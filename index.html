@@ -3,30 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>My Portfolio</title>
+  <title>My Portfolio - Dark Theme</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', sans-serif;
-      background: #fafafa;
-      color: #2d2d2d;
+      background: #121212;
+      color: #e0e0e0;
       line-height: 1.6;
       padding: 60px 20px;
     }
     .container {
       max-width: 900px;
       margin: 0 auto;
-      background: #fff;
+      background: #1e1e1e;
       padding: 40px;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.7);
     }
     h1 {
       font-size: 3rem;
       margin-bottom: 20px;
       font-weight: 600;
       text-align: center;
+      color: #ffffff;
     }
     .functions {
       margin-bottom: 30px;
@@ -34,27 +35,32 @@
       display: flex;
       justify-content: center;
       gap: 40px;
+      color: #bbbbbb;
     }
     .functions li {
       font-size: 1.25rem;
       font-weight: 600;
+      color: #bbbbbb;
     }
     details {
       margin-bottom: 20px;
-      border: 1px solid #ddd;
+      border: 1px solid #333;
       border-radius: 8px;
       overflow: hidden;
+      background: #292929;
+      color: #ddd;
     }
     summary {
-      background: #f0f0f0;
+      background: #222;
       padding: 16px 24px;
       font-size: 1.5rem;
       font-weight: 600;
       cursor: pointer;
       list-style: none;
+      color: #eee;
     }
     details[open] summary {
-      background: #e2e2e2;
+      background: #333;
     }
     details > div {
       padding: 24px;
@@ -70,21 +76,24 @@
     .media-block h3 {
       font-size: 1.5rem;
       margin-bottom: 8px;
+      color: #fff;
     }
     .meta {
       font-size: 1rem;
-      color: #555;
+      color: #999;
       margin-bottom: 4px;
     }
     .description {
       font-size: 1rem;
-      color: #444;
+      color: #bbb;
       margin-bottom: 16px;
     }
     .video, .photo {
       max-width: 100%;
       border-radius: 6px 6px 0 0;
       display: block;
+      box-shadow: 0 0 8px rgba(0,0,0,0.7);
+      background: #000;
     }
     iframe {
       width: 100%;
@@ -92,8 +101,9 @@
       border: none;
       border-radius: 6px 6px 0 0;
       display: block;
+      box-shadow: 0 0 8px rgba(0,0,0,0.7);
+      background: #000;
     }
-
     /* Media wrapper and caption below media */
     .media-wrapper {
       display: inline-block;
@@ -101,10 +111,11 @@
       border-radius: 6px;
       overflow: hidden;
       margin-bottom: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
     }
     .media-credit {
-      background: rgba(0, 0, 0, 0.6);
-      color: #fff;
+      background: rgba(20, 20, 20, 0.9);
+      color: #ccc;
       font-size: 0.875rem;
       padding: 6px 10px;
       display: flex;
@@ -113,6 +124,8 @@
       border-radius: 0 0 6px 6px; /* round bottom corners only */
       width: 100%;
       box-sizing: border-box;
+      font-weight: 500;
+      user-select: none;
     }
     .media-credit .icon {
       font-size: 1rem;
