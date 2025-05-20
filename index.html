@@ -11,68 +11,12 @@
     background: #121212;
     color: #eee;
     font-family: 'Comfortaa', cursive;
-    padding: 20px;
-    padding-left: 80px;
     display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
     flex-wrap: wrap;
-    gap: 20px;
   }
-
-  .hidden {
-    display: none;
-  }
-
-  .sidebar-toggle {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    background: #333;
-    color: #eee;
-    border: none;
-    padding: 10px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-family: 'Comfortaa', cursive;
-    z-index: 1001;
-  }
-
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: -220px;
-    height: 100%;
-    width: 200px;
-    background: #1e1e1e;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    transition: left 0.3s ease;
-    z-index: 1000;
-  }
-
-  .sidebar.show {
-    left: 0;
-  }
-
-  .sidebar button {
-    padding: 20px;
-    background: #333;
-    border: none;
-    color: #eee;
-    font-size: 1.2em;
-    border-radius: 8px;
-    cursor: pointer;
-    font-family: 'Comfortaa', cursive;
-  }
-
-  .section {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-
   .project {
     background: #1e1e1e;
     padding: 20px;
@@ -80,51 +24,42 @@
     max-width: 400px;
     flex: 1 1 300px;
   }
-
   .header-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 6px;
   }
-
   .function {
     font-style: italic;
     margin: 0;
   }
-
   .duration {
     font-size: 0.9em;
     color: #aaa;
     margin: 0;
   }
-
   .title {
     font-weight: 700;
     font-size: 1.4em;
     margin-bottom: 4px;
   }
-
   .media {
     margin-bottom: 15px;
   }
-
   .media img, .media iframe {
     max-width: 100%;
     border-radius: 8px;
     display: block;
   }
-
   .media .copyright {
     font-size: 0.7em;
     color: #666;
     margin-top: 4px;
   }
-
   .description {
     margin-bottom: 12px;
   }
-
   .toggle-btn {
     background: #333;
     color: #eee;
@@ -135,89 +70,72 @@
     font-family: 'Comfortaa', cursive;
     margin-bottom: 10px;
   }
-
   .video-container {
     margin-top: 10px;
     display: none;
   }
-
   iframe {
     width: 100%;
     height: 225px;
     border: none;
     border-radius: 8px;
   }
-
-  .about-text {
-    max-width: 600px;
-    font-size: 1.1em;
-    line-height: 1.6em;
-  }
 </style>
 </head>
 <body>
-
-<!-- Sidebar Toggle -->
-<button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
-
-<!-- Sidebar -->
-<div class="sidebar" id="sidebar">
-  <button onclick="showSection(event, 'videography')">Videography</button>
-  <button onclick="showSection(event, 'photography')">Photography</button>
-  <button onclick="showSection(event, 'about')">About</button>
-</div>
-
-<!-- VIDEOGRAPHY -->
-<div class="section" id="videography">
   <div class="project">
     <div class="header-row">
       <div class="function">Camera Operator</div>
-      <div class="duration">3 months</div>
+      <div class="duration">Duration: 3 months</div>
     </div>
     <div class="title">Urban Exploration</div>
     <div class="media">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" alt="Project Image" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/400px-PNG_transparency_demonstration_1.png" alt="Project Image" />
       <div class="copyright">© Photo by Me</div>
     </div>
-    <div class="description">Exploring hidden city areas through visual storytelling.</div>
+    <div class="description">A photo series capturing hidden urban landscapes.</div>
     <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
     <div class="video-container media">
       <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
       <div class="copyright">© Video by Me</div>
     </div>
   </div>
-</div>
 
-<!-- PHOTOGRAPHY -->
-<div class="section hidden" id="photography">
   <div class="project">
     <div class="header-row">
-      <div class="function">Photographer</div>
-      <div class="duration">2 months</div>
+      <div class="function">Editor</div>
+      <div class="duration">Duration: 2 months</div>
     </div>
-    <div class="title">Nature Study</div>
+    <div class="title">Nature Documentary</div>
     <div class="media">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Forest_in_Bavaria%2C_Germany_02.jpg" alt="Nature Project" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Forest_in_Bavaria%2C_Germany_02.jpg/400px-Forest_in_Bavaria%2C_Germany_02.jpg" alt="Nature Project" />
       <div class="copyright">© Photo by Me</div>
     </div>
-    <div class="description">Still nature photos capturing mood and motionless energy.</div>
+    <div class="description">Editing and color grading a nature documentary.</div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4" allowfullscreen></iframe>
+      <div class="copyright">© Video by Me</div>
+    </div>
   </div>
-</div>
 
-<!-- ABOUT -->
-<div class="section hidden" id="about">
-  <div class="about-text">
-    <h2>About Me</h2>
-    <p>
-      I’m a visual storyteller working across photography and videography.
-      My work explores emotion, mood, and experience through a cinematic lens.
-    </p>
-    <p>
-      I’ve collaborated on indie film projects, art documentaries, and brand campaigns,
-      with a focus on authenticity and feeling.
-    </p>
+  <div class="project">
+    <div class="header-row">
+      <div class="function">Director</div>
+      <div class="duration">Duration: 6 months</div>
+    </div>
+    <div class="title">Short Film</div>
+    <div class="media">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Autumn_forest_Stavanger_Norway_12.jpg/400px-Autumn_forest_Stavanger_Norway_12.jpg" alt="Short Film Project" />
+      <div class="copyright">© Photo by Me</div>
+    </div>
+    <div class="description">Directed and produced a short film on nature themes.</div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <iframe src="https://www.youtube.com/embed/oHg5SJYRHA0" allowfullscreen></iframe>
+      <div class="copyright">© Video by Me</div>
+    </div>
   </div>
-</div>
 
 <script>
   function toggleVideo(button) {
@@ -231,20 +149,6 @@
       button.textContent = 'Hide Video';
     }
   }
-
-  function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('show');
-  }
-
-  function showSection(event, id) {
-    event.preventDefault();
-    document.querySelectorAll('.section').forEach(section => {
-      section.classList.add('hidden');
-    });
-    document.getElementById(id).classList.remove('hidden');
-    toggleSidebar();
-  }
 </script>
-
 </body>
 </html>
