@@ -17,6 +17,7 @@
       padding: 20px;
       flex-wrap: wrap;
     }
+
     .project {
       background: #1e1e1e;
       padding: 20px;
@@ -94,15 +95,17 @@
 
     /* Top­-of­-page toggle container */
     #toggles {
-      position: fixed;
+            background: transparent;
+      color: #fff;
+      position: relative;
       top: 10px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 1000;
     }
     .top-toggle-btn {
-      background: #222;
-      color: #eee;
+      background: rgba(100, 100, 120, 0.4);
+      color: #fff;
       border: none;
       padding: 10px 16px;
       border-radius: 6px;
@@ -110,15 +113,27 @@
       font-family: 'Comfortaa', cursive;
       margin: 0 8px;
     }
+    header {
+  flex: 0 0 auto;      /* don’t grow or shrink; size to its own content */
+  width: 100%;         /* span the full width of its container */
+  align-self: stretch; /* make sure it stretches across the cross-axis */
+  padding:1rem;
+  padding-top: 0;
+}
   </style>
 </head>
 <body>
 
-  <!-- Two top buttons -->
-  <div id="toggles">
-    <button id="ee-toggle" class="top-toggle-btn">Show EE</button>
+<header>
+    <div id="toggles">
+    <p class="top-toggle-btn">Valdir Neves' Portfolio
+    <button id="ee-toggle" class="top-toggle-btn">Show STEM</button>
     <button id="film-toggle" class="top-toggle-btn">Hide Film</button>
-  </div>
+  </p></div>
+</header>
+
+
+
 
   <div class="project" id="about">
     <div class="header-row">
@@ -275,7 +290,7 @@
     </div>
   </div>
 
-  <div class="project mix">
+  <div class="project film">
     <div class="header-row">
       <div class="function">Gaffer/Lighting Electrician & Assistant Crane Operator</div>
       <div class="duration">Jun. 2024</div>
@@ -425,7 +440,7 @@
     </div>
   </div>
 
-  <div class="project mix">
+  <div class="project film">
     <div class="header-row">
       <div class="function">Virtual Production tests</div>
       <div class="duration">Feb. 2022</div>
@@ -552,7 +567,7 @@
       document.querySelectorAll('.ee').forEach(el => {
         el.style.display = eeVisible ? 'block' : 'none';
       });
-      eeToggle.textContent = eeVisible ? 'Hide EE' : 'Show EE';
+      eeToggle.textContent = eeVisible ? 'Hide STEM' : 'Show STEM';
     });
 
     // Film toggle logic
