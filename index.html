@@ -92,8 +92,10 @@
       /* films visible by default */
     }
     .pic {
-      background: #222;
+      background: rgba(0, 0, 0, 0);
       display: none; /* photos hidden by default */
+      padding: 0px;
+
     }
     .mix { background: #323; }
 
@@ -131,8 +133,8 @@
 <header>
     <div id="toggles">
     <p class="top-toggle-btn">Valdir Neves' Portfolio
+    <button id="pic-toggle" class="top-toggle-btn">Show Photography</button>
     <button id="ee-toggle" class="top-toggle-btn">Show STEM</button>
-    <button id="pic-toggle" class="top-toggle-btn">Show Photos</button>
     <button id="film-toggle" class="top-toggle-btn">Hide Film</button>
   </p></div>
 </header>
@@ -585,7 +587,7 @@
       <img src="media/skydive.png" alt="" />
       <div class="copyright">© Photo</div>
     </div>
-    <div class="description">Video description goes here</div>
+    <div class="description">Animation in Grand Theft Auto</div>
     <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
     <div class="video-container media">
       <iframe src="https://www.youtube.com/embed/aaa" allowfullscreen></iframe>
@@ -672,7 +674,7 @@
       document.querySelectorAll('.pic').forEach(el => {
         el.style.display = picVisible ? 'block' : 'none';
       });
-      picToggle.textContent = picVisible ? 'Hide Photos' : 'Show Photos';
+      picToggle.textContent = picVisible ? 'Hide Photography' : 'Show Photography';
     });
   </script>
 </body>
