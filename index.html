@@ -84,12 +84,16 @@
     #about { background: #254; }
     #title { background: #522; }
     .ee {
-      background: #272020;
+      background: #411;
       display: none; /* EE hidden by default */
     }
     .film {
       background: #224;
       /* films visible by default */
+    }
+    .pic {
+      background: #222;
+      display: none; /* photos hidden by default */
     }
     .mix { background: #323; }
 
@@ -128,6 +132,7 @@
     <div id="toggles">
     <p class="top-toggle-btn">Valdir Neves' Portfolio
     <button id="ee-toggle" class="top-toggle-btn">Show STEM</button>
+    <button id="pic-toggle" class="top-toggle-btn">Show Photos</button>
     <button id="film-toggle" class="top-toggle-btn">Hide Film</button>
   </p></div>
 </header>
@@ -140,12 +145,13 @@
       <div class="function">About Me</div>
       <div class="duration"></div>
     </div>
-    <div class="title">Valdir Neves' Portfolio</div>
+    <div class="title">Valdir Neves</div>
     <div class="media">
       <img src="media/group0.png" alt="" />
       <div class="copyright">© Photo</div>
     </div>
     <div class="description">Brazilian living in Lisbon, Portugal. Passionate about engineering, filmmaking, photography, optics and architecture. Fluent in English.</div>
+    <div class="description">Student at ETIC Lisboa.</div>
   </div>
 
   <div class="project film">
@@ -232,6 +238,13 @@
   </div>
 
 
+  <div class="project pic">
+    <div class="media">
+      <img src="media/bridgetall.png" alt="" />
+    </div>
+  </div>
+
+
   <div class="project film">
     <div class="header-row">
       <div class="function">Photoshoot Scouting & App UI</div>
@@ -314,6 +327,7 @@
     <div class="title">Live TV program mock-up (~30m)</div>
     <div class="media">
       <img src="media/redroom.jpg" alt="" />
+      <img src="media/cctv.jpg" alt="" />
       <div class="copyright">© Photo</div>
     </div>
     <div class="description">Video description goes here</div>
@@ -349,6 +363,7 @@
     </div>
     <div class="title">Short film (3.8min)</div>
     <div class="media">
+      <img src="media/framing.png" alt="" />
       <img src="media/cinema.png" alt="" />
       <div class="copyright">@ Forum Lisboa</div>
     </div>
@@ -367,6 +382,8 @@
       <div class="copyright">© Charlie Chaves</div>
     </div>
   </div>
+
+
 
   <div class="project film">
     <div class="header-row">
@@ -497,6 +514,33 @@
 
   <div class="project ee">
     <div class="header-row">
+      <div class="function">PCB Designing</div>
+      <div class="duration">Aug. 2020</div>
+    </div>
+    <div class="media">
+      <img src="media/pcb3d.png" alt="" />
+      <div class="copyright">@ KiCad</div>
+    </div>
+  </div>
+
+  <div class="project ee">
+    <div class="header-row">
+      <div class="function">aaa</div>
+      <div class="duration">aaa</div>
+    </div>
+    <div class="media">
+      <img src="media/432one.png" alt="" />
+      <img src="media/432three.png" alt="" />
+      <div class="copyright">@ Unity</div>
+    </div>
+    <div class="media">
+      <img src="media/mirror.png" alt="" />
+      <div class="copyright">@ VR Chat</div>
+    </div>
+  </div>
+
+  <div class="project ee">
+    <div class="header-row">
       <div class="function">Minecraft Mod</div>
       <div class="duration">Dec. 2015</div>
     </div>
@@ -505,6 +549,32 @@
       <div class="copyright">© Photo</div>
     </div>
   </div>
+
+  <div class="project pic">
+    <div class="media">
+      <img src="media/moon.jpg" alt="" />
+    </div>
+  </div>
+
+  <div class="project pic">
+    <div class="media">
+      <img src="media/pic1.jpg" alt="" />
+    </div>
+  </div>
+
+  <div class="project pic">
+    <div class="media">
+      <img src="media/pic2.jpg" alt="" />
+    </div>
+  </div>
+
+  <div class="project pic">
+    <div class="media">
+      <img src="media/pic0.jpg" alt="" />
+    </div>
+  </div>
+
+
 
   <div class="project film">
     <div class="header-row">
@@ -546,10 +616,7 @@
       <div class="duration">aaa</div>
     </div>
     <div class="media">
-      <img src="media/cctv.jpg" alt="" />
       <img src="media/pcb.png" alt="" />
-      <img src="media/framing.jpg" alt="" />
-      <img src="media/bridgetall.jpg" alt="" />
       <img src="media/watermelon.png" alt="" />
       <div class="copyright">© Photo</div>
     </div>
@@ -595,6 +662,17 @@
         el.style.display = filmVisible ? 'block' : 'none';
       });
       filmToggle.textContent = filmVisible ? 'Hide Film' : 'Show Film';
+    });
+
+    // Photos toggle logic
+    const picToggle = document.getElementById('pic-toggle');
+    let picVisible = false; // photos sections start visible
+    picToggle.addEventListener('click', () => {
+      picVisible = !picVisible;
+      document.querySelectorAll('.pic').forEach(el => {
+        el.style.display = picVisible ? 'block' : 'none';
+      });
+      picToggle.textContent = picVisible ? 'Hide Photos' : 'Show Photos';
     });
   </script>
 </body>
