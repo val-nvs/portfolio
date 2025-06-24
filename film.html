@@ -12,15 +12,14 @@
   <style>
     html, body {
       margin: 0;
-      background: #eee;
+      background: #111;
       font-family: 'Michroma', sans-serif;
       min-height: 100vh;
       height: auto;
-
-      /* Center horizontally only */
       display: flex;
       justify-content: center;
-      align-items: flex-start; /* no vertical centering */
+      align-items: flex-start;
+      transition: filter 0.3s ease;
     }
 
     .orange-strip {
@@ -31,11 +30,10 @@
       justify-content: space-between;
       box-sizing: border-box;
       padding: 0;
-      height: auto;  /* allow height to grow with content */
-      min-height: 100vh; /* at least full viewport height */
+      height: auto;
+      min-height: 100vh;
     }
 
-    /* White columns with rectangles and 2rem gap */
     .white-column {
       width: 2.794rem;
       display: flex;
@@ -64,7 +62,6 @@
       margin-bottom: 0;
     }
 
-    /* Content container in center */
     .content-container {
       flex-grow: 1;
       margin: 0 1rem;
@@ -78,56 +75,58 @@
       max-height: none;
     }
 
-.content-box {
-  width: 52.63rem;
-  margin-bottom: 0;
-  position: relative;
-}
-.content-box .inner-box {
-  position: absolute;
-  inset: 0.2rem;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: .8rem;
-  font-size: 1.5rem;
-  color: #333;
-  user-select: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  box-sizing: border-box;
-}
-.content-box .inner-box img {
-  max-width: 50%;
-  height: auto;
-  display: block;
-}
+    .content-box {
+      width: 52.63rem;
+      margin-bottom: 0;
+      position: relative;
+      cursor: pointer;
+    }
 
-.height-3 {
-  height: calc(3 * 4.75rem);
-}
-.height-4 {
-  height: calc(4 * 4.75rem);
-}
-.height-5 {
-  height: calc(5 * 4.75rem);
-}
-.height-6 {
-  height: calc(6 * 4.75rem);
-}
-.height-7 {
-  height: calc(7 * 4.75rem);
-}
-.height-8 {
-  height: calc(8 * 4.75rem);
-}
-.height-9 {
-  height: calc(9 * 4.75rem);
-}
-.height-10 {
-  height: calc(10 * 4.75rem);
-}
+    .content-box .inner-box {
+      position: absolute;
+      inset: 0.2rem;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: .8rem;
+      font-size: 1.5rem;
+      color: #333;
+      user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
 
+    .content-box .inner-box img {
+      max-width: 50%;
+      height: auto;
+      display: block;
+    }
+
+    .height-3 {
+      height: calc(3 * 4.75rem);
+    }
+    .height-4 {
+      height: calc(4 * 4.75rem);
+    }
+    .height-5 {
+      height: calc(5 * 4.75rem);
+    }
+    .height-6 {
+      height: calc(6 * 4.75rem);
+    }
+    .height-7 {
+      height: calc(7 * 4.75rem);
+    }
+    .height-8 {
+      height: calc(8 * 4.75rem);
+    }
+    .height-9 {
+      height: calc(9 * 4.75rem);
+    }
+    .height-10 {
+      height: calc(10 * 4.75rem);
+    }
   </style>
 </head>
 <body>
@@ -135,28 +134,20 @@
     <div class="white-column" id="left-column"></div>
 
     <div class="content-container" id="content-container">
-      <!-- Manually edit these boxes here -->
-
-
       <div class="content-box height-5">
         <div class="inner-box">
-        <!-- Put any content you want here -->
-        <h2>My Box Title</h2>
-        <p>Here goes the text, images, or anything else you want!</p>
-        <img src="media/pop.png" alt="Description" />
+          <h2>My Box Title</h2>
+          <p>Here goes the text, images, or anything else you want!</p>
+          <img src="media/pop.png" alt="Description" />
         </div>
       </div>
 
-
       <div class="content-box height-5">
         <div class="inner-box">
-        <!-- Put any content you want here -->
-        <h2>My Box Title</h2>
-        <p>Here goes the text, images, or anything else you want!</p>
+          <h2>My Box Title</h2>
+          <p>Here goes the text, images, or anything else you want!</p>
         </div>
       </div>
-
-
     </div>
 
     <div class="white-column" id="right-column"></div>
@@ -167,12 +158,10 @@
       const column = document.getElementById(columnId);
       const fontSizePx = parseFloat(getComputedStyle(document.documentElement).fontSize);
       const pitch = 4.75 * fontSizePx;
-      // fallback height if zero
       const columnHeight = column.clientHeight || window.innerHeight;
       const count = Math.floor(columnHeight / pitch) + 1;
 
       column.innerHTML = '';
-
       for (let i = 0; i < count; i++) {
         const rect = document.createElement('div');
         rect.className = 'white-rect';
@@ -191,6 +180,15 @@
 
     window.addEventListener('load', onResize);
     window.addEventListener('resize', onResize);
+
+    document.querySelectorAll('.content-box').forEach(box => {
+      box.addEventListener('mouseenter', () => {
+        document.body.style.filter = 'invert(1)';
+      });
+      box.addEventListener('mouseleave', () => {
+        document.body.style.filter = '';
+      });
+    });
   </script>
 </body>
 </html>
