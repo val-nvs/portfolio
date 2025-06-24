@@ -10,6 +10,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet" />
   
   <style>
+
+    html { font-size: 16px; }
+
     html, body {
       margin: 0;
       font-family: 'Michroma', sans-serif;
@@ -179,25 +182,13 @@
       box.addEventListener('mouseleave', ()=>wrapper.style.filter='' );
     });
 
-    // quick zoom-out on scroll
-    let zo;
-    window.addEventListener('scroll', ()=>{
-      clearTimeout(zo);
-      wrapper.style.transition = 'transform 0.15s ease';
-      wrapper.style.transform  = 'scale(0.8)';
-      zo = setTimeout(()=>{
-        wrapper.style.transform  = '';
-        wrapper.style.transition = 'transform 1s ease';
-      },150);
-    });
-
     // scale-to-fit logic
     function scaleWrapperToFit(){
-      const w = document.querySelector('.wrapper'),
-            rw= w.getBoundingClientRect().width,
-            vw= document.documentElement.clientWidth;
+      const w  = document.querySelector('.wrapper'),
+            rw = w.getBoundingClientRect().width,
+            vw = document.documentElement.clientWidth;
       let f = vw / rw;
-      if (f>1) f=1;
+      if (f>1) f = 1;
       f = Math.floor(f*1000)/1000;
       w.style.transform = `scale(${f})`;
     }
