@@ -33,7 +33,7 @@ html, body {
 
 .wrapper {
   background: #fff;
-  transition: filter 0.3s ease, transform 0.1s ease;
+  transition: filter 0.3s ease, transform 0.3s ease;
   /* ensure it grows to fit content or viewport */
   height: 100vh;    /* fixed height */
   width: 100vw;     /* full viewport width */
@@ -216,16 +216,18 @@ html, body {
       });
     });
 
-    // Zoom out on scroll
+    // Quick zoom out on scroll
+    let zoomTimeout;
     window.addEventListener('scroll', () => {
-      const maxZoomOut = 0.5;  // minimum scale (50%)
-      const maxScroll = 300;   // scroll amount to reach min scale
-      let scrollY = window.scrollY;
+      if (zoomTimeout) clearTimeout(zoomTimeout);
       
-      let scale = 1 - (scrollY / maxScroll) * (1 - maxZoomOut);
-      if (scale < maxZoomOut) scale = maxZoomOut;
+      wrapper.style.transition = 'transform 0.15s ease';
+      wrapper.style.transform = 'scale(0.8)';
 
-      wrapper.style.transform = `scale(${scale})`;
+      zoomTimeout = setTimeout(() => {
+        wrapper.style.transform = 'scale(1)';
+        wrapper.style.transition = 'transform 1s ease';
+      }, 150);
     });
   </script>
 </body>
