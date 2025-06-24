@@ -31,21 +31,15 @@ html, body {
 }
 
 
-/* Always center the fixed-width layout for desktop */
 .wrapper {
-  width: 65rem;
-  max-width: 100vw;
+  background: #fff;
+  transition: filter 0.3s ease;
+  /* ensure it grows to fit content or viewport */
+  height: 100vh;    /* change from min-height to fixed height */
+  width: 100vw;     /* change from 100% to 100vw for full viewport width */
+  display: flex;
   justify-content: center;
-}
-
-/* When screen is smaller than 65rem, scale down */
-@media (max-width: 65rem) {
-  .wrapper {
-    transform: scale(calc(98vw / 65rem));
-    transform-origin: top left;
-    height: auto;
-    width: 65rem;
-  }
+  align-items: flex-start;
 }
 
 
