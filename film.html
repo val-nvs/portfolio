@@ -10,17 +10,38 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet" />
   
   <style>
-    html, body {
-      margin: 0;
-      background: #111;
-      font-family: 'Michroma', sans-serif;
-      min-height: 100vh;
-      height: auto;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      transition: filter 0.3s ease;
-    }
+html, body {
+  margin: 0;
+  font-family: 'Michroma', sans-serif;
+  min-height: 100vh;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  /* Checkerboard pattern */
+  background-color: #f0f;
+  background-image:
+    linear-gradient(45deg, #000 25%, transparent 25%),
+    linear-gradient(-45deg, #000 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #000 75%),
+    linear-gradient(-45deg, transparent 75%, #000 75%);
+  background-size: 40px 40px;
+  background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+}
+
+
+.wrapper {
+  background: #fff;
+  transition: filter 0.3s ease;
+  /* ensure it grows to fit content or viewport */
+  height: 100vh;    /* change from min-height to fixed height */
+  width: 100vw;     /* change from 100% to 100vw for full viewport width */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 
     .orange-strip {
       position: relative;
@@ -130,27 +151,29 @@
   </style>
 </head>
 <body>
-  <div class="orange-strip">
-    <div class="white-column" id="left-column"></div>
+  <div class="wrapper">
+    <div class="orange-strip">
+      <div class="white-column" id="left-column"></div>
 
-    <div class="content-container" id="content-container">
-      <div class="content-box height-5">
-        <div class="inner-box">
-          <h2>My Box Title</h2>
-          <p>Here goes the text, images, or anything else you want!</p>
-          <img src="media/pop.png" alt="Description" />
+      <div class="content-container" id="content-container">
+        <div class="content-box height-5">
+          <div class="inner-box">
+            <h2>My Box Title</h2>
+            <p>Here goes the text, images, or anything else you want!</p>
+            <img src="media/pop.png" alt="Description" />
+          </div>
+        </div>
+
+        <div class="content-box height-5">
+          <div class="inner-box">
+            <h2>My Box Title</h2>
+            <p>Here goes the text, images, or anything else you want!</p>
+          </div>
         </div>
       </div>
 
-      <div class="content-box height-5">
-        <div class="inner-box">
-          <h2>My Box Title</h2>
-          <p>Here goes the text, images, or anything else you want!</p>
-        </div>
-      </div>
+      <div class="white-column" id="right-column"></div>
     </div>
-
-    <div class="white-column" id="right-column"></div>
   </div>
 
   <script>
@@ -181,12 +204,14 @@
     window.addEventListener('load', onResize);
     window.addEventListener('resize', onResize);
 
+    // Invert the wrapper instead of body on hover
+    const wrapper = document.querySelector('.wrapper');
     document.querySelectorAll('.content-box').forEach(box => {
       box.addEventListener('mouseenter', () => {
-        document.body.style.filter = 'invert(1)';
+        wrapper.style.filter = 'invert(1)';
       });
       box.addEventListener('mouseleave', () => {
-        document.body.style.filter = '';
+        wrapper.style.filter = '';
       });
     });
   </script>
