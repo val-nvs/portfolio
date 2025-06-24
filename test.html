@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --pitch: calc(4.75 / 70 * 100vw);
+  --box-width: calc(2.794 / 70 * 100vw);
+  --box-height: calc(1.981 / 70 * 100vw);
+  --box-radius: calc(0.51 / 70 * 100vw);
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Michroma', sans-serif;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+}
+.film {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  width: calc(65 / 70 * 100vw);
+  min-height: 100vh;
+  background-color: green;
+}
+.strip-left, .strip-right {
+  background-color: black; /* changed to black */
+  width: calc((65 - 52.63) / 2 / 70 * 100vw);
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: calc(var(--pitch) - var(--box-height));
+  padding-top: var(--pitch);
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+.perf-hole {
+  width: var(--box-width);
+  height: var(--box-height);
+  border-radius: var(--box-radius);
+  background-color: white; /* changed to white */
+  flex-shrink: 0;
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+/* Added translation to shift perf holes off-center */
+.strip-left .perf-hole {
+  transform: translateX(40%);
+}
+.strip-right .perf-hole {
+  transform: translateX(-40%);
+}
+
+.zone {
+  background-color: orange;
+  width: calc(52.63 / 70 * 100vw);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+.frame {
+  --x-value: 5;
+  position: relative;
+  background-color: blue;
+  width: 100%;
+  aspect-ratio: calc(52.63 / (var(--x-value) * 4.75));
+  flex-shrink: 0;
+  border-radius: 12px;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+.frame-content {
+  position: relative;
+  flex: 1 1 auto; /* fill available vertical space */
+  overflow: hidden; /* crop image if it overflows horizontally */
+}
+.frame-content img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%; 
+  transform: translateX(-50%);
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  width: auto;
+  max-width: none;
+  display: block;
+}
+.caption {
+  flex-shrink: 0;
+  background-color: rgba(0,0,0,0.5);
+  color: #fff;
+  text-align: center;
+  font-size: calc(1.8 / 70 * 100vw); /* increased font size */
+  padding: 0.3em 0;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="film">
+    <div class="strip-left"></div>
+    <div class="zone">
+      <div class="frame" style="--x-value: 5;">
+        <div class="frame-content">
+          <img src="https://picsum.photos/300/150" alt="Sample Image" />
+        </div>
+        <div class="caption">This is a caption</div>
+      </div>
+      <div class="frame" style="--x-value: 6;">
+        <div class="frame-content">
+          <img src="https://picsum.photos/300/150?1" alt="Sample Image" />
+        </div>
+        <div class="caption">Another caption here</div>
+      </div>
+      <div class="frame" style="--x-value: 7;">
+        <div class="frame-content">
+          <img src="https://picsum.photos/300/150?2" alt="Sample Image" />
+        </div>
+        <div class="caption">More text goes here</div>
+      </div>
+      <div class="frame" style="--x-value: 8;">
+        <div class="frame-content">
+          <img src="https://picsum.photos/300/150?3" alt="Sample Image" />
+        </div>
+        <div class="caption">Yet another caption</div>
+      </div>
+      <div class="frame" style="--x-value: 9;">
+        <div class="frame-content">
+          <img src="https://picsum.photos/300/150?4" alt="Sample Image" />
+        </div>
+        <div class="caption">Final caption here</div>
+      </div>
+    </div>
+    <div class="strip-right"></div>
+  </div>
+</div>
+
+<script>
+function fillStrip(strip) {
+  const vw = window.innerWidth / 100;
+  const pitchPx = (4.75 / 70) * 100 * vw;
+
+  const stripHeight = strip.clientHeight;
+
+  const totalStep = pitchPx;
+
+  const count = Math.floor(stripHeight / totalStep);
+
+  strip.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const box = document.createElement('div');
+    box.className = 'perf-hole';
+    strip.appendChild(box);
+  }
+}
+function fillAllStrips() {
+  document.querySelectorAll('.strip-left, .strip-right').forEach(fillStrip);
+}
+window.addEventListener('DOMContentLoaded', fillAllStrips);
+window.addEventListener('resize', fillAllStrips);
+</script>
+</body>
+</html>
