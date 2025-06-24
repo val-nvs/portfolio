@@ -33,13 +33,14 @@ html, body {
 
 .wrapper {
   background: #fff;
-  transition: filter 0.3s ease;
+  transition: filter 0.3s ease, transform 0.1s ease;
   /* ensure it grows to fit content or viewport */
-  height: 100vh;    /* change from min-height to fixed height */
-  width: 100vw;     /* change from 100% to 100vw for full viewport width */
+  height: 100vh;    /* fixed height */
+  width: 100vw;     /* full viewport width */
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  transform-origin: top center;
 }
 
 
@@ -213,6 +214,18 @@ html, body {
       box.addEventListener('mouseleave', () => {
         wrapper.style.filter = '';
       });
+    });
+
+    // Zoom out on scroll
+    window.addEventListener('scroll', () => {
+      const maxZoomOut = 0.5;  // minimum scale (50%)
+      const maxScroll = 300;   // scroll amount to reach min scale
+      let scrollY = window.scrollY;
+      
+      let scale = 1 - (scrollY / maxScroll) * (1 - maxZoomOut);
+      if (scale < maxZoomOut) scale = maxZoomOut;
+
+      wrapper.style.transform = `scale(${scale})`;
     });
   </script>
 </body>
