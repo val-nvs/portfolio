@@ -10,39 +10,34 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet" />
   
   <style>
-html, body {
-  margin: 0;
-  font-family: 'Michroma', sans-serif;
-  min-height: 100vh;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+    html, body {
+      margin: 0;
+      font-family: 'Michroma', sans-serif;
+      min-height: 100vh;
+      height: auto;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      background-color: #f0f;
+      background-image:
+        linear-gradient(45deg, #000 25%, transparent 25%),
+        linear-gradient(-45deg, #000 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #000 75%),
+        linear-gradient(-45deg, transparent 75%, #000 75%);
+      background-size: 40px 40px;
+      background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+    }
 
-  /* Checkerboard pattern */
-  background-color: #f0f;
-  background-image:
-    linear-gradient(45deg, #000 25%, transparent 25%),
-    linear-gradient(-45deg, #000 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #000 75%),
-    linear-gradient(-45deg, transparent 75%, #000 75%);
-  background-size: 40px 40px;
-  background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
-}
-
-
-.wrapper {
-  background: #fff;
-  transition: filter 0.3s ease, transform 0.3s ease;
-  /* ensure it grows to fit content or viewport */
-  height: 100vh;    /* fixed height */
-  width: 100vw;     /* full viewport width */
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  transform-origin: top center;
-}
-
+    .wrapper {
+      background: #fff;
+      transition: filter 0.3s ease, transform 0.3s ease;
+      width: 70rem;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      transform-origin: top center;
+    }
 
     .orange-strip {
       position: relative;
@@ -52,8 +47,8 @@ html, body {
       justify-content: space-between;
       box-sizing: border-box;
       padding: 0;
-      height: auto;
       min-height: 100vh;
+      height: auto;
     }
 
     .white-column {
@@ -86,7 +81,7 @@ html, body {
 
     .content-container {
       flex-grow: 1;
-      margin: 0 0rem;
+      margin: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -125,37 +120,20 @@ html, body {
       display: block;
     }
 
-    .height-3 {
-      height: calc(3 * 4.75rem);
-    }
-    .height-4 {
-      height: calc(4 * 4.75rem);
-    }
-    .height-5 {
-      height: calc(5 * 4.75rem);
-    }
-    .height-6 {
-      height: calc(6 * 4.75rem);
-    }
-    .height-7 {
-      height: calc(7 * 4.75rem);
-    }
-    .height-8 {
-      height: calc(8 * 4.75rem);
-    }
-    .height-9 {
-      height: calc(9 * 4.75rem);
-    }
-    .height-10 {
-      height: calc(10 * 4.75rem);
-    }
+    .height-3 { height: calc(3 * 4.75rem); }
+    .height-4 { height: calc(4 * 4.75rem); }
+    .height-5 { height: calc(5 * 4.75rem); }
+    .height-6 { height: calc(6 * 4.75rem); }
+    .height-7 { height: calc(7 * 4.75rem); }
+    .height-8 { height: calc(8 * 4.75rem); }
+    .height-9 { height: calc(9 * 4.75rem); }
+    .height-10{ height: calc(10 * 4.75rem); }
   </style>
 </head>
 <body>
   <div class="wrapper">
     <div class="orange-strip">
       <div class="white-column" id="left-column"></div>
-
       <div class="content-container" id="content-container">
         <div class="content-box height-5">
           <div class="inner-box">
@@ -164,7 +142,6 @@ html, body {
             <img src="media/pop.png" alt="Description" />
           </div>
         </div>
-
         <div class="content-box height-5">
           <div class="inner-box">
             <h2>My Box Title</h2>
@@ -172,63 +149,60 @@ html, body {
           </div>
         </div>
       </div>
-
       <div class="white-column" id="right-column"></div>
     </div>
   </div>
 
   <script>
-    function fillColumn(columnId) {
-      const column = document.getElementById(columnId);
-      const fontSizePx = parseFloat(getComputedStyle(document.documentElement).fontSize);
-      const pitch = 4.75 * fontSizePx;
-      const columnHeight = column.clientHeight || window.innerHeight;
-      const count = Math.floor(columnHeight / pitch) + 1;
-
-      column.innerHTML = '';
-      for (let i = 0; i < count; i++) {
-        const rect = document.createElement('div');
-        rect.className = 'white-rect';
-        column.appendChild(rect);
+    // fill side columns
+    function fillColumn(id) {
+      const col = document.getElementById(id),
+            rootFs = parseFloat(getComputedStyle(document.documentElement).fontSize),
+            pitch  = 4.75 * rootFs,
+            height = col.clientHeight || window.innerHeight,
+            count  = Math.floor(height / pitch) + 1;
+      col.innerHTML = '';
+      for (let i=0; i < count; i++) {
+        const d = document.createElement('div');
+        d.className = 'white-rect';
+        col.appendChild(d);
       }
     }
+    function fillColumns(){ fillColumn('left-column'); fillColumn('right-column'); }
+    window.addEventListener('load', fillColumns);
+    window.addEventListener('resize', fillColumns);
 
-    function fillColumns() {
-      fillColumn('left-column');
-      fillColumn('right-column');
-    }
-
-    function onResize() {
-      fillColumns();
-    }
-
-    window.addEventListener('load', onResize);
-    window.addEventListener('resize', onResize);
-
-    // Invert the wrapper instead of body on hover
+    // invert on hover
     const wrapper = document.querySelector('.wrapper');
     document.querySelectorAll('.content-box').forEach(box => {
-      box.addEventListener('mouseenter', () => {
-        wrapper.style.filter = 'invert(1)';
-      });
-      box.addEventListener('mouseleave', () => {
-        wrapper.style.filter = '';
-      });
+      box.addEventListener('mouseenter', ()=>wrapper.style.filter='invert(1)');
+      box.addEventListener('mouseleave', ()=>wrapper.style.filter='' );
     });
 
-    // Quick zoom out on scroll
-    let zoomTimeout;
-    window.addEventListener('scroll', () => {
-      if (zoomTimeout) clearTimeout(zoomTimeout);
-      
+    // quick zoom-out on scroll
+    let zo;
+    window.addEventListener('scroll', ()=>{
+      clearTimeout(zo);
       wrapper.style.transition = 'transform 0.15s ease';
-      wrapper.style.transform = 'scale(0.8)';
-
-      zoomTimeout = setTimeout(() => {
-        wrapper.style.transform = 'scale(1)';
+      wrapper.style.transform  = 'scale(0.8)';
+      zo = setTimeout(()=>{
+        wrapper.style.transform  = '';
         wrapper.style.transition = 'transform 1s ease';
-      }, 150);
+      },150);
     });
+
+    // scale-to-fit logic
+    function scaleWrapperToFit(){
+      const w = document.querySelector('.wrapper'),
+            rw= w.getBoundingClientRect().width,
+            vw= document.documentElement.clientWidth;
+      let f = vw / rw;
+      if (f>1) f=1;
+      f = Math.floor(f*1000)/1000;
+      w.style.transform = `scale(${f})`;
+    }
+    window.addEventListener('load',  scaleWrapperToFit);
+    window.addEventListener('resize', scaleWrapperToFit);
   </script>
 </body>
 </html>
