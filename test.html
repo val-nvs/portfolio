@@ -35,15 +35,6 @@ html, body {
   padding-top: var(--pitch); box-sizing: border-box; overflow-y: auto;
   position: relative;
 }
-.year-right {
-  position: relative; /* change from absolute to relative */
-  height: auto;       /* remove fixed height */
-  width: auto;        /* adjust width if needed */
-  pointer-events: none;
-  background-color: transparent;
-  z-index: 9999;
-}
-
 
 .perf-hole {
   width: var(--box-width); height: var(--box-height);
@@ -101,25 +92,11 @@ html, body {
   border-bottom-right-radius: calc(.51 / 70 * 100vw); position: relative; z-index: 3;
   pointer-events: none;
 }
-.year-label {
-  position: absolute; left: 110%;
-  transform: translateX(-8%) rotate(90deg);
-  transform-origin: top left;
-  font-size: calc(1.8 / 70 * 100vw); font-weight: bold;
-  pointer-events: none; white-space: nowrap; user-select: none;
-  z-index: 10000; transition: color 0.5s ease;
-  background: white; color: black;
-}
 .black-bg { background-color: black !important; }
-.black-bg .year-label { color: yellow !important; }
-.black-bg .frame-content img { filter: none !important; }
 .orange-bg { background-color: orange !important; }
-.orange-bg .year-label { color: black !important; }
 .orange-bg .frame-content img { filter: hue-rotate(180deg) invert(1); }
-.film.black-bg,
-.year-right.black-bg {background-color: black !important;}
-.film.orange-bg,
-.year-right.orange-bg {background-color: orange !important;}
+.film.black-bg {background-color: black !important;}
+.film.orange-bg {background-color: orange !important;}
 
 /* pop-in */
 @keyframes popIn {
@@ -187,9 +164,7 @@ html, body {
       </div>
       <!-- more frames -->
     </div>
-    <div class="strip-right">
-      <div class="year-right"></div>
-    </div>
+    <div class="strip-right"></div>
   </div>
 </div>
 
@@ -215,59 +190,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // Fill strips
   document.querySelectorAll('.strip-left, .strip-right').forEach(fillStrip);
 
-  // Year labels
-  const yearRight = document.querySelector('.year-right');
-  const zone = document.querySelector('.zone');
-  const years = [
-    "aaa '25", "Jul '25", "Jun '25", "May '25", "Jan '25",
-    "Oct '24", "Oct '24", "Aug '24", "Aug '24", "Jun '24",
-    "Jun '24", "Jun '24"
-  ];
-
-  function updateYear() {
-    if (!yearRight) return;
-    yearRight.querySelectorAll('.year-label').forEach(e => e.remove());
-    zone.querySelectorAll('.frame').forEach((frame, i) => {
-      const rF = frame.getBoundingClientRect();
-      const rZ = zone.getBoundingClientRect();
-      const top = rF.top - rZ.top + zone.scrollTop;
-
-      const y = document.createElement('div');
-      y.className = 'year-label';
-      y.textContent = years[i] || 'Year';
-      y.style.top = top + 'px';
-      yearRight.appendChild(y);
-    });
-  }
-  updateYear();
-
   // State elements
   const strips = [
-    document.querySelector('.year-right'),
     document.querySelector('.film'),
     document.querySelector('.strip-left'),
     document.querySelector('.strip-right'),
     document.querySelector('.zone')
   ].filter(Boolean);
 
-  // Sync year-right background class with film's background class
-  function syncYearRightState() {
-    if (!yearRight) return;
-    if (yearRight.classList.contains('black-bg')) {
-      yearRight.classList.add('black-bg');
-      yearRight.classList.remove('orange-bg');
-    } else if (yearRight.classList.contains('orange-bg')) {
-      yearRight.classList.add('orange-bg');
-      yearRight.classList.remove('black-bg');
-    }
-  }
-
   // Initialize all with black-bg
   strips.forEach(el => {
     el.classList.add('black-bg');
     el.classList.remove('orange-bg');
   });
-  syncYearRightState();
 
   // Popup logic
   const modal = document.getElementById('info-modal');
@@ -280,7 +215,6 @@ document.addEventListener('DOMContentLoaded', () => {
         el.classList.add('orange-bg');
         el.classList.remove('black-bg');
       });
-      syncYearRightState();
 
       const title = core.dataset.info || '';
       const desc = core.dataset.desc || '';
@@ -317,14 +251,12 @@ document.addEventListener('DOMContentLoaded', () => {
         el.classList.add('black-bg');
         el.classList.remove('orange-bg');
       });
-      syncYearRightState();
     }
   });
 
-  // Update strips and year labels on resize
+  // Update strips on resize
   window.addEventListener('resize', () => {
     document.querySelectorAll('.strip-left, .strip-right').forEach(fillStrip);
-    updateYear();
   });
 });
 </script>
