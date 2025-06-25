@@ -18,182 +18,150 @@ html, body {
   font-family: 'Michroma', sans-serif;
 }
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  width: 100vw;
+  display: flex; justify-content: center; align-items: center;
+  min-height: 100vh; width: 100vw;
 }
 .film {
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  width: calc(65 / 70 * 100vw);
-  min-height: 100vh;
-  background-color: green;
+  display: flex; justify-content: center; align-items: stretch;
+  width: calc(65 / 70 * 100vw); min-height: 100vh; background-color: orange;
 }
-.strip-left, .strip-right {
+.strip-left, .strip-right {    margin-top: calc(-2.972 / 70 * 100vw);
+
   background-color: orange;
   width: calc((65 - 52.63) / 2 / 70 * 100vw);
   min-height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
+  display: flex; flex-direction: column; align-items: center;
   gap: calc(var(--pitch) - var(--box-height));
-  padding-top: var(--pitch);
-  box-sizing: border-box;
-  overflow-y: auto;
+  padding-top: var(--pitch); box-sizing: border-box; overflow-y: auto;
   position: relative;
 }
+.year-right {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* so it doesn't block clicks */
+  overflow: visible;    /* allow overflow */
+  display: block;
+  z-index: 9999;
+  background-color: transparent; /* remove lime for clarity */
+}
+
+
+
 .perf-hole {
-  width: var(--box-width);
-  height: var(--box-height);
-  border-radius: var(--box-radius);
-  background-color: white;
-  flex-shrink: 0;
-  box-shadow: 0 0 4px rgba(0,0,0,0.2);
+  width: var(--box-width); height: var(--box-height);
+  border-radius: var(--box-radius); background-color: white;
+  flex-shrink: 0; box-shadow: 0 0 4px rgba(0,0,0,0.2);
 }
-.strip-left .perf-hole {
-  transform: translateX(40%);
-}
-.strip-right .perf-hole {
-  transform: translateX(-40%);
-}
-.zone {
+.strip-left .perf-hole { transform: translateX(40%); }
+.strip-right .perf-hole { transform: translateX(-40%); }
+
+.zone {    margin-top: calc(4.75 / 70 * 100vw);
+
   background-color: orange;
   width: calc(52.63 / 70 * 100vw);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  min-height: 100vh;
-  overflow-y: auto;
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: flex-start; min-height: 100vh; overflow-y: auto;
   position: relative;
 }
 .frame {
   --x-value:5;
-  position: relative;
-  background-color: transparent;
-  width: 100%;
-  aspect-ratio: calc(52.63 / (var(--x-value) * 4.75));
-  flex-shrink: 0;
-  border-radius: 12px;
-  margin-bottom: 0;
-  display: flex;
-  flex-direction: column;
-  padding: calc(0.3 / 70 * 100vw);
-  box-sizing: border-box;
+  position: relative; background-color: transparent;
+  width: 100%; aspect-ratio: calc(52.63 / (var(--x-value) * 4.75));
+  flex-shrink: 0; border-radius: 12px; margin-bottom: 0;
+  display: flex; flex-direction: column;
+  padding: calc(0.3 / 70 * 100vw); box-sizing: border-box;
 }
 .frame-core {
-  background-color: blue;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  overflow: hidden;
+  background-color: blue; border-radius: calc(.51 / 70 * 100vw);
+  display: flex; flex-direction: column; flex: 1 1 auto;
+  overflow: hidden; position: relative; z-index: 2; cursor: pointer;
   transition: filter 0.5s ease;
-  position: relative;
-  z-index: 2; /* above overlay */
 }
 .frame-core::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-color: transparent;
-  pointer-events: none;
-  border-radius: 12px;
-  z-index: -1;
+  content: ''; position: absolute; inset: 0;
+  background-color: transparent; pointer-events: none;
+  border-radius: 12px; z-index: -1;
 }
-
-/* Orange overlay after image filter */
 .orange-bg .frame-core::after {
-  content: '';
-  position: absolute;
-  inset: 0;
+  content: ''; position: absolute; inset: 0;
   background-color: rgba(255, 165, 0, 0.4);
-  pointer-events: none;
-  border-radius: 12px;
-  z-index: 2; /* overlay above image */
+  pointer-events: none; border-radius: 12px; z-index: 2;
 }
-
 .frame-content {
-  position: relative;
-  flex: 1 1 auto;
-  overflow: hidden;
+  position: relative; flex: 1 1 auto; overflow: hidden;
 }
 .frame-content img {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  height: 100%; 
-  transform: translateX(-50%);
-  object-fit: cover;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  width: auto;
-  max-width: none;
-  display: block;
-  z-index: 1;
+  position: absolute; top: 0; left: 50%; height: 100%;
+  transform: translateX(-50%); object-fit: cover;
+  border-top-left-radius: calc(.51 / 70 * 100vw); border-top-right-radius: calc(.51 / 70 * 100vw);
+  width: auto; max-width: none; display: block; z-index: 1;
 }
-
-/* Caption above overlay */
 .caption {
-  flex-shrink: 0;
-  background-color: rgba(0,0,0,0.5);
-  color: #fff;
-  text-align: center;
-  font-size: calc(1.8 / 70 * 100vw);
-  padding: 0.3em 0;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-  position: relative;
-  z-index: 3;
+  flex-shrink: 0; background-color: rgba(0,0,0,0.5); color: #fff;
+  text-align: center; font-size: calc(1.8 / 70 * 100vw);
+  padding: 0.3em 0; border-bottom-left-radius: calc(.51 / 70 * 100vw);
+  border-bottom-right-radius: calc(.51 / 70 * 100vw); position: relative; z-index: 3;
+  pointer-events: none;
 }
 .year-label {
-  position: absolute;
-  left: 110%;
+  position: absolute; left: 110%;
   transform: translateX(-8%) rotate(90deg);
   transform-origin: top left;
-  font-size: calc(1.8 / 70 * 100vw);
-  font-weight: bold;
-  pointer-events: none;
-  white-space: nowrap;
-  user-select: none;
-  z-index: 10000;
-  transition: color 0.5s ease;
+  font-size: calc(1.8 / 70 * 100vw); font-weight: bold;
+  pointer-events: none; white-space: nowrap; user-select: none;
+  z-index: 10000; transition: color 0.5s ease;
+  background: white; color: black
 }
-/* Black background state */
-.black-bg {
-  background-color: black !important;
-}
-.black-bg .year-label {
-  color: yellow !important;
-}
-.black-bg .frame-core {
-  filter: none;
-  position: relative;
-}
-.black-bg .frame-core::before {
-  background-color: transparent;
-}
-.black-bg .frame-content img {
-  filter: none !important;
-}
+.black-bg { background-color: black !important; }
+.black-bg .year-label { color: yellow !important; }
+.black-bg .frame-content img { filter: none !important; }
+.orange-bg { background-color: orange !important; }
+.orange-bg .year-label { color: black !important; }
+.orange-bg .frame-content img { filter: hue-rotate(180deg) invert(1); }
+.film.black-bg,
+.year-right.black-bg {background-color: black !important;}
+.film.orange-bg,
+.year-right.orange-bg {background-color: orange !important;}
 
-/* Orange background state */
-.orange-bg {
-  background-color: orange !important;
+/* pop-in */
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
 }
-.orange-bg .year-label {
-  color: black !important;
+/* Modal */
+#info-modal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  justify-content: center; align-items: center; z-index: 20000;
 }
-.orange-bg .frame-core {
-  filter: none !important; /* remove filter from frame-core */
+#info-modal .modal-content {
+  background: rgba(255,255,255,0.3);   /* 30% */
+  padding: 1rem; border-radius: 8px;
+  width: 80vw; max-width: 600px;
+  font-family: 'Michroma', sans-serif;
+  animation: popIn 0.3s ease-out;
+  position: relative; overflow: auto; max-height: 90vh;
 }
-.orange-bg .frame-content img {
-  filter: hue-rotate(180deg) invert(1);
+#info-modal .modal-content h2,
+#info-modal .modal-content p {
+  margin: 0 0 1rem;
+}
+#info-modal .modal-content img {
+  width: 100%; border-radius: 4px; margin-bottom: 1rem;
+}
+#info-modal .modal-content button {
+  display: block;
+  margin: 0 auto 1rem;
+  padding: 0.5em 1em;
+  font-family: 'Michroma', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+}
+#info-modal .modal-content iframe {
+  width: 100%; height: 315px; border: none; border-radius: 4px;
 }
 </style>
 </head>
@@ -202,293 +170,44 @@ html, body {
   <div class="film">
     <div class="strip-left"></div>
     <div class="zone">
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/group0.png" alt="group0.png"/></div>
-      <div class="caption"></div>
+      <div class="frame" style="--x-value:5;">
+        <div class="frame-core"
+             data-info="Project 0"
+             data-desc="Here’s a longer description of Project 0..."
+             data-photo="https://picsum.photos/seed/p0/600/300"
+             data-video="dQw4w9WgXcQ">
+          <div class="frame-content"><img src="media/group0.png" alt="" /></div>
+          <div class="caption">Project 0</div>
+        </div>
+      </div>
+      <div class="frame" style="--x-value:5;">
+        <div class="frame-core"
+             data-info="Project 1"
+             data-desc="Detail text for Project 1."
+             data-photo="https://picsum.photos/seed/p1/600/300"
+             data-video="eY52Zsg-KVI">
+          <div class="frame-content"><img src="media/aaa.jpg" alt="" /></div>
+          <div class="caption">Project 1</div>
+        </div>
+      </div>
+      <!-- more frames -->
+    </div>
+    <div class="strip-right">
+      <div class="year-right"></div>
     </div>
   </div>
+</div>
 
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/aaa.jpg" alt="aaa.jpg"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/aaa.jpg" alt="aaa.jpg"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/liberdade.jpg" alt="liberdade.jpg"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/chapito.png" alt="chapito.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/doclis.png" alt="doclis.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/justy.jpg" alt="justy.jpg"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/dog.png" alt="dog.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/blue.jpg" alt="blue.jpg"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/group1.png" alt="group1.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/blender.png" alt="blender.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/redroom.jpg" alt="redroom.jpg"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/cctv.jpg" alt="cctv.jpg"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/alges.png" alt="alges.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/framing.png" alt="framing.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/cinema.png" alt="cinema.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/aaa.png" alt="aaa.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/people.png" alt="people.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/mms.png" alt="mms.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/cyano.png" alt="cyano.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/steady.png" alt="steady.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/nodes.png" alt="nodes.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/pop.png" alt="pop.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/vive.png" alt="vive.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/film.png" alt="film.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/boat.png" alt="boat.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/pcb3d.png" alt="pcb3d.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/432one.png" alt="432one.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/432three.png" alt="432three.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/mirror.png" alt="mirror.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/commands.png" alt="commands.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/moon.jpg" alt="moon.jpg"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/pic1.jpg" alt="pic1.jpg"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/pic2.jpg" alt="pic2.jpg"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/pic0.jpg" alt="pic0.jpg"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/skydive.png" alt="skydive.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/keyframes.png" alt="keyframes.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/pcb.png" alt="pcb.png"/></div>
-      <div class="caption"></div>
-    </div>
-  </div>
-
-  <div class="frame" style="--x-value:5;">
-    <div class="frame-core">
-      <div class="frame-content"><img src="media/watermelon.png" alt="watermelon.png"/></div>
-      <div class="caption"></div>
-    </div>
-   </div>
-
-    </div>
-    <div class="strip-right"></div>
-  </div>
+<!-- Modal -->
+<div id="info-modal">
+  <div class="modal-content" id="modal-content"></div>
 </div>
 
 <script>
 function fillStrip(strip) {
   const vw = window.innerWidth / 100;
   const pitchPx = (4.75 / 70) * 100 * vw;
-  const stripHeight = strip.clientHeight;
-  const totalStep = pitchPx;
-  const count = Math.floor(stripHeight / totalStep);
+  const count = Math.floor(strip.clientHeight / pitchPx);
   strip.innerHTML = '';
   for (let i = 0; i < count; i++) {
     const box = document.createElement('div');
@@ -496,76 +215,104 @@ function fillStrip(strip) {
     strip.appendChild(box);
   }
 }
-function fillAllStrips() {
+document.addEventListener('DOMContentLoaded', () => {
+  // Fill strips
   document.querySelectorAll('.strip-left, .strip-right').forEach(fillStrip);
-}
-function updateYearLabelColors(stripRight, zone, years) {
-  // Remove existing labels
-  stripRight.querySelectorAll('.year-label').forEach(el => el.remove());
-  const frames = [...zone.querySelectorAll('.frame')];
-  frames.forEach((frame, i) => {
-    const rectFrame = frame.getBoundingClientRect();
-    const rectZone = zone.getBoundingClientRect();
-    const offsetTop = rectFrame.top - rectZone.top + zone.scrollTop;
-    const yearLabel = document.createElement('div');
-    yearLabel.className = 'year-label';
-    yearLabel.textContent = years[i] ?? 'Year';
-    yearLabel.style.top = offsetTop + 'px';
-    stripRight.appendChild(yearLabel);
-  });
-}
-window.addEventListener('DOMContentLoaded', () => {
-  fillAllStrips();
 
-  const stripRight = document.querySelector('.strip-right');
-  const zone = document.querySelector('.zone');
-  const years = [
-    "aaa '25",
-    "Jul '25",
-    "Jun '25",
-    "May '25",
-    "Jan '25",
-    "Oct '24",
-    "Oct '24",
-    "Aug '24",
-    "Aug '24",
-    "Jun '24",
-    "Jun '24",
-    "Jun '24",
-
-
-  ];
-
-  updateYearLabelColors(stripRight, zone, years);
-
-  const strips = document.querySelectorAll('.strip-left, .strip-right, .zone');
-  let toggle = true;
-
-  // Initialize with orange background state
-  strips.forEach(el => el.classList.add('orange-bg'));
-  strips.forEach(el => el.classList.remove('black-bg'));
-
-  setInterval(() => {
-    toggle = !toggle;
-    strips.forEach(el => {
-      if (toggle) {
-        el.classList.remove('black-bg');
-        el.classList.add('orange-bg');
-      } else {
-        el.classList.remove('orange-bg');
-        el.classList.add('black-bg');
-      }
+  // Year labels
+  const yearRight = document.querySelector('.year-right'),
+        zone = document.querySelector('.zone'),
+        years = ["aaa '25", "Jul '25", "Jun '25", "May '25", "Jan '25",
+                  "Oct '24", "Oct '24", "Aug '24", "Aug '24", "Jun '24",
+                  "Jun '24", "Jun '24"];
+  function updateYear() {
+    if (!yearRight) return;
+    yearRight.querySelectorAll('.year-label').forEach(e => e.remove());
+    zone.querySelectorAll('.frame').forEach((f, i) => {
+      const rF = f.getBoundingClientRect(),
+            rZ = zone.getBoundingClientRect(),
+            top = rF.top - rZ.top + zone.scrollTop;
+      const y = document.createElement('div');
+      y.className = 'year-label';
+      y.textContent = years[i] || 'Year';
+      y.style.top = top + 'px';
+      yearRight.appendChild(y);
     });
-  }, 5000); // seconds toggle interval
-});
-window.addEventListener('resize', () => {
-  fillAllStrips();
+  }
+  updateYear();
 
-  const stripRight = document.querySelector('.strip-right');
-  const zone = document.querySelector('.zone');
-  const years = ['1980', '1985', '1990', '1995', '2000'];
+  // State
+  const strips = [...document.querySelectorAll('.year-right, .film, .strip-left, .strip-right, .zone')],
+        stripRight = document.querySelector('.strip-right');
 
-  updateYearLabelColors(stripRight, zone, years);
+
+  // Sync .year-right state with .strip-right
+  function syncYearRightState() {
+    if (!yearRight) return;
+    if (yearRight.classList.contains('black-bg')) {
+      yearRight.classList.add('black-bg');
+      yearRight.classList.remove('orange-bg');
+    } else if (yearRight.classList.contains('orange-bg')) {
+      yearRight.classList.add('orange-bg');
+      yearRight.classList.remove('black-bg');
+    }
+  }
+
+  // Default black-bg
+  strips.forEach(e => e.classList.add('black-bg'));
+  syncYearRightState();
+
+  // Popup logic
+  const modal = document.getElementById('info-modal'),
+        content = document.getElementById('modal-content');
+  document.querySelectorAll('.frame-core').forEach(core => {
+    core.addEventListener('click', () => {
+      // Force orange-bg
+      strips.forEach(e => {
+        e.classList.add('orange-bg');
+        e.classList.remove('black-bg');
+      });
+      syncYearRightState();
+
+      // Build modal
+      const title = core.dataset.info || '',
+            desc = core.dataset.desc || '',
+            photo = core.dataset.photo || '',
+            vid = core.dataset.video || '';
+      let html = `<h2>${title}</h2><p>${desc}</p><img src="${photo}" alt="">`;
+      if (vid) {
+        html += `<button id="show-video">Show Video</button><div id="video-container"></div>`;
+      }
+      content.innerHTML = html;
+
+      // Video Button
+      const btn = content.querySelector('#show-video');
+      if (btn) {
+        btn.addEventListener('click', () => {
+          const container = content.querySelector('#video-container');
+          container.innerHTML = `<iframe src="https://www.youtube.com/embed/${vid}" allowfullscreen></iframe>`;
+          btn.style.display = 'none';
+        });
+      }
+      modal.style.display = 'flex';
+    });
+  });
+  // Modal click
+  modal.addEventListener('click', e => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+      strips.forEach(s => {
+        s.classList.add('black-bg');
+        s.classList.remove('orange-bg');
+      });
+      syncYearRightState();
+    }
+  });
+  // Resize listener
+  window.addEventListener('resize', () => {
+    document.querySelectorAll('.strip-left, .strip-right').forEach(fillStrip);
+    updateYear();
+  });
 });
 </script>
 </body>
