@@ -25,8 +25,8 @@ html, body {
   display: flex; justify-content: center; align-items: stretch;
   width: calc(65 / 70 * 100vw); min-height: 100vh; background-color: orange;
 }
-.strip-left, .strip-right {    margin-top: calc(-2.972 / 70 * 100vw);
-
+.strip-left, .strip-right {
+  margin-top: calc(-2.972 / 70 * 100vw);
   background-color: orange;
   width: calc((65 - 52.63) / 2 / 70 * 100vw);
   min-height: 100vh;
@@ -45,10 +45,8 @@ html, body {
   overflow: visible;    /* allow overflow */
   display: block;
   z-index: 9999;
-  background-color: transparent; /* remove lime for clarity */
+  background-color: transparent;
 }
-
-
 
 .perf-hole {
   width: var(--box-width); height: var(--box-height);
@@ -58,8 +56,8 @@ html, body {
 .strip-left .perf-hole { transform: translateX(40%); }
 .strip-right .perf-hole { transform: translateX(-40%); }
 
-.zone {    margin-top: calc(4.75 / 70 * 100vw);
-
+.zone {
+  margin-top: calc(4.75 / 70 * 100vw);
   background-color: orange;
   width: calc(52.63 / 70 * 100vw);
   display: flex; flex-direction: column; align-items: center;
@@ -113,7 +111,7 @@ html, body {
   font-size: calc(1.8 / 70 * 100vw); font-weight: bold;
   pointer-events: none; white-space: nowrap; user-select: none;
   z-index: 10000; transition: color 0.5s ease;
-  background: white; color: black
+  background: white; color: black;
 }
 .black-bg { background-color: black !important; }
 .black-bg .year-label { color: yellow !important; }
@@ -215,23 +213,28 @@ function fillStrip(strip) {
     strip.appendChild(box);
   }
 }
+
 document.addEventListener('DOMContentLoaded', () => {
   // Fill strips
   document.querySelectorAll('.strip-left, .strip-right').forEach(fillStrip);
 
   // Year labels
-  const yearRight = document.querySelector('.year-right'),
-        zone = document.querySelector('.zone'),
-        years = ["aaa '25", "Jul '25", "Jun '25", "May '25", "Jan '25",
-                  "Oct '24", "Oct '24", "Aug '24", "Aug '24", "Jun '24",
-                  "Jun '24", "Jun '24"];
+  const yearRight = document.querySelector('.year-right');
+  const zone = document.querySelector('.zone');
+  const years = [
+    "aaa '25", "Jul '25", "Jun '25", "May '25", "Jan '25",
+    "Oct '24", "Oct '24", "Aug '24", "Aug '24", "Jun '24",
+    "Jun '24", "Jun '24"
+  ];
+
   function updateYear() {
     if (!yearRight) return;
     yearRight.querySelectorAll('.year-label').forEach(e => e.remove());
-    zone.querySelectorAll('.frame').forEach((f, i) => {
-      const rF = f.getBoundingClientRect(),
-            rZ = zone.getBoundingClientRect(),
-            top = rF.top - rZ.top + zone.scrollTop;
+    zone.querySelectorAll('.frame').forEach((frame, i) => {
+      const rF = frame.getBoundingClientRect();
+      const rZ = zone.getBoundingClientRect();
+      const top = rF.top - rZ.top + zone.scrollTop;
+
       const y = document.createElement('div');
       y.className = 'year-label';
       y.textContent = years[i] || 'Year';
@@ -241,12 +244,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   updateYear();
 
-  // State
-  const strips = [...document.querySelectorAll('.year-right, .film, .strip-left, .strip-right, .zone')],
-        stripRight = document.querySelector('.strip-right');
+  // State elements
+  const strips = [
+    document.querySelector('.year-right'),
+    document.querySelector('.film'),
+    document.querySelector('.strip-left'),
+    document.querySelector('.strip-right'),
+    document.querySelector('.zone')
+  ].filter(Boolean);
 
-
-  // Sync .year-right state with .strip-right
+  // Sync year-right background class with film's background class
   function syncYearRightState() {
     if (!yearRight) return;
     if (yearRight.classList.contains('black-bg')) {
@@ -258,34 +265,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Default black-bg
-  strips.forEach(e => e.classList.add('black-bg'));
+  // Initialize all with black-bg
+  strips.forEach(el => {
+    el.classList.add('black-bg');
+    el.classList.remove('orange-bg');
+  });
   syncYearRightState();
 
   // Popup logic
-  const modal = document.getElementById('info-modal'),
-        content = document.getElementById('modal-content');
+  const modal = document.getElementById('info-modal');
+  const content = document.getElementById('modal-content');
+
   document.querySelectorAll('.frame-core').forEach(core => {
     core.addEventListener('click', () => {
-      // Force orange-bg
-      strips.forEach(e => {
-        e.classList.add('orange-bg');
-        e.classList.remove('black-bg');
+      // Switch all to orange-bg
+      strips.forEach(el => {
+        el.classList.add('orange-bg');
+        el.classList.remove('black-bg');
       });
       syncYearRightState();
 
-      // Build modal
-      const title = core.dataset.info || '',
-            desc = core.dataset.desc || '',
-            photo = core.dataset.photo || '',
-            vid = core.dataset.video || '';
+      const title = core.dataset.info || '';
+      const desc = core.dataset.desc || '';
+      const photo = core.dataset.photo || '';
+      const vid = core.dataset.video || '';
+
       let html = `<h2>${title}</h2><p>${desc}</p><img src="${photo}" alt="">`;
+
       if (vid) {
         html += `<button id="show-video">Show Video</button><div id="video-container"></div>`;
       }
+
       content.innerHTML = html;
 
-      // Video Button
       const btn = content.querySelector('#show-video');
       if (btn) {
         btn.addEventListener('click', () => {
@@ -294,21 +306,25 @@ document.addEventListener('DOMContentLoaded', () => {
           btn.style.display = 'none';
         });
       }
+
       modal.style.display = 'flex';
     });
   });
-  // Modal click
+
+  // Close modal on background click
   modal.addEventListener('click', e => {
     if (e.target === modal) {
       modal.style.display = 'none';
-      strips.forEach(s => {
-        s.classList.add('black-bg');
-        s.classList.remove('orange-bg');
+      // Switch back to black-bg
+      strips.forEach(el => {
+        el.classList.add('black-bg');
+        el.classList.remove('orange-bg');
       });
       syncYearRightState();
     }
   });
-  // Resize listener
+
+  // Update strips and year labels on resize
   window.addEventListener('resize', () => {
     document.querySelectorAll('.strip-left, .strip-right').forEach(fillStrip);
     updateYear();
