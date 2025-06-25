@@ -54,65 +54,33 @@ html, body {
 }
 .frame {
   --x-value:5;
-  position: relative; background-color: transparent;
-  width: 100%; aspect-ratio: calc(52.63 / (var(--x-value) * 4.75));
-  flex-shrink: 0; border-radius: 12px; margin-bottom: 0;
-  display: flex; flex-direction: column;
-  padding: calc(0.3 / 70 * 100vw); box-sizing: border-box;
+  position: relative;
+  background-color: transparent;
+  width: 100%;
+  aspect-ratio: calc(52.63 / (var(--x-value) * 4.75));
+  flex-shrink: 0;
+  border-radius: 12px;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  padding: calc(0.3 / 70 * 100vw);
+  box-sizing: border-box;
 }
 .frame-core {
-  background-color: blue; border-radius: calc(.51 / 70 * 100vw);
-  display: flex; flex-direction: column; flex: 1 1 auto;
-  overflow: hidden; position: relative; z-index: 2; cursor: pointer;
-  transition: box-shadow 2s ease, filter 0.5s ease;
-  /* Remove border */
-  border: none;
-  /* Initial box-shadow off */
+  background-color: blue;
+  border-radius: calc(.51 / 70 * 100vw);
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  transition: box-shadow 0.5s ease;
   box-shadow: none;
 }
-
-/* Pulsing purple glow with white fog accents */
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow:
-      0 0 8px 3px rgba(150, 50, 200, 0.6),
-      0 0 20px 6px rgba(180, 90, 255, 0.4),
-      0 0 30px 12px rgba(255, 255, 255, 0.2);
-  }
-  50% {
-    box-shadow:
-      0 0 12px 6px rgba(150, 50, 200, 1),
-      0 0 28px 10px rgba(180, 90, 255, 0.6),
-      0 0 38px 16px rgba(255, 255, 255, 0.3);
-  }
-}
-
-/* Add glow and pulse on hover or when .active */
-.frame-core.glowing {
-  animation: pulseGlow 2s infinite alternate;
-  /* Make sure box-shadow is present immediately */
-  box-shadow:
-      0 0 8px 3px rgba(150, 50, 200, 0.6),
-      0 0 20px 6px rgba(180, 90, 255, 0.4),
-      0 0 30px 12px rgba(255, 255, 255, 0.2);
-}
-
-/* On hover, add glowing class style */
 .frame-core:hover {
-  animation: pulseGlow 2s infinite alternate;
-  box-shadow:
-      0 0 8px 3px rgba(150, 50, 200, 0.6),
-      0 0 20px 6px rgba(180, 90, 255, 0.4),
-      0 0 30px 12px rgba(255, 255, 255, 0.2);
-}
-
-/* Smooth disappearance on hover end with 2s transition */
-/* The transition is already on box-shadow in .frame-core */
-
-.frame-core::before {
-  content: ''; position: absolute; inset: 0;
-  background-color: transparent; pointer-events: none;
-  border-radius: 12px; z-index: -1;
+  box-shadow: 0 0 0 3px yellow;
 }
 .orange-bg .frame-core::after {
   content: ''; position: absolute; inset: 0;
@@ -123,10 +91,17 @@ html, body {
   position: relative; flex: 1 1 auto; overflow: hidden;
 }
 .frame-content img {
-  position: absolute; top: 0; left: 50%; height: 100%;
-  transform: translateX(-50%); object-fit: cover;
-  border-top-left-radius: calc(.51 / 70 * 100vw); border-top-right-radius: calc(.51 / 70 * 100vw);
-  width: auto; max-width: none; display: block; z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;           /* Fill the parent */
+  height: 100%;          /* Fill the parent */
+  object-fit: cover;     /* Maintain aspect ratio, crop as needed */
+  object-position: center;
+  border-top-left-radius: calc(.51 / 70 * 100vw);
+  border-top-right-radius: calc(.51 / 70 * 100vw);
+  display: block;
+  z-index: 1;
 }
 .caption {
   flex-shrink: 0; background-color: rgba(0,0,0,0.5); color: #fff;
@@ -189,27 +164,48 @@ html, body {
   <div class="film">
     <div class="strip-left"></div>
     <div class="zone">
-      <div class="frame" style="--x-value:5;">
+
+      <div class="frame" style="--x-value:6;">
         <div class="frame-core"
-             data-info="Project 0"
-             data-desc="Here’s a longer description of Project 0..."
-             data-photo="https://picsum.photos/seed/p0/600/300"
-             data-video="dQw4w9WgXcQ">
-          <div class="frame-content"><img src="media/group0.png" alt="" /></div>
-          <div class="caption">Project 0</div>
+             data-info="Short film"
+             data-desc="Sound Mixer, Boom Operator, Media Manager - May 2025<br><br>
+             Recorded production sound and streamlined file workflow with batch-edit scripts and spreadsheet tracking for a 20-minute action thriller, shot in 13 days at 6 varied locations across Lisbon.
+             "
+             data-photo="media/liberdade.jpg"
+             data-video="">
+          <div class="frame-content"><img src="media/liberdade.jpg" alt="" /></div>
+          <div class="caption">Short film - Sound</div>
         </div>
       </div>
-      <div class="frame" style="--x-value:5;">
+
+      <div class="frame" style="--x-value:6;">
         <div class="frame-core"
-             data-info="Project 1"
-             data-desc="Detail text for Project 1."
-             data-photo="https://picsum.photos/seed/p1/600/300"
+             data-info="Documentary"
+             data-desc="Gimbal Camera Operator - January 2025<br><br>
+             Documentary about Pascoal Furtado, a teacher at Chapitô, a circus school in Lisbon
+             "
+             data-photo="media/chapito.png"
+             data-video="ztUn9QWYk_Y">
+          <div class="frame-content"><img src="media/chapito.png" alt="" /></div>
+          <div class="caption">Documentary - Camera</div>
+        </div>
+      </div>
+
+      <div class="frame" style="--x-value:6;">
+        <div class="frame-core"
+             data-info="Film festival coverage"
+             data-desc="Camera Operator - October 2024<br><br>
+             Filmed B-roll and presentations for Doclisboa, Portugal’s leading international documentary film festival.
+             "
+             data-photo="media/doclis.png"
              data-video="eY52Zsg-KVI">
-          <div class="frame-content"><img src="media/aaa.jpg" alt="" /></div>
-          <div class="caption">Project 1</div>
+          <div class="frame-content"><img src="media/doclis.png" alt="" /></div>
+          <div class="caption">Film festival coverage</div>
         </div>
       </div>
+
       <!-- more frames -->
+
     </div>
     <div class="strip-right"></div>
   </div>
