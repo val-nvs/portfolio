@@ -64,8 +64,51 @@ html, body {
   background-color: blue; border-radius: calc(.51 / 70 * 100vw);
   display: flex; flex-direction: column; flex: 1 1 auto;
   overflow: hidden; position: relative; z-index: 2; cursor: pointer;
-  transition: filter 0.5s ease;
+  transition: box-shadow 2s ease, filter 0.5s ease;
+  /* Remove border */
+  border: none;
+  /* Initial box-shadow off */
+  box-shadow: none;
 }
+
+/* Pulsing purple glow with white fog accents */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 8px 3px rgba(150, 50, 200, 0.6),
+      0 0 20px 6px rgba(180, 90, 255, 0.4),
+      0 0 30px 12px rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 12px 6px rgba(150, 50, 200, 1),
+      0 0 28px 10px rgba(180, 90, 255, 0.6),
+      0 0 38px 16px rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Add glow and pulse on hover or when .active */
+.frame-core.glowing {
+  animation: pulseGlow 2s infinite alternate;
+  /* Make sure box-shadow is present immediately */
+  box-shadow:
+      0 0 8px 3px rgba(150, 50, 200, 0.6),
+      0 0 20px 6px rgba(180, 90, 255, 0.4),
+      0 0 30px 12px rgba(255, 255, 255, 0.2);
+}
+
+/* On hover, add glowing class style */
+.frame-core:hover {
+  animation: pulseGlow 2s infinite alternate;
+  box-shadow:
+      0 0 8px 3px rgba(150, 50, 200, 0.6),
+      0 0 20px 6px rgba(180, 90, 255, 0.4),
+      0 0 30px 12px rgba(255, 255, 255, 0.2);
+}
+
+/* Smooth disappearance on hover end with 2s transition */
+/* The transition is already on box-shadow in .frame-core */
+
 .frame-core::before {
   content: ''; position: absolute; inset: 0;
   background-color: transparent; pointer-events: none;
@@ -213,6 +256,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const content = document.getElementById('modal-content');
 
   document.querySelectorAll('.frame-core').forEach(core => {
+    // Hover effect is pure CSS, so no js needed for that
+
+    // Add touch support for glowing class on touchstart/touchend to simulate hover glow on mobile
+    core.addEventListener('touchstart', e => {
+      e.stopPropagation();
+      core.classList.add('glowing');
+    }, {passive:true});
+    core.addEventListener('touchend', e => {
+      e.stopPropagation();
+      // Remove glow after 2s to allow smooth fade out
+      setTimeout(() => core.classList.remove('glowing'), 2000);
+    });
+
     core.addEventListener('click', () => {
       // Switch all to orange-bg
       strips.forEach(el => {
