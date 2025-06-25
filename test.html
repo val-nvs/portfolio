@@ -36,17 +36,14 @@ html, body {
   position: relative;
 }
 .year-right {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none; /* so it doesn't block clicks */
-  overflow: visible;    /* allow overflow */
-  display: block;
-  z-index: 9999;
+  position: relative; /* change from absolute to relative */
+  height: auto;       /* remove fixed height */
+  width: auto;        /* adjust width if needed */
+  pointer-events: none;
   background-color: transparent;
+  z-index: 9999;
 }
+
 
 .perf-hole {
   width: var(--box-width); height: var(--box-height);
