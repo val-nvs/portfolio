@@ -88,7 +88,7 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      flex: 0 0 auto; /* prevent flex grow/shrink */
+      flex: 0 0 auto;
     }
     .left-keycode,
     .right-keycode {
@@ -142,14 +142,16 @@
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
       overflow: hidden;
       position: relative;
+      padding: 0.5rem;
+      box-sizing: border-box;
     }
     .content img {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 100%;
-      height: 100%;
-      object-fit: cover; /* crop to fill container */
+      width: calc(100% - 1rem);  /* subtract horizontal padding */
+      height: calc(100% - 1rem); /* subtract vertical padding */
+      object-fit: cover;
       transform: translate(-50%, -50%);
       pointer-events: none;
       user-select: none;
@@ -173,7 +175,7 @@
             </div>
           </div>
           <div class="content">
-            <img src="" alt="GIF" />
+            <img src="media/chapito.gif" alt="GIF" />
           </div>
           <div class="perf-column">
             <div class="perf-blocks">
@@ -190,7 +192,7 @@
             </div>
           </div>
           <div class="content">
-            <img src="media/chapito.gif" alt="GIF" />
+            <img src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif" alt="GIF" />
           </div>
           <div class="perf-column">
             <div class="perf-blocks">
@@ -207,7 +209,7 @@
             </div>
           </div>
           <div class="content">
-            <img src="media/chapito.gif" alt="GIF" />
+            <img src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif" alt="GIF" />
           </div>
           <div class="perf-column">
             <div class="perf-blocks">
