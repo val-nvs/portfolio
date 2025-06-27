@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Black Background Start with Transparent Colored Boxes & Shadows</title>
+  <style>
+    :root {
+      --gray-noise-opacity: 0.8;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      background-color: #000;
+    }
+    body {
+      height: 100vh;
+      margin: 0;
+    }
+    .gray-box {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #34495e;
+      overflow: hidden;
+    }
+    .gray-box::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'>\
+<filter id='noise'><feTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='1' stitchTiles='stitch'/></filter>\
+<rect width='100%' height='100%' filter='url(%23noise)'/></svg>");
+      background-repeat: repeat;
+      background-size: 256px 256px;
+      image-rendering: pixelated;
+      mix-blend-mode: soft-light;
+      opacity: var(--gray-noise-opacity);
+      z-index: 1;
+    }
+    .white-box {
+      position: relative;
+      width: 70%;
+      height: 90%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      overflow: hidden;
+      box-shadow: inset 0 0 2rem rgba(0, 0, 0, 1);
+      z-index: 2;
+    }
+    .strip {
+      position: relative;
+      width: 70%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(243, 156, 18, 0.5);
+      transform: translateY(-100%);
+      animation: slideDown 1s ease forwards;
+      box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+    }
+    .frame {
+      background-color: rgba(52, 152, 219, 0.5);
+      width: 100%;
+      aspect-ratio: 65 / 23.75;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      gap: 0;
+      padding: 0;
+      box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+    }
+    .left-keycode,
+    .right-keycode,
+    .perf-column,
+    .content {
+      flex: 1;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    .left-keycode,
+    .right-keycode {
+      background-color: rgba(39, 174, 96, 0.5);
+      box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      color: white;
+      font-family: sans-serif;
+    }
+    .rotated-right {
+      transform: rotate(90deg);
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .rotated-left {
+      transform: rotate(-90deg);
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .perf-column {
+      background-color: rgba(241, 196, 15, 0.5);
+      box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .perf-blocks {
+      display: grid;
+      grid-template-rows: repeat(5, 1fr);
+      gap: 20%;
+      width: 60%;
+      height: 80%;
+    }
+    .perf-blocks>div {
+      background-color: white;
+      border-radius: 0.5rem;
+      width: 100%;
+      height: 100%;
+    }
+    .content {
+      background-color: rgba(231, 76, 60, 0.5);
+      aspect-ratio: 52.63 / 23.75;
+      height: 100%;
+      box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+    }
+    @keyframes slideDown {
+      to {
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="gray-box">
+    <div class="white-box">
+      <div class="strip">
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">L1</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content"></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">R1</span></div>
+        </div>
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">L2</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content"></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">R2</span></div>
+        </div>
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">L3</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content"></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">R3</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
