@@ -67,8 +67,10 @@
       z-index: 2;
     }
     .strip {
-      position: relative;
+      position: absolute;
+      top: 0;
       width: 95%;
+      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -77,6 +79,7 @@
       transform: translateY(-100%);
       animation: slideDown 1s ease forwards;
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+      overflow-y: auto
     }
     .frame {
       background-color: rgba(52, 152, 219, 0);
@@ -169,7 +172,7 @@
     .text {
       position: absolute;
       top: 80%;
-      left: 5%;
+      left: 4%;
       color: white;
       font-family: 'Michroma', sans-serif;
       font-weight: bold;
@@ -177,7 +180,7 @@
       pointer-events: none;
       user-select: none;
       white-space: nowrap;
-      text-shadow: 0 0 4px rgba(0,0,0,0.7);
+      text-shadow:0 0 3px rgba(0,0,0,0.8),5px 5px 5px rgba(0,0,0,0.7),-5px -5px 5px rgba(0,0,0,0.6),5px -5px 5px rgba(0,0,0,0.5),-5px 5px 5px rgba(0,0,0,0.4),0 0 12px rgba(0,0,0,0.3);
       z-index: 10;
     }
     @keyframes slideDown {
@@ -191,6 +194,68 @@
   <div class="gray-box">
     <div class="white-box">
       <div class="strip">
+
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">1000</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/moon.jpg" alt="GIF" />
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">1000</span></div>
+        </div>
+
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">1000</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/moon.jpg" alt="GIF" />
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">1000</span></div>
+        </div>
+
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">1000</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/moon.jpg" alt="GIF" />
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">1000</span></div>
+        </div>
+
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">1000</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/moon.jpg" alt="GIF" />
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">1000</span></div>
+        </div>
+
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">JUL 2025</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/moon.jpg" data-gif="" alt="GIF" />
+            <div class="text">Short film - Camera</div>
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">XX</span></div>
+        </div>
+
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">JUN 2025</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/moon.jpg" data-gif="" alt="GIF" />
+            <div class="text">Music Video - Camera</div>
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">3 MIN</span></div>
+        </div>
 
         <div class="frame">
           <div class="left-keycode"><span class="rotated-left">MAY 2025</span></div>
@@ -211,22 +276,82 @@
             <div class="text">Documentary - Camera & Sound</div>
           </div>
           <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
-          <div class="right-keycode"><span class="rotated-right">12 MIN</span></div>
+          <div class="right-keycode"><span class="rotated-right">13 MIN</span></div>
         </div>
 
         <div class="frame">
-          <div class="left-keycode"><span class="rotated-left">1000</span></div>
+          <div class="left-keycode"><span class="rotated-left">OCT 2024</span></div>
           <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
           <div class="content">
-            <img src="" alt="GIF" />
+            <img src="media/doclis.png" data-gif="" alt="GIF" />
+            <div class="text">Film festival coverage</div>
           </div>
           <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
-          <div class="right-keycode"><span class="rotated-right">1000</span></div>
+          <div class="right-keycode"><span class="rotated-right">X DAYS</span></div>
         </div>
 
-      </div>
-    </div>
-  </div>
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">AUG 2024</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/seb.jpg" data-gif="media/seb.gif" alt="GIF" />
+            <div class="text">Interview - Camera</div>
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">4 MIN</span></div>
+        </div>
+
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">JUN 2024</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/group1.png" data-gif="" alt="GIF" />
+            <div class="text">TV Pilot - Crane Cam</div>
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">31 MIN</span></div>
+        </div>
+
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">JUN 2024</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/redroom.jpg" data-gif="" alt="GIF" />
+            <div class="text">TV Pilot - Crane Cam AC</div>
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">30 MIN</span></div>
+        </div>
+
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">MAY 2024</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/alges.png" data-gif="" alt="GIF" />
+            <div class="text">Music Video - Camera</div>
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">4 MIN</span></div>
+        </div>
+
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">APR 2024</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/cinema.png" data-gif="" alt="GIF" />
+            <div class="text">Short film - Sound</div>
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">4 MIN</span></div>
+        </div>
+
+
+
+
+
+
+
+</div></div></div>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const images = Array.from(document.querySelectorAll('.content img')).filter(img => img.hasAttribute('data-gif'));
