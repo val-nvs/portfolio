@@ -85,13 +85,14 @@
     .right-keycode,
     .perf-column,
     .content {
-      flex: 1;
       margin: 0;
       padding: 0;
       height: 100%;
+      flex: 0 0 auto; /* prevent flex grow/shrink */
     }
     .left-keycode,
     .right-keycode {
+      width: 3.5%;
       background-color: rgba(39, 174, 96, 0.5);
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
       display: flex;
@@ -112,6 +113,7 @@
       white-space: nowrap;
     }
     .perf-column {
+      width: 7%;
       background-color: rgba(241, 196, 15, 0.5);
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
       position: relative;
@@ -126,17 +128,31 @@
       width: 60%;
       height: 80%;
     }
-    .perf-blocks>div {
+    .perf-blocks > div {
       background-color: white;
       border-radius: 0.5rem;
       width: 100%;
       height: 100%;
     }
     .content {
-      background-color: rgba(231, 76, 60, 0.5);
+      width: auto;
       aspect-ratio: 52.63 / 23.75;
       height: 100%;
+      background-color: rgba(231, 76, 60, 0.5);
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      position: relative;
+    }
+    .content img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* crop to fill container */
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      user-select: none;
     }
     @keyframes slideDown {
       to {
@@ -151,23 +167,53 @@
       <div class="strip">
         <div class="frame">
           <div class="left-keycode"><span class="rotated-left">L1</span></div>
-          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
-          <div class="content"></div>
-          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="perf-column">
+            <div class="perf-blocks">
+              <div></div><div></div><div></div><div></div><div></div>
+            </div>
+          </div>
+          <div class="content">
+            <img src="" alt="GIF" />
+          </div>
+          <div class="perf-column">
+            <div class="perf-blocks">
+              <div></div><div></div><div></div><div></div><div></div>
+            </div>
+          </div>
           <div class="right-keycode"><span class="rotated-right">R1</span></div>
         </div>
         <div class="frame">
           <div class="left-keycode"><span class="rotated-left">L2</span></div>
-          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
-          <div class="content"></div>
-          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="perf-column">
+            <div class="perf-blocks">
+              <div></div><div></div><div></div><div></div><div></div>
+            </div>
+          </div>
+          <div class="content">
+            <img src="media/chapito.gif" alt="GIF" />
+          </div>
+          <div class="perf-column">
+            <div class="perf-blocks">
+              <div></div><div></div><div></div><div></div><div></div>
+            </div>
+          </div>
           <div class="right-keycode"><span class="rotated-right">R2</span></div>
         </div>
         <div class="frame">
           <div class="left-keycode"><span class="rotated-left">L3</span></div>
-          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
-          <div class="content"></div>
-          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="perf-column">
+            <div class="perf-blocks">
+              <div></div><div></div><div></div><div></div><div></div>
+            </div>
+          </div>
+          <div class="content">
+            <img src="media/chapito.gif" alt="GIF" />
+          </div>
+          <div class="perf-column">
+            <div class="perf-blocks">
+              <div></div><div></div><div></div><div></div><div></div>
+            </div>
+          </div>
           <div class="right-keycode"><span class="rotated-right">R3</span></div>
         </div>
       </div>
