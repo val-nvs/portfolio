@@ -193,25 +193,25 @@
       <div class="strip">
 
         <div class="frame">
-          <div class="left-keycode"><span class="rotated-left">May 2025</span></div>
+          <div class="left-keycode"><span class="rotated-left">MAY 2025</span></div>
           <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
           <div class="content">
-            <img src="media/clapper.gif" alt="GIF" />
+            <img src="media/clapper.jpg" data-gif="media/clapper.gif" alt="GIF" />
             <div class="text">Short film - Sound</div>
           </div>
           <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
-          <div class="right-keycode"><span class="rotated-right">May 2025</span></div>
+          <div class="right-keycode"><span class="rotated-right">30 MIN</span></div>
         </div>
 
         <div class="frame">
-          <div class="left-keycode"><span class="rotated-left">Jan. 2025</span></div>
+          <div class="left-keycode"><span class="rotated-left">JAN 2025</span></div>
           <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
           <div class="content">
             <img src="media/chapito.gif" alt="GIF" />
             <div class="text">Documentary - Camera & Sound</div>
           </div>
           <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
-          <div class="right-keycode"><span class="rotated-right">Jan. 2025</span></div>
+          <div class="right-keycode"><span class="rotated-right">12 MIN</span></div>
         </div>
 
         <div class="frame">
@@ -227,5 +227,45 @@
       </div>
     </div>
   </div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const images = Array.from(document.querySelectorAll('.content img')).filter(img => img.hasAttribute('data-gif'));
+
+    let loaded = 0;
+
+    images.forEach(img => {
+      const jpgSrc = img.getAttribute('src');
+
+      const preloader = new Image();
+      preloader.onload = () => {
+        loaded++;
+        if (loaded === images.length) {
+          // Swap each image individually to its GIF
+          images.forEach(image => {
+            const gifSrc = image.getAttribute('data-gif');
+            if (gifSrc) {
+              image.src = gifSrc;
+            }
+          });
+        }
+      };
+      preloader.onerror = () => {
+        console.error("Failed to load:", jpgSrc);
+        loaded++;
+        if (loaded === images.length) {
+          images.forEach(image => {
+            const gifSrc = image.getAttribute('data-gif');
+            if (gifSrc) {
+              image.src = gifSrc;
+            }
+          });
+        }
+      };
+
+      preloader.src = jpgSrc;
+    });
+  });
+</script>
+
 </body>
 </html>
