@@ -65,24 +65,27 @@
       overflow: hidden;
       box-shadow: inset 0 0 2rem rgba(0, 0, 0, 1);
       z-index: 2;
+            border-radius: min(calc(var(--border-r-content) * 1vw), calc(800 * (var(--border-r-content) / 100) * 1px));
+
     }
     .strip {
-      position: absolute;
+      position: relative;
       top: 0;
       width: 95%;
       height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
-      background-color: rgba(255, 140, 0, 0.6);
-      transform: translateY(-100%);
-      animation: slideDown 1s ease forwards;
+      background-color: rgba(0, 0, 0, 0.2);
+      transform: translateY(100%);
+      animation: slideDown 2s ease forwards;
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
-      overflow-y: auto
+      overflow-y: auto;
+      opacity: 0.9;
     }
     .frame {
-      background-color: rgba(52, 152, 219, 0);
+      background-color: transparent;
       width: 100%;
       aspect-ratio: 65 / 23.75;
       display: flex;
@@ -105,7 +108,7 @@
     .left-keycode,
     .right-keycode {
       width: 5.215%;
-      background-color: rgba(39, 174, 96, 0);
+      background-color: rgba(255, 140, 0, 0.7);
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0);
       display: flex;
       justify-content: center;
@@ -127,7 +130,7 @@
     }
     .perf-column {
       width: 4.3%;
-      background-color: rgba(241, 196, 15, 0);
+      background-color: rgba(255, 140, 0, 0.7);
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0);
       position: relative;
       display: flex;
@@ -140,17 +143,18 @@
       gap: 11.66%;
       width: 100%;
       height: 88.30%;
+
     }
     .perf-blocks > div {
-      background-color: white;
       border-radius: min(calc(var(--border-r-perf) * 1vw), calc(800 * (var(--border-r-perf) / 100) * 1px));
+      box-shadow: inset 0 0 calc(min(calc(var(--border-r-perf) * 1vw), calc(800 * (var(--border-r-perf) / 100) * 1px))) rgba(0, 0, 0, 0.8);
       width: 100%;
       height: 100%;
     }
     .content {
       width: 80.97%;
       height: 100%;
-      background-color: rgba(231, 76, 60, 0);
+      background-color: rgba(255, 140, 0, 0.7);
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0);
       overflow: hidden;
       position: relative;
@@ -193,6 +197,9 @@
 <body>
   <div class="gray-box">
     <div class="white-box">
+      <div id="randomSticker" style="position: absolute; top: 10px; right: 10px;">
+        <img src="media/moon.jpg" alt="Sticker" style="width: 100px; height: auto;" />
+      </div>
       <div class="strip">
 
         <div class="frame">
@@ -205,35 +212,6 @@
           <div class="right-keycode"><span class="rotated-right">1000</span></div>
         </div>
 
-        <div class="frame">
-          <div class="left-keycode"><span class="rotated-left">1000</span></div>
-          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
-          <div class="content">
-            <img src="media/moon.jpg" alt="GIF" />
-          </div>
-          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
-          <div class="right-keycode"><span class="rotated-right">1000</span></div>
-        </div>
-
-        <div class="frame">
-          <div class="left-keycode"><span class="rotated-left">1000</span></div>
-          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
-          <div class="content">
-            <img src="media/moon.jpg" alt="GIF" />
-          </div>
-          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
-          <div class="right-keycode"><span class="rotated-right">1000</span></div>
-        </div>
-
-        <div class="frame">
-          <div class="left-keycode"><span class="rotated-left">1000</span></div>
-          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
-          <div class="content">
-            <img src="media/moon.jpg" alt="GIF" />
-          </div>
-          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
-          <div class="right-keycode"><span class="rotated-right">1000</span></div>
-        </div>
 
         <div class="frame">
           <div class="left-keycode"><span class="rotated-left">JUL 2025</span></div>
@@ -250,7 +228,7 @@
           <div class="left-keycode"><span class="rotated-left">JUN 2025</span></div>
           <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
           <div class="content">
-            <img src="media/moon.jpg" data-gif="" alt="GIF" />
+            <img src="media/bang.jpg" data-gif="media/bang.gif" alt="GIF" />
             <div class="text">Music Video - Camera</div>
           </div>
           <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
