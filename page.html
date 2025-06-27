@@ -142,19 +142,20 @@
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
       overflow: hidden;
       position: relative;
-      padding: 0.5rem;
+      padding: 0rem;
       box-sizing: border-box;
     }
     .content img {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: calc(100% - 1rem);  /* subtract horizontal padding */
-      height: calc(100% - 1rem); /* subtract vertical padding */
+      width: calc(100% - 0rem);
+      height: calc(100% - 0.2rem);
       object-fit: cover;
       transform: translate(-50%, -50%);
       pointer-events: none;
       user-select: none;
+      border-radius: 0.4rem;
     }
     @keyframes slideDown {
       to {
@@ -192,7 +193,7 @@
             </div>
           </div>
           <div class="content">
-            <img src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif" alt="GIF" />
+            <img src="" alt="GIF" />
           </div>
           <div class="perf-column">
             <div class="perf-blocks">
@@ -209,7 +210,7 @@
             </div>
           </div>
           <div class="content">
-            <img src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif" alt="GIF" />
+            <img src="" alt="GIF" />
           </div>
           <div class="perf-column">
             <div class="perf-blocks">
