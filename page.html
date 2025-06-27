@@ -10,6 +10,7 @@
   <style>
     :root {
       --gray-noise-opacity: 0.8;
+      --font-scale-keycode: 1.5;
     }
     html, body {
       height: 100%;
@@ -104,7 +105,7 @@
       font-weight: bold;
       color: black;
       font-family: 'Michroma', sans-serif;
-      font-size: 0.6rem;
+font-size: min(calc(var(--font-scale-keycode) * 1vw), calc(800 * (var(--font-scale-keycode) / 100) * 1px));
     }
     .rotated-right {
       transform: rotate(90deg);
