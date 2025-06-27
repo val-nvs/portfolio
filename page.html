@@ -9,11 +9,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --gray-noise-opacity: 0.8;
-      --font-scale-keycode: 1.5;
+      --gray-noise-opacity: 1;
+      --font-scale-keycode: 1.2;
       --border-r-perf: 0.5;
       --border-r-content: 1.2;
-      --content-gap: 0.6;
+      --content-gap-w: 1.2;
+      --content-gap-h: 0.6;
     }
     html, body {
       height: 100%;
@@ -33,7 +34,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #34495e;
+      background-color: #333;
       overflow: hidden;
     }
     .gray-box::before {
@@ -46,7 +47,7 @@
 <filter id='noise'><feTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='1' stitchTiles='stitch'/></filter>\
 <rect width='100%' height='100%' filter='url(%23noise)'/></svg>");
       background-repeat: repeat;
-      background-size: 256px 256px;
+      background-size: 128px 128px;
       image-rendering: pixelated;
       mix-blend-mode: soft-light;
       opacity: var(--gray-noise-opacity);
@@ -54,8 +55,8 @@
     }
     .white-box {
       position: relative;
-      width: 70%;
-      height: 90%;
+      width: 95%;
+      height: 80%;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -66,7 +67,7 @@
     }
     .strip {
       position: relative;
-      width: 70%;
+      width: 95%;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -156,8 +157,8 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: calc(100% - min(var(--content-gap) * 1vw, calc(800 * (var(--content-gap) / 100) * 1px)));
-      height: calc(100% - min(var(--content-gap) * 1vw, calc(800 * (var(--content-gap) / 100) * 1px)));
+      width: calc(100% - min(var(--content-gap-w) * 1vw, calc(800 * (var(--content-gap-w) / 100) * 1px)));
+      height: calc(100% - min(var(--content-gap-h) * 1vw, calc(800 * (var(--content-gap-h) / 100) * 1px)));
       object-fit: cover;
       transform: translate(-50%, -50%);
       pointer-events: none;
@@ -175,57 +176,38 @@
   <div class="gray-box">
     <div class="white-box">
       <div class="strip">
+
         <div class="frame">
-          <div class="left-keycode"><span class="rotated-left">L1</span></div>
-          <div class="perf-column">
-            <div class="perf-blocks">
-              <div></div><div></div><div></div><div></div><div></div>
-            </div>
-          </div>
+          <div class="left-keycode"><span class="rotated-left">2000</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
           <div class="content">
             <img src="media/chapito.gif" alt="GIF" />
           </div>
-          <div class="perf-column">
-            <div class="perf-blocks">
-              <div></div><div></div><div></div><div></div><div></div>
-            </div>
-          </div>
-          <div class="right-keycode"><span class="rotated-right">R1</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">2000</span></div>
         </div>
+
         <div class="frame">
-          <div class="left-keycode"><span class="rotated-left">L2</span></div>
-          <div class="perf-column">
-            <div class="perf-blocks">
-              <div></div><div></div><div></div><div></div><div></div>
-            </div>
+          <div class="left-keycode"><span class="rotated-left">1999</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="" alt="GIF" />
+            <div class="text">Text Here</div>
           </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">1999</span></div>
+        </div>
+
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">1000</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
           <div class="content">
             <img src="" alt="GIF" />
           </div>
-          <div class="perf-column">
-            <div class="perf-blocks">
-              <div></div><div></div><div></div><div></div><div></div>
-            </div>
-          </div>
-          <div class="right-keycode"><span class="rotated-right">R2</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">1000</span></div>
         </div>
-        <div class="frame">
-          <div class="left-keycode"><span class="rotated-left">L3</span></div>
-          <div class="perf-column">
-            <div class="perf-blocks">
-              <div></div><div></div><div></div><div></div><div></div>
-            </div>
-          </div>
-          <div class="content">
-            <img src="" alt="GIF" />
-          </div>
-          <div class="perf-column">
-            <div class="perf-blocks">
-              <div></div><div></div><div></div><div></div><div></div>
-            </div>
-          </div>
-          <div class="right-keycode"><span class="rotated-right">R3</span></div>
-        </div>
+
       </div>
     </div>
   </div>
