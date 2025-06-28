@@ -14,6 +14,7 @@
       --font-scale-keycode: 1.8;
       --border-r-perf: 0.5;
       --border-r-content: 1.2;
+      --border-r-light: 1.8;
       --content-gap-w: 1.2;
       --content-gap-h: 0.6;
     }
@@ -30,7 +31,7 @@
       position: relative;
       height: 100vh;
       width: 100%;
-      max-width: 800px;
+      max-width: 600px;
       margin: 0 auto;
       display: flex;
       justify-content: center;
@@ -39,21 +40,63 @@
       overflow: hidden;
     }
     .gray-box::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background-image: url("data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'>\
-<filter id='noise'><feTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='1' stitchTiles='stitch'/></filter>\
-<rect width='100%' height='100%' filter='url(%23noise)'/></svg>");
-      background-repeat: repeat;
-      background-size: 128px 128px;
-      image-rendering: pixelated;
-      mix-blend-mode: soft-light;
-      opacity: var(--gray-noise-opacity);
-      z-index: 1;
-    }
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='128' height='128'>\
+<filter id='noise'>\
+<feTurbulence type='fractalNoise' baseFrequency='0.4' numOctaves='1' stitchTiles='stitch'/>\
+<feColorMatrix type='saturate' values='0'/>\
+</filter>\
+<rect width='100%' height='100%' filter='url(%23noise)'/>\
+</svg>");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+  image-rendering: pixelated;
+  mix-blend-mode: soft-light;
+  opacity: var(--gray-noise-opacity);
+  z-index: 1;
+}
+.button-row {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+  z-index: 10;
+}
+
+
+.gray-btn {
+  all: unset; /* Remove all default button styles */
+  font-family: 'Michroma', sans-serif;
+  font-size: min(calc(var(--font-scale) * 1vw), calc(600 * (var(--font-scale) / 100) * 1px));
+  background: rgba(130, 130, 130, 0.9);
+  color: black;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 0.4rem rgba(0, 0, 0, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  user-select: none;
+}
+.gray-btn:hover {
+  background: rgba(255, 200, 0, 1);
+  transform: translateY(-1px);
+  box-shadow: 0 0 0.6rem rgba(255, 140, 0, 0.8);
+}
+.gray-btn:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 0 0.4rem rgba(0, 0, 0, 0.6);
+}
+
+
+
     .white-box {
       position: relative;
       width: 95%;
@@ -65,7 +108,7 @@
       overflow: hidden;
       box-shadow: inset 0 0 2rem rgba(0, 0, 0, 1);
       z-index: 2;
-            border-radius: min(calc(var(--border-r-content) * 1vw), calc(800 * (var(--border-r-content) / 100) * 1px));
+            border-radius: min(calc(var(--border-r-light) * 1vw), calc(600 * (var(--border-r-light) / 100) * 1px));
 
     }
     .strip {
@@ -79,11 +122,16 @@
       align-items: center;
       background-color: rgba(0, 0, 0, 0.2);
       transform: translateY(100%);
-      animation: slideDown 2s ease forwards;
+      animation: slideDown 1s ease forwards;
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
       overflow-y: auto;
       opacity: 0.9;
-    }
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.strip::-webkit-scrollbar {
+  display: none;
+}
     .frame {
       background-color: transparent;
       width: 100%;
@@ -107,7 +155,7 @@
     }
     .left-keycode,
     .right-keycode {
-      width: 5.215%;
+      width: 4.7%;
       background-color: rgba(255, 140, 0, 0.7);
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0);
       display: flex;
@@ -116,7 +164,7 @@
       font-weight: bold;
       color: black;
       font-family: 'Michroma', sans-serif;
-      font-size: min(calc(var(--font-scale-keycode) * 1vw), calc(800 * (var(--font-scale-keycode) / 100) * 1px));
+      font-size: min(calc(var(--font-scale-keycode) * 1vw), calc(600 * (var(--font-scale-keycode) / 100) * 1px));
     }
     .rotated-right {
       transform: rotate(90deg);
@@ -146,13 +194,13 @@
 
     }
     .perf-blocks > div {
-      border-radius: min(calc(var(--border-r-perf) * 1vw), calc(800 * (var(--border-r-perf) / 100) * 1px));
-      box-shadow: inset 0 0 calc(min(calc(var(--border-r-perf) * 1vw), calc(800 * (var(--border-r-perf) / 100) * 1px))) rgba(0, 0, 0, 0.8);
+      border-radius: min(calc(var(--border-r-perf) * 1vw), calc(600 * (var(--border-r-perf) / 100) * 1px));
+      box-shadow: inset 0 0 calc(min(calc(var(--border-r-perf) * 1vw), calc(600 * (var(--border-r-perf) / 100) * 1px))) rgba(0, 0, 0, 0.8);
       width: 100%;
       height: 100%;
     }
     .content {
-      width: 80.97%;
+      width: 82%;
       height: 100%;
       background-color: rgba(255, 140, 0, 0.7);
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0);
@@ -165,13 +213,13 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: calc(100% - min(var(--content-gap-w) * 1vw, calc(800 * (var(--content-gap-w) / 100) * 1px)));
-      height: calc(100% - min(var(--content-gap-h) * 1vw, calc(800 * (var(--content-gap-h) / 100) * 1px)));
+      width: calc(100% - min(var(--content-gap-w) * 1vw, calc(600 * (var(--content-gap-w) / 100) * 1px)));
+      height: calc(100% - min(var(--content-gap-h) * 1vw, calc(600 * (var(--content-gap-h) / 100) * 1px)));
       object-fit: cover;
       transform: translate(-50%, -50%);
       pointer-events: none;
       user-select: none;
-      border-radius: min(calc(var(--border-r-content) * 1vw), calc(800 * (var(--border-r-content) / 100) * 1px));
+      border-radius: min(calc(var(--border-r-content) * 1vw), calc(600 * (var(--border-r-content) / 100) * 1px));
     }
     .text {
       position: absolute;
@@ -180,7 +228,7 @@
       color: white;
       font-family: 'Michroma', sans-serif;
       font-weight: bold;
-      font-size: min(calc(var(--font-scale) * 1vw), calc(800 * (var(--font-scale) / 100) * 1px));
+      font-size: min(calc(var(--font-scale) * 1vw), calc(600 * (var(--font-scale) / 100) * 1px));
       pointer-events: none;
       user-select: none;
       white-space: nowrap;
@@ -196,6 +244,12 @@
 </head>
 <body>
   <div class="gray-box">
+    <div class="button-row">
+      <button class="gray-btn">Click</button>
+      <button class="gray-btn">Click</button>
+      <button class="gray-btn">Click</button>
+      <button class="gray-btn">Click</button>
+    </div>
     <div class="white-box">
       <div id="randomSticker" style="position: absolute; top: 10px; right: 10px;">
         <img src="media/moon.jpg" alt="Sticker" style="width: 100px; height: auto;" />
@@ -207,11 +261,23 @@
           <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
           <div class="content">
             <img src="media/moon.jpg" alt="GIF" />
+            <div class="text">hi</div>
+
           </div>
           <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
           <div class="right-keycode"><span class="rotated-right">1000</span></div>
         </div>
 
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">AUG 2025</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/moon.jpg" data-gif="" alt="GIF" />
+            <div class="text">Film Camera</div>
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">XX</span></div>
+        </div>
 
         <div class="frame">
           <div class="left-keycode"><span class="rotated-left">JUL 2025</span></div>
@@ -280,6 +346,19 @@
         </div>
 
         <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">AUG 2024</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/free.jpg" data-gif="media/free.gif" alt="GIF" />
+            <div class="text">Short film - Camera</div>
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">4 MIN</span></div>
+        </div>
+
+
+
+        <div class="frame">
           <div class="left-keycode"><span class="rotated-left">JUN 2024</span></div>
           <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
           <div class="content">
@@ -321,6 +400,84 @@
           </div>
           <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
           <div class="right-keycode"><span class="rotated-right">4 MIN</span></div>
+        </div>
+
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">FEB 2024</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/moon.jpg" data-gif="" alt="GIF" />
+            <div class="text">Short</div>
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">2 MIN</span></div>
+        </div>
+
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">JAN 2024</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/people.png" data-gif="" alt="GIF" />
+            <div class="text">Photography</div>
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">2 MIN</span></div>
+        </div>
+
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">JUN 2023</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/steady.png" data-gif="" alt="GIF" />
+            <div class="text">Short</div>
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">2 MIN</span></div>
+        </div>
+
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">DEC 2021</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/film.png" data-gif="" alt="GIF" />
+            <div class="text">C-41 Developing</div>
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">XX</span></div>
+        </div>
+
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">JUN 2021</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/boat.png" data-gif="" alt="GIF" />
+            <div class="text">Short</div>
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">1 MIN</span></div>
+        </div>
+
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">OCT 2015</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/skydive.png" data-gif="" alt="GIF" />
+            <div class="text">Camera animation</div>
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">1 MIN</span></div>
+        </div>
+
+
+        <div class="frame">
+          <div class="left-keycode"><span class="rotated-left">CC0 1929</span></div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="content">
+            <img src="media/moon.jpg" data-gif="media/end.gif" alt="GIF" />
+            <div class="text"></div>
+          </div>
+          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+          <div class="right-keycode"><span class="rotated-right">65MM</span></div>
         </div>
 
 
