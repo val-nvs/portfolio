@@ -128,11 +128,26 @@
       opacity: 0.9;
   scrollbar-width: none;
   -ms-overflow-style: none;
+        background-color: rgba(255, 140, 0, 0.7);
+
 }
 .strip::-webkit-scrollbar {
   display: none;
 }
-    .frame {
+
+.project{outline: .1rem solid red;
+
+display: flex;
+  flex-wrap: wrap;
+
+
+
+
+
+
+
+}
+    .frame, .detail{
       background-color: transparent;
       width: 100%;
       aspect-ratio: 65 / 23.75;
@@ -144,6 +159,9 @@
       padding: 0;
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0);
     }
+    .detail {
+  display: none;
+}
     .left-keycode,
     .right-keycode,
     .perf-column,
@@ -156,7 +174,6 @@
     .left-keycode,
     .right-keycode {
       width: 4.7%;
-      background-color: rgba(255, 140, 0, 0.7);
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0);
       display: flex;
       justify-content: center;
@@ -178,7 +195,6 @@
     }
     .perf-column {
       width: 4.3%;
-      background-color: rgba(255, 140, 0, 0.7);
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0);
       position: relative;
       display: flex;
@@ -202,7 +218,6 @@
     .content {
       width: 82%;
       height: 100%;
-      background-color: rgba(255, 140, 0, 0.7);
       box-shadow: 0 0 1rem rgba(0, 0, 0, 0);
       overflow: hidden;
       position: relative;
@@ -290,28 +305,34 @@
           <div class="right-keycode"><span class="rotated-right">XX</span></div>
         </div>
 
-        <div class="frame">
-          <div class="left-keycode"><span class="rotated-left">JUN 2025</span></div>
-          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
-          <div class="content">
-            <img src="media/bang.jpg" data-gif="media/bang.gif" alt="GIF" />
-            <div class="text">Music Video - Camera</div>
-          </div>
-          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
-          <div class="right-keycode"><span class="rotated-right">3 MIN</span></div>
-        </div>
+  <div class="frame">
+    <div class="left-keycode"><span class="rotated-left">JUN 2025</span></div>
+    <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+    <div class="content">
+      <img src="media/bang.jpg" data-gif="media/bang.gif" alt="GIF" />
+      <div class="text">Music Video - Camera</div>
+    </div>
+    <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+    <div class="right-keycode"><span class="rotated-right">3 MIN</span></div>
+  </div>
+  <div class="frame detail">
+    <div class="content">
+       <div class="text">description about music video</div>
+    </div>
+  </div>
 
-        <div class="frame">
-          <div class="left-keycode"><span class="rotated-left">MAY 2025</span></div>
-          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
-          <div class="content">
-            <img src="media/clapper.jpg" data-gif="media/clapper.gif" alt="GIF" />
-            <div class="text">Short film - Sound</div>
-          </div>
-          <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
-          <div class="right-keycode"><span class="rotated-right">30 MIN</span></div>
-        </div>
-
+<div class="project">
+  <div class="frame">
+    <div class="left-keycode"><span class="rotated-left">MAY 2025</span></div>
+    <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+    <div class="content">
+      <img src="media/clapper.jpg" data-gif="media/clapper.gif" alt="GIF" />
+      <div class="text">Short film - Sound</div>
+    </div>
+    <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
+    <div class="right-keycode"><span class="rotated-right">30 MIN</span></div>
+    </div>
+</div>
         <div class="frame">
           <div class="left-keycode"><span class="rotated-left">JAN 2025</span></div>
           <div class="perf-column"><div class="perf-blocks"><div></div><div></div><div></div><div></div><div></div></div></div>
@@ -525,6 +546,29 @@
       preloader.src = jpgSrc;
     });
   });
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".frame").forEach(function (frame) {
+      frame.style.cursor = "pointer";
+      frame.addEventListener("click", function () {
+        console.log("Frame clicked:", frame);
+        // You could load a detail frame, toggle something, etc.
+      });
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // Attach a click listener to each frame
+    document.querySelectorAll('.frame').forEach(frame => {
+      frame.addEventListener('click', () => {
+        frame.classList.toggle('open');
+      });
+    });
+  });
+
+
+
 </script>
 
 </body>
