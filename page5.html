@@ -27,6 +27,7 @@
     body {
       height: 100vh;
       margin: 0;
+      font-family: sans-serif;
     }
     .gray-box {
       position: relative;
@@ -121,11 +122,9 @@
       background-color: rgba(255, 140, 0, 0.7);
       z-index: 3;
     }
-    .strip::-webkit-scrollbar {
-      display: none;
-    }
-    .frame, .detail {
-      background-color: transparent;
+    .strip::-webkit-scrollbar { display: none; }
+    .frame {
+      background: transparent;
       width: 100%;
       aspect-ratio: 65 / 23.75;
       display: flex;
@@ -133,80 +132,46 @@
       align-items: center;
       margin: 0;
       padding: 0;
+      cursor: pointer;
     }
-    .detail {
-      display: none;
+    .left-keycode, .right-keycode, .perf-column, .content {
+      margin: 0; padding: 0; height: 100%; flex: 0 0 auto;
     }
-    .left-keycode,
-    .right-keycode,
-    .perf-column,
-    .content {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      flex: 0 0 auto;
-    }
-    .left-keycode,
-    .right-keycode {
-      width: 4.7%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: bold;
-      color: black;
-      font-family: 'Michroma', sans-serif;
+    .left-keycode, .right-keycode {
+      width: 4.7%; display: flex; justify-content: center; align-items: center;
+      font-weight: bold; color: black; font-family: 'Michroma', sans-serif;
       font-size: min(calc(var(--font-scale-keycode) * 1vw), calc(600 * (var(--font-scale-keycode) / 100) * 1px));
     }
     .rotated-right { transform: rotate(90deg); display: inline-block; white-space: nowrap; }
     .rotated-left  { transform: rotate(-90deg); display: inline-block; white-space: nowrap; }
     .perf-column {
-      width: 4.3%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      width: 4.3%; display: flex; justify-content: center; align-items: center;
     }
     .perf-blocks {
-      display: grid;
-      grid-template-rows: repeat(5, 1fr);
-      gap: 11.66%;
-      width: 100%;
-      height: 88.30%;
+      display: grid; grid-template-rows: repeat(5, 1fr); gap: 11.66%;
+      width: 100%; height: 88.30%;
     }
     .perf-blocks > div {
       border-radius: min(calc(var(--border-r-perf) * 1vw), calc(600 * (var(--border-r-perf) / 100) * 1px));
       box-shadow: inset 0 0 calc(min(calc(var(--border-r-perf) * 1vw), calc(600 * (var(--border-r-perf) / 100) * 1px))) rgba(0, 0, 0, 0.8);
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
     }
     .content {
-      width: 82%;
-      height: 100%;
-      position: relative;
-      overflow: hidden;
-      box-sizing: border-box;
+      width: 82%; height: 100%; position: relative; overflow: hidden; box-sizing: border-box;
     }
     .content img {
-      position: absolute;
-      top: 50%;
-      left: 50%;
+      position: absolute; top: 50%; left: 50%;
       width: calc(100% - min(var(--content-gap-w) * 1vw, calc(600 * (var(--content-gap-w) / 100) * 1px)));
       height: calc(100% - min(var(--content-gap-h) * 1vw, calc(600 * (var(--content-gap-h) / 100) * 1px)));
-      object-fit: cover;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      user-select: none;
+      object-fit: cover; transform: translate(-50%, -50%);
+      pointer-events: none; user-select: none;
       border-radius: min(calc(var(--border-r-content) * 1vw), calc(600 * (var(--border-r-content) / 100) * 1px));
     }
     .text {
-      position: absolute;
-      top: 80%;
-      left: 4%;
-      color: white;
-      font-family: 'Michroma', sans-serif;
-      font-weight: bold;
+      position: absolute; top: 80%; left: 4%; color: white;
+      font-family: 'Michroma', sans-serif; font-weight: bold;
       font-size: min(calc(var(--font-scale) * 1vw), calc(600 * (var(--font-scale) / 100) * 1px));
-      user-select: none;
-      white-space: nowrap;
+      user-select: none; white-space: nowrap;
       text-shadow:
         0 0 3px rgba(0,0,0,0.8),
         5px 5px 5px rgba(0,0,0,0.7),
@@ -216,9 +181,27 @@
         0 0 12px rgba(0,0,0,0.3);
       z-index: 10;
     }
-    @keyframes slideDown {
-      to { transform: translateY(0); }
+    @keyframes slideDown { to { transform: translateY(0); } }
+
+    /* Modal overlay */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7); display: none;
+      justify-content: center; align-items: center; z-index: 100;
     }
+    .modal {
+      background: #fff; border-radius: 0.5rem; padding: 1.5rem;
+      width: 95%; max-width: 600px; max-height: 80%; overflow-y: auto;
+      position: relative; font-family: sans-serif;
+    }
+    .modal .close {
+      position: absolute; top: 0.5rem; right: 0.75rem;
+      font-size: 1.25rem; cursor: pointer;
+    }
+    .modal img {
+      width: 100%; height: auto; display: block; margin-bottom: 1rem;
+    }
+    .modal h2 { margin-top: 0; }
   </style>
 </head>
 <body>
@@ -237,40 +220,171 @@
     </div>
   </div>
 
+  <!-- Modal structure -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <span class="close" id="modalClose">✕</span>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
   <script>
-    // 1) project data array
+    // 1) project data array (with an extra `detail` field for the popup)
 const projects = [
-  { dateLeft: "1000",   img: "media/moon.jpg",     gif: null,              text: "hi",                         right: "1000" },
-  { dateLeft: "AUG 2025", img: "media/moon.jpg",     gif: "",                text: "Film Camera",                right: "XX"   },
-  { dateLeft: "JUL 2025", img: "media/moon.jpg",     gif: "",                text: "Short film - Camera",        right: "XX"   },
-  { dateLeft: "JUN 2025", img: "media/bang.jpg",     gif: "media/bang.gif",  text: "Music Video - Camera",       right: "3 MIN", detail: "description about music video" },
-  { dateLeft: "MAY 2025", img: "media/clapper.jpg",  gif: "media/clapper.gif", text: "Short film - Sound",         right: "30 MIN" },
-
-  { dateLeft: "JAN 2025", img: "media/chapito.jpg",  gif: "media/chapito.gif", text: "Documentary - Camera & Sound", right: "13 MIN" },
-  { dateLeft: "OCT 2024", img: "media/doclis.png",   gif: "",                text: "Film festival coverage",     right: "X DAYS" },
-  { dateLeft: "AUG 2024", img: "media/seb.jpg",      gif: "media/seb.gif",   text: "Interview – Camera",         right: "4 MIN"  },
-  { dateLeft: "AUG 2024", img: "media/free.jpg",     gif: "media/free.gif",  text: "Short film – Camera",         right: "4 MIN"  },
-
-  { dateLeft: "JUN 2024", img: "media/group1.png",   gif: "",                text: "TV Pilot – Crane Cam",         right: "31 MIN" },
-  { dateLeft: "JUN 2024", img: "media/redroom.jpg",  gif: "",                text: "TV Pilot – Crane Cam AC",     right: "30 MIN" },
-  { dateLeft: "MAY 2024", img: "media/alges.png",    gif: "",                text: "Music Video – Camera",        right: "4 MIN"  },
-  { dateLeft: "APR 2024", img: "media/cinema.png",   gif: "",                text: "Short film – Sound",          right: "4 MIN"  },
-
-  { dateLeft: "FEB 2024", img: "media/moon.jpg",     gif: "",                text: "Short",                      right: "2 MIN"  },
-  { dateLeft: "JAN 2024", img: "media/people.png",   gif: "",                text: "Photography",                right: "2 MIN"  },
-  { dateLeft: "JUN 2023", img: "media/steady.png",   gif: "",                text: "Short",                      right: "2 MIN"  },
-  { dateLeft: "DEC 2021", img: "media/film.png",     gif: "",                text: "C‑41 Developing",             right: "XX"     },
-
-  { dateLeft: "JUN 2021", img: "media/boat.png",     gif: "",                text: "Short",                      right: "1 MIN"  },
-  { dateLeft: "OCT 2015", img: "media/skydive.png",  gif: "",                text: "Camera animation",           right: "1 MIN"  },
-  { dateLeft: "CC0 1929", img: "media/moon.jpg",     gif: "media/end.gif",   text: "",                           right: "65MM"   }
+  { dateLeft: "1000",
+    img:       "media/moon.jpg",
+    gif:       "",
+    text:      "hi",
+    right:     "1000",
+    detail:    "Just a friendly greeting!",
+    youtube:   "dQw4w9WgXcQ"},
+  { dateLeft: "AUG 2025",
+    img:       "media/moon.jpg",
+    gif:       "",
+    text:      "Film Camera",
+    right:     "XX",
+    detail:    "A film camera project overview.",
+    youtube:   ""},
+  { dateLeft: "JUL 2025",
+    img:       "media/moon.jpg",
+    gif:       "",
+    text:      "Short film - Camera",
+    right:     "XX",
+    detail:    "Behind‑the‑scenes of the short film.",
+    youtube:   ""},
+  {
+    dateLeft: "JUN 2025",
+    img:       "media/bang.jpg",
+    gif:       "media/bang.gif",
+    text:      "Music Video - Camera",
+    right:     "3 MIN",
+    detail:    "In‑depth description of the music video project.",
+    youtube:   ""},
+  { dateLeft: "MAY 2025",
+    img:       "media/clapper.jpg",
+    gif:       "media/clapper.gif",
+    text:      "Short film - Sound",
+    right:     "30 MIN",
+    detail:    "Sound design notes for the short.",
+    youtube:   ""},
+  { dateLeft: "JAN 2025",
+    img:       "media/chapito.jpg",
+    gif:       "media/chapito.gif",
+    text:      "Documentary - Camera & Sound",
+    right:     "13 MIN",
+    detail:    "An exploration of combined camera and sound techniques.",
+    youtube:   ""},
+  { dateLeft: "OCT 2024",
+    img:       "media/doclis.png",
+    gif:       "",
+    text:      "Film festival coverage",
+    right:     "X DAYS",
+    detail:    "Coverage of recent film festivals.",
+    youtube:   ""},
+  { dateLeft: "AUG 2024",
+    img:       "media/seb.jpg",
+    gif:       "media/seb.gif",
+    text:      "Interview - Camera",
+    right:     "4 MIN",
+    detail:    "Highlights from the on-set interview shoot.",
+    youtube:   ""},
+  { dateLeft: "AUG 2024",
+    img:       "media/free.jpg",
+    gif:       "media/free.gif",
+    text:      "Short film - Camera",
+    right:     "4 MIN",
+    detail:    "Artistic short film focusing on camera movement.",
+    youtube:   ""},
+  { dateLeft: "JUN 2024",
+    img:       "media/group1.png",
+    gif:       "",
+    text:      "TV Pilot - Crane Cam",
+    right:     "31 MIN",
+    detail:    "Behind‑the‑scenes of the crane cam setup for the TV pilot.",
+    youtube:   ""},
+  { dateLeft: "JUN 2024",
+    img:       "media/redroom.jpg",
+    gif:       "",
+    text:      "TV Pilot - Crane Cam AC",
+    right:     "30 MIN",
+    detail:    "Assistant camera work using the crane cam on the pilot.",
+    youtube:   ""},
+  { dateLeft: "MAY 2024",
+    img:       "media/alges.png",
+    gif:       "",
+    text:      "Music Video - Camera",
+    right:     "4 MIN",
+    detail:    "Camera styling and shots for a music video.",
+    youtube:   ""},
+  { dateLeft: "APR 2024",
+    img:       "media/cinema.png",
+    gif:       "",
+    text:      "Short film - Sound",
+    right:     "4 MIN",
+    detail:    "Sound recording techniques on a short film set.",
+    youtube:   ""},
+  { dateLeft: "FEB 2024",
+    img:       "media/moon.jpg",
+    gif:       "",
+    text:      "Short",
+    right:     "2 MIN",
+    detail:    "A very short experimental piece.",
+    youtube:   ""},
+  { dateLeft: "JAN 2024",
+    img:       "media/people.png",
+    gif:       "",
+    text:      "Photography",
+    right:     "2 MIN",
+    detail:    "A collection of creative photography shots.",
+    youtube:   ""},
+  { dateLeft: "JUN 2023",
+    img:       "media/steady.png",
+    gif:       "",
+    text:      "Short",
+    right:     "2 MIN",
+    detail:    "Experimenting with steady cam techniques.",
+    youtube:   ""},
+  { dateLeft: "DEC 2021",
+    img:       "media/film.png",
+    gif:       "",
+    text:      "C‑41 Developing",
+    right:     "XX",
+    detail:    "Tutorial on C‑41 photo developing process.",
+    youtube:   ""},
+  { dateLeft: "JUN 2021",
+    img:       "media/boat.png",
+    gif:       "",
+    text:      "Short",
+    right:     "1 MIN",
+    detail:    "A quick boating-themed vignette.",
+    youtube:   ""},
+  { dateLeft: "OCT 2015",
+    img:       "media/skydive.png",
+    gif:       "",
+    text:      "Camera animation",
+    right:     "1 MIN",
+    detail:    "Animating camera movements in 3D.",
+    youtube:   ""},
+  { dateLeft: "CC0 1929",
+    img:       "media/moon.jpg",
+    gif:       "media/end.gif",
+    text:      "",
+    right:     "65MM",
+    detail:    "Public domain footage from 1929.",
+    youtube:   ""},
 ];
-    const strip = document.getElementById("strip");
 
-    // 2) build frames
-    projects.forEach(p => {
+
+    const strip = document.getElementById("strip");
+    const overlay = document.getElementById("modalOverlay");
+    const modalContent = document.getElementById("modalContent");
+    const modalClose = document.getElementById("modalClose");
+
+    // 2) Build frames dynamically
+    projects.forEach((p, idx) => {
       const f = document.createElement("div");
       f.className = "frame";
+      f.dataset.index = idx;
       f.innerHTML = `
         <div class="left-keycode"><span class="rotated-left">${p.dateLeft}</span></div>
         <div class="perf-column"><div class="perf-blocks">${"<div></div>".repeat(5)}</div></div>
@@ -282,16 +396,9 @@ const projects = [
         <div class="right-keycode"><span class="rotated-right">${p.right}</span></div>
       `;
       strip.appendChild(f);
-
-      if (p.detail) {
-        const d = document.createElement("div");
-        d.className = "frame detail";
-        d.innerHTML = `<div class="content"><div class="text">${p.detail}</div></div>`;
-        strip.appendChild(d);
-      }
     });
 
-    // 3) preload JPEGs then swap to GIFs
+    // 3) Preload JPEGs then swap to GIFs
     document.addEventListener("DOMContentLoaded", () => {
       const imgs = Array.from(document.querySelectorAll('.content img[data-gif]'));
       let loaded = 0;
@@ -307,12 +414,25 @@ const projects = [
       });
     });
 
-    // 4) frame click toggles
-    document.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll(".frame").forEach(frame => {
-        frame.style.cursor = "pointer";
-        frame.addEventListener("click", () => frame.classList.toggle("open"));
-      });
+    // 4) Frame click → open modal
+    strip.addEventListener("click", e => {
+      const frame = e.target.closest(".frame");
+      if (!frame) return;
+      const proj = projects[frame.dataset.index];
+      modalContent.innerHTML = `
+        <h2>${proj.text || proj.dateLeft}</h2>
+        <img src="${proj.gif || proj.img}" alt="${proj.text}" />
+        <p><strong>Date:</strong> ${proj.dateLeft}</p>
+        ${proj.right ? `<p><strong>Runtime:</strong> ${proj.right}</p>` : ""}
+        <p>${proj.detail}</p>
+      `;
+      overlay.style.display = "flex";
+    });
+
+    // 5) Close modal
+    modalClose.addEventListener("click", () => overlay.style.display = "none");
+    overlay.addEventListener("click", e => {
+      if (e.target === overlay) overlay.style.display = "none";
     });
   </script>
 </body>
