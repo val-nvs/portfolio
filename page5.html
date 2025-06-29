@@ -432,41 +432,44 @@ const projects = [
       });
     });
 
-// 4) Frame click → open modal: date/runtime, detail, embed, then image/GIF
+// 4) Frame click → open modal: date/runtime, detail, then (deferred) embed, then image/GIF
 strip.addEventListener("click", e => {
   const frame = e.target.closest(".frame");
   if (!frame) return;
   const p = projects[frame.dataset.index];
 
-  let html = `
+  // 1) Build the basic modal HTML without the iframe
+  const baseHTML = `
     <h2>${p.text || p.dateL}</h2>
     <p class="meta">
       ${p.dateL}${p.right ? `  |  ${p.right}` : ""}
     </p>
     <p>${p.detail}</p>
+    <!-- placeholder for video if needed -->
+    <div id="videoPlaceholder"></div>
+    <img src="${p.gif || p.img}" alt="${p.text}" />
   `;
 
-  // optional YouTube embed
+  modalContent.innerHTML = baseHTML;
+  overlay.style.display   = "flex";
+
+  // 2) Defer the iframe creation to the next paint
   if (p.youtube) {
-    html += `
-      <div class="video-wrapper">
+    requestAnimationFrame(() => {
+      const placeholder = document.getElementById("videoPlaceholder");
+      const wrapper     = document.createElement("div");
+      wrapper.className = "video-wrapper";
+      wrapper.innerHTML = `
         <iframe
           src="https://www.youtube.com/embed/${p.youtube}"
           frameborder="0"
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
         ></iframe>
-      </div>
-    `;
+      `;
+      placeholder.replaceWith(wrapper);
+    });
   }
-
-  // always show image/GIF last
-  html += `
-    <img src="${p.gif || p.img}" alt="${p.text}" />
-  `;
-
-  modalContent.innerHTML = html;
-  overlay.style.display   = "flex";
 });
 
 
