@@ -198,10 +198,30 @@
       position: absolute; top: 0.5rem; right: 0.75rem;
       font-size: 1.25rem; cursor: pointer;
     }
-    .modal img {
+    .modal img, .modal iframe {
       width: 100%; height: auto; display: block; margin-bottom: 1rem;
     }
     .modal h2 { margin-top: 0; }
+    .modal .meta {
+      margin: 0.5rem 0;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    /* keep your existing iframe wrapper */
+    .modal .video-wrapper {
+      position: relative;
+      padding-top: 56.25%; /* 16:9 */
+      margin-top: 1rem;
+    }
+    .modal .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+    }
   </style>
 </head>
 <body>
@@ -229,7 +249,7 @@
   </div>
 
   <script>
-    // 1) project data array (with an extra `detail` field for the popup)
+    // 1) project data array (with detail + youtube code)
 const projects = [
   { dateLeft: "1000",
     img:       "media/moon.jpg",
@@ -374,18 +394,17 @@ const projects = [
     youtube:   ""},
 ];
 
-
-    const strip = document.getElementById("strip");
-    const overlay = document.getElementById("modalOverlay");
+    const strip        = document.getElementById("strip");
+    const overlay      = document.getElementById("modalOverlay");
     const modalContent = document.getElementById("modalContent");
-    const modalClose = document.getElementById("modalClose");
+    const modalClose   = document.getElementById("modalClose");
 
     // 2) Build frames dynamically
     projects.forEach((p, idx) => {
       const f = document.createElement("div");
-      f.className = "frame";
+      f.className     = "frame";
       f.dataset.index = idx;
-      f.innerHTML = `
+      f.innerHTML     = `
         <div class="left-keycode"><span class="rotated-left">${p.dateLeft}</span></div>
         <div class="perf-column"><div class="perf-blocks">${"<div></div>".repeat(5)}</div></div>
         <div class="content">
@@ -414,20 +433,43 @@ const projects = [
       });
     });
 
-    // 4) Frame click → open modal
-    strip.addEventListener("click", e => {
-      const frame = e.target.closest(".frame");
-      if (!frame) return;
-      const proj = projects[frame.dataset.index];
-      modalContent.innerHTML = `
-        <h2>${proj.text || proj.dateLeft}</h2>
-        <img src="${proj.gif || proj.img}" alt="${proj.text}" />
-        <p><strong>Date:</strong> ${proj.dateLeft}</p>
-        ${proj.right ? `<p><strong>Runtime:</strong> ${proj.right}</p>` : ""}
-        <p>${proj.detail}</p>
-      `;
-      overlay.style.display = "flex";
-    });
+// 4) Frame click → open modal: date/runtime, detail, embed, then image/GIF
+strip.addEventListener("click", e => {
+  const frame = e.target.closest(".frame");
+  if (!frame) return;
+  const p = projects[frame.dataset.index];
+
+  let html = `
+    <h2>${p.text || p.dateLeft}</h2>
+    <p class="meta">
+      ${p.dateLeft}${p.right ? `  |  ${p.right}` : ""}
+    </p>
+    <p>${p.detail}</p>
+  `;
+
+  // optional YouTube embed
+  if (p.youtube) {
+    html += `
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/${p.youtube}"
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    `;
+  }
+
+  // always show image/GIF last
+  html += `
+    <img src="${p.gif || p.img}" alt="${p.text}" />
+  `;
+
+  modalContent.innerHTML = html;
+  overlay.style.display   = "flex";
+});
+
 
     // 5) Close modal
     modalClose.addEventListener("click", () => overlay.style.display = "none");
