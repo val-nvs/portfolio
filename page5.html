@@ -6,7 +6,7 @@
   <title>page</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&family=Michroma&display=swap" rel="stylesheet" />
   <style>
     :root {
       --gray-noise-opacity: 1;
@@ -24,12 +24,13 @@
       height: 100%;
       margin: 0;
       background-color: #000;
+
     }
     body {
       height: 100vh;
       height: 100dvh;
       margin: 0;
-      font-family: sans-serif;
+      font-family: 'Atkinson Hyperlegible', sans-serif;
     }
     .gray-box {
       position: relative;
@@ -68,7 +69,7 @@
     }
     .gray-btn {
       all: unset;
-      font-family: 'Michroma', sans-serif;
+      font-family: 'Atkinson Hyperlegible', sans-serif;
       font-size: min(calc(var(--font-scale) * 1vw), calc(600 * (var(--font-scale) / 100) * 1px));
   background-image: url("media/noise3.png");
   background-repeat: repeat;
@@ -144,7 +145,8 @@
     }
     .left-keycode, .right-keycode {
       width: 4.7%; display: flex; justify-content: center; align-items: center;
-      font-weight: bold; color: black; font-family: 'Michroma', sans-serif;
+      font-weight: bold; color: black; 
+      font-family: 'Michroma', sans-serif !important;
       font-size: min(calc(var(--font-scale-keycode) * 1vw), calc(600 * (var(--font-scale-keycode) / 100) * 1px));
     }
     .rotated-right { transform: rotate(90deg); display: inline-block; white-space: nowrap; }
@@ -174,7 +176,8 @@
     }
     .text {
       position: absolute; top: 80%; left: 4%; color: white;
-      font-family: 'Michroma', sans-serif; font-weight: bold;
+      font-family: 'Michroma', sans-serif;
+       font-weight: bold;
       font-size: min(calc(var(--font-scale) * 1vw), calc(600 * (var(--font-scale) / 100) * 1px));
       user-select: none; white-space: nowrap;
       text-shadow:
@@ -204,12 +207,13 @@
     .modal {
       background: #ccc; border-radius: 0.5rem; padding: 1.5rem;
       width: 95%; max-width: 600px; max-height: 80%; overflow-y: auto;
-      position: relative; font-family: sans-serif;
+      position: relative;   font-family: 'Atkinson Hyperlegible', monospace;
+      font-size: 1.5rem;
 
     }
     .modal .close {
       position: absolute; top: 0.5rem; right: 0.75rem;
-      font-size: 1.25rem; cursor: pointer;
+      font-size: 2rem; cursor: pointer;
     }
     .modal img, .modal iframe {
       width: 100%; height: auto; display: block; margin-bottom: 1rem;
@@ -231,19 +235,17 @@
     }
     .modal .video-wrapper iframe {
       position: absolute;
-      top: 0; left: 0;
+      top: 0%; left: 0%;
       width: 100%;
-      height: 100%;
+      height: 95%;
     }
   </style>
 </head>
 <body>
   <div class="gray-box">
     <div class="button-row">
-      <button class="gray-btn">asdf</button>
-      <button class="gray-btn">asdf</button>
-      <button class="gray-btn">asdf</button>
-      <button class="gray-btn">asdf</button>
+      <button class="gray-btn">About</button>
+      <button class="gray-btn">Contact</button>
     </div>
     <div class="white-box">
       <div id="randomSticker" style="position: absolute; top: 10px; right: 10px;">
@@ -265,21 +267,14 @@
     // 1) project data array (with detail + youtube code)
 const projects = [
   { dateL:     "2000",
-    img:       "media/moon.jpg",
+    img:       "media/group.jpg",
     gif:       "",
     text:      "About me",
     right:     "XX",
-    detail:    "Just a friendly greeting!",
-    youtube:   "dQw4w9WgXcQ"},
-  { dateL:     "AUG 2025",
-    img:       "media/moon.jpg",
-    gif:       "",
-    text:      "Film Camera",
-    right:     "XX",
-    detail:    "A film camera project overview.",
+    detail:    "Brazilian living in Lisbon, Portugal.<br>Passionate about engineering, filmmaking, photography, optics and architecture.<br>Fluent in English.<br>Student at ETIC Lisboa.<br><br>Contact: valdir.nvs@hotmail.com<br>Insta: @val.nevs",
     youtube:   ""},
   { dateL:     "JUL 2025",
-    img:       "media/moon.jpg",
+    img:       "media/placeholder.jpg",
     gif:       "",
     text:      "Short film - Camera",
     right:     "XX",
@@ -290,14 +285,14 @@ const projects = [
     gif:       "media/bang.gif",
     text:      "Music Video - Camera",
     right:     "3 MIN",
-    detail:    "In‑depth description of the music video project.",
+    detail:    "KPOP Dance cover",
     youtube:   ""},
   { dateL:     "MAY 2025",
     img:       "media/clapper.jpg",
     gif:       "media/clapper.gif",
     text:      "Short film - Sound",
     right:     "30 MIN",
-    detail:    "Sound design notes for the short.",
+    detail:    "Recorded production sound and streamlined file workflow with batch-edit scripts and spreadsheet tracking for a 20-minute action thriller, shot in 13 days at 6 varied locations across Lisbon.",
     youtube:   ""},
   { dateL:     "JAN 2025",
     img:       "media/chapito.jpg",
@@ -356,7 +351,7 @@ const projects = [
     detail:    "Sound recording https://vimeo.com/930022904",
     youtube:   ""},
   { dateL:     "FEB 2024",
-    img:       "media/moon.jpg",
+    img:       "media/curta.jpg",
     gif:       "",
     text:      "Short",
     right:     "2 MIN",
@@ -492,6 +487,23 @@ strip.addEventListener("click", e => {
     overlay.addEventListener("click", e => {
       if (e.target === overlay) overlay.style.display = "none";
     });
+
+
+    // About button event
+document.querySelectorAll('.gray-btn').forEach(btn => {
+  if (btn.textContent.trim().toLowerCase() === 'about') {
+    btn.addEventListener('click', () => {
+      // Example about content for modal
+      const aboutHTML = `
+        <h2>About This Project</h2>
+        <p>This is the about frame popup content. You can customize it with any information about your project.</p>
+      `;
+      modalContent.innerHTML = aboutHTML;
+      overlay.style.display = 'flex';
+    });
+  }
+});
+
   </script>
 </body>
 </html>
