@@ -18,6 +18,7 @@
       --border-r-light: 1.8;
       --content-gap-w: 1.2;
       --content-gap-h: 0.6;
+      --button-stuff: 1;
     }
     html, body {
       height: 100%;
@@ -42,42 +43,36 @@
       background-color: #333;
       overflow: hidden;
     }
-    .gray-box::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background-image: url("data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' width='128' height='128'>\
-<filter id='noise'>\
-<feTurbulence type='fractalNoise' baseFrequency='0.4' numOctaves='1' stitchTiles='stitch'/>\
-<feColorMatrix type='saturate' values='0'/>\
-</filter>\
-<rect width='100%' height='100%' filter='url(%23noise)'/>\
-</svg>");
-      background-repeat: repeat;
-      background-size: 128px 128px;
-      image-rendering: pixelated;
-      mix-blend-mode: soft-light;
-      opacity: var(--gray-noise-opacity);
-      z-index: 1;
-    }
+.gray-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("media/noise.png");
+  background-repeat: repeat;
+  background-size: 64px 64px;
+  image-rendering: pixelated;
+  mix-blend-mode: soft-light;
+  opacity: var(--gray-noise-opacity);
+  z-index: 1;
+}
+
     .button-row {
       position: absolute;
-      top: 20px;
+      top: min(calc(1 * 1vw), calc(600 * (1 / 100) * 1px));
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      gap: 1rem;
+      gap: min(calc(1 * 1vw), calc(600 * (1 / 100) * 1px));
       z-index: 10;
     }
     .gray-btn {
       all: unset;
       font-family: 'Michroma', sans-serif;
       font-size: min(calc(var(--font-scale) * 1vw), calc(600 * (var(--font-scale) / 100) * 1px));
-      background: rgba(130, 130, 130, 0.9);
-      color: black;
-      padding: 0.6rem 1.2rem;
+  background-image: url("media/noise3.png");
+  background-repeat: repeat;
+  background-size: 64px 64px;      padding: 0.6rem 1.2rem;
       border-radius: 0.6rem;
       cursor: pointer;
       transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
@@ -95,19 +90,21 @@
       transform: translateY(1px);
       box-shadow: inset 0 0 0.4rem rgba(0, 0, 0, 0.6);
     }
-    .white-box {
-      position: relative;
-      width: 95%;
-      height: 80%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #fff;
-      overflow: hidden;
-      box-shadow: inset 0 0 2rem rgba(0, 0, 0, 1);
-      z-index: 2;
-      border-radius: min(calc(var(--border-r-light) * 1vw), calc(600 * (var(--border-r-light) / 100) * 1px));
-    }
+.white-box {
+  position: absolute;
+  top: min(calc(10 * 1vw), calc(600 * (10 / 100) * 1px));
+  bottom: min(calc(3 * 1vw), calc(600 * (3 / 100) * 1px));
+  width: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  overflow: hidden;
+  box-shadow: inset 0 0 2rem rgba(0, 0, 0, 1);
+  z-index: 2;
+  border-radius: min(calc(var(--border-r-light) * 1vw), calc(600 * (var(--border-r-light) / 100) * 1px));
+}
+
     .strip {
       position: relative;
       width: 95%;
@@ -123,6 +120,8 @@
       -ms-overflow-style: none;
       background-color: rgba(255, 140, 0, 0.7);
       z-index: 3;
+            box-shadow: 0 0 calc(min(calc(var(--border-r-perf) * 1vw), calc(600 * (var(--border-r-perf) / 100) * 1px))) rgba(0, 0, 0, 0.8);
+
     }
     .strip::-webkit-scrollbar { display: none; }
     .frame {
@@ -229,10 +228,10 @@
 <body>
   <div class="gray-box">
     <div class="button-row">
-      <button class="gray-btn">Click</button>
-      <button class="gray-btn">Click</button>
-      <button class="gray-btn">Click</button>
-      <button class="gray-btn">Click</button>
+      <button class="gray-btn">asdf</button>
+      <button class="gray-btn">asdf</button>
+      <button class="gray-btn">asdf</button>
+      <button class="gray-btn">asdf</button>
     </div>
     <div class="white-box">
       <div id="randomSticker" style="position: absolute; top: 10px; right: 10px;">
