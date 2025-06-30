@@ -72,7 +72,8 @@
       font-size: min(calc(var(--font-scale) * 1vw), calc(600 * (var(--font-scale) / 100) * 1px));
   background-image: url("media/noise3.png");
   background-repeat: repeat;
-  background-size: 64px 64px;      padding: 0.6rem 1.2rem;
+  background-size: 64px 64px;
+        padding: 0.6rem 1.2rem;
       border-radius: 0.6rem;
       cursor: pointer;
       transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
@@ -118,7 +119,10 @@
       overflow-y: auto;
       scrollbar-width: none;
       -ms-overflow-style: none;
-      background-color: rgba(255, 140, 0, 0.7);
+  background-image: url("media/noise2.png");
+  background-repeat: repeat;
+  background-size: 64px 64px;
+
       z-index: 3;
             box-shadow: 0 0 calc(min(calc(var(--border-r-perf) * 1vw), calc(600 * (var(--border-r-perf) / 100) * 1px))) rgba(0, 0, 0, 0.8);
 
@@ -186,14 +190,22 @@
 
     /* Modal overlay */
     .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7); display: none;
-      justify-content: center; align-items: center; z-index: 100;
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%;
+      background: rgba(0,0,0,0.7); 
+      display: none;
+      justify-content: center; 
+      align-items: center; 
+      z-index: 100;
     }
     .modal {
-      background: #fff; border-radius: 0.5rem; padding: 1.5rem;
+      background: #ccc; border-radius: 0.5rem; padding: 1.5rem;
       width: 95%; max-width: 600px; max-height: 80%; overflow-y: auto;
       position: relative; font-family: sans-serif;
+
     }
     .modal .close {
       position: absolute; top: 0.5rem; right: 0.75rem;
@@ -235,7 +247,7 @@
     </div>
     <div class="white-box">
       <div id="randomSticker" style="position: absolute; top: 10px; right: 10px;">
-        <img src="media/moon.jpg" alt="Sticker" style="width: 100px;" loading="lazy" />
+        <img src="media/slop.png" alt="Sticker" style="width: 100px;" loading="lazy" />
       </div>
       <div class="strip" id="strip"></div>
     </div>
@@ -252,11 +264,11 @@
   <script>
     // 1) project data array (with detail + youtube code)
 const projects = [
-  { dateL:     "1000",
+  { dateL:     "2000",
     img:       "media/moon.jpg",
     gif:       "",
-    text:      "hi",
-    right:     "1000",
+    text:      "About me",
+    right:     "XX",
     detail:    "Just a friendly greeting!",
     youtube:   "dQw4w9WgXcQ"},
   { dateL:     "AUG 2025",
@@ -292,56 +304,56 @@ const projects = [
     gif:       "media/chapito.gif",
     text:      "Documentary - Camera & Sound",
     right:     "13 MIN",
-    detail:    "An exploration of combined camera and sound techniques.",
-    youtube:   ""},
+    detail:    "Documentary about Pascoal Furtado, a teacher at Chapitô, a circus school in Lisbon.",
+    youtube:   "ztUn9QWYk_Y"},
   { dateL:     "OCT 2024",
     img:       "media/doclis.png",
     gif:       "",
     text:      "Film festival coverage",
     right:     "X DAYS",
-    detail:    "Coverage of recent film festivals.",
-    youtube:   ""},
+    detail:    "Filmed B-roll and presentations for Doclisboa, Portugal’s leading international documentary film festival.",
+    youtube:   "NPPzUJvmkq8"},
   { dateL:     "AUG 2024",
     img:       "media/seb.jpg",
     gif:       "media/seb.gif",
     text:      "Interview - Camera",
     right:     "4 MIN",
-    detail:    "Highlights from the on-set interview shoot.",
-    youtube:   ""},
+    detail:    "Interview about Sebastião Ogando - Inês Serra",
+    youtube:   "__UxmK7BD68"},
   { dateL:      "AUG 2024",
     img:       "media/free.jpg",
     gif:       "media/free.gif",
     text:      "Short film - Camera",
     right:     "4 MIN",
-    detail:    "Artistic short film focusing on camera movement.",
-    youtube:   ""},
+    detail:    "Experimental short film.",
+    youtube:   "FcrQnCTnG0M"},
   { dateL:     "JUN 2024",
     img:       "media/group1.png",
     gif:       "",
     text:      "TV Pilot - Crane Cam",
     right:     "31 MIN",
-    detail:    "Behind‑the‑scenes of the crane cam setup for the TV pilot.",
-    youtube:   ""},
+    detail:    "Behind‑the‑scenes of the crane cam setup for a TV pilot.",
+    youtube:   "5LlSdajis7g"},
   { dateL:     "JUN 2024",
     img:       "media/redroom.jpg",
     gif:       "",
     text:      "TV Pilot - Crane Cam AC",
     right:     "30 MIN",
-    detail:    "Assistant camera work using the crane cam on the pilot.",
+    detail:    "Assistant camera of the crane cam.",
     youtube:   ""},
   { dateL:     "MAY 2024",
     img:       "media/alges.png",
     gif:       "",
     text:      "Music Video - Camera",
     right:     "4 MIN",
-    detail:    "Camera styling and shots for a music video.",
-    youtube:   ""},
+    detail:    "Dance cover, RIIZE 라이즈 - 'Impossible'.",
+    youtube:   "UsGJUCy7Mx0"},
   { dateL:     "APR 2024",
     img:       "media/cinema.png",
     gif:       "",
     text:      "Short film - Sound",
     right:     "4 MIN",
-    detail:    "Sound recording techniques on a short film set.",
+    detail:    "Sound recording https://vimeo.com/930022904",
     youtube:   ""},
   { dateL:     "FEB 2024",
     img:       "media/moon.jpg",
@@ -355,8 +367,8 @@ const projects = [
     gif:       "",
     text:      "Photography",
     right:     "2 MIN",
-    detail:    "A collection of creative photography shots.",
-    youtube:   ""},
+    detail:    "Behind the scenes photographs",
+    youtube:   "ayyPyMsfCJo"},
   { dateL:     "JUN 2023",
     img:       "media/steady.png",
     gif:       "",
@@ -369,14 +381,14 @@ const projects = [
     gif:       "",
     text:      "C‑41 Developing",
     right:     "XX",
-    detail:    "Tutorial on C‑41 photo developing process.",
+    detail:    "C‑41 Developing",
     youtube:   ""},
   { dateL:     "JUN 2021",
     img:       "media/boat.png",
     gif:       "",
     text:      "Short",
     right:     "1 MIN",
-    detail:    "A quick boating-themed vignette.",
+    detail:    "A quick boating-themed video.",
     youtube:   ""},
   { dateL:     "OCT 2015",
     img:       "media/skydive.png",
@@ -394,6 +406,7 @@ const projects = [
     youtube:   ""},
 ];
 
+//const projects etc etc
     const strip        = document.getElementById("strip");
     const overlay      = document.getElementById("modalOverlay");
     const modalContent = document.getElementById("modalContent");
