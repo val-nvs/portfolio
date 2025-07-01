@@ -6,7 +6,7 @@
   <title>page</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&family=Michroma&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&family=Michroma&display=swap" rel="stylesheet" />
   <style>
     :root {
       --gray-noise-opacity: 1;
@@ -24,7 +24,6 @@
       height: 100%;
       margin: 0;
       background-color: #000;
-
     }
     body {
       height: 100vh;
@@ -44,20 +43,19 @@
       background-color: #333;
       overflow: hidden;
     }
-.gray-box::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: url("media/noise.png");
-  background-repeat: repeat;
-  background-size: 64px 64px;
-  image-rendering: pixelated;
-  mix-blend-mode: soft-light;
-  opacity: var(--gray-noise-opacity);
-  z-index: 1;
-}
-
+    .gray-box::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: url("media/noise.png");
+      background-repeat: repeat;
+      background-size: 64px 64px;
+      image-rendering: pixelated;
+      mix-blend-mode: soft-light;
+      opacity: var(--gray-noise-opacity);
+      z-index: 1;
+    }
     .button-row {
       position: absolute;
       top: min(calc(1 * 1vw), calc(600 * (1 / 100) * 1px));
@@ -71,10 +69,10 @@
       all: unset;
       font-family: 'Atkinson Hyperlegible', sans-serif;
       font-size: min(calc(var(--font-scale) * 1vw), calc(600 * (var(--font-scale) / 100) * 1px));
-  background-image: url("media/noise3.png");
-  background-repeat: repeat;
-  background-size: 64px 64px;
-        padding: 0.6rem 1.2rem;
+      background-image: url("media/noise3.png");
+      background-repeat: repeat;
+      background-size: 64px 64px;
+      padding: 0.6rem 1.2rem;
       border-radius: 0.6rem;
       cursor: pointer;
       transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
@@ -92,21 +90,20 @@
       transform: translateY(1px);
       box-shadow: inset 0 0 0.4rem rgba(0, 0, 0, 0.6);
     }
-.white-box {
-  position: absolute;
-  top: min(calc(10 * 1vw), calc(600 * (10 / 100) * 1px));
-  bottom: min(calc(3 * 1vw), calc(600 * (3 / 100) * 1px));
-  width: 95%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #fff;
-  overflow: hidden;
-  box-shadow: inset 0 0 2rem rgba(0, 0, 0, 1);
-  z-index: 2;
-  border-radius: min(calc(var(--border-r-light) * 1vw), calc(600 * (var(--border-r-light) / 100) * 1px));
-}
-
+    .white-box {
+      position: absolute;
+      top: min(calc(10 * 1vw), calc(600 * (10 / 100) * 1px));
+      bottom: min(calc(3 * 1vw), calc(600 * (3 / 100) * 1px));
+      width: 95%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      overflow: hidden;
+      box-shadow: inset 0 0 2rem rgba(0, 0, 0, 1);
+      z-index: 2;
+      border-radius: min(calc(var(--border-r-light) * 1vw), calc(600 * (var(--border-r-light) / 100) * 1px));
+    }
     .strip {
       position: relative;
       width: 95%;
@@ -120,15 +117,41 @@
       overflow-y: auto;
       scrollbar-width: none;
       -ms-overflow-style: none;
-  background-image: url("media/noise2.png");
-  background-repeat: repeat;
-  background-size: 64px 64px;
-
+      background-image: url("media/noise2.png");
+      background-repeat: repeat;
+      background-size: 64px 64px;
       z-index: 3;
-            box-shadow: 0 0 calc(min(calc(var(--border-r-perf) * 1vw), calc(600 * (var(--border-r-perf) / 100) * 1px))) rgba(0, 0, 0, 0.8);
-
+      box-shadow: 0 0 calc(min(calc(var(--border-r-perf) * 1vw), calc(600 * (var(--border-r-perf) / 100) * 1px))) rgba(0, 0, 0, 0.8);
     }
     .strip::-webkit-scrollbar { display: none; }
+
+    /* ✔️ Gloss‑blob overlay on .strip */
+.strip::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -25%;        /* start off‑canvas so it drifts in */
+  width: 150%;               /* wide enough to sweep across */
+  height: 20%;               /* very short vertically */
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0) 35%,
+    rgba(255,255,255,0.5) 50%,
+    rgba(255,255,255,0) 65%
+  );
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: blur(10px);        /* soften the edges */
+  animation: streakDrift 4s ease-in-out infinite alternate;
+  z-index: 4;
+}
+
+
+@keyframes streakDrift {
+  0%   { transform: translateY(-10%) translateX(0) rotate(0deg); }
+  50%  { transform: translateY( 10%) translateX(50%) rotate(10deg); }
+  100% { transform: translateY(-10%) translateX(100%) rotate(-10deg); }
+}
+
     .frame {
       background: transparent;
       width: 100%;
@@ -144,42 +167,66 @@
       margin: 0; padding: 0; height: 100%; flex: 0 0 auto;
     }
     .left-keycode, .right-keycode {
-      width: 4.7%; display: flex; justify-content: center; align-items: center;
-      font-weight: bold; color: black; 
+      width: 4.7%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      color: black;
       font-family: 'Michroma', sans-serif !important;
       font-size: min(calc(var(--font-scale-keycode) * 1vw), calc(600 * (var(--font-scale-keycode) / 100) * 1px));
     }
     .rotated-right { transform: rotate(90deg); display: inline-block; white-space: nowrap; }
     .rotated-left  { transform: rotate(-90deg); display: inline-block; white-space: nowrap; }
     .perf-column {
-      width: 4.3%; display: flex; justify-content: center; align-items: center;
+      width: 4.3%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .perf-blocks {
-      display: grid; grid-template-rows: repeat(5, 1fr); gap: 11.66%;
-      width: 100%; height: 88.30%;
+      display: grid;
+      grid-template-rows: repeat(5, 1fr);
+      gap: 11.66%;
+      width: 100%;
+      height: 88.30%;
     }
     .perf-blocks > div {
       border-radius: min(calc(var(--border-r-perf) * 1vw), calc(600 * (var(--border-r-perf) / 100) * 1px));
       box-shadow: inset 0 0 calc(min(calc(var(--border-r-perf) * 1vw), calc(600 * (var(--border-r-perf) / 100) * 1px))) rgba(0, 0, 0, 0.8);
-      width: 100%; height: 100%; background-color: rgba(230, 230, 230, 1);
+      width: 100%;
+      height: 100%;
+      background-color: rgba(230, 230, 230, 1);
     }
     .content {
-      width: 82%; height: 100%; position: relative; overflow: hidden; box-sizing: border-box;
+      width: 82%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
     }
     .content img {
-      position: absolute; top: 50%; left: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
       width: calc(100% - min(var(--content-gap-w) * 1vw, calc(600 * (var(--content-gap-w) / 100) * 1px)));
       height: calc(100% - min(var(--content-gap-h) * 1vw, calc(600 * (var(--content-gap-h) / 100) * 1px)));
-      object-fit: cover; transform: translate(-50%, -50%);
-      pointer-events: none; user-select: none;
+      object-fit: cover;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      user-select: none;
       border-radius: min(calc(var(--border-r-content) * 1vw), calc(600 * (var(--border-r-content) / 100) * 1px));
     }
     .text {
-      position: absolute; top: 80%; left: 4%; color: white;
+      position: absolute;
+      top: 80%;
+      left: 4%;
+      color: white;
       font-family: 'Michroma', sans-serif;
-       font-weight: bold;
+      font-weight: bold;
       font-size: min(calc(var(--font-scale) * 1vw), calc(600 * (var(--font-scale) / 100) * 1px));
-      user-select: none; white-space: nowrap;
+      user-select: none;
+      white-space: nowrap;
       text-shadow:
         0 0 3px rgba(0,0,0,0.8),
         5px 5px 5px rgba(0,0,0,0.7),
@@ -190,33 +237,40 @@
       z-index: 10;
     }
     @keyframes slideDown { to { transform: translateY(0); } }
-
-    /* Modal overlay */
     .modal-overlay {
-      position: fixed; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      height: 100%;
-      background: rgba(0,0,0,0.7); 
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
       display: none;
-      justify-content: center; 
-      align-items: center; 
+      justify-content: center;
+      align-items: center;
       z-index: 100;
     }
     .modal {
-      background: #ccc; border-radius: 0.5rem; padding: 1.5rem;
-      width: 95%; max-width: 600px; max-height: 80%; overflow-y: auto;
-      position: relative;   font-family: 'Atkinson Hyperlegible', monospace;
+      background: #ccc;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      width: 95%;
+      max-width: 600px;
+      max-height: 80%;
+      overflow-y: auto;
+      position: relative;
+      font-family: 'Atkinson Hyperlegible', monospace;
       font-size: 1.5rem;
-
     }
     .modal .close {
-      position: absolute; top: 0.5rem; right: 0.75rem;
-      font-size: 2rem; cursor: pointer;
+      position: absolute;
+      top: 0.5rem;
+      right: 0.75rem;
+      font-size: 2rem;
+      cursor: pointer;
     }
     .modal img, .modal iframe {
-      width: 100%; height: auto; display: block; margin-bottom: 1rem;
+      width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: 1rem;
     }
     .modal h2 { margin-top: 0; }
     .modal .meta {
@@ -226,8 +280,6 @@
       justify-content: center;
       gap: 1rem;
     }
-
-    /* keep your existing iframe wrapper */
     .modal .video-wrapper {
       position: relative;
       padding-top: 56.25%; /* 16:9 */
@@ -235,7 +287,7 @@
     }
     .modal .video-wrapper iframe {
       position: absolute;
-      top: 0%; left: 0%;
+      top: 0; left: 0;
       width: 100%;
       height: 95%;
     }
@@ -401,7 +453,6 @@ const projects = [
     youtube:   ""},
 ];
 
-//const projects etc etc
     const strip        = document.getElementById("strip");
     const overlay      = document.getElementById("modalOverlay");
     const modalContent = document.getElementById("modalContent");
@@ -441,46 +492,41 @@ const projects = [
       });
     });
 
-// 4) Frame click → open modal: date/runtime, detail, then (deferred) embed, then image/GIF
-strip.addEventListener("click", e => {
-  const frame = e.target.closest(".frame");
-  if (!frame) return;
-  const p = projects[frame.dataset.index];
+    // 4) Frame click → open modal
+    strip.addEventListener("click", e => {
+      const frame = e.target.closest(".frame");
+      if (!frame) return;
+      const p = projects[frame.dataset.index];
 
-  // 1) Build the basic modal HTML without the iframe
-  const baseHTML = `
-    <h2>${p.text || p.dateL}</h2>
-    <p class="meta">
-      ${p.dateL}${p.right ? `  |  ${p.right}` : ""}
-    </p>
-    <p>${p.detail}</p>
-    <!-- placeholder for video if needed -->
-    <div id="videoPlaceholder"></div>
-    <img src="${p.gif || p.img}" alt="${p.text}" />
-  `;
-
-  modalContent.innerHTML = baseHTML;
-  overlay.style.display   = "flex";
-
-  // 2) Defer the iframe creation to the next paint
-  if (p.youtube) {
-    requestAnimationFrame(() => {
-      const placeholder = document.getElementById("videoPlaceholder");
-      const wrapper     = document.createElement("div");
-      wrapper.className = "video-wrapper";
-      wrapper.innerHTML = `
-        <iframe
-          src="https://www.youtube.com/embed/${p.youtube}"
-          frameborder="0"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
+      const baseHTML = `
+        <h2>${p.text || p.dateL}</h2>
+        <p class="meta">
+          ${p.dateL}${p.right ? `  |  ${p.right}` : ""}
+        </p>
+        <p>${p.detail}</p>
+        <div id="videoPlaceholder"></div>
+        <img src="${p.gif || p.img}" alt="${p.text}" />
       `;
-      placeholder.replaceWith(wrapper);
-    });
-  }
-});
+      modalContent.innerHTML = baseHTML;
+      overlay.style.display   = "flex";
 
+      if (p.youtube) {
+        requestAnimationFrame(() => {
+          const placeholder = document.getElementById("videoPlaceholder");
+          const wrapper     = document.createElement("div");
+          wrapper.className = "video-wrapper";
+          wrapper.innerHTML = `
+            <iframe
+              src="https://www.youtube.com/embed/${p.youtube}"
+              frameborder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          `;
+          placeholder.replaceWith(wrapper);
+        });
+      }
+    });
 
     // 5) Close modal
     modalClose.addEventListener("click", () => overlay.style.display = "none");
@@ -488,22 +534,19 @@ strip.addEventListener("click", e => {
       if (e.target === overlay) overlay.style.display = "none";
     });
 
-
-    // About button event
-document.querySelectorAll('.gray-btn').forEach(btn => {
-  if (btn.textContent.trim().toLowerCase() === 'about') {
-    btn.addEventListener('click', () => {
-      // Example about content for modal
-      const aboutHTML = `
-        <h2>About This Project</h2>
-        <p>This is the about frame popup content. You can customize it with any information about your project.</p>
-      `;
-      modalContent.innerHTML = aboutHTML;
-      overlay.style.display = 'flex';
+    // About button
+    document.querySelectorAll('.gray-btn').forEach(btn => {
+      if (btn.textContent.trim().toLowerCase() === 'about') {
+        btn.addEventListener('click', () => {
+          const aboutHTML = `
+            <h2>About This Project</h2>
+            <p>This is the about frame popup content. You can customize it with any information about your project.</p>
+          `;
+          modalContent.innerHTML = aboutHTML;
+          overlay.style.display = 'flex';
+        });
+      }
     });
-  }
-});
-
   </script>
 </body>
 </html>
