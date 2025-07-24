@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet" />
+  <style>
+    a:link{color:#89CFF0;}
+    a:visited{color:#DDA0DD;}
+    a:hover{color:#FFB6C1;text-decoration:underline;}
+    a:active{color:#FFD580;}
+    body {
+      margin: 0;
+      background: #121212;
+      color: #eee;
+      font-family: 'Comfortaa', serif;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+      flex-wrap: wrap;
+    }
+
+    .project {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      flex: 1 1 300px;
+    }
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .function {
+      font-style: italic;
+      margin: 0;
+    }
+    .duration {
+      font-size: 0.9em;
+      color: #aaa;
+      margin: 0;
+    }
+    .title {
+      font-weight: 700;
+      font-size: 1.4em;
+      margin-bottom: 4px;
+    }
+    .media {
+      margin-bottom: 15px;
+    }
+    .media img, .media iframe {
+      max-width: 100%;
+      border-radius: 8px;
+      display: block;
+    }
+    .media .copyright {
+      font-size: 0.7em;
+      color: #666;
+      margin-top: 4px;
+    }
+    .description {
+      margin-bottom: 12px;
+    }
+    .toggle-btn {
+      background: #222;
+      color: #aaa;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Comfortaa', serif;
+      margin-bottom: 10px;
+    }
+    .video-container {
+      margin-top: 10px;
+      display: none;
+    }
+    iframe {
+      width: 100%;
+      height: 225px;
+      border: none;
+      border-radius: 8px;
+    }
+    #about { background: #254; }
+    #title { background: #522; }
+    .ee {
+      background: #411;
+      display: none; /* EE hidden by default */
+    }
+    .film {
+      background: #224;
+      /* films visible by default */
+    }
+    .pic {
+      background: rgba(0, 0, 0, 0);
+      display: none; /* photos hidden by default */
+      padding: 0px;
+
+    }
+    .mix { background: #323; }
+
+    /* Top­-of­-page toggle container */
+    #toggles {
+            background: transparent;
+      color: #fff;
+      position: relative;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+    }
+    .top-toggle-btn {
+      background: rgba(100, 100, 120, 0.4);
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Comfortaa', serif;
+      margin: 0 8px;
+    }
+    header {
+  flex: 0 0 auto;      /* don’t grow or shrink; size to its own content */
+  width: 100%;         /* span the full width of its container */
+  align-self: stretch; /* make sure it stretches across the cross-axis */
+  padding:1rem;
+  padding-top: 0;
+}
+  </style>
+</head>
+<body>
+
+<header>
+    <div id="toggles">
+    <p class="top-toggle-btn">Valdir Neves' Portfolio
+    <button id="pic-toggle" class="top-toggle-btn">Show Photography</button>
+    <button id="ee-toggle" class="top-toggle-btn">Show STEM</button>
+    <button id="film-toggle" class="top-toggle-btn">Hide Film</button>
+  </p></div>
+</header>
+
+
+
+
+  <div class="project" id="about">
+    <div class="header-row">
+      <div class="function">About Me</div>
+      <div class="duration"></div>
+    </div>
+    <div class="title">Valdir Neves</div>
+    <div class="media">
+      <img src="media/group0.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+    <div class="description">Brazilian living in Lisbon, Portugal. Passionate about engineering, filmmaking, photography, optics and architecture. Fluent in English.</div>
+    <div class="description">Student at ETIC Lisboa.</div>
+    <div class="description">Contact: valdir.nvs@hotmail.com</div>
+    <div class="description">Instagram: <a href="https://www.instagram.com/val.nevs/" target="_blank" rel="noopener noreferrer">@val.nevs</a></div>
+  </div>
+  
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Camera Operator</div>
+      <div class="duration">July 2025</div>
+    </div>
+    <div class="title">Dance cover</div>
+    <div class="media">
+      <img src="media/aaa.jpg" alt="" />
+      <div class="copyright">© Photo S</div>
+      <img src="media/aaa.jpg" alt="" />
+    </div>
+    <div class="description">KPOP</div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <iframe src="https://www.youtube.com/embed/aaa" allowfullscreen></iframe>
+      <div class="copyright">text</div>
+    </div>
+  </div>
+  
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Sound Mixer, Boom Operator, Media Manager</div>
+      <div class="duration">May 2025</div>
+    </div>
+    <div class="title">Short film</div>
+    <div class="media">
+      <img src="media/perche.jpg" alt="" />
+      <div class="copyright">© Photo Madalena</div>
+      <img src="media/liberdade.jpg" alt="" />
+    </div>
+    <div class="description">Recorded production sound and streamlined file workflow with batch-edit scripts and spreadsheet tracking for a 20-minute action thriller, shot in 13 days at 6 varied locations across Lisbon.</div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <iframe src="https://www.youtube.com/embed/aaa" allowfullscreen></iframe>
+      <div class="copyright">© Video</div>
+    </div>
+  </div>
+
+  <div class="project ee">
+    <div class="header-row">
+      <div class="function">Gate-level Full Adder</div>
+      <div class="duration">May 2025</div>
+    </div>
+    <div class="media">
+      <img src="media/adder.jpg" alt="" />
+      <div class="copyright">© aaa</div>
+    </div>
+  </div>
+
+  <div class="project ee">
+    <div class="header-row">
+      <div class="function">Blender Guide</div>
+      <div class="duration">May 2025</div>
+    </div>
+    <div class="media">
+      <img src="media/areas.png" alt="" />
+      <div class="copyright">© aaa/</div>
+    </div>
+      <div class="description">
+        <a href="https://val-nvs.github.io/blender-guide/" target="_blank" rel="noopener noreferrer">
+          https://val-nvs.github.io/blender-guide/
+        </a>
+      </div>
+  </div>
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Gimbal Camera Operator</div>
+      <div class="duration">Jan. 2025</div>
+    </div>
+    <div class="title">Documentary (15min)</div>
+    <div class="media">
+      <img src="media/chapito.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+    <div class="description">Documentary about Pascoal Furtado, a teacher at Chapitô, a circus school in Lisbon</div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <iframe src="https://www.youtube.com/embed/ztUn9QWYk_Y" allowfullscreen></iframe>
+      <div class="copyright">© Video</div>
+    </div>
+  </div>
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Camera Operator</div>
+      <div class="duration">Oct. 2024</div>
+    </div>
+    <div class="title">Film festival coverage</div>
+    <div class="media">
+      <img src="media/doclisboa.png" alt="" />
+      <img src="media/doclis.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+    <div class="description">Filmed B-roll and presentations for Doclisboa, Portugal’s leading international documentary film festival.</div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <iframe src="https://www.youtube.com/embed/NPPzUJvmkq8" allowfullscreen></iframe>
+      <div class="copyright">© Video</div>
+    </div>
+  </div>
+
+
+  <div class="project pic">
+    <div class="media">
+      <img src="media/bridgetall.png" alt="" />
+    </div>
+  </div>
+
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Photoshoot Scouting & App UI</div>
+      <div class="duration">October 2024</div>
+    </div>
+    <div class="title">Rebranding Pitch</div>
+    <div class="media">
+      <img src="media/justy.jpg" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+    <div class="description">Rebranding Pitch for "Just a Change", a non-profit organization in Lisbon</div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <iframe src="https://www.youtube.com/embed/53ViHFOege0" allowfullscreen></iframe>
+      <div class="copyright">© Video</div>
+    </div>
+  </div>
+
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Camera Operator</div>
+      <div class="duration">August 2024</div>
+    </div>
+    <div class="title">Interview (3.8min)</div>
+    <div class="media">
+      <img src="media/dog.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+    <div class="description">Interview about Sebastião Ogando - Inês Serra</div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <iframe src="https://www.youtube.com/embed/__UxmK7BD68" allowfullscreen></iframe>
+      <div class="copyright">© Video</div>
+    </div>
+  </div>
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Camera Operator</div>
+      <div class="duration">August 2024</div>
+    </div>
+    <div class="title">Short Film</div>
+    <div class="media">
+      <img src="media/blue.jpg" alt="" />
+      <div class="copyright">© Inês Serra</div>
+    </div>
+    <div class="description">Experimental short film</div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <iframe src="https://www.youtube.com/embed/FcrQnCTnG0M" allowfullscreen></iframe>
+      <div class="copyright">© Video</div>
+    </div>
+  </div>
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Crane Camera Operator & Pre-Vis</div>
+      <div class="duration">Jun. 2024</div>
+    </div>
+    <div class="title">Live TV program mock-up (32 min)</div>
+    <div class="media">
+      <img src="media/group1.png" alt="" />
+      <img src="media/blender.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+    <div class="description">Video description goes here</div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <iframe src="https://www.youtube.com/embed/5LlSdajis7g" allowfullscreen></iframe>
+      <div class="copyright">© Video</div>
+    </div>
+  </div>
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Gaffer/Lighting Electrician & Assistant Crane Operator</div>
+      <div class="duration">Jun. 2024</div>
+    </div>
+    <div class="title">Live TV program mock-up (~30m)</div>
+    <div class="media">
+      <img src="media/redroom.jpg" alt="" />
+      <img src="media/cctv.jpg" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+    <div class="description">Video description goes here</div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <iframe src="https://www.youtube.com/embed/aaa" allowfullscreen></iframe>
+      <div class="copyright">© Video</div>
+    </div>
+  </div>
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Camera Operator</div>
+      <div class="duration">May 2024</div>
+    </div>
+    <div class="title">Dance cover music video (3.7min)</div>
+    <div class="media">
+      <img src="media/alges.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <div class="description">RIIZE 라이즈 - 'Impossible'</div>
+      <iframe src="https://www.youtube.com/embed/UsGJUCy7Mx0" allowfullscreen></iframe>
+      <div class="copyright">© Video</div>
+    </div>
+  </div>
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Sound Mixer, Boom Operator</div>
+      <div class="duration">April 2024</div>
+    </div>
+    <div class="title">Short film (3.8min)</div>
+    <div class="media">
+      <img src="media/framing.png" alt="" />
+      <img src="media/cinema.png" alt="" />
+      <div class="copyright">@ Forum Lisboa</div>
+    </div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <div class="description">El Artista Comprendido</div>
+      <iframe 
+        src="https://player.vimeo.com/video/930022904?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" 
+        width="100%" 
+        height="100%" 
+        frameborder="0" 
+        allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
+        allowfullscreen 
+        title="Vimeo video">
+      </iframe>
+      <div class="copyright">© Charlie Chaves</div>
+    </div>
+  </div>
+
+
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Director / Gimbal Camera</div>
+      <div class="duration">Feb. 2024</div>
+    </div>
+    <div class="title">Short film (1.9min)</div>
+    <div class="media">
+      <img src="media/aaa.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+    <div class="description">Video description goes here</div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <iframe src="https://www.youtube.com/embed/0laM8mNg5xY" allowfullscreen></iframe>
+      <div class="copyright">© Video</div>
+    </div>
+  </div>
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Photography/Props</div>
+      <div class="duration">Jan. 2024</div>
+    </div>
+    <div class="title">Short film (1.8min)</div>
+    <div class="media">
+      <img src="media/people.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+    <div class="description">Video description goes here</div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <iframe src="https://www.youtube.com/embed/ayyPyMsfCJo" allowfullscreen></iframe>
+      <div class="copyright">© Video</div>
+    </div>
+  </div>
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">'Movie Magic Scheduling' Classes</div>
+      <div class="duration">Sep. 2023</div>
+    </div>
+    <div class="media">
+      <img src="media/mms.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+  </div>
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Cyanotype Workshop</div>
+      <div class="duration">Sep. 2023</div>
+    </div>
+    <div class="media">
+      <img src="media/cyano.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+  </div>
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Director / Steadicam Camera</div>
+      <div class="duration">June 2023</div>
+    </div>
+    <div class="title">Short film (1.9min)</div>
+    <div class="media">
+      <img src="media/steady.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+    <div class="description">Video description goes here</div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <iframe src="https://www.youtube.com/embed/PHQb5IYAWm0" allowfullscreen></iframe>
+      <div class="copyright">© Video</div>
+    </div>
+  </div>
+
+  <div class="project ee">
+    <div class="header-row">
+      <div class="function">Procedural 3D Models & Textures - Blender Nodes</div>
+      <div class="duration">Nov. 2022</div>
+    </div>
+    <div class="media">
+      <img src="media/nodes.png" alt="" />
+      <img src="media/pop.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+  </div>
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Virtual Production tests</div>
+      <div class="duration">Feb. 2022</div>
+    </div>
+    <div class="media">
+      <img src="media/vive.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+  </div>
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Film Developing</div>
+      <div class="duration">Dec. 2021</div>
+    </div>
+    <div class="media">
+      <img src="media/film.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+  </div>
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Short film</div>
+      <div class="duration">Jun. 2021</div>
+    </div>
+    <div class="media">
+      <img src="media/boat.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+    <div class="description">Video description goes here</div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <iframe src="https://www.youtube.com/embed/h13c_dRhnCg" allowfullscreen></iframe>
+      <div class="copyright">© Video</div>
+    </div>
+  </div>
+
+  <div class="project ee">
+    <div class="header-row">
+      <div class="function">PCB Designing</div>
+      <div class="duration">Aug. 2020</div>
+    </div>
+    <div class="media">
+      <img src="media/pcb3d.png" alt="" />
+      <div class="copyright">@ KiCad</div>
+    </div>
+  </div>
+
+  <div class="project ee">
+    <div class="header-row">
+      <div class="function">aaa</div>
+      <div class="duration">aaa</div>
+    </div>
+    <div class="media">
+      <img src="media/432one.png" alt="" />
+      <img src="media/432three.png" alt="" />
+      <div class="copyright">@ Unity</div>
+    </div>
+    <div class="media">
+      <img src="media/mirror.png" alt="" />
+      <div class="copyright">@ VR Chat</div>
+    </div>
+  </div>
+
+  <div class="project ee">
+    <div class="header-row">
+      <div class="function">Minecraft Mod</div>
+      <div class="duration">Dec. 2015</div>
+    </div>
+    <div class="media">
+      <img src="media/commands.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+  </div>
+
+  <div class="project pic">
+    <div class="media">
+      <img src="media/moon.jpg" alt="" />
+    </div>
+  </div>
+
+  <div class="project pic">
+    <div class="media">
+      <img src="media/pic1.jpg" alt="" />
+    </div>
+  </div>
+
+  <div class="project pic">
+    <div class="media">
+      <img src="media/pic2.jpg" alt="" />
+    </div>
+  </div>
+
+  <div class="project pic">
+    <div class="media">
+      <img src="media/pic0.jpg" alt="" />
+    </div>
+  </div>
+
+
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Short film</div>
+      <div class="duration">Oct. 2015</div>
+    </div>
+    <div class="media">
+      <img src="media/skydive.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+    <div class="description">Animation in Grand Theft Auto</div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <iframe src="https://www.youtube.com/embed/aaa" allowfullscreen></iframe>
+      <div class="copyright">© Video</div>
+    </div>
+  </div>
+
+  <div class="project film">
+    <div class="header-row">
+      <div class="function">Short film - Keyframe animation</div>
+      <div class="duration">Aug. 2015</div>
+    </div>
+    <div class="media">
+      <img src="media/keyframes.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+    <div class="description">Video description goes here</div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <iframe src="https://www.youtube.com/embed/aaa" allowfullscreen></iframe>
+      <div class="copyright">© Video</div>
+    </div>
+  </div>
+
+  <div class="project">
+    <div class="header-row">
+      <div class="function">aaa</div>
+      <div class="duration">aaa</div>
+    </div>
+    <div class="media">
+      <img src="media/pcb.png" alt="" />
+      <img src="media/watermelon.png" alt="" />
+      <div class="copyright">© Photo</div>
+    </div>
+    <div class="description">Video description goes here</div>
+    <button class="toggle-btn" onclick="toggleVideo(this)">Show Video</button>
+    <div class="video-container media">
+      <iframe src="https://www.youtube.com/embed/aaa" allowfullscreen></iframe>
+      <div class="copyright">© Video</div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle individual video players
+    function toggleVideo(button) {
+      const project = button.closest('.project');
+      const videoArea = project.querySelector('.video-container');
+      if (videoArea.style.display === 'block') {
+        videoArea.style.display = 'none';
+        button.textContent = 'Show Video';
+      } else {
+        videoArea.style.display = 'block';
+        button.textContent = 'Hide Video';
+      }
+    }
+
+    // EE toggle logic
+    const eeToggle = document.getElementById('ee-toggle');
+    let eeVisible = false;
+    eeToggle.addEventListener('click', () => {
+      eeVisible = !eeVisible;
+      document.querySelectorAll('.ee').forEach(el => {
+        el.style.display = eeVisible ? 'block' : 'none';
+      });
+      eeToggle.textContent = eeVisible ? 'Hide STEM' : 'Show STEM';
+    });
+
+    // Film toggle logic
+    const filmToggle = document.getElementById('film-toggle');
+    let filmVisible = true; // film sections start visible
+    filmToggle.addEventListener('click', () => {
+      filmVisible = !filmVisible;
+      document.querySelectorAll('.film').forEach(el => {
+        el.style.display = filmVisible ? 'block' : 'none';
+      });
+      filmToggle.textContent = filmVisible ? 'Hide Film' : 'Show Film';
+    });
+
+    // Photos toggle logic
+    const picToggle = document.getElementById('pic-toggle');
+    let picVisible = false; // photos sections start visible
+    picToggle.addEventListener('click', () => {
+      picVisible = !picVisible;
+      document.querySelectorAll('.pic').forEach(el => {
+        el.style.display = picVisible ? 'block' : 'none';
+      });
+      picToggle.textContent = picVisible ? 'Hide Photography' : 'Show Photography';
+    });
+  </script>
+</body>
+</html>
