@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCB Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #0a4a2a;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Parallax Container */
+        .parallax-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* PCB Background - Slowest parallax */
+        .pcb-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 110%;
+            height: 110%;
+            background-color: #0a4a2a;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    #0c5c3a 2px,
+                    #0c5c3a 4px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 2px,
+                    #0c5c3a 2px,
+                    #0c5c3a 4px
+                );
+            background-size: 50px 50px;
+            z-index: -3;
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        /* Circuit traces - Medium parallax */
+        .traces-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 200%;
+            z-index: -2;
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        .trace {
+            position: absolute;
+            background: linear-gradient(90deg, 
+                rgba(255, 215, 0, 0.2),
+                rgba(255, 215, 0, 0.4),
+                rgba(255, 215, 0, 0.2)
+            );
+            box-shadow: 0 0 2px rgba(255, 215, 0, 0.3);
+        }
+
+        .trace-h {
+            height: 2px;
+            width: 200px;
+        }
+
+        .trace-v {
+            width: 2px;
+            height: 200px;
+        }
+
+        /* SMD Components Layer - Fast parallax */
+        .components-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 200%;
+            z-index: -1;
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        /* SMD LEDs */
+        .smd-led {
+            position: absolute;
+            width: 8px;
+            height: 12px;
+            background: linear-gradient(90deg, #ddd 20%, #fff 50%, #ddd 80%);
+            border: 1px solid #888;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .smd-led::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 4px;
+            height: 8px;
+            background-color: #ff0000;
+            opacity: 0;
+            animation: blink 3s infinite;
+        }
+
+        .smd-led.green::after {
+            background-color: #00ff00;
+            animation-delay: 1s;
+        }
+
+        .smd-led.yellow::after {
+            background-color: #ffff00;
+            animation-delay: 2s;
+        }
+
+        @keyframes blink {
+            0%, 70%, 100% { opacity: 0; }
+            75%, 95% { opacity: 1; box-shadow: 0 0 10px currentColor; }
+        }
+
+        /* Content Container */
+        .content-container {
+            position: relative;
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            z-index: 10;
+        }
+
+        /* Realistic IC Chip Style */
+        .ic-chip {
+            background: linear-gradient(145deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
+            border: 1px solid #111;
+            border-radius: 2px;
+            padding: 40px;
+            margin: 60px 0;
+            position: relative;
+            box-shadow: 
+                0 8px 16px rgba(0,0,0,0.7),
+                inset 0 1px 0 rgba(255,255,255,0.05),
+                inset 0 -1px 0 rgba(0,0,0,0.8);
+            color: #e0e0e0;
+            overflow: visible;
+        }
+
+        /* IC Surface texture */
+        .ic-chip::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(255,255,255,0.01) 10px,
+                    rgba(255,255,255,0.01) 20px
+                );
+            pointer-events: none;
+            border-radius: 2px;
+        }
+
+        /* Pin 1 indicator (notch) */
+        .ic-notch {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 10px;
+            height: 10px;
+            background-color: #0a0a0a;
+            border-radius: 50%;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.8);
+        }
+
+        /* IC Pins Container */
+        .ic-pins-left,
+        .ic-pins-right {
+            position: absolute;
+            top: 20px;
+            bottom: 20px;
+            width: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: -1;
+        }
+
+        .ic-pins-left {
+            left: -30px;
+        }
+
+        .ic-pins-right {
+            right: -30px;
+        }
+
+        /* Individual IC Pin */
+        .ic-pin {
+            width: 30px;
+            height: 8px;
+            background: linear-gradient(90deg, 
+                #808080 0%, 
+                #C0C0C0 30%, 
+                #E0E0E0 50%, 
+                #C0C0C0 70%, 
+                #808080 100%
+            );
+            border: 1px solid #606060;
+            box-shadow: 
+                0 1px 2px rgba(0,0,0,0.4),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+            position: relative;
+        }
+
+        .ic-pins-left .ic-pin {
+            border-radius: 3px 0 0 3px;
+        }
+
+        .ic-pins-right .ic-pin {
+            border-radius: 0 3px 3px 0;
+        }
+
+        /* Pin numbers */
+        .ic-pin::after {
+            content: attr(data-pin);
+            position: absolute;
+            font-size: 6px;
+            color: #666;
+            top: -8px;
+        }
+
+        .ic-pins-left .ic-pin::after {
+            left: 2px;
+        }
+
+        .ic-pins-right .ic-pin::after {
+            right: 2px;
+        }
+
+        /* IC positioning for variety */
+        .ic-chip:nth-child(1) { margin-left: 0px; }
+        .ic-chip:nth-child(2) { margin-left: 150px; }
+        .ic-chip:nth-child(3) { margin-left: 50px; }
+        .ic-chip:nth-child(4) { margin-left: 200px; }
+        .ic-chip:nth-child(5) { margin-left: 100px; }
+
+        /* IC Label */
+        .ic-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 9px;
+            color: #555;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+            text-align: center;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .ic-label .ic-logo {
+            font-size: 14px;
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 3px;
+        }
+
+        .ic-label .ic-part {
+            font-size: 11px;
+            color: #777;
+        }
+
+        .ic-label .ic-date {
+            font-size: 8px;
+            color: #555;
+            margin-top: 3px;
+        }
+
+        /* Content styling */
+        .ic-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Typography */
+        h1 {
+            color: #FFD700;
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+
+        h2 {
+            color: #FFD700;
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        p, li {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        ul li::before {
+            content: '▸ ';
+            color: #FFD700;
+            font-weight: bold;
+            margin-left: -20px;
+            margin-right: 10px;
+        }
+
+        /* Contact Links */
+        .contact-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+            color: #FFD700;
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #FFD700;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        .contact-links a:hover {
+            background-color: #FFD700;
+            color: #1a1a1a;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Via holes */
+        .via {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #111 40%, #333 60%, #222 100%);
+            border: 1px solid #444;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.8);
+        }
+
+        /* Capacitors */
+        .cap {
+            position: absolute;
+            width: 12px;
+            height: 20px;
+            background: linear-gradient(180deg, #8B4513 0%, #A0522D 50%, #8B4513 100%);
+            border: 1px solid #654321;
+            border-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .cap::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            height: 2px;
+            background: rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="parallax-container">
+        <div class="pcb-background" data-speed="0.2"></div>
+        
+        <div class="traces-layer" data-speed="0.4">
+            <!-- Circuit traces -->
+            <div class="trace trace-h" style="top: 100px; left: 50px;"></div>
+            <div class="trace trace-v" style="top: 150px; left: 250px;"></div>
+            <div class="trace trace-h" style="top: 300px; left: 300px;"></div>
+            <div class="trace trace-v" style="top: 400px; left: 100px;"></div>
+            <div class="trace trace-h" style="top: 500px; left: 150px;"></div>
+            <div class="trace trace-v" style="top: 200px; left: 500px;"></div>
+            <div class="trace trace-h" style="top: 700px; left: 200px;"></div>
+            <div class="trace trace-v" style="top: 600px; left: 400px;"></div>
+            <div class="trace trace-h" style="top: 900px; left: 350px;"></div>
+            <div class="trace trace-v" style="top: 800px; left: 550px;"></div>
+            <div class="trace trace-h" style="top: 1100px; left: 100px;"></div>
+            <div class="trace trace-v" style="top: 1000px; left: 300px;"></div>
+        </div>
+
+        <div class="components-layer" data-speed="0.6">
+            <!-- SMD LEDs -->
+            <div class="smd-led" style="top: 80px; left: 300px;"></div>
+            <div class="smd-led green" style="top: 250px; left: 120px;"></div>
+            <div class="smd-led yellow" style="top: 420px; left: 480px;"></div>
+            <div class="smd-led" style="top: 550px; left: 250px;"></div>
+            <div class="smd-led green" style="top: 680px; left: 380px;"></div>
+            <div class="smd-led yellow" style="top: 320px; left: 550px;"></div>
+            <div class="smd-led" style="top: 750px; left: 150px;"></div>
+            <div class="smd-led green" style="top: 880px; left: 450px;"></div>
+            <div class="smd-led yellow" style="top: 1020px; left: 200px;"></div>
+            <div class="smd-led" style="top: 1150px; left: 400px;"></div>
+
+            <!-- Via holes -->
+            <div class="via" style="top: 120px; left: 180px;"></div>
+            <div class="via" style="top: 220px; left: 380px;"></div>
+            <div class="via" style="top: 340px; left: 80px;"></div>
+            <div class="via" style="top: 460px; left: 280px;"></div>
+            <div class="via" style="top: 580px; left: 180px;"></div>
+            <div class="via" style="top: 700px; left: 480px;"></div>
+            <div class="via" style="top: 820px; left: 280px;"></div>
+            <div class="via" style="top: 940px; left: 380px;"></div>
+            <div class="via" style="top: 1060px; left: 150px;"></div>
+            <div class="via" style="top: 1180px; left: 320px;"></div>
+
+            <!-- Capacitors -->
+            <div class="cap" style="top: 160px; left: 420px;"></div>
+            <div class="cap" style="top: 380px; left: 200px;"></div>
+            <div class="cap" style="top: 620px; left: 350px;"></div>
+            <div class="cap" style="top: 860px; left: 180px;"></div>
+            <div class="cap" style="top: 1100px; left: 450px;"></div>
+        </div>
+    </div>
+
+    <div class="content-container">
+        <!-- Header IC -->
+        <div class="ic-chip">
+            <div class="ic-notch"></div>
+            <div class="ic-pins-left">
+                <div class="ic-pin" data-pin="1"></div>
+                <div class="ic-pin" data-pin="2"></div>
+                <div class="ic-pin" data-pin="3"></div>
+                <div class="ic-pin" data-pin="4"></div>
+                <div class="ic-pin" data-pin="5"></div>
+                <div class="ic-pin" data-pin="6"></div>
+                <div class="ic-pin" data-pin="7"></div>
+                <div class="ic-pin" data-pin="8"></div>
+            </div>
+            <div class="ic-pins-right">
+                <div class="ic-pin" data-pin="16"></div>
+                <div class="ic-pin" data-pin="15"></div>
+                <div class="ic-pin" data-pin="14"></div>
+                <div class="ic-pin" data-pin="13"></div>
+                <div class="ic-pin" data-pin="12"></div>
+                <div class="ic-pin" data-pin="11"></div>
+                <div class="ic-pin" data-pin="10"></div>
+                <div class="ic-pin" data-pin="9"></div>
+            </div>
+            <div class="ic-label">
+                <div class="ic-logo">◆</div>
+                <div class="ic-part">MC74HC595</div>
+                <div class="ic-date">2025W12</div>
+            </div>
+            <div class="ic-content">
+                <h1>JOHN DOE</h1>
+                <p>Full Stack Developer | Hardware Enthusiast</p>
+                <p>Building digital solutions with the precision of circuit design</p>
+            </div>
+        </div>
+
+        <!-- About IC -->
+        <div class="ic-chip">
+            <div class="ic-notch"></div>
+            <div class="ic-pins-left">
+                <div class="ic-pin" data-pin="1"></div>
+                <div class="ic-pin" data-pin="2"></div>
+                <div class="ic-pin" data-pin="3"></div>
+                <div class="ic-pin" data-pin="4"></div>
+                <div class="ic-pin" data-pin="5"></div>
+                <div class="ic-pin" data-pin="6"></div>
+                <div class="ic-pin" data-pin="7"></div>
+                <div class="ic-pin" data-pin="8"></div>
+                <div class="ic-pin" data-pin="9"></div>
+                <div class="ic-pin" data-pin="10"></div>
+            </div>
+            <div class="ic-pins-right">
+                <div class="ic-pin" data-pin="20"></div>
+                <div class="ic-pin" data-pin="19"></div>
+                <div class="ic-pin" data-pin="18"></div>
+                <div class="ic-pin" data-pin="17"></div>
+                <div class="ic-pin" data-pin="16"></div>
+                <div class="ic-pin" data-pin="15"></div>
+                <div class="ic-pin" data-pin="14"></div>
+                <div class="ic-pin" data-pin="13"></div>
+                <div class="ic-pin" data-pin="12"></div>
+                <div class="ic-pin" data-pin="11"></div>
+            </div>
+            <div class="ic-label">
+                <div class="ic-logo">▼</div>
+                <div class="ic-part">ATmega328P</div>
+                <div class="ic-date">2025W08</div>
+            </div>
+            <div class="ic-content">
+                <h2>About Me</h2>
+                <p>Passionate developer with 5+ years of experience in creating innovative web applications. 
+                I bridge the gap between software elegance and hardware efficiency, bringing a unique perspective 
+                to every project.</p>
+                <p>Specializing in modern web technologies with a deep appreciation for low-level optimization 
+                and system architecture.</p>
+            </div>
+        </div>
+
+        <!-- Skills IC -->
+        <div class="ic-chip">
+            <div class="ic-notch"></div>
+            <div class="ic-pins-left">
+                <div class="ic-pin" data-pin="1"></div>
+                <div class="ic-pin" data-pin="2"></div>
+                <div class="ic-pin" data-pin="3"></div>
+                <div class="ic-pin" data-pin="4"></div>
+                <div class="ic-pin" data-pin="5"></div>
+                <div class="ic-pin" data-pin="6"></div>
+                <div class="ic-pin" data-pin="7"></div>
+                <div class="ic-pin" data-pin="8"></div>
+                <div class="ic-pin" data-pin="9"></div>
+                <div class="ic-pin" data-pin="10"></div>
+                <div class="ic-pin" data-pin="11"></div>
+                <div class="ic-pin" data-pin="12"></div>
+            </div>
+            <div class="ic-pins-right">
+                <div class="ic-pin" data-pin="24"></div>
+                <div class="ic-pin" data-pin="23"></div>
+                <div class="ic-pin" data-pin="22"></div>
+                <div class="ic-pin" data-pin="21"></div>
+                <div class="ic-pin" data-pin="20"></div>
+                <div class="ic-pin" data-pin="19"></div>
+                <div class="ic-pin" data-pin="18"></div>
+                <div class="ic-pin" data-pin="17"></div>
+                <div class="ic-pin" data-pin="16"></div>
+                <div class="ic-pin" data-pin="15"></div>
+                <div class="ic-pin" data-pin="14"></div>
+                <div class="ic-pin" data-pin="13"></div>
+            </div>
+            <div class="ic-label">
+                <div class="ic-logo">◈</div>
+                <div class="ic-part">STM32F103</div>
+                <div class="ic-date">2025W11</div>
+            </div>
+            <div class="ic-content">
+                <h2>Technical Stack</h2>
+                <ul>
+                    <li>JavaScript / TypeScript / Python</li>
+                    <li>React / Node.js / Express</li>
+                    <li>PostgreSQL / MongoDB / Redis</li>
+                    <li>Docker / Kubernetes / AWS</li>
+                    <li>Embedded C / Arduino / Raspberry Pi</li>
+                    <li>PCB Design / Circuit Analysis</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Projects IC -->
+        <div class="ic-chip">
+            <div class="ic-notch"></div>
+            <div class="ic-pins-left">
+                <div class="ic-pin" data-pin="1"></div>
+                <div class="ic-pin" data-pin="2"></div>
+                <div class="ic-pin" data-pin="3"></div>
+                <div class="ic-pin" data-pin="4"></div>
+                <div class="ic-pin" data-pin="5"></div>
+                <div class="ic-pin" data-pin="6"></div>
+                <div class="ic-pin" data-pin="7"></div>
+                <div class="ic-pin" data-pin="8"></div>
+                <div class="ic-pin" data-pin="9"></div>
+                <div class="ic-pin" data-pin="10"></div>
+                <div class="ic-pin" data-pin="11"></div>
+                <div class="ic-pin" data-pin="12"></div>
+                <div class="ic-pin" data-pin="13"></div>
+                <div class="ic-pin" data-pin="14"></div>
+            </div>
+            <div class="ic-pins-right">
+                <div class="ic-pin" data-pin="28"></div>
+                <div class="ic-pin" data-pin="27"></div>
+                <div class="ic-pin" data-pin="26"></div>
+                <div class="ic-pin" data-pin="25"></div>
+                <div class="ic-pin" data-pin="24"></div>
+                <div class="ic-pin" data-pin="23"></div>
+                <div class="ic-pin" data-pin="22"></div>
+                <div class="ic-pin" data-pin="21"></div>
+                <div class="ic-pin" data-pin="20"></div>
+                <div class="ic-pin" data-pin="19"></div>
+                <div class="ic-pin" data-pin="18"></div>
+                <div class="ic-pin" data-pin="17"></div>
+                <div class="ic-pin" data-pin="16"></div>
+                <div class="ic-pin" data-pin="15"></div>
+            </div>
+            <div class="ic-label">
+                <div class="ic-logo">◉</div>
+                <div class="ic-part">ESP32-WROOM</div>
+                <div class="ic-date">2025W10</div>
+            </div>
+            <div class="ic-content">
+                <h2>Featured Projects</h2>
+                <ul>
+                    <li><strong>IoT Dashboard:</strong> Real-time monitoring system for industrial sensors</li>
+                    <li><strong>E-Commerce Platform:</strong> Scalable marketplace with 100k+ daily users</li>
+                    <li><strong>Smart Home Controller:</strong> Custom PCB design with web interface</li>
+                    <li><strong>Data Pipeline:</strong> ETL system processing 1TB+ daily</li>
+                    <li><strong>Open Source Contributions:</strong> Active maintainer of 3 popular libraries</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Contact IC -->
+        <div class="ic-chip">
+            <div class="ic-notch"></div>
+            <div class="ic-pins-left">
+                <div class="ic-pin" data-pin="1"></div>
+                <div class="ic-pin" data-pin="2"></div>
+                <div class="ic-pin" data-pin="3"></div>
+                <div class="ic-pin" data-pin="4"></div>
+                <div class="ic-pin" data-pin="5"></div>
+                <div class="ic-pin" data-pin="6"></div>
+            </div>
+            <div class="ic-pins-right">
+                <div class="ic-pin" data-pin="12"></div>
+                <div class="ic-pin" data-pin="11"></div>
+                <div class="ic-pin" data-pin="10"></div>
+                <div class="ic-pin" data-pin="9"></div>
+                <div class="ic-pin" data-pin="8"></div>
+                <div class="ic-pin" data-pin="7"></div>
+            </div>
+            <div class="ic-label">
+                <div class="ic-logo">⬟</div>
+                <div class="ic-part">NE555</div>
+                <div class="ic-date">2025W09</div>
+            </div>
+            <div class="ic-content">
+                <h2>Connect</h2>
+                <div class="contact-links">
+                    <a href="mailto:john@example.com">Email</a>
+                    <a href="https://github.com">GitHub</a>
+                    <a href="https://linkedin.com">LinkedIn</a>
+                    <a href="https://twitter.com">Twitter</a>
+                </div>
+                <p style="margin-top: 20px; font-size: 12px; color: #888;">
+                    STATUS: OPERATIONAL | UPTIME: 99.9% | LAST UPDATE: 2025
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Parallax effect
+        let lastScrollY = 0;
+        let ticking = false;
+
+        function updateParallax() {
+            const scrollY = window.pageYOffset;
+            
+            // Update PCB background
+            const pcbBg = document.querySelector('.pcb-background');
+            if (pcbBg) {
+                const speed = parseFloat(pcbBg.dataset.speed);
+                pcbBg.style.transform = `translateY(${scrollY * speed}px)`;
+            }
+            
+            // Update traces layer
+            const tracesLayer = document.querySelector('.traces-layer');
+            if (tracesLayer) {
+                const speed = parseFloat(tracesLayer.dataset.speed);
+                tracesLayer.style.transform = `translateY(${scrollY * speed}px)`;
+            }
+            
+            // Update components layer
+            const componentsLayer = document.querySelector('.components-layer');
+            if (componentsLayer) {
+                const speed = parseFloat(componentsLayer.dataset.speed);
+                componentsLayer.style.transform = `translateY(${scrollY * speed}px)`;
+            }
+            
+            lastScrollY = scrollY;
+            ticking = false;
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                window.requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', requestTick);
+
+        // Add more dynamic traces on scroll
+        let traceCount = 12;
+        window.addEventListener('scroll', () => {
+            if (traceCount < 30 && Math.random() > 0.95) {
+                const tracesLayer = document.querySelector('.traces-layer');
+                const trace = document.createElement('div');
+                trace.className = Math.random() > 0.5 ? 'trace trace-h' : 'trace trace-v';
+                trace.style.top = (window.scrollY + Math.random() * window.innerHeight) + 'px';
+                trace.style.left = Math.random() * window.innerWidth + 'px';
+                tracesLayer.appendChild(trace);
+                traceCount++;
+            }
+        });
+
+        // Add more LEDs dynamically
+        let ledCount = 10;
+        window.addEventListener('scroll', () => {
+            if (ledCount < 40 && Math.random() > 0.97) {
+                const componentsLayer = document.querySelector('.components-layer');
+                const led = document.createElement('div');
+                const colors = ['', 'green', 'yellow'];
+                led.className = 'smd-led ' + colors[Math.floor(Math.random() * colors.length)];
+                led.style.position = 'absolute';
+                led.style.top = (window.scrollY + Math.random() * window.innerHeight) + 'px';
+                led.style.left = Math.random() * window.innerWidth + 'px';
+                componentsLayer.appendChild(led);
+                ledCount++;
+            }
+        });
+
+        // Subtle IC hover effect
+        document.querySelectorAll('.ic-chip').forEach(chip => {
+            chip.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 10px 20px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05), inset 0 -1px 0 rgba(0,0,0,0.8)';
+            });
+            
+            chip.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 8px 16px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.05), inset 0 -1px 0 rgba(0,0,0,0.8)';
+            });
+        });
+    </script>
+</body>
+</html>
