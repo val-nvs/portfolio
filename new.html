@@ -34,7 +34,8 @@
             background: #1a1a1a;
             border: 1px solid #333;
             overflow: hidden;
-            z-index: 100;
+            z-index: 50;
+            transition: top 0.5s ease;
         }
 
         .vertical-project-list {
@@ -156,6 +157,7 @@
         const totalProjects = 5;
         
         let currentIndex = 0;
+        let horizontalStripCentered = false;
 
         function updateProject(index) {
             // Remove all classes
@@ -228,6 +230,29 @@
         [...verticalProjects, ...horizontalProjects].forEach((project) => {
             project.addEventListener('click', () => {
                 const projectIndex = parseInt(project.dataset.project);
+                
+                // Check if clicking on active project in vertical strip
+                if (project.classList.contains('active') && project.classList.contains('vertical-project-item')) {
+                    // Center the horizontal strip
+                    document.documentElement.style.setProperty('--horizontal-strip-top', '50%');
+                    horizontalStripCentered = true;
+                    return; // Don't navigate, just center
+                }
+                
+                // Check if clicking on active project in horizontal strip
+                if (project.classList.contains('active') && project.classList.contains('horizontal-project-item')) {
+                    // Toggle horizontal strip position
+                    if (horizontalStripCentered) {
+                        document.documentElement.style.setProperty('--horizontal-strip-top', '30%');
+                        horizontalStripCentered = false;
+                    } else {
+                        document.documentElement.style.setProperty('--horizontal-strip-top', '50%');
+                        horizontalStripCentered = true;
+                    }
+                    return; // Don't navigate, just toggle position
+                }
+                
+                // Normal navigation for other clicks
                 const targetScroll = (projectIndex / (totalProjects - 1)) * (document.body.scrollHeight - window.innerHeight);
                 window.scrollTo({ top: targetScroll, behavior: 'smooth' });
             });
