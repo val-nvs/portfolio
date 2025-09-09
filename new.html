@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Sticky Scroll</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --horizontal-strip-top: 30%;
+            --vertical-strip-left: 25%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0a0a0a;
+            color: white;
+            overflow-x: hidden;
+            height: 500vh; /* Make page long enough to scroll */
+        }
+
+        /* Horizontal-scrolling strip (full width, positioned vertically) */
+        .vertical-strip {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: var(--horizontal-strip-top);
+            height: 120px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .vertical-project-list {
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .vertical-project-item {
+            flex: 0 0 33.333%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 16px;
+            background: #1a1a1a;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            opacity: 0.5;
+            transform: scale(0.9);
+        }
+
+        .vertical-project-item.active {
+            background: #2a2a2a;
+            color: white;
+            opacity: 1;
+            transform: scale(1);
+            font-size: 18px;
+        }
+
+        .vertical-project-item.adjacent {
+            color: #aaa;
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        /* Vertical-scrolling strip (full height, positioned horizontally) */
+        .horizontal-strip {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: var(--vertical-strip-left);
+            width: 200px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .horizontal-project-list {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .horizontal-project-item {
+            flex: 0 0 33.333%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+            background: #1a1a1a;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            opacity: 0.5;
+            transform: scale(0.9);
+        }
+
+        .horizontal-project-item.active {
+            background: #2a2a2a;
+            color: white;
+            opacity: 1;
+            transform: scale(1);
+            font-size: 16px;
+        }
+
+        .horizontal-project-item.adjacent {
+            color: #aaa;
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <!-- Horizontal-scrolling Strip (full width) -->
+    <div class="vertical-strip">
+        <div class="vertical-project-list" id="verticalProjectList">
+            <div class="vertical-project-item" data-project="0">Project 05</div>
+            <div class="vertical-project-item active" data-project="0">Project 01</div>
+            <div class="vertical-project-item adjacent" data-project="1">Project 02</div>
+            <div class="vertical-project-item" data-project="2">Project 03</div>
+            <div class="vertical-project-item" data-project="3">Project 04</div>
+            <div class="vertical-project-item" data-project="4">Project 05</div>
+            <div class="vertical-project-item" data-project="0">Project 01</div>
+        </div>
+    </div>
+
+    <!-- Vertical-scrolling Strip (full height) -->
+    <div class="horizontal-strip">
+        <div class="horizontal-project-list" id="horizontalProjectList">
+            <div class="horizontal-project-item" data-project="0">Project 05</div>
+            <div class="horizontal-project-item active" data-project="0">Project 01</div>
+            <div class="horizontal-project-item adjacent" data-project="1">Project 02</div>
+            <div class="horizontal-project-item" data-project="2">Project 03</div>
+            <div class="horizontal-project-item" data-project="3">Project 04</div>
+            <div class="horizontal-project-item" data-project="4">Project 05</div>
+            <div class="horizontal-project-item" data-project="0">Project 01</div>
+        </div>
+    </div>
+
+    <script>
+        const verticalProjects = document.querySelectorAll('.vertical-project-item');
+        const horizontalProjects = document.querySelectorAll('.horizontal-project-item');
+        const verticalProjectList = document.getElementById('verticalProjectList');
+        const horizontalProjectList = document.getElementById('horizontalProjectList');
+        const totalProjects = 5;
+        
+        let currentIndex = 0;
+
+        function updateProject(index) {
+            // Remove all classes
+            verticalProjects.forEach(p => {
+                p.classList.remove('active', 'adjacent');
+            });
+            horizontalProjects.forEach(p => {
+                p.classList.remove('active', 'adjacent');
+            });
+            
+            // Update horizontal-scrolling strip
+            const verticalActiveIndex = index + 1; // +1 because we have prev item at start
+            if (verticalProjects[verticalActiveIndex]) {
+                verticalProjects[verticalActiveIndex].classList.add('active');
+            }
+            if (verticalProjects[verticalActiveIndex - 1]) {
+                verticalProjects[verticalActiveIndex - 1].classList.add('adjacent');
+            }
+            if (verticalProjects[verticalActiveIndex + 1]) {
+                verticalProjects[verticalActiveIndex + 1].classList.add('adjacent');
+            }
+            
+            // Update vertical-scrolling strip
+            const horizontalActiveIndex = index + 1; // +1 because we have prev item at start
+            if (horizontalProjects[horizontalActiveIndex]) {
+                horizontalProjects[horizontalActiveIndex].classList.add('active');
+            }
+            if (horizontalProjects[horizontalActiveIndex - 1]) {
+                horizontalProjects[horizontalActiveIndex - 1].classList.add('adjacent');
+            }
+            if (horizontalProjects[horizontalActiveIndex + 1]) {
+                horizontalProjects[horizontalActiveIndex + 1].classList.add('adjacent');
+            }
+            
+            // Move to center the active project
+            const verticalTranslateX = -index * 33.333;
+            verticalProjectList.style.transform = `translateX(${verticalTranslateX}%)`;
+            
+            const horizontalTranslateY = -index * 33.333;
+            horizontalProjectList.style.transform = `translateY(${horizontalTranslateY}%)`;
+            
+            currentIndex = index;
+        }
+
+        function handleScroll() {
+            const scrollProgress = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+            const newIndex = Math.floor(scrollProgress * totalProjects);
+            const clampedIndex = Math.max(0, Math.min(newIndex, totalProjects - 1));
+            
+            if (clampedIndex !== currentIndex) {
+                updateProject(clampedIndex);
+            }
+        }
+
+        // Throttle scroll events for better performance
+        let ticking = false;
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(handleScroll);
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', () => {
+            requestTick();
+            ticking = false;
+        });
+
+        // Click navigation
+        [...verticalProjects, ...horizontalProjects].forEach((project) => {
+            project.addEventListener('click', () => {
+                const projectIndex = parseInt(project.dataset.project);
+                const targetScroll = (projectIndex / (totalProjects - 1)) * (document.body.scrollHeight - window.innerHeight);
+                window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+            });
+        });
+
+        // Initialize
+        updateProject(0);
+    </script>
+</body>
+</html>
