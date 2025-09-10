@@ -40,14 +40,14 @@
             overflow-x: hidden;
             /* CSS Scroll Snap */
             scroll-snap-type: y mandatory;
-            scroll-behavior: smooth;
+            scroll-behavior: auto; /* Fast scrolling instead of smooth */
             /* Mobile optimization */
             -webkit-overflow-scrolling: touch;
         }
 
         /* Project sections for scroll snap */
         .project-section {
-            height: 100vh;
+            height: 60vh; /* Reduced from 100vh for easier mobile scrolling */
             scroll-snap-align: start;
             scroll-snap-stop: always;
             display: flex;
@@ -277,7 +277,7 @@
 
         // Simple wheel-based navigation with cooldown (desktop)
         let wheelCooldown = false;
-        const COOLDOWN_TIME = 120; // 120ms between project changes
+        const COOLDOWN_TIME = 120; // Fast 120ms cooldown
 
         window.addEventListener('wheel', (e) => {
             if (wheelCooldown) return; // Skip if in cooldown
@@ -290,9 +290,9 @@
             if (clampedIndex !== currentIndex) {
                 updateProject(clampedIndex);
                 
-                // Scroll to the section smoothly
+                // Fast scroll to section (no smooth animation)
                 if (projectSections[clampedIndex]) {
-                    projectSections[clampedIndex].scrollIntoView({ behavior: 'smooth' });
+                    projectSections[clampedIndex].scrollIntoView({ behavior: 'auto' });
                 }
                 
                 // Start cooldown
@@ -326,7 +326,7 @@
             observer.observe(section);
         });
 
-        // Click navigation - fixed to work with new system
+        // Click navigation
         [...blueProjects, ...redProjects].forEach((project) => {
             project.addEventListener('click', () => {
                 const projectIndex = parseInt(project.dataset.project);
