@@ -3,19 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - CSS Variables</title>
+    <title>Portfolio - Scroll Snap</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        :root {
-            --red-strip-left: 50%;
-            --blue-strip-current: -5%;
-            --blue-strip-top: -5%;
-            --blue-strip-top-active: 50%;
         }
 
         html, body {
@@ -33,12 +26,34 @@
             height: 0;
         }
 
+        :root {
+            --red-strip-left: 50%;
+            --blue-strip-current: -5%;
+            --blue-strip-top: -5%;
+            --blue-strip-top-active: 50%;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background: #0a0a0a;
             color: white;
             overflow-x: hidden;
-            height: 500vh; /* Normal scrolling height */
+            /* CSS Scroll Snap */
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            /* Mobile optimization */
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Project sections for scroll snap */
+        .project-section {
+            height: 100vh;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0a0a0a;
         }
 
         /* Blue strip (horizontal-scrolling, positioned vertically) */
@@ -77,6 +92,8 @@
             cursor: pointer;
             opacity: 0.5;
             transform: scale(0.9);
+            /* Mobile touch targets */
+            touch-action: manipulation;
         }
 
         .blue-project-item.active {
@@ -128,6 +145,8 @@
             cursor: pointer;
             opacity: 0.5;
             transform: scale(0.9);
+            /* Mobile touch targets */
+            touch-action: manipulation;
         }
 
         .red-project-item.active {
@@ -143,9 +162,31 @@
             opacity: 0.7;
             transform: scale(0.95);
         }
+
+        /* Mobile specific optimizations */
+        @media (max-width: 768px) {
+            .blue-project-item {
+                min-height: 44px; /* Accessibility touch target */
+            }
+            .red-project-item {
+                min-height: 44px; /* Accessibility touch target */
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Project sections for scroll snap -->
+    <div class="project-section" data-project="0"></div>
+    <div class="project-section" data-project="1"></div>
+    <div class="project-section" data-project="2"></div>
+    <div class="project-section" data-project="3"></div>
+    <div class="project-section" data-project="4"></div>
+    <div class="project-section" data-project="5"></div>
+    <div class="project-section" data-project="6"></div>
+    <div class="project-section" data-project="7"></div>
+    <div class="project-section" data-project="8"></div>
+    <div class="project-section" data-project="9"></div>
+
     <!-- Blue Strip (horizontal scrolling) -->
     <div class="blue-strip">
         <div class="blue-project-list" id="blueProjectList">
@@ -183,6 +224,7 @@
         const redProjects = document.querySelectorAll('.red-project-item');
         const blueProjectList = document.getElementById('blueProjectList');
         const redProjectList = document.getElementById('redProjectList');
+        const projectSections = document.querySelectorAll('.project-section');
         const totalProjects = 10;
         
         let currentIndex = 0;
@@ -220,13 +262,11 @@
             }
             
             // Center the ACTIVE project in viewport
-            // Blue strip: center active project horizontally in viewport
             const viewportCenterX = window.innerWidth / 2;
             const projectCenterX = 285 / 2;  // Half project width
             const blueTranslateX = viewportCenterX - projectCenterX - (index * 285);
             blueProjectList.style.transform = `translateX(${blueTranslateX}px)`;
             
-            // Red strip: center active project vertically in viewport
             const viewportCenterY = window.innerHeight / 2;
             const projectCenterY = 95 / 2;   // Half project height
             const redTranslateY = viewportCenterY - projectCenterY - (index * 95);
@@ -235,29 +275,33 @@
             currentIndex = index;
         }
 
-        function handleScroll() {
-            const scrollProgress = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-            const newIndex = Math.floor(scrollProgress * totalProjects);
+        // Simple wheel-based navigation with cooldown
+        let wheelCooldown = false;
+        const COOLDOWN_TIME = 120; // ms between project changes
+
+        window.addEventListener('wheel', (e) => {
+            if (wheelCooldown) return; // Skip if in cooldown
+            
+            // Determine direction
+            const direction = e.deltaY > 0 ? 1 : -1; // Down = +1, Up = -1
+            const newIndex = currentIndex + direction;
             const clampedIndex = Math.max(0, Math.min(newIndex, totalProjects - 1));
             
             if (clampedIndex !== currentIndex) {
                 updateProject(clampedIndex);
+                
+                // Scroll to the section smoothly
+                if (projectSections[clampedIndex]) {
+                    projectSections[clampedIndex].scrollIntoView({ behavior: 'smooth' });
+                }
+                
+                // Start cooldown
+                wheelCooldown = true;
+                setTimeout(() => {
+                    wheelCooldown = false;
+                }, COOLDOWN_TIME);
             }
-        }
-
-        // Throttle scroll events for better performance
-        let ticking = false;
-        function requestTick() {
-            if (!ticking) {
-                requestAnimationFrame(handleScroll);
-                ticking = true;
-            }
-        }
-
-        window.addEventListener('scroll', () => {
-            requestTick();
-            ticking = false;
-        });
+        }, { passive: false });
 
         // Click navigation
         [...blueProjects, ...redProjects].forEach((project) => {
@@ -290,9 +334,10 @@
                     return; // Don't navigate, just toggle position
                 }
                 
-                // Normal navigation for other clicks
-                const targetScroll = (projectIndex / (totalProjects - 1)) * (document.body.scrollHeight - window.innerHeight);
-                window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+                // Navigate to clicked project using scroll snap
+                if (projectSections[projectIndex]) {
+                    projectSections[projectIndex].scrollIntoView({ behavior: 'smooth' });
+                }
             });
         });
 
