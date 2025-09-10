@@ -275,9 +275,9 @@
             currentIndex = index;
         }
 
-        // Simple wheel-based navigation with cooldown
+        // Simple wheel-based navigation with cooldown (desktop)
         let wheelCooldown = false;
-        const COOLDOWN_TIME = 120; // ms between project changes
+        const COOLDOWN_TIME = 120; // 120ms between project changes
 
         window.addEventListener('wheel', (e) => {
             if (wheelCooldown) return; // Skip if in cooldown
@@ -303,7 +303,30 @@
             }
         }, { passive: false });
 
-        // Click navigation
+        // Mobile touch support - Intersection Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !wheelCooldown) {
+                    const newIndex = parseInt(entry.target.dataset.project);
+                    if (newIndex !== currentIndex) {
+                        updateProject(newIndex);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe all project sections for mobile
+        projectSections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Click navigation - fixed to work with new system
         [...blueProjects, ...redProjects].forEach((project) => {
             project.addEventListener('click', () => {
                 const projectIndex = parseInt(project.dataset.project);
@@ -334,9 +357,12 @@
                     return; // Don't navigate, just toggle position
                 }
                 
-                // Navigate to clicked project using scroll snap
-                if (projectSections[projectIndex]) {
-                    projectSections[projectIndex].scrollIntoView({ behavior: 'smooth' });
+                // Navigate to clicked project
+                if (projectIndex >= 0 && projectIndex < totalProjects) {
+                    updateProject(projectIndex);
+                    if (projectSections[projectIndex]) {
+                        projectSections[projectIndex].scrollIntoView({ behavior: 'smooth' });
+                    }
                 }
             });
         });
