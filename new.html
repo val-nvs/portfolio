@@ -104,12 +104,6 @@
             font-size: 18px;
         }
 
-        .blue-project-item.adjacent {
-            color: #aaa;
-            opacity: 0.7;
-            transform: scale(0.95);
-        }
-
         /* Red strip (vertical-scrolling, positioned horizontally) */
         .red-strip {
             position: fixed;
@@ -157,12 +151,6 @@
             font-size: 16px;
         }
 
-        .red-project-item.adjacent {
-            color: #aaa;
-            opacity: 0.7;
-            transform: scale(0.95);
-        }
-
         /* Mobile specific optimizations */
         @media (max-width: 768px) {
             .blue-project-item {
@@ -191,7 +179,7 @@
     <div class="blue-strip">
         <div class="blue-project-list" id="blueProjectList">
             <div class="blue-project-item active" data-project="0">Project 01</div>
-            <div class="blue-project-item adjacent" data-project="1">Project 02</div>
+            <div class="blue-project-item" data-project="1">Project 02</div>
             <div class="blue-project-item" data-project="2">Project 03</div>
             <div class="blue-project-item" data-project="3">Project 04</div>
             <div class="blue-project-item" data-project="4">Project 05</div>
@@ -207,7 +195,7 @@
     <div class="red-strip">
         <div class="red-project-list" id="redProjectList">
             <div class="red-project-item active" data-project="0">Project 01</div>
-            <div class="red-project-item adjacent" data-project="1">Project 02</div>
+            <div class="red-project-item" data-project="1">Project 02</div>
             <div class="red-project-item" data-project="2">Project 03</div>
             <div class="red-project-item" data-project="3">Project 04</div>
             <div class="red-project-item" data-project="4">Project 05</div>
@@ -231,34 +219,20 @@
         let blueStripCentered = false;
 
         function updateProject(index) {
-            // Remove all classes
+            // Remove all active classes
             blueProjects.forEach(p => {
-                p.classList.remove('active', 'adjacent');
+                p.classList.remove('active');
             });
             redProjects.forEach(p => {
-                p.classList.remove('active', 'adjacent');
+                p.classList.remove('active');
             });
             
-            // Update blue strip
+            // Add active class to current project
             if (blueProjects[index]) {
                 blueProjects[index].classList.add('active');
             }
-            if (blueProjects[index - 1]) {
-                blueProjects[index - 1].classList.add('adjacent');
-            }
-            if (blueProjects[index + 1]) {
-                blueProjects[index + 1].classList.add('adjacent');
-            }
-            
-            // Update red strip
             if (redProjects[index]) {
                 redProjects[index].classList.add('active');
-            }
-            if (redProjects[index - 1]) {
-                redProjects[index - 1].classList.add('adjacent');
-            }
-            if (redProjects[index + 1]) {
-                redProjects[index + 1].classList.add('adjacent');
             }
             
             // Center the ACTIVE project in viewport
