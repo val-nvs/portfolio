@@ -13,9 +13,9 @@
 
         :root {
             --red-strip-left: 50%;
-            --blue-strip-current: 22%;
-            --blue-strip-top: 22%;
-            --blue-strip-top-active: 44%;
+            --blue-strip-current: -5%;
+            --blue-strip-top: -5%;
+            --blue-strip-top-active: 50%;
         }
 
         body {
@@ -38,6 +38,7 @@
             overflow: hidden;
             z-index: 100;
             transition: top 0.5s ease;
+            transform: translateY(-50%);
         }
 
         .blue-project-list {
@@ -88,6 +89,7 @@
             border: 1px solid #6a2a2a;
             overflow: hidden;
             z-index: 50;
+            transform: translateX(-50%);
         }
 
         .red-project-list {
