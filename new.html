@@ -34,7 +34,7 @@
             top: var(--blue-strip-current);
             height: 260px;
             background: #1a2a3a;
-            border: 1px solid #2a4a6a;
+            box-shadow: 0 0 0 1px #2a4a6a;
             overflow: hidden;
             z-index: 100;
             transition: top 0.5s ease;
@@ -86,7 +86,7 @@
             left: var(--red-strip-left);
             width: 260px;
             background: #3a1a1a;
-            border: 1px solid #6a2a2a;
+            box-shadow: 0 0 0 1px #6a2a2a;
             overflow: hidden;
             z-index: 50;
             transform: translateX(-50%);
@@ -204,11 +204,17 @@
                 redProjects[index + 1].classList.add('adjacent');
             }
             
-            // Move to center the active project using fixed pixel values
-            const blueTranslateX = -index * 260;
+            // Center the ACTIVE project in viewport
+            // Blue strip: center active project horizontally in viewport
+            const viewportCenterX = window.innerWidth / 2;
+            const projectCenterX = 285 / 2;  // Half project width
+            const blueTranslateX = viewportCenterX - projectCenterX - (index * 285);
             blueProjectList.style.transform = `translateX(${blueTranslateX}px)`;
             
-            const redTranslateY = -index * 95;
+            // Red strip: center active project vertically in viewport
+            const viewportCenterY = window.innerHeight / 2;
+            const projectCenterY = 95 / 2;   // Half project height
+            const redTranslateY = viewportCenterY - projectCenterY - (index * 95);
             redProjectList.style.transform = `translateY(${redTranslateY}px)`;
             
             currentIndex = index;
@@ -245,10 +251,15 @@
                 
                 // Check if clicking on active project in blue strip
                 if (project.classList.contains('active') && project.classList.contains('blue-project-item')) {
-                    // Center the blue strip using CSS variable
-                    document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top-active)');
-                    blueStripCentered = true;
-                    return; // Don't navigate, just center
+                    // Toggle blue strip position using CSS variables
+                    if (blueStripCentered) {
+                        document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top)');
+                        blueStripCentered = false;
+                    } else {
+                        document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top-active)');
+                        blueStripCentered = true;
+                    }
+                    return; // Don't navigate, just toggle position
                 }
                 
                 // Check if clicking on active project in red strip
