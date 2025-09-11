@@ -85,23 +85,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #666;
-            font-size: 16px;
+            color: white;
+            font-size: 18px;
             background: rgba(0, 0, 255, 0.5);
             transition: all 0.3s ease;
-            cursor: pointer;
-            opacity: 0.5;
-            transform: scale(0.9);
-            /* Mobile touch targets */
-            touch-action: manipulation;
-        }
-
-        .blue-project-item.active {
-            background: rgba(0, 0, 255, 0.5);
-            color: white;
+            cursor: default;
             opacity: 1;
             transform: scale(1);
-            font-size: 18px;
+            /* Mobile touch targets */
+            touch-action: manipulation;
         }
 
         /* Red strip (vertical-scrolling, positioned horizontally) */
@@ -136,11 +128,26 @@
             font-size: 16px;
             background: rgba(255, 0, 0, 0.5);
             transition: all 0.3s ease;
-            cursor: pointer;
+            cursor: default;
             opacity: 1;
             transform: scale(1);
             /* Mobile touch targets */
             touch-action: manipulation;
+        }
+
+        .project-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: inherit;
+            transition: background 0.2s ease;
+        }
+
+        .project-button:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
 
         /* Mobile specific optimizations */
@@ -170,32 +177,32 @@
     <!-- Blue Strip (horizontal scrolling) -->
     <div class="blue-strip">
         <div class="blue-project-list" id="blueProjectList">
-            <div class="blue-project-item active" data-project="0">Project 01</div>
-            <div class="blue-project-item" data-project="1">Project 02</div>
-            <div class="blue-project-item" data-project="2">Project 03</div>
-            <div class="blue-project-item" data-project="3">Project 04</div>
-            <div class="blue-project-item" data-project="4">Project 05</div>
-            <div class="blue-project-item" data-project="5">Project 06</div>
-            <div class="blue-project-item" data-project="6">Project 07</div>
-            <div class="blue-project-item" data-project="7">Project 08</div>
-            <div class="blue-project-item" data-project="8">Project 09</div>
-            <div class="blue-project-item" data-project="9">Project 10</div>
+            <div class="blue-project-item active" data-project="0"><button class="project-button">Project 01</button></div>
+            <div class="blue-project-item" data-project="1"><button class="project-button">Project 02</button></div>
+            <div class="blue-project-item" data-project="2"><button class="project-button">Project 03</button></div>
+            <div class="blue-project-item" data-project="3"><button class="project-button">Project 04</button></div>
+            <div class="blue-project-item" data-project="4"><button class="project-button">Project 05</button></div>
+            <div class="blue-project-item" data-project="5"><button class="project-button">Project 06</button></div>
+            <div class="blue-project-item" data-project="6"><button class="project-button">Project 07</button></div>
+            <div class="blue-project-item" data-project="7"><button class="project-button">Project 08</button></div>
+            <div class="blue-project-item" data-project="8"><button class="project-button">Project 09</button></div>
+            <div class="blue-project-item" data-project="9"><button class="project-button">Project 10</button></div>
         </div>
     </div>
 
     <!-- Red Strip (vertical scrolling) -->
     <div class="red-strip">
         <div class="red-project-list" id="redProjectList">
-            <div class="red-project-item active" data-project="0">Project 01</div>
-            <div class="red-project-item" data-project="1">Project 02</div>
-            <div class="red-project-item" data-project="2">Project 03</div>
-            <div class="red-project-item" data-project="3">Project 04</div>
-            <div class="red-project-item" data-project="4">Project 05</div>
-            <div class="red-project-item" data-project="5">Project 06</div>
-            <div class="red-project-item" data-project="6">Project 07</div>
-            <div class="red-project-item" data-project="7">Project 08</div>
-            <div class="red-project-item" data-project="8">Project 09</div>
-            <div class="red-project-item" data-project="9">Project 10</div>
+            <div class="red-project-item active" data-project="0"><button class="project-button">Project 01</button></div>
+            <div class="red-project-item" data-project="1"><button class="project-button">Project 02</button></div>
+            <div class="red-project-item" data-project="2"><button class="project-button">Project 03</button></div>
+            <div class="red-project-item" data-project="3"><button class="project-button">Project 04</button></div>
+            <div class="red-project-item" data-project="4"><button class="project-button">Project 05</button></div>
+            <div class="red-project-item" data-project="5"><button class="project-button">Project 06</button></div>
+            <div class="red-project-item" data-project="6"><button class="project-button">Project 07</button></div>
+            <div class="red-project-item" data-project="7"><button class="project-button">Project 08</button></div>
+            <div class="red-project-item" data-project="8"><button class="project-button">Project 09</button></div>
+            <div class="red-project-item" data-project="9"><button class="project-button">Project 10</button></div>
         </div>
     </div>
 
@@ -294,7 +301,7 @@
 
         // Click navigation
         [...blueProjects, ...redProjects].forEach((project) => {
-            project.addEventListener('click', () => {
+            project.addEventListener('click', (e) => {
                 const projectIndex = parseInt(project.dataset.project);
                 
                 // Check if clicking on active project in blue strip
