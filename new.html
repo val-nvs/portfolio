@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio - Scroll Snap</title>
+    <script src="debug-colors.js"></script>
     <style>
         * {
             margin: 0;
@@ -139,11 +140,23 @@
             background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
-            padding: 8px 16px;
             border-radius: 4px;
             cursor: pointer;
             font-size: inherit;
             transition: background 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .blue-project-item .project-button {
+            width: 282px;
+            height: 210.4px;
+        }
+
+        .red-project-item .project-button {
+            width: 210.4px;
+            height: 92px;
         }
 
         .project-button:hover {
