@@ -63,7 +63,7 @@
             right: 0;
             top: var(--blue-strip-current);
             height: 260px;
-            background: #1a2a3a;
+            background: rgba(100, 100, 100, 0.5);
             box-shadow: 0 0 0 1px #2a4a6a;
             overflow: hidden;
             z-index: 100;
@@ -87,7 +87,7 @@
             justify-content: center;
             color: #666;
             font-size: 16px;
-            background: #1a2a3a;
+            background: rgba(0, 0, 255, 0.5);
             transition: all 0.3s ease;
             cursor: pointer;
             opacity: 0.5;
@@ -97,7 +97,7 @@
         }
 
         .blue-project-item.active {
-            background: #2a4a6a;
+            background: rgba(0, 0, 255, 0.5);
             color: white;
             opacity: 1;
             transform: scale(1);
@@ -111,7 +111,7 @@
             bottom: 0;
             left: var(--red-strip-left);
             width: 260px;
-            background: #3a1a1a;
+            background: rgba(100, 100, 100, 0.5);
             box-shadow: 0 0 0 1px #6a2a2a;
             overflow: hidden;
             z-index: 50;
@@ -132,23 +132,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #666;
-            font-size: 14px;
-            background: #3a1a1a;
+            color: white;
+            font-size: 16px;
+            background: rgba(255, 0, 0, 0.5);
             transition: all 0.3s ease;
             cursor: pointer;
-            opacity: 0.5;
-            transform: scale(0.9);
-            /* Mobile touch targets */
-            touch-action: manipulation;
-        }
-
-        .red-project-item.active {
-            background: #6a2a2a;
-            color: white;
             opacity: 1;
             transform: scale(1);
-            font-size: 16px;
+            /* Mobile touch targets */
+            touch-action: manipulation;
         }
 
         /* Mobile specific optimizations */
@@ -333,10 +325,19 @@
                 
                 // Navigate to clicked project
                 if (projectIndex >= 0 && projectIndex < totalProjects) {
+                    // Disable intersection observer during click navigation
+                    wheelCooldown = true;
+                    
                     updateProject(projectIndex);
+                    
                     if (projectSections[projectIndex]) {
-                        projectSections[projectIndex].scrollIntoView({ behavior: 'smooth' });
+                        projectSections[projectIndex].scrollIntoView({ behavior: 'auto' });
                     }
+                    
+                    // Re-enable intersection observer after a short delay
+                    setTimeout(() => {
+                        wheelCooldown = false;
+                    }, 100);
                 }
             });
         });
