@@ -127,13 +127,58 @@
             justify-content: center;
             color: white;
             font-size: 16px;
-            background: rgba(255, 0, 0, 0.5);
+            background: transparent;
             transition: all 0.3s ease;
             cursor: default;
             opacity: 1;
             transform: scale(1);
+            position: relative;
             /* Mobile touch targets */
             touch-action: manipulation;
+            background-image: 
+                /* Gap 1 bridge rectangles - 6 total */
+                linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5)),
+                linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5)),
+                linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5)),
+                linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5)),
+                linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5)),
+                linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5)),
+                /* Gap 2 bridge rectangles - 6 total */
+                linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5)),
+                linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5)),
+                linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5)),
+                linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5)),
+                linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5)),
+                linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5));
+            background-size: 
+                20px 5.53px, 60px 11.07px, 60px 11.07px, 60px 11.07px, 60px 11.07px, 60px 5.53px,
+                60px 5.53px, 60px 11.07px, 60px 11.07px, 60px 11.07px, 60px 11.07px, 60px 5.53px;
+            background-position: 
+                50px 0px, 50px 13.45px, 50px 32.44px, 50px 51.43px, 50px 70.42px, 50px 89.41px,
+                150px 0px, 150px 13.45px, 150px 32.44px, 150px 51.43px, 150px 70.42px, 150px 89.41px;
+            background-repeat: no-repeat;
+        }
+
+        /* Create the main red rectangles using pseudo-elements */
+        .red-project-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 95px;
+            background: rgba(255, 0, 0, 0.5);
+            box-shadow: 210px 0 0 0 rgba(255, 0, 0, 0.5);
+        }
+
+        .red-project-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: calc(190px * 2);
+            width: 190px;
+            height: 95px;
+            background: rgba(255, 0, 0, 0.5);
         }
 
         .project-button {
@@ -157,6 +202,10 @@
         .red-project-item .project-button {
             width: 210.4px;
             height: 92px;
+            background: transparent;
+            border: none;
+            z-index: 10;
+            position: relative;
         }
 
         .project-button:hover {
