@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio - Scroll Snap</title>
-    <script src="debug-colors.js"></script>
     <style>
         * {
             margin: 0;
@@ -29,10 +28,10 @@
 
         :root {
             --red-strip-left: 50%;
-            --blue-strip-current: -0%;
-            --blue-strip-top: -0%;
-            --blue-strip-top-hover: calc(50% - 2rem + 30px);
-            --blue-strip-top-active: calc(50% - 2rem + 130px);
+            --blue-strip-current: 0%;
+            --blue-strip-top: 0%;
+            --blue-strip-top-hover: calc(0% - 1rem + 3rem);
+            --blue-strip-top-active: calc(50% - 1rem + 130px);
         }
 
         body {
@@ -70,7 +69,7 @@
             overflow: hidden;
             z-index: 100;
             transition: top 0.5s ease;
-            transform: translateY(calc(-100% + 2rem));
+            transform: translateY(calc(-100% + 1rem));
         }
 
         .blue-project-list {
@@ -409,6 +408,26 @@
                     setTimeout(() => {
                         wheelCooldown = false;
                     }, 100);
+                }
+            });
+        });
+
+        // Hover effect for active red projects
+        redProjects.forEach((project) => {
+            project.addEventListener('mouseenter', (e) => {
+                if (project.classList.contains('active')) {
+                    document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top-hover)');
+                }
+            });
+            
+            project.addEventListener('mouseleave', (e) => {
+                if (project.classList.contains('active')) {
+                    // Restore to previous state
+                    if (blueStripCentered) {
+                        document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top-active)');
+                    } else {
+                        document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top)');
+                    }
                 }
             });
         });
