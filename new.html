@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio - Scroll Snap</title>
+    <link rel="preload" href="15perf-frame.svg" as="image">
+    <link rel="preload" href="5perf-frame.svg" as="image">
     <style>
         * {
             margin: 0;
@@ -62,7 +64,7 @@
 
         /* Project sections for scroll snap */
         .project-section {
-            height: 60vh; /* Reduced from 100vh for easier mobile scrolling */
+            height: 60vh;
             scroll-snap-align: start;
             scroll-snap-stop: always;
             display: flex;
@@ -84,6 +86,7 @@
             z-index: 100;
             transition: top 0.5s ease;
             transform: translateY(calc(-100% + 1rem));
+            will-change: top;
         }
 
         .blue-project-list {
@@ -91,6 +94,8 @@
             flex-direction: row;
             height: 100%;
             transition: transform 0.3s ease;
+            transform: translateZ(0);
+            will-change: transform;
         }
 
         .blue-project-item {
@@ -108,7 +113,6 @@
             cursor: default;
             opacity: 1;
             transform: scale(1);
-            /* Mobile touch targets */
             touch-action: manipulation;
         }
 
@@ -131,6 +135,8 @@
             flex-direction: column;
             height: 100%;
             transition: transform 0.3s ease;
+            transform: translateZ(0);
+            will-change: transform;
         }
 
         .red-project-item {
@@ -149,7 +155,6 @@
             opacity: 1;
             transform: scale(1);
             position: relative;
-            /* Mobile touch targets */
             touch-action: manipulation;
         }
 
@@ -184,6 +189,20 @@
             position: relative;
         }
 
+        .project-thumbnail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 3px;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
         .project-video {
             position: absolute;
             top: 0;
@@ -193,6 +212,12 @@
             object-fit: cover;
             border-radius: 3px;
             pointer-events: none;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-video.active {
             opacity: 1;
         }
 
@@ -237,13 +262,24 @@
             right: 8px;
         }
 
-        /* Mobile specific optimizations */
+        /* Mobile optimizations */
         @media (max-width: 768px) {
             .blue-project-item {
-                min-height: 44px; /* Accessibility touch target */
+                min-height: 44px;
             }
             .red-project-item {
-                min-height: 44px; /* Accessibility touch target */
+                min-height: 44px;
+            }
+            .blue-project-list,
+            .red-project-list {
+                transition-duration: 0.2s;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition-duration: 0.1s !important;
+                animation-duration: 0.1s !important;
             }
         }
     </style>
@@ -256,13 +292,6 @@
     <div class="project-section" data-project="0"></div>
     <div class="project-section" data-project="1"></div>
     <div class="project-section" data-project="2"></div>
-    <div class="project-section" data-project="3"></div>
-    <div class="project-section" data-project="4"></div>
-    <div class="project-section" data-project="5"></div>
-    <div class="project-section" data-project="6"></div>
-    <div class="project-section" data-project="7"></div>
-    <div class="project-section" data-project="8"></div>
-    <div class="project-section" data-project="9"></div>
 
     <!-- Blue Strip (horizontal scrolling) -->
     <div class="blue-strip">
@@ -279,25 +308,25 @@
     </div>
 
     <script>
-        // Sample project data - replace with your projects.json file
+        // Film-related project data (3 projects)
         const projectsData = [
             {
-                "id": "bang",
-                "left-text": "asdf",
-                "right-text": "asdf",
-                "15perf-text": "asdf"
+                "id": "clapper",
+                "left-text": "Drama",
+                "right-text": "4K",
+                "15perf-text": "Award-Winning Short Film"
             },
             {
                 "id": "film",
-                "left-text": "asdf",
-                "right-text": "asdf",
-                "15perf-text": "asdf"
+                "left-text": "Documentary",
+                "right-text": "Director",
+                "15perf-text": "Environmental Documentary"
             },
             {
-                "id": "cinema",
-                "left-text": "asdf",
-                "right-text": "asdf",
-                "15perf-text": "asdf"
+                "id": "chapito",
+                "left-text": "Music Video",
+                "right-text": "Cinematographer",
+                "15perf-text": "Indie Music Video"
             }
         ];
 
@@ -309,19 +338,19 @@
         let currentIndex = 0;
         let blueStripCentered = false;
         let blueProjects, redProjects;
+        let activeVideos = new Map(); // Track active video elements
 
-        // Function to create project HTML
+        // Create project HTML with thumbnail + video container
         function createProjectHTML(project, index, type) {
             const activeClass = index === 0 ? ' active' : '';
-            const mediaSrc = `media/${project.id}.webm`;
+            const thumbnailSrc = `media/${project.id}.jpg`;
             
             if (type === 'blue') {
                 return `
                     <div class="blue-project-item${activeClass}" data-project="${index}">
                         <button class="project-button">
-                            <video class="project-video" muted loop>
-                                <source src="${mediaSrc}" type="video/webm">
-                            </video>
+                            <img class="project-thumbnail" src="${thumbnailSrc}" alt="${project['15perf-text']}" loading="${index === 0 ? 'eager' : 'lazy'}">
+                            <div class="video-container" data-project="${index}"></div>
                             <div class="blue-text-overlay">${project['15perf-text']}</div>
                         </button>
                     </div>
@@ -330,9 +359,8 @@
                 return `
                     <div class="red-project-item${activeClass}" data-project="${index}">
                         <button class="project-button">
-                            <video class="project-video" muted loop>
-                                <source src="${mediaSrc}" type="video/webm">
-                            </video>
+                            <img class="project-thumbnail" src="${thumbnailSrc}" alt="${project['left-text']} ${project['right-text']}" loading="${index === 0 ? 'eager' : 'lazy'}">
+                            <div class="video-container" data-project="${index}"></div>
                             <div class="red-text-overlay red-text-left">${project['left-text']}</div>
                             <div class="red-text-overlay red-text-right">${project['right-text']}</div>
                         </button>
@@ -341,114 +369,179 @@
             }
         }
 
-        // Function to populate projects
+        // Populate projects with thumbnails
         function populateProjects() {
-            // Generate blue projects
-            const blueHTML = projectsData.map((project, index) => 
-                createProjectHTML(project, index, 'blue')
-            ).join('');
-            blueProjectList.innerHTML = blueHTML;
+            const blueFragment = document.createDocumentFragment();
+            const redFragment = document.createDocumentFragment();
+            
+            projectsData.forEach((project, index) => {
+                // Create blue project
+                const blueDiv = document.createElement('div');
+                blueDiv.innerHTML = createProjectHTML(project, index, 'blue');
+                blueFragment.appendChild(blueDiv.firstElementChild);
+                
+                // Create red project
+                const redDiv = document.createElement('div');
+                redDiv.innerHTML = createProjectHTML(project, index, 'red');
+                redFragment.appendChild(redDiv.firstElementChild);
+            });
+            
+            blueProjectList.appendChild(blueFragment);
+            redProjectList.appendChild(redFragment);
 
-            // Generate red projects
-            const redHTML = projectsData.map((project, index) => 
-                createProjectHTML(project, index, 'red')
-            ).join('');
-            redProjectList.innerHTML = redHTML;
-
-            // Update references to new elements
             blueProjects = document.querySelectorAll('.blue-project-item');
             redProjects = document.querySelectorAll('.red-project-item');
         }
 
-        // Function to control video playback
+        // Load video for active project
+        function loadVideoForProject(index) {
+            const project = projectsData[index];
+            const videoSrc = `media/${project.id}.webm`;
+            
+            // Create video element
+            const video = document.createElement('video');
+            video.className = 'project-video active';
+            video.muted = true;
+            video.loop = true;
+            video.preload = 'metadata';
+            
+            const source = document.createElement('source');
+            source.src = videoSrc;
+            source.type = 'video/webm';
+            video.appendChild(source);
+            
+            return video;
+        }
+
+        // Add video to project containers
+        function addVideoToProject(index) {
+            if (activeVideos.has(index)) return activeVideos.get(index);
+            
+            const video = loadVideoForProject(index);
+            
+            // Add to both blue and red containers
+            const blueContainer = blueProjects[index]?.querySelector('.video-container');
+            const redContainer = redProjects[index]?.querySelector('.video-container');
+            
+            if (blueContainer) {
+                const blueVideo = video.cloneNode(true);
+                blueContainer.appendChild(blueVideo);
+                
+                blueVideo.addEventListener('loadedmetadata', () => {
+                    blueVideo.play().catch(e => console.log('Blue video play failed:', e));
+                });
+            }
+            
+            if (redContainer) {
+                const redVideo = video.cloneNode(true);
+                redContainer.appendChild(redVideo);
+                
+                redVideo.addEventListener('loadedmetadata', () => {
+                    redVideo.play().catch(e => console.log('Red video play failed:', e));
+                });
+            }
+            
+            activeVideos.set(index, { blue: blueContainer?.firstElementChild, red: redContainer?.firstElementChild });
+            return activeVideos.get(index);
+        }
+
+        // Remove video from project containers (free memory)
+        function removeVideoFromProject(index) {
+            if (!activeVideos.has(index)) return;
+            
+            const videos = activeVideos.get(index);
+            
+            // Remove and clean up blue video
+            if (videos.blue) {
+                videos.blue.pause();
+                videos.blue.src = '';
+                videos.blue.load(); // This helps free memory
+                videos.blue.remove();
+            }
+            
+            // Remove and clean up red video
+            if (videos.red) {
+                videos.red.pause();
+                videos.red.src = '';
+                videos.red.load(); // This helps free memory
+                videos.red.remove();
+            }
+            
+            activeVideos.delete(index);
+        }
+
+        // Control video playback and memory management
         function controlVideoPlayback(activeIndex) {
-            // Pause all videos first
-            const allVideos = document.querySelectorAll('.project-video');
-            allVideos.forEach(video => {
-                video.pause();
+            requestAnimationFrame(() => {
+                // Remove videos from all inactive projects to save memory
+                for (let i = 0; i < totalProjects; i++) {
+                    if (i !== activeIndex) {
+                        removeVideoFromProject(i);
+                    }
+                }
+                
+                // Add and play video for active project
+                if (!activeVideos.has(activeIndex)) {
+                    addVideoToProject(activeIndex);
+                }
             });
-
-            // Play videos in active projects
-            const activeBlueVideo = blueProjects[activeIndex]?.querySelector('.project-video');
-            const activeRedVideo = redProjects[activeIndex]?.querySelector('.project-video');
-            
-            if (activeBlueVideo) {
-                activeBlueVideo.play().catch(e => console.log('Blue video play failed:', e));
-            }
-            if (activeRedVideo) {
-                activeRedVideo.play().catch(e => console.log('Red video play failed:', e));
-            }
         }
 
+        // Update project with hardware acceleration
         function updateProject(index) {
-            // Remove all active classes
-            blueProjects.forEach(p => {
-                p.classList.remove('active');
+            requestAnimationFrame(() => {
+                // Remove all active classes
+                blueProjects.forEach(p => p.classList.remove('active'));
+                redProjects.forEach(p => p.classList.remove('active'));
+                
+                // Add active class to current project
+                if (blueProjects[index]) blueProjects[index].classList.add('active');
+                if (redProjects[index]) redProjects[index].classList.add('active');
+                
+                // Hardware accelerated transforms
+                const viewportCenterX = window.innerWidth / 2;
+                const projectCenterX = 285 / 2;
+                const blueTranslateX = viewportCenterX - projectCenterX - (index * 285);
+                blueProjectList.style.transform = `translate3d(${blueTranslateX}px, 0, 0)`;
+                
+                const viewportCenterY = window.innerHeight / 2;
+                const projectCenterY = 95 / 2;
+                const redTranslateY = viewportCenterY - projectCenterY - (index * 95);
+                redProjectList.style.transform = `translate3d(0, ${redTranslateY}px, 0)`;
+                
+                currentIndex = index;
+                
+                // Control video playback and memory
+                controlVideoPlayback(index);
             });
-            redProjects.forEach(p => {
-                p.classList.remove('active');
-            });
-            
-            // Add active class to current project
-            if (blueProjects[index]) {
-                blueProjects[index].classList.add('active');
-            }
-            if (redProjects[index]) {
-                redProjects[index].classList.add('active');
-            }
-            
-            // Center the ACTIVE project in viewport
-            const viewportCenterX = window.innerWidth / 2;
-            const projectCenterX = 285 / 2;  // Half project width
-            const blueTranslateX = viewportCenterX - projectCenterX - (index * 285);
-            blueProjectList.style.transform = `translateX(${blueTranslateX}px)`;
-            
-            const viewportCenterY = window.innerHeight / 2;
-            const projectCenterY = 95 / 2;   // Half project height
-            const redTranslateY = viewportCenterY - projectCenterY - (index * 95);
-            redProjectList.style.transform = `translateY(${redTranslateY}px)`;
-            
-            currentIndex = index;
-            
-            // Control video playback
-            controlVideoPlayback(index);
         }
 
-        // Simple wheel-based navigation with cooldown (desktop)
+        // Wheel navigation
         let wheelCooldown = false;
-        const COOLDOWN_TIME = 120; // Fast 120ms cooldown
+        const COOLDOWN_TIME = 120;
 
-        window.addEventListener('wheel', (e) => {
-            if (wheelCooldown) return; // Skip if in cooldown
+        const handleWheel = (e) => {
+            if (wheelCooldown) return;
             
-            // Determine direction
-            const direction = e.deltaY > 0 ? 1 : -1; // Down = +1, Up = -1
+            const direction = e.deltaY > 0 ? 1 : -1;
             const newIndex = currentIndex + direction;
             const clampedIndex = Math.max(0, Math.min(newIndex, totalProjects - 1));
             
             if (clampedIndex !== currentIndex) {
                 updateProject(clampedIndex);
                 
-                // Fast scroll to section (no smooth animation)
                 if (projectSections[clampedIndex]) {
                     projectSections[clampedIndex].scrollIntoView({ behavior: 'auto' });
                 }
                 
-                // Start cooldown
                 wheelCooldown = true;
-                setTimeout(() => {
-                    wheelCooldown = false;
-                }, COOLDOWN_TIME);
+                setTimeout(() => { wheelCooldown = false; }, COOLDOWN_TIME);
             }
-        }, { passive: false });
-
-        // Mobile touch support - Intersection Observer
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.5
         };
 
+        window.addEventListener('wheel', handleWheel, { passive: true });
+
+        // Intersection Observer for mobile
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting && !wheelCooldown) {
@@ -458,92 +551,78 @@
                     }
                 }
             });
-        }, observerOptions);
+        }, {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5
+        });
 
-        // Function to setup event listeners
+        // Event delegation
         function setupEventListeners() {
-            // Observe all project sections for mobile
-            projectSections.forEach(section => {
-                observer.observe(section);
-            });
-
-            // Click navigation
-            [...blueProjects, ...redProjects].forEach((project) => {
-                project.addEventListener('click', (e) => {
-                    const projectIndex = parseInt(project.dataset.project);
-                    
-                    // Check if clicking on active project in blue strip
-                    if (project.classList.contains('active') && project.classList.contains('blue-project-item')) {
-                        // Toggle blue strip position using CSS variables
-                        if (blueStripCentered) {
-                            document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top)');
-                            blueStripCentered = false;
-                        } else {
-                            document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top-active)');
-                            blueStripCentered = true;
-                        }
-                        return; // Don't navigate, just toggle position
-                    }
-                    
-                    // Check if clicking on active project in red strip
-                    if (project.classList.contains('active') && project.classList.contains('red-project-item')) {
-                        // Toggle blue strip position using CSS variables
-                        if (blueStripCentered) {
-                            document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top)');
-                            blueStripCentered = false;
-                        } else {
-                            document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top-active)');
-                            blueStripCentered = true;
-                        }
-                        return; // Don't navigate, just toggle position
-                    }
-                    
-                    // Navigate to clicked project
-                    if (projectIndex >= 0 && projectIndex < totalProjects) {
-                        // Disable intersection observer during click navigation
-                        wheelCooldown = true;
-                        
-                        updateProject(projectIndex);
-                        
-                        if (projectSections[projectIndex]) {
-                            projectSections[projectIndex].scrollIntoView({ behavior: 'auto' });
-                        }
-                        
-                        // Re-enable intersection observer after a short delay
-                        setTimeout(() => {
-                            wheelCooldown = false;
-                        }, 100);
-                    }
-                });
-            });
-
-            // Hover effect for active red projects
-            redProjects.forEach((project) => {
-                project.addEventListener('mouseenter', (e) => {
-                    if (project.classList.contains('active')) {
-                        document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top-hover)');
-                    }
-                });
-                
-                project.addEventListener('mouseleave', (e) => {
-                    if (project.classList.contains('active')) {
-                        // Restore to previous state
-                        if (blueStripCentered) {
-                            document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top-active)');
-                        } else {
-                            document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top)');
-                        }
-                    }
-                });
-            });
+            projectSections.forEach(section => observer.observe(section));
+            
+            blueProjectList.addEventListener('click', handleProjectClick);
+            redProjectList.addEventListener('click', handleProjectClick);
+            redProjectList.addEventListener('mouseenter', handleRedHover, true);
+            redProjectList.addEventListener('mouseleave', handleRedHover, true);
         }
 
-        // Initialize everything
+        function handleProjectClick(e) {
+            const project = e.target.closest('.blue-project-item, .red-project-item');
+            if (!project) return;
+            
+            const projectIndex = parseInt(project.dataset.project);
+            
+            if (project.classList.contains('active')) {
+                // Toggle blue strip position
+                if (blueStripCentered) {
+                    document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top)');
+                    blueStripCentered = false;
+                } else {
+                    document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top-active)');
+                    blueStripCentered = true;
+                }
+                return;
+            }
+            
+            if (projectIndex >= 0 && projectIndex < totalProjects) {
+                wheelCooldown = true;
+                updateProject(projectIndex);
+                
+                if (projectSections[projectIndex]) {
+                    projectSections[projectIndex].scrollIntoView({ behavior: 'auto' });
+                }
+                
+                setTimeout(() => { wheelCooldown = false; }, 100);
+            }
+        }
+
+        function handleRedHover(e) {
+            const project = e.target.closest('.red-project-item');
+            if (!project?.classList.contains('active')) return;
+            
+            if (e.type === 'mouseenter') {
+                document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top-hover)');
+            } else {
+                const targetState = blueStripCentered ? 'var(--blue-strip-top-active)' : 'var(--blue-strip-top)';
+                document.documentElement.style.setProperty('--blue-strip-current', targetState);
+            }
+        }
+
+        // Initialize
         function init() {
             populateProjects();
             setupEventListeners();
-            updateProject(0); // Start with first project active and playing
+            updateProject(0); // Start with first project active
         }
+
+        // Clean up on page unload
+        window.addEventListener('beforeunload', () => {
+            // Clean up all active videos
+            activeVideos.forEach((videos, index) => {
+                removeVideoFromProject(index);
+            });
+        });
 
         // Start the app
         init();
