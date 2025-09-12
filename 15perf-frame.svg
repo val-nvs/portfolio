@@ -1,0 +1,58 @@
+<svg width="71.25" height="65" viewBox="0 0 71.25 65" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="noise">
+      <!-- fine fractal noise -->
+      <feTurbulence type="fractalNoise" baseFrequency="10" numOctaves="3" result="noise"/>
+      <feColorMatrix in="noise" type="saturate" values="0" result="grayNoise"/>
+      <feBlend in="SourceGraphic" in2="grayNoise" mode="overlay"/>
+    </filter>
+
+    <!-- Mask for holes (black = transparent) -->
+    <mask id="holesMask">
+      <!-- full rotated canvas -->
+      <rect width="71.25" height="65" fill="white"/>
+
+      <!-- TOP: 15 holes (vertical holes: width=1.98, height=2.79)
+           centers at x = 2.375 + n*4.75; top-left x = center - 0.99 -->
+      <rect x="1.385"  y="3" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="6.135"  y="3" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="10.885" y="3" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="15.635" y="3" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="20.385" y="3" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="25.135" y="3" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="29.885" y="3" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="34.635" y="3" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="39.385" y="3" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="44.135" y="3" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="48.885" y="3" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="53.635" y="3" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="58.385" y="3" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="63.135" y="3" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="67.885" y="3" width="1.98" height="2.79" rx="0.5" fill="black"/>
+
+      <!-- BOTTOM: 15 holes, symmetric -->
+      <!-- bottom y = canvasHeight - 3 - holeHeight = 65 - 3 - 2.79 = 59.21 -->
+      <rect x="1.385"  y="59.21" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="6.135"  y="59.21" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="10.885" y="59.21" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="15.635" y="59.21" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="20.385" y="59.21" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="25.135" y="59.21" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="29.885" y="59.21" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="34.635" y="59.21" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="39.385" y="59.21" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="44.135" y="59.21" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="48.885" y="59.21" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="53.635" y="59.21" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="58.385" y="59.21" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="63.135" y="59.21" width="1.98" height="2.79" rx="0.5" fill="black"/>
+      <rect x="67.885" y="59.21" width="1.98" height="2.79" rx="0.5" fill="black"/>
+
+      <!-- Big centered hole rotated: width=70.5, height=52.6, centered -->
+      <rect x="0.375" y="6.2" width="70.5" height="52.6" rx="0.5" ry="0.5" fill="black"/>
+    </mask>
+  </defs>
+
+  <!-- Orange emulsion sheet (semi-transparent) with grayscale fine grain -->
+  <rect width="71.25" height="65" fill="orange" fill-opacity="0.5" filter="url(#noise)" mask="url(#holesMask)"/>
+</svg>

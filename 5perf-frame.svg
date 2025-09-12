@@ -2,7 +2,7 @@
   <defs>
     <filter id="noise">
       <!-- finer fractal noise for small units -->
-      <feTurbulence type="fractalNoise" baseFrequency="5" numOctaves="3" result="noise"/>
+      <feTurbulence type="fractalNoise" baseFrequency="10" numOctaves="3" result="noise"/>
       <!-- make noise monochrome -->
       <feColorMatrix in="noise" type="saturate" values="0" result="grayNoise"/>
       <!-- blend the grayscale noise over the colored source -->
