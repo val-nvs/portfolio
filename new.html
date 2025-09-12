@@ -29,9 +29,9 @@
 
         :root {
             --red-strip-left: 50%;
-            --blue-strip-current: -5%;
-            --blue-strip-top: -5%;
-            --blue-strip-top-active: 50%;
+            --blue-strip-current: -0%;
+            --blue-strip-top: -0%;
+            --blue-strip-top-active: calc(50% - 2rem + 130px);
         }
 
         body {
@@ -62,14 +62,14 @@
             position: fixed;
             left: 0;
             right: 0;
-            top: var(--blue-strip-current);
+            top: calc(var(--blue-strip-current));
             height: 260px;
             background: rgba(100, 100, 100, 0.5);
             box-shadow: 0 0 0 1px #2a4a6a;
             overflow: hidden;
             z-index: 100;
             transition: top 0.5s ease;
-            transform: translateY(-50%);
+            transform: translateY(calc(-100% + 2rem));
         }
 
         .blue-project-list {
@@ -151,11 +151,11 @@
                 linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5)),
                 linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5));
             background-size: 
-                20px 5.53px, 60px 11.07px, 60px 11.07px, 60px 11.07px, 60px 11.07px, 60px 5.53px,
-                60px 5.53px, 60px 11.07px, 60px 11.07px, 60px 11.07px, 60px 11.07px, 60px 5.53px;
+                12px 5.53px, 12px 11.07px, 12px 11.07px, 12px 11.07px, 12px 11.07px, 12px 5.53px,
+                12px 5.53px, 12px 11.07px, 12px 11.07px, 12px 11.07px, 12px 11.07px, 12px 5.53px;
             background-position: 
-                50px 0px, 50px 13.45px, 50px 32.44px, 50px 51.43px, 50px 70.42px, 50px 89.41px,
-                150px 0px, 150px 13.45px, 150px 32.44px, 150px 51.43px, 150px 70.42px, 150px 89.41px;
+                8px 0px, 8px 13.45px, 8px 32.44px, 8px 51.43px, 8px 70.42px, 8px 89.41px,
+                240px 0px, 240px 13.45px, 240px 32.44px, 240px 51.43px, 240px 70.42px, 240px 89.41px;
             background-repeat: no-repeat;
         }
 
@@ -168,15 +168,15 @@
             width: 8px;
             height: 95px;
             background: rgba(255, 0, 0, 0.5);
-            box-shadow: 210px 0 0 0 rgba(255, 0, 0, 0.5);
+            box-shadow: 252px 0 0 0 rgba(255, 0, 0, 0.5);
         }
 
         .red-project-item::after {
             content: '';
             position: absolute;
             top: 0;
-            left: calc(190px * 2);
-            width: 190px;
+            left: 50;
+            width: 220px;
             height: 95px;
             background: rgba(255, 0, 0, 0.5);
         }
