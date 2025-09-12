@@ -102,7 +102,8 @@
             justify-content: center;
             color: white;
             font-size: 18px;
-            background: rgba(0, 0, 255, 0.5);
+            background: url('15perf-frame.svg') no-repeat center center;
+            background-size: 285px 260px;
             transition: all 0.3s ease;
             cursor: default;
             opacity: 1;
@@ -153,7 +154,7 @@
         }
 
         .project-button {
-            background: rgba(255, 255, 255, 0.2);
+            background: transparent;
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
             border-radius: 4px;
@@ -164,6 +165,9 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 0 0 1px rgba(2, 0, 0, 1.0);
+            overflow: hidden;
+            padding: 0;
+            position: relative;
         }
 
         .blue-project-item .project-button {
@@ -178,6 +182,17 @@
             border: none;
             z-index: 10;
             position: relative;
+        }
+
+        .project-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 3px;
+            pointer-events: none;
         }
 
         .project-button:hover {
@@ -214,32 +229,32 @@
     <!-- Blue Strip (horizontal scrolling) -->
     <div class="blue-strip">
         <div class="blue-project-list" id="blueProjectList">
-            <div class="blue-project-item active" data-project="0"><button class="project-button">Project 01</button></div>
-            <div class="blue-project-item" data-project="1"><button class="project-button">Project 02</button></div>
-            <div class="blue-project-item" data-project="2"><button class="project-button">Project 03</button></div>
-            <div class="blue-project-item" data-project="3"><button class="project-button">Project 04</button></div>
-            <div class="blue-project-item" data-project="4"><button class="project-button">Project 05</button></div>
-            <div class="blue-project-item" data-project="5"><button class="project-button">Project 06</button></div>
-            <div class="blue-project-item" data-project="6"><button class="project-button">Project 07</button></div>
-            <div class="blue-project-item" data-project="7"><button class="project-button">Project 08</button></div>
-            <div class="blue-project-item" data-project="8"><button class="project-button">Project 09</button></div>
-            <div class="blue-project-item" data-project="9"><button class="project-button">Project 10</button></div>
+            <div class="blue-project-item active" data-project="0"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
+            <div class="blue-project-item" data-project="1"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
+            <div class="blue-project-item" data-project="2"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
+            <div class="blue-project-item" data-project="3"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
+            <div class="blue-project-item" data-project="4"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
+            <div class="blue-project-item" data-project="5"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
+            <div class="blue-project-item" data-project="6"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
+            <div class="blue-project-item" data-project="7"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
+            <div class="blue-project-item" data-project="8"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
+            <div class="blue-project-item" data-project="9"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
         </div>
     </div>
 
     <!-- Red Strip (vertical scrolling) -->
     <div class="red-strip">
         <div class="red-project-list" id="redProjectList">
-            <div class="red-project-item active" data-project="0"><button class="project-button">Project 01</button></div>
-            <div class="red-project-item" data-project="1"><button class="project-button">Project 02</button></div>
-            <div class="red-project-item" data-project="2"><button class="project-button">Project 03</button></div>
-            <div class="red-project-item" data-project="3"><button class="project-button">Project 04</button></div>
-            <div class="red-project-item" data-project="4"><button class="project-button">Project 05</button></div>
-            <div class="red-project-item" data-project="5"><button class="project-button">Project 06</button></div>
-            <div class="red-project-item" data-project="6"><button class="project-button">Project 07</button></div>
-            <div class="red-project-item" data-project="7"><button class="project-button">Project 08</button></div>
-            <div class="red-project-item" data-project="8"><button class="project-button">Project 09</button></div>
-            <div class="red-project-item" data-project="9"><button class="project-button">Project 10</button></div>
+            <div class="red-project-item active" data-project="0"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
+            <div class="red-project-item" data-project="1"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
+            <div class="red-project-item" data-project="2"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
+            <div class="red-project-item" data-project="3"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
+            <div class="red-project-item" data-project="4"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
+            <div class="red-project-item" data-project="5"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
+            <div class="red-project-item" data-project="6"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
+            <div class="red-project-item" data-project="7"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
+            <div class="red-project-item" data-project="8"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
+            <div class="red-project-item" data-project="9"><button class="project-button"><video class="project-video" autoplay muted loop><source src="sample.mp4" type="video/mp4"></video></button></div>
         </div>
     </div>
 
