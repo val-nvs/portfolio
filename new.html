@@ -193,6 +193,7 @@
             object-fit: cover;
             border-radius: 3px;
             pointer-events: none;
+            opacity: 1;
         }
 
         .project-button:hover {
@@ -281,16 +282,22 @@
         // Sample project data - replace with your projects.json file
         const projectsData = [
             {
-                "id": "sample",
-                "left-text": "MV",
-                "right-text": "2025",
-                "15perf-text": "kpop"
+                "id": "bang",
+                "left-text": "asdf",
+                "right-text": "asdf",
+                "15perf-text": "asdf"
             },
             {
-                "id": "sample",
-                "left-text": "Film",
-                "right-text": "2025",
-                "15perf-text": "action thriller"
+                "id": "film",
+                "left-text": "asdf",
+                "right-text": "asdf",
+                "15perf-text": "asdf"
+            },
+            {
+                "id": "cinema",
+                "left-text": "asdf",
+                "right-text": "asdf",
+                "15perf-text": "asdf"
             }
         ];
 
@@ -306,14 +313,14 @@
         // Function to create project HTML
         function createProjectHTML(project, index, type) {
             const activeClass = index === 0 ? ' active' : '';
-            const videoSrc = `${project.id}.mp4`;
+            const mediaSrc = `media/${project.id}.webm`;
             
             if (type === 'blue') {
                 return `
                     <div class="blue-project-item${activeClass}" data-project="${index}">
                         <button class="project-button">
                             <video class="project-video" muted loop>
-                                <source src="${videoSrc}" type="video/mp4">
+                                <source src="${mediaSrc}" type="video/webm">
                             </video>
                             <div class="blue-text-overlay">${project['15perf-text']}</div>
                         </button>
@@ -324,7 +331,7 @@
                     <div class="red-project-item${activeClass}" data-project="${index}">
                         <button class="project-button">
                             <video class="project-video" muted loop>
-                                <source src="${videoSrc}" type="video/mp4">
+                                <source src="${mediaSrc}" type="video/webm">
                             </video>
                             <div class="red-text-overlay red-text-left">${project['left-text']}</div>
                             <div class="red-text-overlay red-text-right">${project['right-text']}</div>
