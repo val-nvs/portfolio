@@ -203,7 +203,7 @@
             transition: opacity 0.3s ease;
         }
 
-        .project-video {
+        .project-gif {
             position: absolute;
             top: 0;
             left: 0;
@@ -217,7 +217,7 @@
             transition: opacity 0.3s ease;
         }
 
-        .project-video.active {
+        .project-gif.active {
             opacity: 1;
         }
 
@@ -312,21 +312,21 @@
         const projectsData = [
             {
                 "id": "clapper",
-                "left-text": "Drama",
-                "right-text": "4K",
-                "15perf-text": "Award-Winning Short Film"
+                "left-text": "text",
+                "right-text": "text",
+                "15perf-text": "text"
             },
             {
-                "id": "film",
-                "left-text": "Documentary",
-                "right-text": "Director",
-                "15perf-text": "Environmental Documentary"
+                "id": "free",
+                "left-text": "text",
+                "right-text": "text",
+                "15perf-text": "text"
             },
             {
                 "id": "chapito",
-                "left-text": "Music Video",
-                "right-text": "Cinematographer",
-                "15perf-text": "Indie Music Video"
+                "left-text": "text",
+                "right-text": "text",
+                "15perf-text": "text"
             }
         ];
 
@@ -338,9 +338,9 @@
         let currentIndex = 0;
         let blueStripCentered = false;
         let blueProjects, redProjects;
-        let activeVideos = new Map(); // Track active video elements
+        let activeGifs = new Map(); // Track active GIF elements
 
-        // Create project HTML with thumbnail + video container
+        // Create project HTML with thumbnail + gif container
         function createProjectHTML(project, index, type) {
             const activeClass = index === 0 ? ' active' : '';
             const thumbnailSrc = `media/${project.id}.jpg`;
@@ -350,7 +350,7 @@
                     <div class="blue-project-item${activeClass}" data-project="${index}">
                         <button class="project-button">
                             <img class="project-thumbnail" src="${thumbnailSrc}" alt="${project['15perf-text']}" loading="${index === 0 ? 'eager' : 'lazy'}">
-                            <div class="video-container" data-project="${index}"></div>
+                            <div class="gif-container" data-project="${index}"></div>
                             <div class="blue-text-overlay">${project['15perf-text']}</div>
                         </button>
                     </div>
@@ -360,7 +360,7 @@
                     <div class="red-project-item${activeClass}" data-project="${index}">
                         <button class="project-button">
                             <img class="project-thumbnail" src="${thumbnailSrc}" alt="${project['left-text']} ${project['right-text']}" loading="${index === 0 ? 'eager' : 'lazy'}">
-                            <div class="video-container" data-project="${index}"></div>
+                            <div class="gif-container" data-project="${index}"></div>
                             <div class="red-text-overlay red-text-left">${project['left-text']}</div>
                             <div class="red-text-overlay red-text-right">${project['right-text']}</div>
                         </button>
@@ -393,96 +393,97 @@
             redProjects = document.querySelectorAll('.red-project-item');
         }
 
-        // Load video for active project
-        function loadVideoForProject(index) {
+        // Load GIF for active project
+        function loadGifForProject(index) {
             const project = projectsData[index];
-            const videoSrc = `media/${project.id}.webm`;
+            const gifSrc = `media/${project.id}.gif`;
             
-            // Create video element
-            const video = document.createElement('video');
-            video.className = 'project-video active';
-            video.muted = true;
-            video.loop = true;
-            video.preload = 'metadata';
+            // Create GIF element
+            const gif = document.createElement('img');
+            gif.className = 'project-gif active';
+            gif.src = gifSrc;
+            gif.alt = `${project.id} animation`;
             
-            const source = document.createElement('source');
-            source.src = videoSrc;
-            source.type = 'video/webm';
-            video.appendChild(source);
-            
-            return video;
+            return gif;
         }
 
-        // Add video to project containers
-        function addVideoToProject(index) {
-            if (activeVideos.has(index)) return activeVideos.get(index);
+        // Add GIF to project containers
+        function addGifToProject(index) {
+            if (activeGifs.has(index)) return activeGifs.get(index);
             
-            const video = loadVideoForProject(index);
+            const gif = loadGifForProject(index);
             
             // Add to both blue and red containers
-            const blueContainer = blueProjects[index]?.querySelector('.video-container');
-            const redContainer = redProjects[index]?.querySelector('.video-container');
+            const blueContainer = blueProjects[index]?.querySelector('.gif-container');
+            const redContainer = redProjects[index]?.querySelector('.gif-container');
+            
+            let blueGif, redGif;
             
             if (blueContainer) {
-                const blueVideo = video.cloneNode(true);
-                blueContainer.appendChild(blueVideo);
+                blueGif = gif.cloneNode(true);
+                blueContainer.appendChild(blueGif);
                 
-                blueVideo.addEventListener('loadedmetadata', () => {
-                    blueVideo.play().catch(e => console.log('Blue video play failed:', e));
+                // GIFs start playing automatically when src is set
+                blueGif.addEventListener('load', () => {
+                    console.log('Blue GIF loaded for project', index);
+                });
+                
+                blueGif.addEventListener('error', () => {
+                    console.log('Blue GIF failed to load for project', index);
                 });
             }
             
             if (redContainer) {
-                const redVideo = video.cloneNode(true);
-                redContainer.appendChild(redVideo);
+                redGif = gif.cloneNode(true);
+                redContainer.appendChild(redGif);
                 
-                redVideo.addEventListener('loadedmetadata', () => {
-                    redVideo.play().catch(e => console.log('Red video play failed:', e));
+                redGif.addEventListener('load', () => {
+                    console.log('Red GIF loaded for project', index);
+                });
+                
+                redGif.addEventListener('error', () => {
+                    console.log('Red GIF failed to load for project', index);
                 });
             }
             
-            activeVideos.set(index, { blue: blueContainer?.firstElementChild, red: redContainer?.firstElementChild });
-            return activeVideos.get(index);
+            activeGifs.set(index, { blue: blueGif, red: redGif });
+            return activeGifs.get(index);
         }
 
-        // Remove video from project containers (free memory)
-        function removeVideoFromProject(index) {
-            if (!activeVideos.has(index)) return;
+        // Remove GIF from project containers (free memory)
+        function removeGifFromProject(index) {
+            if (!activeGifs.has(index)) return;
             
-            const videos = activeVideos.get(index);
+            const gifs = activeGifs.get(index);
             
-            // Remove and clean up blue video
-            if (videos.blue) {
-                videos.blue.pause();
-                videos.blue.src = '';
-                videos.blue.load(); // This helps free memory
-                videos.blue.remove();
+            // Remove and clean up blue GIF
+            if (gifs.blue) {
+                gifs.blue.src = ''; // Clear source to stop animation
+                gifs.blue.remove();
             }
             
-            // Remove and clean up red video
-            if (videos.red) {
-                videos.red.pause();
-                videos.red.src = '';
-                videos.red.load(); // This helps free memory
-                videos.red.remove();
+            // Remove and clean up red GIF
+            if (gifs.red) {
+                gifs.red.src = ''; // Clear source to stop animation
+                gifs.red.remove();
             }
             
-            activeVideos.delete(index);
+            activeGifs.delete(index);
         }
 
-        // Control video playback and memory management
-        function controlVideoPlayback(activeIndex) {
+        // Control GIF playback and memory management
+        function controlGifPlayback(activeIndex) {
             requestAnimationFrame(() => {
-                // Remove videos from all inactive projects to save memory
+                // Remove GIFs from all inactive projects to save memory
                 for (let i = 0; i < totalProjects; i++) {
                     if (i !== activeIndex) {
-                        removeVideoFromProject(i);
+                        removeGifFromProject(i);
                     }
                 }
                 
-                // Add and play video for active project
-                if (!activeVideos.has(activeIndex)) {
-                    addVideoToProject(activeIndex);
+                // Add and show GIF for active project
+                if (!activeGifs.has(activeIndex)) {
+                    addGifToProject(activeIndex);
                 }
             });
         }
@@ -511,8 +512,8 @@
                 
                 currentIndex = index;
                 
-                // Control video playback and memory
-                controlVideoPlayback(index);
+                // Control GIF playback and memory
+                controlGifPlayback(index);
             });
         }
 
@@ -618,9 +619,9 @@
 
         // Clean up on page unload
         window.addEventListener('beforeunload', () => {
-            // Clean up all active videos
-            activeVideos.forEach((videos, index) => {
-                removeVideoFromProject(index);
+            // Clean up all active GIFs
+            activeGifs.forEach((gifs, index) => {
+                removeGifFromProject(index);
             });
         });
 
