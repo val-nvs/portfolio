@@ -7,6 +7,7 @@
 	<link rel="preload" href="15perf-frame.svg" as="image">
 	<link rel="preload" href="5perf-frame.svg" as="image">
 	<style>
+		/* Reset and basic setup */
 		* {
 			margin: 0;
 			padding: 0;
@@ -28,14 +29,16 @@
 			height: 0;
 		}
 
+		/* CSS Variables for strip positioning */
 		:root {
 			--red-strip-left: 50%;
 			--blue-strip-current: 0%;
 			--blue-strip-top: 0%;
-			--blue-strip-top-hover: calc(0% - 1rem + 3rem);
-			--blue-strip-top-active: calc(50% - 1rem + 130px);
+			--blue-strip-top-hover: calc(0% - 0.9rem + 1.6rem);
+			--blue-strip-top-active: calc(50% - 0.9rem + 130px);
 		}
 
+		/* Main body styles */
 		body {
 			font-family: Arial, sans-serif;
 			background: #0a0a0a;
@@ -43,7 +46,7 @@
 			overflow-x: hidden;
 			/* CSS Scroll Snap */
 			scroll-snap-type: y mandatory;
-			scroll-behavior: auto; /* Fast scrolling instead of smooth */
+			scroll-behavior: auto;
 			/* Mobile optimization */
 			-webkit-overflow-scrolling: touch;
 		}
@@ -73,7 +76,7 @@
 			background: #0a0a0a;
 		}
 
-		/* Blue strip (horizontal-scrolling, positioned vertically) */
+		/* Blue strip (15perf) - horizontal scrolling, positioned vertically */
 		.blue-strip {
 			position: fixed;
 			left: 0;
@@ -85,7 +88,7 @@
 			overflow: hidden;
 			z-index: 100;
 			transition: top 0.5s ease;
-			transform: translateY(calc(-100% + 1rem));
+			transform: translateY(calc(-100% + 0.9rem));
 			will-change: top;
 		}
 
@@ -116,7 +119,7 @@
 			touch-action: manipulation;
 		}
 
-		/* Red strip (vertical-scrolling, positioned horizontally) */
+		/* Red strip (5perf) - vertical scrolling, positioned horizontally */
 		.red-strip {
 			position: fixed;
 			top: 0;
@@ -158,6 +161,7 @@
 			touch-action: manipulation;
 		}
 
+		/* Project button styling */
 		.project-button {
 			background: transparent;
 			border: 1px solid rgba(255, 255, 255, 0.3);
@@ -189,6 +193,7 @@
 			position: relative;
 		}
 
+		/* Project thumbnail image */
 		.project-thumbnail {
 			position: absolute;
 			top: 0;
@@ -202,42 +207,65 @@
 			opacity: 1;
 		}
 
-		/* Blue project specific - blur layer and video player */
-		.blur-layer {
+		/* Compact video player for blue projects */
+		.video-container {
 			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: rgba(0, 0, 0, 0.3);
-			backdrop-filter: blur(8px);
-			-webkit-backdrop-filter: blur(8px);
-			border-radius: 3px;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 250px;
 			z-index: 10;
 			opacity: 0;
 			transition: opacity 0.3s ease;
-			display: flex;
-			align-items: center;
-			justify-content: center;
 		}
 
-		.blur-layer.active {
+		.video-container.active {
 			opacity: 1;
 		}
 
-		.video-player {
-			width: 90%;
-			height: 80%;
-			border-radius: 4px;
-			outline: none;
+		.custom-video {
+			width: 250px;
+			height: auto;
+			border-radius: 3px;
+			display: block;
+		}
+
+		/* Flat video controls */
+		.video-controls {
+			background: #333;
+			padding: 4px;
+			display: flex;
+			align-items: center;
+			gap: 6px;
 			pointer-events: auto;
 		}
 
-		.video-player:focus {
-			outline: 2px solid rgba(255, 255, 255, 0.5);
+		.play-pause-btn {
+			background: #555;
+			border: none;
+			color: white;
+			width: 20px;
+			height: 20px;
+			cursor: pointer;
+			font-size: 8px;
+			flex-shrink: 0;
 		}
 
-		/* Red project specific - GIF system */
+		.progress-bar {
+			flex: 1;
+			height: 3px;
+			background: #555;
+			cursor: pointer;
+			position: relative;
+		}
+
+		.progress-filled {
+			height: 100%;
+			background: white;
+			width: 0%;
+		}
+
+		/* GIF system for red projects */
 		.project-gif {
 			position: absolute;
 			top: 0;
@@ -256,11 +284,16 @@
 			opacity: 1;
 		}
 
+		/* Button hover effects */
 		.project-button:hover {
 			background: rgba(255, 255, 255, 0.3);
 		}
 
-		/* Text overlays for 15perf (blue) projects */
+		.play-pause-btn:hover {
+			background: #666;
+		}
+
+		/* Text overlays for blue projects */
 		.blue-text-overlay {
 			position: absolute;
 			bottom: 8px;
@@ -277,7 +310,7 @@
 			pointer-events: none;
 		}
 
-		/* Text overlays for 5perf (red) projects */
+		/* Text overlays for red projects */
 		.red-text-overlay {
 			position: absolute;
 			bottom: 4px;
@@ -309,8 +342,16 @@
 			.red-project-list {
 				transition-duration: 0.2s;
 			}
+			
+			/* Larger touch targets on mobile */
+			.play-pause-btn {
+				width: 24px;
+				height: 24px;
+				font-size: 10px;
+			}
 		}
 
+		/* Accessibility - reduced motion */
 		@media (prefers-reduced-motion: reduce) {
 			* {
 				transition-duration: 0.1s !important;
@@ -323,27 +364,23 @@
 	<!-- Fixed white rectangle in center -->
 	<div class="center-rectangle"></div>
 
-	<!-- Project sections for scroll snap -->
+	<!-- Project sections for scroll snap navigation -->
 	<div class="project-section" data-project="0"></div>
 	<div class="project-section" data-project="1"></div>
 	<div class="project-section" data-project="2"></div>
 
-	<!-- Blue Strip (horizontal scrolling) -->
+	<!-- Blue strip (15perf) with video players -->
 	<div class="blue-strip">
-		<div class="blue-project-list" id="blueProjectList">
-			<!-- Projects will be populated by JavaScript -->
-		</div>
+		<div class="blue-project-list" id="blueProjectList"></div>
 	</div>
 
-	<!-- Red Strip (vertical scrolling) -->
+	<!-- Red strip (5perf) with GIF system -->
 	<div class="red-strip">
-		<div class="red-project-list" id="redProjectList">
-			<!-- Projects will be populated by JavaScript -->
-		</div>
+		<div class="red-project-list" id="redProjectList"></div>
 	</div>
 
 	<script>
-		// Film-related project data (3 projects)
+		// Project data configuration
 		const projectsData = [
 			{
 				"id": "clapper",
@@ -365,35 +402,44 @@
 			}
 		];
 
+		// DOM elements
 		const blueProjectList = document.getElementById('blueProjectList');
 		const redProjectList = document.getElementById('redProjectList');
 		const projectSections = document.querySelectorAll('.project-section');
 		const totalProjects = projectsData.length;
 		
+		// State management
 		let currentIndex = 0;
 		let blueStripCentered = false;
 		let blueProjects, redProjects;
 		let activeGifs = new Map(); // Track active GIF elements for red projects
 		let activeVideos = new Map(); // Track active video elements for blue projects
 
-		// Create project HTML - different for blue vs red
+		/**
+		 * Creates HTML for individual project items
+		 * @param {Object} project - Project data object
+		 * @param {number} index - Project index
+		 * @param {string} type - 'blue' or 'red' project type
+		 * @returns {string} HTML string for the project
+		 */
 		function createProjectHTML(project, index, type) {
 			const activeClass = index === 0 ? ' active' : '';
-			const thumbnailSrc = `media/${project.id}.jpg`;
 			
 			if (type === 'blue') {
-				// Blue projects: JPG + blur layer + video player
+				// Blue projects: pre-blurred thumbnail + video player
+				const thumbnailSrc = `media/${project.id}-blur.jpg`;
 				return `
 					<div class="blue-project-item${activeClass}" data-project="${index}">
 						<button class="project-button">
 							<img class="project-thumbnail" src="${thumbnailSrc}" alt="${project['15perf-text']}" loading="${index === 0 ? 'eager' : 'lazy'}">
-							<div class="blur-layer" data-project="${index}"></div>
+							<div class="video-container" data-project="${index}"></div>
 							<div class="blue-text-overlay">${project['15perf-text']}</div>
 						</button>
 					</div>
 				`;
 			} else {
-				// Red projects: JPG + GIF system
+				// Red projects: regular thumbnail + GIF system
+				const thumbnailSrc = `media/${project.id}.jpg`;
 				return `
 					<div class="red-project-item${activeClass}" data-project="${index}">
 						<button class="project-button">
@@ -407,249 +453,254 @@
 			}
 		}
 
-		// Populate projects with different media systems
+		/**
+		 * Creates the compact video player with flat controls
+		 * @param {Object} project - Project data object
+		 * @returns {HTMLElement} Video player element
+		 */
+		function createVideoPlayer(project) {
+			const container = document.createElement('div');
+			container.className = 'video-container active';
+			
+			const video = document.createElement('video');
+			video.className = 'custom-video';
+			video.muted = true;
+			video.loop = true;
+			video.preload = 'metadata';
+			video.src = `media/${project.id}.mp4`;
+			
+			const controls = document.createElement('div');
+			controls.className = 'video-controls';
+			
+			const playPauseBtn = document.createElement('button');
+			playPauseBtn.className = 'play-pause-btn';
+			playPauseBtn.innerHTML = '▶';
+			
+			const progressBar = document.createElement('div');
+			progressBar.className = 'progress-bar';
+			const progressFilled = document.createElement('div');
+			progressFilled.className = 'progress-filled';
+			progressBar.appendChild(progressFilled);
+			
+			controls.appendChild(playPauseBtn);
+			controls.appendChild(progressBar);
+			
+			container.appendChild(video);
+			container.appendChild(controls);
+			
+			// Video player event listeners
+			playPauseBtn.addEventListener('click', (e) => {
+				e.stopPropagation();
+				if (video.paused) {
+					video.play();
+					playPauseBtn.innerHTML = '⏸';
+				} else {
+					video.pause();
+					playPauseBtn.innerHTML = '▶';
+				}
+			});
+			
+			// Progress bar functionality
+			video.addEventListener('timeupdate', () => {
+				const progress = (video.currentTime / video.duration) * 100;
+				progressFilled.style.width = `${progress}%`;
+			});
+			
+			progressBar.addEventListener('click', (e) => {
+				e.stopPropagation();
+				const rect = progressBar.getBoundingClientRect();
+				const clickX = e.clientX - rect.left;
+				const progress = clickX / rect.width;
+				video.currentTime = progress * video.duration;
+			});
+			
+			return { container, video };
+		}
+
+		/**
+		 * Populates both blue and red project lists
+		 */
 		function populateProjects() {
 			const blueFragment = document.createDocumentFragment();
 			const redFragment = document.createDocumentFragment();
 			
 			projectsData.forEach((project, index) => {
-				// Create blue project
+				// Create blue project (15perf)
 				const blueDiv = document.createElement('div');
 				blueDiv.innerHTML = createProjectHTML(project, index, 'blue');
 				blueFragment.appendChild(blueDiv.firstElementChild);
 				
-				// Create red project
+				// Create red project (5perf)
 				const redDiv = document.createElement('div');
 				redDiv.innerHTML = createProjectHTML(project, index, 'red');
 				redFragment.appendChild(redDiv.firstElementChild);
 			});
 			
+			// Add fragments to DOM in single operation for performance
 			blueProjectList.appendChild(blueFragment);
 			redProjectList.appendChild(redFragment);
 
+			// Update element references
 			blueProjects = document.querySelectorAll('.blue-project-item');
 			redProjects = document.querySelectorAll('.red-project-item');
 		}
 
-		// Load video player for blue project
-		function loadVideoForBlueProject(index) {
-			const project = projectsData[index];
-			const videoSrc = `media/${project.id}.mp4`;
-			
-			// Create video player with controls
-			const video = document.createElement('video');
-			video.className = 'video-player';
-			video.controls = true;
-			video.preload = 'metadata';
-			video.src = videoSrc;
-			
-			return video;
-		}
-
-		// Add video player to blue project
+		/**
+		 * Adds video player to blue project
+		 * @param {number} index - Project index
+		 */
 		function addVideoToBlueProject(index) {
-			if (activeVideos.has(index)) return activeVideos.get(index);
+			if (activeVideos.has(index)) return;
 			
-			const video = loadVideoForBlueProject(index);
-			const blurLayer = blueProjects[index]?.querySelector('.blur-layer');
+			const project = projectsData[index];
+			const { container, video } = createVideoPlayer(project);
+			const videoContainer = blueProjects[index]?.querySelector('.video-container');
 			
-			if (blurLayer) {
-				blurLayer.appendChild(video);
-				blurLayer.classList.add('active');
-				
-				video.addEventListener('loadedmetadata', () => {
-					console.log('Blue video loaded for project', index);
-				});
-				
-				video.addEventListener('error', () => {
-					console.log('Blue video failed to load for project', index);
-				});
-				
-				activeVideos.set(index, video);
-				return video;
+			if (videoContainer) {
+				// Replace placeholder with actual video player
+				videoContainer.replaceWith(container);
+				activeVideos.set(index, { container, video });
 			}
-			
-			return null;
 		}
 
-		// Remove video from blue project
+		/**
+		 * Removes video player from blue project to save memory
+		 * @param {number} index - Project index
+		 */
 		function removeVideoFromBlueProject(index) {
 			if (!activeVideos.has(index)) return;
 			
-			const video = activeVideos.get(index);
-			const blurLayer = blueProjects[index]?.querySelector('.blur-layer');
+			const { container, video } = activeVideos.get(index);
 			
+			// Clean up video resources
 			if (video) {
 				video.pause();
 				video.src = '';
-				video.load();
-				video.remove();
+				video.load(); // Force browser to free memory
 			}
 			
-			if (blurLayer) {
-				blurLayer.classList.remove('active');
+			// Replace with empty placeholder
+			const placeholder = document.createElement('div');
+			placeholder.className = 'video-container';
+			placeholder.dataset.project = index;
+			
+			if (container && container.parentElement) {
+				container.replaceWith(placeholder);
 			}
 			
 			activeVideos.delete(index);
 		}
 
-		// Load GIF for red project (same as before)
-		function loadGifForProject(index) {
-			const project = projectsData[index];
-			const gifSrc = `media/${project.id}.gif`;
+		/**
+		 * Adds GIF animation to red project
+		 * @param {number} index - Project index
+		 */
+		function addGifToRedProject(index) {
+			if (activeGifs.has(index)) return;
 			
+			const project = projectsData[index];
 			const gif = document.createElement('img');
 			gif.className = 'project-gif active';
-			gif.src = gifSrc;
+			gif.src = `media/${project.id}.gif`;
 			gif.alt = `${project.id} animation`;
 			
-			return gif;
-		}
-
-		// Add GIF to red project (same as before)
-		function addGifToRedProject(index) {
-			if (activeGifs.has(index)) return activeGifs.get(index);
-			
-			const gif = loadGifForProject(index);
-			const redContainer = redProjects[index]?.querySelector('.gif-container');
-			
-			if (redContainer) {
-				redContainer.appendChild(gif);
-				
-				gif.addEventListener('load', () => {
-					console.log('Red GIF loaded for project', index);
-				});
-				
-				gif.addEventListener('error', () => {
-					console.log('Red GIF failed to load for project', index);
-				});
-				
+			const container = redProjects[index]?.querySelector('.gif-container');
+			if (container) {
+				container.appendChild(gif);
 				activeGifs.set(index, gif);
-				return gif;
 			}
-			
-			return null;
 		}
 
-		// Remove GIF from red project (same as before)
+		/**
+		 * Removes GIF from red project to save memory
+		 * @param {number} index - Project index
+		 */
 		function removeGifFromRedProject(index) {
 			if (!activeGifs.has(index)) return;
 			
 			const gif = activeGifs.get(index);
-			
 			if (gif) {
-				gif.src = '';
-				gif.remove();
+				gif.src = ''; // Stop animation
+				gif.remove(); // Remove from DOM
 			}
-			
 			activeGifs.delete(index);
 		}
 
-		// Control media playback and memory management
-		function controlMediaPlayback(activeIndex) {
-			requestAnimationFrame(() => {
-				// Remove media from all inactive projects
-				for (let i = 0; i < totalProjects; i++) {
-					if (i !== activeIndex) {
-						removeVideoFromBlueProject(i);
-						removeGifFromRedProject(i);
-					}
-				}
-				
-				// Add media for active project
-				addVideoToBlueProject(activeIndex); // Blue: video player
-				addGifToRedProject(activeIndex);    // Red: GIF
-			});
-		}
-
-		// Update project with hardware acceleration
+		/**
+		 * Updates the active project and manages media loading
+		 * @param {number} index - New active project index
+		 */
 		function updateProject(index) {
-			requestAnimationFrame(() => {
-				// Remove all active classes
-				blueProjects.forEach(p => p.classList.remove('active'));
-				redProjects.forEach(p => p.classList.remove('active'));
-				
-				// Add active class to current project
-				if (blueProjects[index]) blueProjects[index].classList.add('active');
-				if (redProjects[index]) redProjects[index].classList.add('active');
-				
-				// Hardware accelerated transforms
-				const viewportCenterX = window.innerWidth / 2;
-				const projectCenterX = 285 / 2;
-				const blueTranslateX = viewportCenterX - projectCenterX - (index * 285);
-				blueProjectList.style.transform = `translate3d(${blueTranslateX}px, 0, 0)`;
-				
-				const viewportCenterY = window.innerHeight / 2;
-				const projectCenterY = 95 / 2;
-				const redTranslateY = viewportCenterY - projectCenterY - (index * 95);
-				redProjectList.style.transform = `translate3d(0, ${redTranslateY}px, 0)`;
-				
-				currentIndex = index;
-				
-				// Control media playback and memory
-				controlMediaPlayback(index);
-			});
+			// Update active classes
+			blueProjects.forEach(p => p.classList.remove('active'));
+			redProjects.forEach(p => p.classList.remove('active'));
+			
+			if (blueProjects[index]) blueProjects[index].classList.add('active');
+			if (redProjects[index]) redProjects[index].classList.add('active');
+			
+			// Update strip positions with hardware acceleration
+			const viewportCenterX = window.innerWidth / 2;
+			const blueTranslateX = viewportCenterX - 142.5 - (index * 285);
+			blueProjectList.style.transform = `translate3d(${blueTranslateX}px, 0, 0)`;
+			
+			const viewportCenterY = window.innerHeight / 2;
+			const redTranslateY = viewportCenterY - 47.5 - (index * 95);
+			redProjectList.style.transform = `translate3d(0, ${redTranslateY}px, 0)`;
+			
+			currentIndex = index;
+			
+			// Memory management - remove media from inactive projects
+			for (let i = 0; i < totalProjects; i++) {
+				if (i !== index) {
+					removeVideoFromBlueProject(i);
+					removeGifFromRedProject(i);
+				}
+			}
+			
+			// Load media for active project
+			addVideoToBlueProject(index);
+			addGifToRedProject(index);
 		}
 
-		// Wheel navigation
+		// Mouse wheel navigation with cooldown
 		let wheelCooldown = false;
-		const COOLDOWN_TIME = 120;
-
-		const handleWheel = (e) => {
+		window.addEventListener('wheel', (e) => {
 			if (wheelCooldown) return;
 			
 			const direction = e.deltaY > 0 ? 1 : -1;
-			const newIndex = currentIndex + direction;
-			const clampedIndex = Math.max(0, Math.min(newIndex, totalProjects - 1));
+			const newIndex = Math.max(0, Math.min(currentIndex + direction, totalProjects - 1));
 			
-			if (clampedIndex !== currentIndex) {
-				updateProject(clampedIndex);
-				
-				if (projectSections[clampedIndex]) {
-					projectSections[clampedIndex].scrollIntoView({ behavior: 'auto' });
-				}
+			if (newIndex !== currentIndex) {
+				updateProject(newIndex);
+				projectSections[newIndex]?.scrollIntoView({ behavior: 'auto' });
 				
 				wheelCooldown = true;
-				setTimeout(() => { wheelCooldown = false; }, COOLDOWN_TIME);
+				setTimeout(() => { wheelCooldown = false; }, 120);
 			}
-		};
+		}, { passive: true });
 
-		window.addEventListener('wheel', handleWheel, { passive: true });
-
-		// Intersection Observer for mobile
+		// Intersection Observer for mobile touch navigation
 		const observer = new IntersectionObserver((entries) => {
 			entries.forEach(entry => {
 				if (entry.isIntersecting && !wheelCooldown) {
 					const newIndex = parseInt(entry.target.dataset.project);
-					if (newIndex !== currentIndex) {
-						updateProject(newIndex);
-					}
+					if (newIndex !== currentIndex) updateProject(newIndex);
 				}
 			});
-		}, {
-			root: null,
-			rootMargin: '0px',
-			threshold: 0.5
-		});
+		}, { threshold: 0.5 });
 
-		// Event delegation
-		function setupEventListeners() {
-			projectSections.forEach(section => observer.observe(section));
-			
-			blueProjectList.addEventListener('click', handleProjectClick);
-			redProjectList.addEventListener('click', handleProjectClick);
-			redProjectList.addEventListener('mouseenter', handleRedHover, true);
-			redProjectList.addEventListener('mouseleave', handleRedHover, true);
-		}
-
+		/**
+		 * Handles clicks on project items
+		 * @param {Event} e - Click event
+		 */
 		function handleProjectClick(e) {
 			const project = e.target.closest('.blue-project-item, .red-project-item');
 			if (!project) return;
 			
 			const projectIndex = parseInt(project.dataset.project);
 			
+			// If clicking on active project, toggle blue strip visibility
 			if (project.classList.contains('active')) {
-				// Toggle blue strip position
 				if (blueStripCentered) {
 					document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top)');
 					blueStripCentered = false;
@@ -660,18 +711,19 @@
 				return;
 			}
 			
+			// Navigate to clicked project
 			if (projectIndex >= 0 && projectIndex < totalProjects) {
 				wheelCooldown = true;
 				updateProject(projectIndex);
-				
-				if (projectSections[projectIndex]) {
-					projectSections[projectIndex].scrollIntoView({ behavior: 'auto' });
-				}
-				
+				projectSections[projectIndex]?.scrollIntoView({ behavior: 'auto' });
 				setTimeout(() => { wheelCooldown = false; }, 100);
 			}
 		}
 
+		/**
+		 * Handles hover effects on red projects
+		 * @param {Event} e - Mouse event
+		 */
 		function handleRedHover(e) {
 			const project = e.target.closest('.red-project-item');
 			if (!project?.classList.contains('active')) return;
@@ -684,25 +736,31 @@
 			}
 		}
 
-		// Initialize
+		/**
+		 * Initialize the application
+		 */
 		function init() {
 			populateProjects();
-			setupEventListeners();
-			updateProject(0); // Start with first project active
+			
+			// Set up event listeners
+			projectSections.forEach(section => observer.observe(section));
+			blueProjectList.addEventListener('click', handleProjectClick);
+			redProjectList.addEventListener('click', handleProjectClick);
+			redProjectList.addEventListener('mouseenter', handleRedHover, true);
+			redProjectList.addEventListener('mouseleave', handleRedHover, true);
+			
+			// Start with first project active
+			updateProject(0);
 		}
 
-		// Clean up on page unload
+		// Clean up resources when page is unloaded
 		window.addEventListener('beforeunload', () => {
-			// Clean up all active media
-			activeVideos.forEach((video, index) => {
-				removeVideoFromBlueProject(index);
-			});
-			activeGifs.forEach((gif, index) => {
-				removeGifFromRedProject(index);
-			});
+			// Clean up all active media to free memory
+			activeVideos.forEach((_, index) => removeVideoFromBlueProject(index));
+			activeGifs.forEach((_, index) => removeGifFromRedProject(index));
 		});
 
-		// Start the app
+		// Start the application
 		init();
 	</script>
 </body>
