@@ -1,709 +1,709 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Scroll Snap</title>
-    <link rel="preload" href="15perf-frame.svg" as="image">
-    <link rel="preload" href="5perf-frame.svg" as="image">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Portfolio - Scroll Snap</title>
+	<link rel="preload" href="15perf-frame.svg" as="image">
+	<link rel="preload" href="5perf-frame.svg" as="image">
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
 
-        html, body {
-            margin: 0;
-            padding: 0;
-            /* Hide scrollbar for all browsers */
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE/Edge */
-        }
+		html, body {
+			margin: 0;
+			padding: 0;
+			/* Hide scrollbar for all browsers */
+			scrollbar-width: none; /* Firefox */
+			-ms-overflow-style: none; /* IE/Edge */
+		}
 
-        /* Hide scrollbar for Chrome/Safari/Opera */
-        html::-webkit-scrollbar,
-        body::-webkit-scrollbar {
-            width: 0;
-            height: 0;
-        }
+		/* Hide scrollbar for Chrome/Safari/Opera */
+		html::-webkit-scrollbar,
+		body::-webkit-scrollbar {
+			width: 0;
+			height: 0;
+		}
 
-        :root {
-            --red-strip-left: 50%;
-            --blue-strip-current: 0%;
-            --blue-strip-top: 0%;
-            --blue-strip-top-hover: calc(0% - 1rem + 3rem);
-            --blue-strip-top-active: calc(50% - 1rem + 130px);
-        }
+		:root {
+			--red-strip-left: 50%;
+			--blue-strip-current: 0%;
+			--blue-strip-top: 0%;
+			--blue-strip-top-hover: calc(0% - 1rem + 3rem);
+			--blue-strip-top-active: calc(50% - 1rem + 130px);
+		}
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #0a0a0a;
-            color: white;
-            overflow-x: hidden;
-            /* CSS Scroll Snap */
-            scroll-snap-type: y mandatory;
-            scroll-behavior: auto; /* Fast scrolling instead of smooth */
-            /* Mobile optimization */
-            -webkit-overflow-scrolling: touch;
-        }
+		body {
+			font-family: Arial, sans-serif;
+			background: #0a0a0a;
+			color: white;
+			overflow-x: hidden;
+			/* CSS Scroll Snap */
+			scroll-snap-type: y mandatory;
+			scroll-behavior: auto; /* Fast scrolling instead of smooth */
+			/* Mobile optimization */
+			-webkit-overflow-scrolling: touch;
+		}
 
-        /* Fixed white rectangle in center */
-        .center-rectangle {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 278px;
-            height: 120px;
-            background: white;
-            transform: translate(-50%, -50%);
-            z-index: 1;
-            border: 5px solid #444;
-            border-radius: 1rem;
-        }
+		/* Fixed white rectangle in center */
+		.center-rectangle {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			width: 278px;
+			height: 120px;
+			background: white;
+			transform: translate(-50%, -50%);
+			z-index: 1;
+			border: 5px solid #444;
+			border-radius: 1rem;
+		}
 
-        /* Project sections for scroll snap */
-        .project-section {
-            height: 60vh;
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #0a0a0a;
-        }
+		/* Project sections for scroll snap */
+		.project-section {
+			height: 60vh;
+			scroll-snap-align: start;
+			scroll-snap-stop: always;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: #0a0a0a;
+		}
 
-        /* Blue strip (horizontal-scrolling, positioned vertically) */
-        .blue-strip {
-            position: fixed;
-            left: 0;
-            right: 0;
-            top: calc(var(--blue-strip-current));
-            height: 260px;
-            background: rgba(100, 100, 100, 0.2);
-            box-shadow: 0 0 0 1px #2a4a6a;
-            overflow: hidden;
-            z-index: 100;
-            transition: top 0.5s ease;
-            transform: translateY(calc(-100% + 1rem));
-            will-change: top;
-        }
+		/* Blue strip (horizontal-scrolling, positioned vertically) */
+		.blue-strip {
+			position: fixed;
+			left: 0;
+			right: 0;
+			top: calc(var(--blue-strip-current));
+			height: 260px;
+			background: rgba(100, 100, 100, 0.2);
+			box-shadow: 0 0 0 1px #2a4a6a;
+			overflow: hidden;
+			z-index: 100;
+			transition: top 0.5s ease;
+			transform: translateY(calc(-100% + 1rem));
+			will-change: top;
+		}
 
-        .blue-project-list {
-            display: flex;
-            flex-direction: row;
-            height: 100%;
-            transition: transform 0.3s ease;
-            transform: translateZ(0);
-            will-change: transform;
-        }
+		.blue-project-list {
+			display: flex;
+			flex-direction: row;
+			height: 100%;
+			transition: transform 0.3s ease;
+			transform: translateZ(0);
+			will-change: transform;
+		}
 
-        .blue-project-item {
-            flex: 0 0 285px;
-            width: 285px;
-            height: 260px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 18px;
-            background: url('15perf-frame.svg') no-repeat center center;
-            background-size: 285px 260px;
-            transition: all 0.3s ease;
-            cursor: default;
-            opacity: 1;
-            transform: scale(1);
-            touch-action: manipulation;
-        }
+		.blue-project-item {
+			flex: 0 0 285px;
+			width: 285px;
+			height: 260px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: white;
+			font-size: 18px;
+			background: url('15perf-frame.svg') no-repeat center center;
+			background-size: 285px 260px;
+			transition: all 0.3s ease;
+			cursor: default;
+			opacity: 1;
+			transform: scale(1);
+			touch-action: manipulation;
+		}
 
-        /* Red strip (vertical-scrolling, positioned horizontally) */
-        .red-strip {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: var(--red-strip-left);
-            width: 260px;
-            background: rgba(100, 100, 100, 0);
-            box-shadow: 0 0 0 1px #6a2a2a;
-            overflow: hidden;
-            z-index: 50;
-            transform: translateX(-50%);
-        }
+		/* Red strip (vertical-scrolling, positioned horizontally) */
+		.red-strip {
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			left: var(--red-strip-left);
+			width: 260px;
+			background: rgba(100, 100, 100, 0);
+			box-shadow: 0 0 0 1px #6a2a2a;
+			overflow: hidden;
+			z-index: 50;
+			transform: translateX(-50%);
+		}
 
-        .red-project-list {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            transition: transform 0.3s ease;
-            transform: translateZ(0);
-            will-change: transform;
-        }
+		.red-project-list {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			transition: transform 0.3s ease;
+			transform: translateZ(0);
+			will-change: transform;
+		}
 
-        .red-project-item {
-            flex: 0 0 95px;
-            width: 260px;
-            height: 95px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 16px;
-            background: url('5perf-frame.svg') no-repeat center center;
-            background-size: 260px 95px;
-            transition: all 0.3s ease;
-            cursor: default;
-            opacity: 1;
-            transform: scale(1);
-            position: relative;
-            touch-action: manipulation;
-        }
+		.red-project-item {
+			flex: 0 0 95px;
+			width: 260px;
+			height: 95px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: white;
+			font-size: 16px;
+			background: url('5perf-frame.svg') no-repeat center center;
+			background-size: 260px 95px;
+			transition: all 0.3s ease;
+			cursor: default;
+			opacity: 1;
+			transform: scale(1);
+			position: relative;
+			touch-action: manipulation;
+		}
 
-        .project-button {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: inherit;
-            transition: background 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 0 1px rgba(2, 0, 0, 1.0);
-            overflow: hidden;
-            padding: 0;
-            position: relative;
-        }
+		.project-button {
+			background: transparent;
+			border: 1px solid rgba(255, 255, 255, 0.3);
+			color: white;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: inherit;
+			transition: background 0.2s ease;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 0 0 1px rgba(2, 0, 0, 1.0);
+			overflow: hidden;
+			padding: 0;
+			position: relative;
+		}
 
-        .blue-project-item .project-button {
-            width: 282px;
-            height: 210.4px;
-        }
+		.blue-project-item .project-button {
+			width: 282px;
+			height: 210.4px;
+		}
 
-        .red-project-item .project-button {
-            width: 210.4px;
-            height: 92px;
-            background: transparent;
-            border: none;
-            z-index: 10;
-            position: relative;
-        }
+		.red-project-item .project-button {
+			width: 210.4px;
+			height: 92px;
+			background: transparent;
+			border: none;
+			z-index: 10;
+			position: relative;
+		}
 
-        .project-thumbnail {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 3px;
-            pointer-events: none;
-            z-index: 5;
-            opacity: 1;
-        }
+		.project-thumbnail {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			border-radius: 3px;
+			pointer-events: none;
+			z-index: 5;
+			opacity: 1;
+		}
 
-        /* Blue project specific - blur layer and video player */
-        .blur-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 3px;
-            z-index: 10;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+		/* Blue project specific - blur layer and video player */
+		.blur-layer {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.3);
+			backdrop-filter: blur(8px);
+			-webkit-backdrop-filter: blur(8px);
+			border-radius: 3px;
+			z-index: 10;
+			opacity: 0;
+			transition: opacity 0.3s ease;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 
-        .blur-layer.active {
-            opacity: 1;
-        }
+		.blur-layer.active {
+			opacity: 1;
+		}
 
-        .video-player {
-            width: 90%;
-            height: 80%;
-            border-radius: 4px;
-            outline: none;
-            pointer-events: auto;
-        }
+		.video-player {
+			width: 90%;
+			height: 80%;
+			border-radius: 4px;
+			outline: none;
+			pointer-events: auto;
+		}
 
-        .video-player:focus {
-            outline: 2px solid rgba(255, 255, 255, 0.5);
-        }
+		.video-player:focus {
+			outline: 2px solid rgba(255, 255, 255, 0.5);
+		}
 
-        /* Red project specific - GIF system */
-        .project-gif {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 3px;
-            pointer-events: none;
-            z-index: 10;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
+		/* Red project specific - GIF system */
+		.project-gif {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			border-radius: 3px;
+			pointer-events: none;
+			z-index: 10;
+			opacity: 0;
+			transition: opacity 0.3s ease;
+		}
 
-        .project-gif.active {
-            opacity: 1;
-        }
+		.project-gif.active {
+			opacity: 1;
+		}
 
-        .project-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
+		.project-button:hover {
+			background: rgba(255, 255, 255, 0.3);
+		}
 
-        /* Text overlays for 15perf (blue) projects */
-        .blue-text-overlay {
-            position: absolute;
-            bottom: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: 500;
-            white-space: nowrap;
-            z-index: 15;
-            pointer-events: none;
-        }
+		/* Text overlays for 15perf (blue) projects */
+		.blue-text-overlay {
+			position: absolute;
+			bottom: 8px;
+			left: 50%;
+			transform: translateX(-50%);
+			background: rgba(0, 0, 0, 0.8);
+			color: white;
+			padding: 4px 12px;
+			border-radius: 4px;
+			font-size: 14px;
+			font-weight: 500;
+			white-space: nowrap;
+			z-index: 15;
+			pointer-events: none;
+		}
 
-        /* Text overlays for 5perf (red) projects */
-        .red-text-overlay {
-            position: absolute;
-            bottom: 4px;
-            font-size: 11px;
-            font-weight: 500;
-            z-index: 15;
-            pointer-events: none;
-            color: white;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-        }
+		/* Text overlays for 5perf (red) projects */
+		.red-text-overlay {
+			position: absolute;
+			bottom: 4px;
+			font-size: 11px;
+			font-weight: 500;
+			z-index: 15;
+			pointer-events: none;
+			color: white;
+			text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+		}
 
-        .red-text-left {
-            left: 8px;
-        }
+		.red-text-left {
+			left: 8px;
+		}
 
-        .red-text-right {
-            right: 8px;
-        }
+		.red-text-right {
+			right: 8px;
+		}
 
-        /* Mobile optimizations */
-        @media (max-width: 768px) {
-            .blue-project-item {
-                min-height: 44px;
-            }
-            .red-project-item {
-                min-height: 44px;
-            }
-            .blue-project-list,
-            .red-project-list {
-                transition-duration: 0.2s;
-            }
-        }
+		/* Mobile optimizations */
+		@media (max-width: 768px) {
+			.blue-project-item {
+				min-height: 44px;
+			}
+			.red-project-item {
+				min-height: 44px;
+			}
+			.blue-project-list,
+			.red-project-list {
+				transition-duration: 0.2s;
+			}
+		}
 
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                transition-duration: 0.1s !important;
-                animation-duration: 0.1s !important;
-            }
-        }
-    </style>
+		@media (prefers-reduced-motion: reduce) {
+			* {
+				transition-duration: 0.1s !important;
+				animation-duration: 0.1s !important;
+			}
+		}
+	</style>
 </head>
 <body>
-    <!-- Fixed white rectangle in center -->
-    <div class="center-rectangle"></div>
+	<!-- Fixed white rectangle in center -->
+	<div class="center-rectangle"></div>
 
-    <!-- Project sections for scroll snap -->
-    <div class="project-section" data-project="0"></div>
-    <div class="project-section" data-project="1"></div>
-    <div class="project-section" data-project="2"></div>
+	<!-- Project sections for scroll snap -->
+	<div class="project-section" data-project="0"></div>
+	<div class="project-section" data-project="1"></div>
+	<div class="project-section" data-project="2"></div>
 
-    <!-- Blue Strip (horizontal scrolling) -->
-    <div class="blue-strip">
-        <div class="blue-project-list" id="blueProjectList">
-            <!-- Projects will be populated by JavaScript -->
-        </div>
-    </div>
+	<!-- Blue Strip (horizontal scrolling) -->
+	<div class="blue-strip">
+		<div class="blue-project-list" id="blueProjectList">
+			<!-- Projects will be populated by JavaScript -->
+		</div>
+	</div>
 
-    <!-- Red Strip (vertical scrolling) -->
-    <div class="red-strip">
-        <div class="red-project-list" id="redProjectList">
-            <!-- Projects will be populated by JavaScript -->
-        </div>
-    </div>
+	<!-- Red Strip (vertical scrolling) -->
+	<div class="red-strip">
+		<div class="red-project-list" id="redProjectList">
+			<!-- Projects will be populated by JavaScript -->
+		</div>
+	</div>
 
-    <script>
-        // Film-related project data (3 projects)
-        const projectsData = [
-            {
-                "id": "clapper",
-                "left-text": "text",
-                "right-text": "text",
-                "15perf-text": "text"
-            },
-            {
-                "id": "free",
-                "left-text": "text",
-                "right-text": "text",
-                "15perf-text": "text"
-            },
-            {
-                "id": "curta",
-                "left-text": "text",
-                "right-text": "text",
-                "15perf-text": "text"
-            }
-        ];
+	<script>
+		// Film-related project data (3 projects)
+		const projectsData = [
+			{
+				"id": "clapper",
+				"left-text": "text",
+				"right-text": "text",
+				"15perf-text": "text"
+			},
+			{
+				"id": "free",
+				"left-text": "text",
+				"right-text": "text",
+				"15perf-text": "text"
+			},
+			{
+				"id": "curta",
+				"left-text": "text",
+				"right-text": "text",
+				"15perf-text": "text"
+			}
+		];
 
-        const blueProjectList = document.getElementById('blueProjectList');
-        const redProjectList = document.getElementById('redProjectList');
-        const projectSections = document.querySelectorAll('.project-section');
-        const totalProjects = projectsData.length;
-        
-        let currentIndex = 0;
-        let blueStripCentered = false;
-        let blueProjects, redProjects;
-        let activeGifs = new Map(); // Track active GIF elements for red projects
-        let activeVideos = new Map(); // Track active video elements for blue projects
+		const blueProjectList = document.getElementById('blueProjectList');
+		const redProjectList = document.getElementById('redProjectList');
+		const projectSections = document.querySelectorAll('.project-section');
+		const totalProjects = projectsData.length;
+		
+		let currentIndex = 0;
+		let blueStripCentered = false;
+		let blueProjects, redProjects;
+		let activeGifs = new Map(); // Track active GIF elements for red projects
+		let activeVideos = new Map(); // Track active video elements for blue projects
 
-        // Create project HTML - different for blue vs red
-        function createProjectHTML(project, index, type) {
-            const activeClass = index === 0 ? ' active' : '';
-            const thumbnailSrc = `media/${project.id}.jpg`;
-            
-            if (type === 'blue') {
-                // Blue projects: JPG + blur layer + video player
-                return `
-                    <div class="blue-project-item${activeClass}" data-project="${index}">
-                        <button class="project-button">
-                            <img class="project-thumbnail" src="${thumbnailSrc}" alt="${project['15perf-text']}" loading="${index === 0 ? 'eager' : 'lazy'}">
-                            <div class="blur-layer" data-project="${index}"></div>
-                            <div class="blue-text-overlay">${project['15perf-text']}</div>
-                        </button>
-                    </div>
-                `;
-            } else {
-                // Red projects: JPG + GIF system
-                return `
-                    <div class="red-project-item${activeClass}" data-project="${index}">
-                        <button class="project-button">
-                            <img class="project-thumbnail" src="${thumbnailSrc}" alt="${project['left-text']} ${project['right-text']}" loading="${index === 0 ? 'eager' : 'lazy'}">
-                            <div class="gif-container" data-project="${index}"></div>
-                            <div class="red-text-overlay red-text-left">${project['left-text']}</div>
-                            <div class="red-text-overlay red-text-right">${project['right-text']}</div>
-                        </button>
-                    </div>
-                `;
-            }
-        }
+		// Create project HTML - different for blue vs red
+		function createProjectHTML(project, index, type) {
+			const activeClass = index === 0 ? ' active' : '';
+			const thumbnailSrc = `media/${project.id}.jpg`;
+			
+			if (type === 'blue') {
+				// Blue projects: JPG + blur layer + video player
+				return `
+					<div class="blue-project-item${activeClass}" data-project="${index}">
+						<button class="project-button">
+							<img class="project-thumbnail" src="${thumbnailSrc}" alt="${project['15perf-text']}" loading="${index === 0 ? 'eager' : 'lazy'}">
+							<div class="blur-layer" data-project="${index}"></div>
+							<div class="blue-text-overlay">${project['15perf-text']}</div>
+						</button>
+					</div>
+				`;
+			} else {
+				// Red projects: JPG + GIF system
+				return `
+					<div class="red-project-item${activeClass}" data-project="${index}">
+						<button class="project-button">
+							<img class="project-thumbnail" src="${thumbnailSrc}" alt="${project['left-text']} ${project['right-text']}" loading="${index === 0 ? 'eager' : 'lazy'}">
+							<div class="gif-container" data-project="${index}"></div>
+							<div class="red-text-overlay red-text-left">${project['left-text']}</div>
+							<div class="red-text-overlay red-text-right">${project['right-text']}</div>
+						</button>
+					</div>
+				`;
+			}
+		}
 
-        // Populate projects with different media systems
-        function populateProjects() {
-            const blueFragment = document.createDocumentFragment();
-            const redFragment = document.createDocumentFragment();
-            
-            projectsData.forEach((project, index) => {
-                // Create blue project
-                const blueDiv = document.createElement('div');
-                blueDiv.innerHTML = createProjectHTML(project, index, 'blue');
-                blueFragment.appendChild(blueDiv.firstElementChild);
-                
-                // Create red project
-                const redDiv = document.createElement('div');
-                redDiv.innerHTML = createProjectHTML(project, index, 'red');
-                redFragment.appendChild(redDiv.firstElementChild);
-            });
-            
-            blueProjectList.appendChild(blueFragment);
-            redProjectList.appendChild(redFragment);
+		// Populate projects with different media systems
+		function populateProjects() {
+			const blueFragment = document.createDocumentFragment();
+			const redFragment = document.createDocumentFragment();
+			
+			projectsData.forEach((project, index) => {
+				// Create blue project
+				const blueDiv = document.createElement('div');
+				blueDiv.innerHTML = createProjectHTML(project, index, 'blue');
+				blueFragment.appendChild(blueDiv.firstElementChild);
+				
+				// Create red project
+				const redDiv = document.createElement('div');
+				redDiv.innerHTML = createProjectHTML(project, index, 'red');
+				redFragment.appendChild(redDiv.firstElementChild);
+			});
+			
+			blueProjectList.appendChild(blueFragment);
+			redProjectList.appendChild(redFragment);
 
-            blueProjects = document.querySelectorAll('.blue-project-item');
-            redProjects = document.querySelectorAll('.red-project-item');
-        }
+			blueProjects = document.querySelectorAll('.blue-project-item');
+			redProjects = document.querySelectorAll('.red-project-item');
+		}
 
-        // Load video player for blue project
-        function loadVideoForBlueProject(index) {
-            const project = projectsData[index];
-            const videoSrc = `media/${project.id}.mp4`;
-            
-            // Create video player with controls
-            const video = document.createElement('video');
-            video.className = 'video-player';
-            video.controls = true;
-            video.preload = 'metadata';
-            video.src = videoSrc;
-            
-            return video;
-        }
+		// Load video player for blue project
+		function loadVideoForBlueProject(index) {
+			const project = projectsData[index];
+			const videoSrc = `media/${project.id}.mp4`;
+			
+			// Create video player with controls
+			const video = document.createElement('video');
+			video.className = 'video-player';
+			video.controls = true;
+			video.preload = 'metadata';
+			video.src = videoSrc;
+			
+			return video;
+		}
 
-        // Add video player to blue project
-        function addVideoToBlueProject(index) {
-            if (activeVideos.has(index)) return activeVideos.get(index);
-            
-            const video = loadVideoForBlueProject(index);
-            const blurLayer = blueProjects[index]?.querySelector('.blur-layer');
-            
-            if (blurLayer) {
-                blurLayer.appendChild(video);
-                blurLayer.classList.add('active');
-                
-                video.addEventListener('loadedmetadata', () => {
-                    console.log('Blue video loaded for project', index);
-                });
-                
-                video.addEventListener('error', () => {
-                    console.log('Blue video failed to load for project', index);
-                });
-                
-                activeVideos.set(index, video);
-                return video;
-            }
-            
-            return null;
-        }
+		// Add video player to blue project
+		function addVideoToBlueProject(index) {
+			if (activeVideos.has(index)) return activeVideos.get(index);
+			
+			const video = loadVideoForBlueProject(index);
+			const blurLayer = blueProjects[index]?.querySelector('.blur-layer');
+			
+			if (blurLayer) {
+				blurLayer.appendChild(video);
+				blurLayer.classList.add('active');
+				
+				video.addEventListener('loadedmetadata', () => {
+					console.log('Blue video loaded for project', index);
+				});
+				
+				video.addEventListener('error', () => {
+					console.log('Blue video failed to load for project', index);
+				});
+				
+				activeVideos.set(index, video);
+				return video;
+			}
+			
+			return null;
+		}
 
-        // Remove video from blue project
-        function removeVideoFromBlueProject(index) {
-            if (!activeVideos.has(index)) return;
-            
-            const video = activeVideos.get(index);
-            const blurLayer = blueProjects[index]?.querySelector('.blur-layer');
-            
-            if (video) {
-                video.pause();
-                video.src = '';
-                video.load();
-                video.remove();
-            }
-            
-            if (blurLayer) {
-                blurLayer.classList.remove('active');
-            }
-            
-            activeVideos.delete(index);
-        }
+		// Remove video from blue project
+		function removeVideoFromBlueProject(index) {
+			if (!activeVideos.has(index)) return;
+			
+			const video = activeVideos.get(index);
+			const blurLayer = blueProjects[index]?.querySelector('.blur-layer');
+			
+			if (video) {
+				video.pause();
+				video.src = '';
+				video.load();
+				video.remove();
+			}
+			
+			if (blurLayer) {
+				blurLayer.classList.remove('active');
+			}
+			
+			activeVideos.delete(index);
+		}
 
-        // Load GIF for red project (same as before)
-        function loadGifForProject(index) {
-            const project = projectsData[index];
-            const gifSrc = `media/${project.id}.gif`;
-            
-            const gif = document.createElement('img');
-            gif.className = 'project-gif active';
-            gif.src = gifSrc;
-            gif.alt = `${project.id} animation`;
-            
-            return gif;
-        }
+		// Load GIF for red project (same as before)
+		function loadGifForProject(index) {
+			const project = projectsData[index];
+			const gifSrc = `media/${project.id}.gif`;
+			
+			const gif = document.createElement('img');
+			gif.className = 'project-gif active';
+			gif.src = gifSrc;
+			gif.alt = `${project.id} animation`;
+			
+			return gif;
+		}
 
-        // Add GIF to red project (same as before)
-        function addGifToRedProject(index) {
-            if (activeGifs.has(index)) return activeGifs.get(index);
-            
-            const gif = loadGifForProject(index);
-            const redContainer = redProjects[index]?.querySelector('.gif-container');
-            
-            if (redContainer) {
-                redContainer.appendChild(gif);
-                
-                gif.addEventListener('load', () => {
-                    console.log('Red GIF loaded for project', index);
-                });
-                
-                gif.addEventListener('error', () => {
-                    console.log('Red GIF failed to load for project', index);
-                });
-                
-                activeGifs.set(index, gif);
-                return gif;
-            }
-            
-            return null;
-        }
+		// Add GIF to red project (same as before)
+		function addGifToRedProject(index) {
+			if (activeGifs.has(index)) return activeGifs.get(index);
+			
+			const gif = loadGifForProject(index);
+			const redContainer = redProjects[index]?.querySelector('.gif-container');
+			
+			if (redContainer) {
+				redContainer.appendChild(gif);
+				
+				gif.addEventListener('load', () => {
+					console.log('Red GIF loaded for project', index);
+				});
+				
+				gif.addEventListener('error', () => {
+					console.log('Red GIF failed to load for project', index);
+				});
+				
+				activeGifs.set(index, gif);
+				return gif;
+			}
+			
+			return null;
+		}
 
-        // Remove GIF from red project (same as before)
-        function removeGifFromRedProject(index) {
-            if (!activeGifs.has(index)) return;
-            
-            const gif = activeGifs.get(index);
-            
-            if (gif) {
-                gif.src = '';
-                gif.remove();
-            }
-            
-            activeGifs.delete(index);
-        }
+		// Remove GIF from red project (same as before)
+		function removeGifFromRedProject(index) {
+			if (!activeGifs.has(index)) return;
+			
+			const gif = activeGifs.get(index);
+			
+			if (gif) {
+				gif.src = '';
+				gif.remove();
+			}
+			
+			activeGifs.delete(index);
+		}
 
-        // Control media playback and memory management
-        function controlMediaPlayback(activeIndex) {
-            requestAnimationFrame(() => {
-                // Remove media from all inactive projects
-                for (let i = 0; i < totalProjects; i++) {
-                    if (i !== activeIndex) {
-                        removeVideoFromBlueProject(i);
-                        removeGifFromRedProject(i);
-                    }
-                }
-                
-                // Add media for active project
-                addVideoToBlueProject(activeIndex); // Blue: video player
-                addGifToRedProject(activeIndex);    // Red: GIF
-            });
-        }
+		// Control media playback and memory management
+		function controlMediaPlayback(activeIndex) {
+			requestAnimationFrame(() => {
+				// Remove media from all inactive projects
+				for (let i = 0; i < totalProjects; i++) {
+					if (i !== activeIndex) {
+						removeVideoFromBlueProject(i);
+						removeGifFromRedProject(i);
+					}
+				}
+				
+				// Add media for active project
+				addVideoToBlueProject(activeIndex); // Blue: video player
+				addGifToRedProject(activeIndex);    // Red: GIF
+			});
+		}
 
-        // Update project with hardware acceleration
-        function updateProject(index) {
-            requestAnimationFrame(() => {
-                // Remove all active classes
-                blueProjects.forEach(p => p.classList.remove('active'));
-                redProjects.forEach(p => p.classList.remove('active'));
-                
-                // Add active class to current project
-                if (blueProjects[index]) blueProjects[index].classList.add('active');
-                if (redProjects[index]) redProjects[index].classList.add('active');
-                
-                // Hardware accelerated transforms
-                const viewportCenterX = window.innerWidth / 2;
-                const projectCenterX = 285 / 2;
-                const blueTranslateX = viewportCenterX - projectCenterX - (index * 285);
-                blueProjectList.style.transform = `translate3d(${blueTranslateX}px, 0, 0)`;
-                
-                const viewportCenterY = window.innerHeight / 2;
-                const projectCenterY = 95 / 2;
-                const redTranslateY = viewportCenterY - projectCenterY - (index * 95);
-                redProjectList.style.transform = `translate3d(0, ${redTranslateY}px, 0)`;
-                
-                currentIndex = index;
-                
-                // Control media playback and memory
-                controlMediaPlayback(index);
-            });
-        }
+		// Update project with hardware acceleration
+		function updateProject(index) {
+			requestAnimationFrame(() => {
+				// Remove all active classes
+				blueProjects.forEach(p => p.classList.remove('active'));
+				redProjects.forEach(p => p.classList.remove('active'));
+				
+				// Add active class to current project
+				if (blueProjects[index]) blueProjects[index].classList.add('active');
+				if (redProjects[index]) redProjects[index].classList.add('active');
+				
+				// Hardware accelerated transforms
+				const viewportCenterX = window.innerWidth / 2;
+				const projectCenterX = 285 / 2;
+				const blueTranslateX = viewportCenterX - projectCenterX - (index * 285);
+				blueProjectList.style.transform = `translate3d(${blueTranslateX}px, 0, 0)`;
+				
+				const viewportCenterY = window.innerHeight / 2;
+				const projectCenterY = 95 / 2;
+				const redTranslateY = viewportCenterY - projectCenterY - (index * 95);
+				redProjectList.style.transform = `translate3d(0, ${redTranslateY}px, 0)`;
+				
+				currentIndex = index;
+				
+				// Control media playback and memory
+				controlMediaPlayback(index);
+			});
+		}
 
-        // Wheel navigation
-        let wheelCooldown = false;
-        const COOLDOWN_TIME = 120;
+		// Wheel navigation
+		let wheelCooldown = false;
+		const COOLDOWN_TIME = 120;
 
-        const handleWheel = (e) => {
-            if (wheelCooldown) return;
-            
-            const direction = e.deltaY > 0 ? 1 : -1;
-            const newIndex = currentIndex + direction;
-            const clampedIndex = Math.max(0, Math.min(newIndex, totalProjects - 1));
-            
-            if (clampedIndex !== currentIndex) {
-                updateProject(clampedIndex);
-                
-                if (projectSections[clampedIndex]) {
-                    projectSections[clampedIndex].scrollIntoView({ behavior: 'auto' });
-                }
-                
-                wheelCooldown = true;
-                setTimeout(() => { wheelCooldown = false; }, COOLDOWN_TIME);
-            }
-        };
+		const handleWheel = (e) => {
+			if (wheelCooldown) return;
+			
+			const direction = e.deltaY > 0 ? 1 : -1;
+			const newIndex = currentIndex + direction;
+			const clampedIndex = Math.max(0, Math.min(newIndex, totalProjects - 1));
+			
+			if (clampedIndex !== currentIndex) {
+				updateProject(clampedIndex);
+				
+				if (projectSections[clampedIndex]) {
+					projectSections[clampedIndex].scrollIntoView({ behavior: 'auto' });
+				}
+				
+				wheelCooldown = true;
+				setTimeout(() => { wheelCooldown = false; }, COOLDOWN_TIME);
+			}
+		};
 
-        window.addEventListener('wheel', handleWheel, { passive: true });
+		window.addEventListener('wheel', handleWheel, { passive: true });
 
-        // Intersection Observer for mobile
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !wheelCooldown) {
-                    const newIndex = parseInt(entry.target.dataset.project);
-                    if (newIndex !== currentIndex) {
-                        updateProject(newIndex);
-                    }
-                }
-            });
-        }, {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.5
-        });
+		// Intersection Observer for mobile
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting && !wheelCooldown) {
+					const newIndex = parseInt(entry.target.dataset.project);
+					if (newIndex !== currentIndex) {
+						updateProject(newIndex);
+					}
+				}
+			});
+		}, {
+			root: null,
+			rootMargin: '0px',
+			threshold: 0.5
+		});
 
-        // Event delegation
-        function setupEventListeners() {
-            projectSections.forEach(section => observer.observe(section));
-            
-            blueProjectList.addEventListener('click', handleProjectClick);
-            redProjectList.addEventListener('click', handleProjectClick);
-            redProjectList.addEventListener('mouseenter', handleRedHover, true);
-            redProjectList.addEventListener('mouseleave', handleRedHover, true);
-        }
+		// Event delegation
+		function setupEventListeners() {
+			projectSections.forEach(section => observer.observe(section));
+			
+			blueProjectList.addEventListener('click', handleProjectClick);
+			redProjectList.addEventListener('click', handleProjectClick);
+			redProjectList.addEventListener('mouseenter', handleRedHover, true);
+			redProjectList.addEventListener('mouseleave', handleRedHover, true);
+		}
 
-        function handleProjectClick(e) {
-            const project = e.target.closest('.blue-project-item, .red-project-item');
-            if (!project) return;
-            
-            const projectIndex = parseInt(project.dataset.project);
-            
-            if (project.classList.contains('active')) {
-                // Toggle blue strip position
-                if (blueStripCentered) {
-                    document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top)');
-                    blueStripCentered = false;
-                } else {
-                    document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top-active)');
-                    blueStripCentered = true;
-                }
-                return;
-            }
-            
-            if (projectIndex >= 0 && projectIndex < totalProjects) {
-                wheelCooldown = true;
-                updateProject(projectIndex);
-                
-                if (projectSections[projectIndex]) {
-                    projectSections[projectIndex].scrollIntoView({ behavior: 'auto' });
-                }
-                
-                setTimeout(() => { wheelCooldown = false; }, 100);
-            }
-        }
+		function handleProjectClick(e) {
+			const project = e.target.closest('.blue-project-item, .red-project-item');
+			if (!project) return;
+			
+			const projectIndex = parseInt(project.dataset.project);
+			
+			if (project.classList.contains('active')) {
+				// Toggle blue strip position
+				if (blueStripCentered) {
+					document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top)');
+					blueStripCentered = false;
+				} else {
+					document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top-active)');
+					blueStripCentered = true;
+				}
+				return;
+			}
+			
+			if (projectIndex >= 0 && projectIndex < totalProjects) {
+				wheelCooldown = true;
+				updateProject(projectIndex);
+				
+				if (projectSections[projectIndex]) {
+					projectSections[projectIndex].scrollIntoView({ behavior: 'auto' });
+				}
+				
+				setTimeout(() => { wheelCooldown = false; }, 100);
+			}
+		}
 
-        function handleRedHover(e) {
-            const project = e.target.closest('.red-project-item');
-            if (!project?.classList.contains('active')) return;
-            
-            if (e.type === 'mouseenter') {
-                document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top-hover)');
-            } else {
-                const targetState = blueStripCentered ? 'var(--blue-strip-top-active)' : 'var(--blue-strip-top)';
-                document.documentElement.style.setProperty('--blue-strip-current', targetState);
-            }
-        }
+		function handleRedHover(e) {
+			const project = e.target.closest('.red-project-item');
+			if (!project?.classList.contains('active')) return;
+			
+			if (e.type === 'mouseenter') {
+				document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top-hover)');
+			} else {
+				const targetState = blueStripCentered ? 'var(--blue-strip-top-active)' : 'var(--blue-strip-top)';
+				document.documentElement.style.setProperty('--blue-strip-current', targetState);
+			}
+		}
 
-        // Initialize
-        function init() {
-            populateProjects();
-            setupEventListeners();
-            updateProject(0); // Start with first project active
-        }
+		// Initialize
+		function init() {
+			populateProjects();
+			setupEventListeners();
+			updateProject(0); // Start with first project active
+		}
 
-        // Clean up on page unload
-        window.addEventListener('beforeunload', () => {
-            // Clean up all active media
-            activeVideos.forEach((video, index) => {
-                removeVideoFromBlueProject(index);
-            });
-            activeGifs.forEach((gif, index) => {
-                removeGifFromRedProject(index);
-            });
-        });
+		// Clean up on page unload
+		window.addEventListener('beforeunload', () => {
+			// Clean up all active media
+			activeVideos.forEach((video, index) => {
+				removeVideoFromBlueProject(index);
+			});
+			activeGifs.forEach((gif, index) => {
+				removeGifFromRedProject(index);
+			});
+		});
 
-        // Start the app
-        init();
-    </script>
+		// Start the app
+		init();
+	</script>
 </body>
 </html>
