@@ -34,8 +34,8 @@
 			--red-strip-left: 50%;
 			--blue-strip-current: 0%;
 			--blue-strip-top: 0%;
-			--blue-strip-top-hover: calc(0% - 0.9rem + 1.6rem);
-			--blue-strip-top-active: calc(50% - 0.9rem + 130px);
+			--blue-strip-top-hover: calc(0% - 1rem + 3rem);
+			--blue-strip-top-active: calc(50% - 1rem + 130px);
 		}
 
 		/* Main body styles */
@@ -88,7 +88,7 @@
 			overflow: hidden;
 			z-index: 100;
 			transition: top 0.5s ease;
-			transform: translateY(calc(-100% + 0.9rem));
+			transform: translateY(calc(-100% + 1rem));
 			will-change: top;
 		}
 
@@ -207,64 +207,6 @@
 			opacity: 1;
 		}
 
-		/* Compact video player for blue projects */
-		.video-container {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			width: 250px;
-			z-index: 10;
-			opacity: 0;
-			transition: opacity 0.3s ease;
-		}
-
-		.video-container.active {
-			opacity: 1;
-		}
-
-		.custom-video {
-			width: 250px;
-			height: auto;
-			border-radius: 3px;
-			display: block;
-		}
-
-		/* Flat video controls */
-		.video-controls {
-			background: #333;
-			padding: 4px;
-			display: flex;
-			align-items: center;
-			gap: 6px;
-			pointer-events: auto;
-		}
-
-		.play-pause-btn {
-			background: #555;
-			border: none;
-			color: white;
-			width: 20px;
-			height: 20px;
-			cursor: pointer;
-			font-size: 8px;
-			flex-shrink: 0;
-		}
-
-		.progress-bar {
-			flex: 1;
-			height: 3px;
-			background: #555;
-			cursor: pointer;
-			position: relative;
-		}
-
-		.progress-filled {
-			height: 100%;
-			background: white;
-			width: 0%;
-		}
-
 		/* GIF system for red projects */
 		.project-gif {
 			position: absolute;
@@ -287,10 +229,6 @@
 		/* Button hover effects */
 		.project-button:hover {
 			background: rgba(255, 255, 255, 0.3);
-		}
-
-		.play-pause-btn:hover {
-			background: #666;
 		}
 
 		/* Text overlays for blue projects */
@@ -342,13 +280,6 @@
 			.red-project-list {
 				transition-duration: 0.2s;
 			}
-			
-			/* Larger touch targets on mobile */
-			.play-pause-btn {
-				width: 24px;
-				height: 24px;
-				font-size: 10px;
-			}
 		}
 
 		/* Accessibility - reduced motion */
@@ -369,7 +300,7 @@
 	<div class="project-section" data-project="1"></div>
 	<div class="project-section" data-project="2"></div>
 
-	<!-- Blue strip (15perf) with video players -->
+	<!-- Blue strip (15perf) with static blur images -->
 	<div class="blue-strip">
 		<div class="blue-project-list" id="blueProjectList"></div>
 	</div>
@@ -413,7 +344,6 @@
 		let blueStripCentered = false;
 		let blueProjects, redProjects;
 		let activeGifs = new Map(); // Track active GIF elements for red projects
-		let activeVideos = new Map(); // Track active video elements for blue projects
 
 		/**
 		 * Creates HTML for individual project items
@@ -426,13 +356,12 @@
 			const activeClass = index === 0 ? ' active' : '';
 			
 			if (type === 'blue') {
-				// Blue projects: pre-blurred thumbnail + video player
+				// Blue projects: static pre-blurred images only
 				const thumbnailSrc = `media/${project.id}-blur.jpg`;
 				return `
 					<div class="blue-project-item${activeClass}" data-project="${index}">
 						<button class="project-button">
 							<img class="project-thumbnail" src="${thumbnailSrc}" alt="${project['15perf-text']}" loading="${index === 0 ? 'eager' : 'lazy'}">
-							<div class="video-container" data-project="${index}"></div>
 							<div class="blue-text-overlay">${project['15perf-text']}</div>
 						</button>
 					</div>
@@ -451,70 +380,6 @@
 					</div>
 				`;
 			}
-		}
-
-		/**
-		 * Creates the compact video player with flat controls
-		 * @param {Object} project - Project data object
-		 * @returns {HTMLElement} Video player element
-		 */
-		function createVideoPlayer(project) {
-			const container = document.createElement('div');
-			container.className = 'video-container active';
-			
-			const video = document.createElement('video');
-			video.className = 'custom-video';
-			video.muted = true;
-			video.loop = true;
-			video.preload = 'metadata';
-			video.src = `media/${project.id}.mp4`;
-			
-			const controls = document.createElement('div');
-			controls.className = 'video-controls';
-			
-			const playPauseBtn = document.createElement('button');
-			playPauseBtn.className = 'play-pause-btn';
-			playPauseBtn.innerHTML = '▶';
-			
-			const progressBar = document.createElement('div');
-			progressBar.className = 'progress-bar';
-			const progressFilled = document.createElement('div');
-			progressFilled.className = 'progress-filled';
-			progressBar.appendChild(progressFilled);
-			
-			controls.appendChild(playPauseBtn);
-			controls.appendChild(progressBar);
-			
-			container.appendChild(video);
-			container.appendChild(controls);
-			
-			// Video player event listeners
-			playPauseBtn.addEventListener('click', (e) => {
-				e.stopPropagation();
-				if (video.paused) {
-					video.play();
-					playPauseBtn.innerHTML = '⏸';
-				} else {
-					video.pause();
-					playPauseBtn.innerHTML = '▶';
-				}
-			});
-			
-			// Progress bar functionality
-			video.addEventListener('timeupdate', () => {
-				const progress = (video.currentTime / video.duration) * 100;
-				progressFilled.style.width = `${progress}%`;
-			});
-			
-			progressBar.addEventListener('click', (e) => {
-				e.stopPropagation();
-				const rect = progressBar.getBoundingClientRect();
-				const clickX = e.clientX - rect.left;
-				const progress = clickX / rect.width;
-				video.currentTime = progress * video.duration;
-			});
-			
-			return { container, video };
 		}
 
 		/**
@@ -543,52 +408,6 @@
 			// Update element references
 			blueProjects = document.querySelectorAll('.blue-project-item');
 			redProjects = document.querySelectorAll('.red-project-item');
-		}
-
-		/**
-		 * Adds video player to blue project
-		 * @param {number} index - Project index
-		 */
-		function addVideoToBlueProject(index) {
-			if (activeVideos.has(index)) return;
-			
-			const project = projectsData[index];
-			const { container, video } = createVideoPlayer(project);
-			const videoContainer = blueProjects[index]?.querySelector('.video-container');
-			
-			if (videoContainer) {
-				// Replace placeholder with actual video player
-				videoContainer.replaceWith(container);
-				activeVideos.set(index, { container, video });
-			}
-		}
-
-		/**
-		 * Removes video player from blue project to save memory
-		 * @param {number} index - Project index
-		 */
-		function removeVideoFromBlueProject(index) {
-			if (!activeVideos.has(index)) return;
-			
-			const { container, video } = activeVideos.get(index);
-			
-			// Clean up video resources
-			if (video) {
-				video.pause();
-				video.src = '';
-				video.load(); // Force browser to free memory
-			}
-			
-			// Replace with empty placeholder
-			const placeholder = document.createElement('div');
-			placeholder.className = 'video-container';
-			placeholder.dataset.project = index;
-			
-			if (container && container.parentElement) {
-				container.replaceWith(placeholder);
-			}
-			
-			activeVideos.delete(index);
 		}
 
 		/**
@@ -649,16 +468,14 @@
 			
 			currentIndex = index;
 			
-			// Memory management - remove media from inactive projects
+			// Memory management - remove GIFs from inactive projects
 			for (let i = 0; i < totalProjects; i++) {
 				if (i !== index) {
-					removeVideoFromBlueProject(i);
 					removeGifFromRedProject(i);
 				}
 			}
 			
-			// Load media for active project
-			addVideoToBlueProject(index);
+			// Load GIF for active project
 			addGifToRedProject(index);
 		}
 
@@ -755,8 +572,7 @@
 
 		// Clean up resources when page is unloaded
 		window.addEventListener('beforeunload', () => {
-			// Clean up all active media to free memory
-			activeVideos.forEach((_, index) => removeVideoFromBlueProject(index));
+			// Clean up all active GIFs to free memory
 			activeGifs.forEach((_, index) => removeGifFromRedProject(index));
 		});
 
