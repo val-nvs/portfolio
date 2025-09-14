@@ -13,6 +13,10 @@
 			box-sizing: border-box;
 			background-color: rgba(255, 0, 255, 0.1);
 		}
+		button {
+			all: unset;
+			cursor: pointer;
+		}
 		html {
 			background-color: #000;
 			font-size: clamp(0.2rem, 1.4vw, 1rem);
@@ -22,6 +26,18 @@
 			flex-direction: column;
 			justify-content: start;
 			align-items: center;
+		}
+
+		#burger {
+			position: fixed;
+			top: 2rem;
+			right: 2rem;
+			font-size: 8rem;
+			z-index: 1000;
+			padding: 1rem;
+			background: darkgray;
+			border-radius: 1rem;
+			font-weight: bold;
 		}
 
 		.strip {}
@@ -79,8 +95,7 @@
 		.frame button {
 			position: absolute;
 			color: white;
-			font-size: 10rem;
-			cursor: pointer;
+			font-size: 8rem;
 			border-radius: 1rem; overflow: hidden;
 		}
 		.frame button:hover {
@@ -92,6 +107,8 @@
 		}
 
 </style></head><body>
+
+	<button id="burger">+</button>
 
 	<div class="carousel strip">
 
