@@ -1,0 +1,202 @@
+{
+	"projects": [
+		{
+			"media": ["./media/monitor.jpg", "./media/monitor-alt.jpg"],
+			"videoId": "dQw4w9WgXcQ",
+			"translations": {
+				"en": ["Music Video", "Camera"],
+				"pt-pt": ["Videoclipe", "Câmara"],
+				"zh": ["音乐视频", "摄影"],
+				"de": ["Musikvideo", "Kamera"],
+				"ar": ["فيديو موسيقي", "كاميرا"]
+			},
+			"description": {
+				"en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"pt-pt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"zh": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"de": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"ar": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+			}
+		},
+		{
+			"media": ["./media/monitor.jpg", "./media/monitor-alt.jpg"],
+			"videoId": "M7lc1UVf-VE",
+			"translations": {
+				"en": ["Short Film", "Sound"],
+				"pt-pt": ["Curta-metragem", "Som"],
+				"zh": ["短片", "音响"],
+				"de": ["Kurzfilm", "Ton"],
+				"ar": ["فيلم قصير", "صوت"]
+			},
+			"description": {
+				"en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"pt-pt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"zh": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"de": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"ar": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+			}
+		},
+		{
+			"media": ["./media/chapito.jpg", "./media/chapito-alt.jpg"],
+			"videoId": "jNQXAC9IVRw",
+			"translations": {
+				"en": ["Documentary", "Camera"],
+				"pt-pt": ["Documentário", "Câmara"],
+				"zh": ["纪录片", "摄影"],
+				"de": ["Dokumentarfilm", "Kamera"],
+				"ar": ["وثائقي", "كاميرا"]
+			},
+			"description": {
+				"en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"pt-pt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"zh": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"de": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"ar": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+			}
+		},
+		{
+			"media": ["./media/doclis.png", "./media/doclis-alt.png"],
+			"videoId": "kJQP7kiw5Fk",
+			"translations": {
+				"en": ["Film Festival Coverage", ""],
+				"pt-pt": ["Cobertura Festival", ""],
+				"zh": ["电影节报道", ""],
+				"de": ["Filmfestival-Berichterstattung", ""],
+				"ar": ["تغطية مهرجان سينمائي", ""]
+			},
+			"description": {
+				"en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"pt-pt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"zh": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"de": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"ar": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+			}
+		},
+		{
+			"media": ["./media/seb.jpg", "./media/seb-alt.jpg"],
+			"videoId": "YE7VzlLtp-4",
+			"translations": {
+				"en": ["Interview", "Camera"],
+				"pt-pt": ["Entrevista", "Câmara"],
+				"zh": ["访谈", "摄影"],
+				"de": ["Interview", "Kamera"],
+				"ar": ["مقابلة", "كاميرا"]
+			},
+			"description": {
+				"en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"pt-pt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"zh": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"de": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"ar": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+			}
+		},
+		{
+			"media": ["./media/free.jpg", "./media/free-alt.jpg"],
+			"videoId": "2vjPBrBU-TM",
+			"translations": {
+				"en": ["Short Film", "Camera"],
+				"pt-pt": ["Curta-metragem", "Câmara"],
+				"zh": ["短片", "摄影"],
+				"de": ["Kurzfilm", "Kamera"],
+				"ar": ["فيلم قصير", "كاميرا"]
+			},
+			"description": {
+				"en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"pt-pt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"zh": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"de": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"ar": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+			}
+		},
+		{
+			"media": ["./media/group1.png", "./media/group1-alt.png"],
+			"videoId": "ScMzIvxBSi4",
+			"translations": {
+				"en": ["TV Pilot", "Crane Cam & Pre-Vis"],
+				"pt-pt": ["Piloto TV", "Grua & Pré-Vis"],
+				"zh": ["电视试播", "摇臂摄影与预览"],
+				"de": ["TV-Pilot", "Kran-Kamera & Pre-Vis"],
+				"ar": ["حلقة تجريبية", "كاميرا رافعة ومعاينة"]
+			},
+			"description": {
+				"en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"pt-pt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"zh": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"de": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"ar": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+			}
+		},
+		{
+			"media": ["./media/redroom.jpg", "./media/redroom-alt.jpg"],
+			"videoId": "hFZFjoX2cGg",
+			"translations": {
+				"en": ["TV Pilot", "Crane Cam AC"],
+				"pt-pt": ["Piloto TV", "Assistente Grua"],
+				"zh": ["电视试播", "摇臂助理"],
+				"de": ["TV-Pilot", "Kran-Kamera AC"],
+				"ar": ["حلقة تجريبية", "مساعد كاميرا رافعة"]
+			},
+			"description": {
+				"en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"pt-pt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"zh": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"de": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"ar": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+			}
+		},
+		{
+			"media": ["./media/alges.png", "./media/alges-alt.png"],
+			"videoId": "_ovdm2yX4MA",
+			"translations": {
+				"en": ["Music Video", "Camera"],
+				"pt-pt": ["Videoclipe", "Câmara"],
+				"zh": ["音乐视频", "摄影"],
+				"de": ["Musikvideo", "Kamera"],
+				"ar": ["فيديو موسيقي", "كاميرا"]
+			},
+			"description": {
+				"en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"pt-pt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"zh": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"de": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"ar": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+			}
+		},
+		{
+			"media": ["./media/cinema.png", "./media/cinema-alt.png"],
+			"videoId": "Zi_XLOBDo_Y",
+			"translations": {
+				"en": ["Short Film", "Sound"],
+				"pt-pt": ["Curta-metragem", "Som"],
+				"zh": ["短片", "音响"],
+				"de": ["Kurzfilm", "Ton"],
+				"ar": ["فيلم قصير", "صوت"]
+			},
+			"description": {
+				"en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"pt-pt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"zh": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"de": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"ar": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+			}
+		},
+		{
+			"media": ["./media/cctv.jpg", "./media/cctv-alt.jpg"],
+			"videoId": "6n3pFFPSlW4",
+			"translations": {
+				"en": ["", ""],
+				"pt-pt": ["", ""],
+				"zh": ["", ""],
+				"de": ["", ""],
+				"ar": ["", ""]
+			},
+			"description": {
+				"en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"pt-pt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"zh": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"de": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+				"ar": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+			}
+		}
+	]
+}
