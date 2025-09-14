@@ -76,14 +76,6 @@
 		.toddao button.expanded {
 			height: 70.5rem;
 		}
-		.toddao button.expanded, .toddao button.expanded:hover {
-			filter: blur(0.3rem) contrast(0.1) brightness(1);
-			-webkit-filter: blur(0.3rem) contrast(0.1) brightness(1);
-		}
-		.toddao.move-down button, .toddao.move-up button {
-			filter: blur(.3rem);
-			-webkit-filter: blur(.3rem);
-		}
 		.toddao.move-up button {
 			transform: translate(-50%, calc(-50% - 23.75rem));
 		}
@@ -299,51 +291,235 @@
 	</div>
 
 	<script>
+	// Project data with translations - media separate from text
+	const projectsData = {
+		"projects": [
+			{
+				"media": "./media/monitor.jpg",
+				"translations": {
+					"en": ["Music Video", "Camera"],
+					"pt-pt": ["Videoclipe", "Câmara"],
+					"zh": ["音乐视频", "摄影"],
+					"de": ["Musikvideo", "Kamera"],
+					"ar": ["فيديو موسيقي", "كاميرا"]
+				}
+			},
+			{
+				"media": "./media/monitor.jpg",
+				"translations": {
+					"en": ["Short Film", "Sound"],
+					"pt-pt": ["Curta-metragem", "Som"],
+					"zh": ["短片", "音响"],
+					"de": ["Kurzfilm", "Ton"],
+					"ar": ["فيلم قصير", "صوت"]
+				}
+			},
+			{
+				"media": "./media/chapito.jpg",
+				"translations": {
+					"en": ["Documentary", "Camera"],
+					"pt-pt": ["Documentário", "Câmara"],
+					"zh": ["纪录片", "摄影"],
+					"de": ["Dokumentarfilm", "Kamera"],
+					"ar": ["وثائقي", "كاميرا"]
+				}
+			},
+			{
+				"media": "./media/doclis.png",
+				"translations": {
+					"en": ["Film Festival Coverage", ""],
+					"pt-pt": ["Cobertura Festival", ""],
+					"zh": ["电影节报道", ""],
+					"de": ["Filmfestival-Berichterstattung", ""],
+					"ar": ["تغطية مهرجان سينمائي", ""]
+				}
+			},
+			{
+				"media": "./media/seb.jpg",
+				"translations": {
+					"en": ["Interview", "Camera"],
+					"pt-pt": ["Entrevista", "Câmara"],
+					"zh": ["访谈", "摄影"],
+					"de": ["Interview", "Kamera"],
+					"ar": ["مقابلة", "كاميرا"]
+				}
+			},
+			{
+				"media": "./media/free.jpg",
+				"translations": {
+					"en": ["Short Film", "Camera"],
+					"pt-pt": ["Curta-metragem", "Câmara"],
+					"zh": ["短片", "摄影"],
+					"de": ["Kurzfilm", "Kamera"],
+					"ar": ["فيلم قصير", "كاميرا"]
+				}
+			},
+			{
+				"media": "./media/group1.png",
+				"translations": {
+					"en": ["TV Pilot", "Crane Cam & Pre-Vis"],
+					"pt-pt": ["Piloto TV", "Grua & Pré-Vis"],
+					"zh": ["电视试播", "摇臂摄影与预览"],
+					"de": ["TV-Pilot", "Kran-Kamera & Pre-Vis"],
+					"ar": ["حلقة تجريبية", "كاميرا رافعة ومعاينة"]
+				}
+			},
+			{
+				"media": "./media/redroom.jpg",
+				"translations": {
+					"en": ["TV Pilot", "Crane Cam AC"],
+					"pt-pt": ["Piloto TV", "Assistente Grua"],
+					"zh": ["电视试播", "摇臂助理"],
+					"de": ["TV-Pilot", "Kran-Kamera AC"],
+					"ar": ["حلقة تجريبية", "مساعد كاميرا رافعة"]
+				}
+			},
+			{
+				"media": "./media/alges.png",
+				"translations": {
+					"en": ["Music Video", "Camera"],
+					"pt-pt": ["Videoclipe", "Câmara"],
+					"zh": ["音乐视频", "摄影"],
+					"de": ["Musikvideo", "Kamera"],
+					"ar": ["فيديو موسيقي", "كاميرا"]
+				}
+			},
+			{
+				"media": "./media/cinema.png",
+				"translations": {
+					"en": ["Short Film", "Sound"],
+					"pt-pt": ["Curta-metragem", "Som"],
+					"zh": ["短片", "音响"],
+					"de": ["Kurzfilm", "Ton"],
+					"ar": ["فيلم قصير", "صوت"]
+				}
+			},
+			{
+				"media": "./media/cctv.jpg",
+				"translations": {
+					"en": ["", ""],
+					"pt-pt": ["", ""],
+					"zh": ["", ""],
+					"de": ["", ""],
+					"ar": ["", ""]
+				}
+			}
+		]
+	};
+
+	// Navigation translations
+	const navTranslations = {
+		"about": {
+			"en": "About",
+			"pt-pt": "Sobre",
+			"zh": "关于",
+			"de": "Über",
+			"ar": "حول"
+		},
+		"contact": {
+			"en": "Contact",
+			"pt-pt": "Contacto",
+			"zh": "联系",
+			"de": "Kontakt",
+			"ar": "اتصال"
+		}
+	};
+
+	// Language cycling
+	const languages = ['en', 'pt-pt', 'zh', 'de', 'ar'];
+	const languageNames = {
+		'en': 'EN',
+		'pt-pt': 'PT',
+		'zh': '中',
+		'de': 'DE',
+		'ar': 'ع'
+	};
+	let currentLanguage = 0;
+
+	function updateLanguage() {
+		const lang = languages[currentLanguage];
+		const langButton = document.querySelector('nav button span:last-child');
+		langButton.textContent = `(${languageNames[lang]})`;
+
+		// Update navigation buttons
+		const aboutButton = document.querySelector('nav ul li:first-child button');
+		const contactButton = document.querySelector('nav ul li:nth-child(2) button');
+		aboutButton.textContent = navTranslations.about[lang];
+		contactButton.textContent = navTranslations.contact[lang];
+
+		// Update all project texts and images
+		const buttons = document.querySelectorAll('.ladder .toddao button');
+		buttons.forEach((button, index) => {
+			if (index < projectsData.projects.length) {
+				const project = projectsData.projects[index];
+				const translations = project.translations[lang];
+				
+				const leftSpan = button.querySelector('.left');
+				const rightSpan = button.querySelector('.right');
+				const img = button.querySelector('img');
+				
+				if (leftSpan) leftSpan.textContent = translations[0];
+				if (rightSpan) rightSpan.textContent = translations[1];
+				if (img && project.media) img.src = project.media;
+			}
+		});
+	}
+
+	function cycleLanguage() {
+		currentLanguage = (currentLanguage + 1) % languages.length;
+		updateLanguage();
+	}
 
 	function burgerClicked() {
 		const burger = document.getElementById('burger');
 		const navLinks = document.getElementById('navLinks');
 
-	const expanded = burger.getAttribute('aria-expanded') === 'true';
-	burger.setAttribute('aria-expanded', !expanded);
-	navLinks.classList.toggle('show');
+		const expanded = burger.getAttribute('aria-expanded') === 'true';
+		burger.setAttribute('aria-expanded', !expanded);
+		navLinks.classList.toggle('show');
 	}
 
+	// Initialize language on load
+	document.addEventListener('DOMContentLoaded', () => {
+		updateLanguage();
+		
+		// Add click event to translate button
+		const translateButton = document.querySelector('nav ul li:last-child button');
+		translateButton.addEventListener('click', cycleLanguage);
+	});
 
+	// Ladder button expansion
+	const ladderButtons = document.querySelectorAll('.ladder .toddao button');
+	const ladderFrames = document.querySelectorAll('.ladder .toddao');
 
-
-// Ladder button expansion
-const ladderButtons = document.querySelectorAll('.ladder .toddao button');
-const ladderFrames = document.querySelectorAll('.ladder .toddao');
-
-ladderButtons.forEach((button, index) => {
-    button.addEventListener('click', () => {
-        // Check if this button is already expanded
-        const isExpanded = button.classList.contains('expanded');
-        
-        // Reset all buttons and frames
-        ladderButtons.forEach(btn => btn.classList.remove('expanded'));
-        ladderFrames.forEach(frame => {
-            frame.classList.remove('move-up', 'move-down');
-        });
-        
-        // If it wasn't expanded, expand it
-        if (!isExpanded) {
-            button.classList.add('expanded');
-            
-            // Move other frames
-            ladderFrames.forEach((frame, frameIndex) => {
-                if (frameIndex < index + 1) {
-                    // Frames before the clicked one move up
-                    frame.classList.add('move-up');
-                } else if (frameIndex > index + 1) {
-                    // Frames after the clicked one move down
-                    frame.classList.add('move-down');
-                }
-            });
-        }
-    });
-});
+	ladderButtons.forEach((button, index) => {
+		button.addEventListener('click', () => {
+			// Check if this button is already expanded
+			const isExpanded = button.classList.contains('expanded');
+			
+			// Reset all buttons and frames
+			ladderButtons.forEach(btn => btn.classList.remove('expanded'));
+			ladderFrames.forEach(frame => {
+				frame.classList.remove('move-up', 'move-down');
+			});
+			
+			// If it wasn't expanded, expand it
+			if (!isExpanded) {
+				button.classList.add('expanded');
+				
+				// Move other frames
+				ladderFrames.forEach((frame, frameIndex) => {
+					if (frameIndex < index + 1) {
+						// Frames before the clicked one move up
+						frame.classList.add('move-up');
+					} else if (frameIndex > index + 1) {
+						// Frames after the clicked one move down
+						frame.classList.add('move-down');
+					}
+				});
+			}
+		});
+	});
 	</script>
 
 </body></html>
