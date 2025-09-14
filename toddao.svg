@@ -8,32 +8,48 @@
       <!-- blend the grayscale noise over the colored source -->
       <feBlend in="SourceGraphic" in2="grayNoise" mode="overlay"/>
     </filter>
-
+    
+    <!-- Radial gradients for smoky shadow effect -->
+    <radialGradient id="holeShadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:rgba(0,0,0,0);stop-opacity:0" />
+      <stop offset="40%" style="stop-color:rgba(0,0,0,0.1);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(0,0,0,0.4);stop-opacity:1" />
+    </radialGradient>
+    
     <!-- Mask for holes (black = transparent) -->
     <mask id="holesMask">
       <rect width="65" height="23.75" fill="white"/>
-
       <!-- Left side: 5 holes, x = 3 -->
-      <!-- centers: 2.375, 7.125, 11.875, 16.625, 21.375 -->
-      <!-- top-left y = center - 0.99 (half of 1.98) -->
       <rect x="3"    y="1.385"  width="2.79" height="1.98" rx="0.5" fill="black"/>
       <rect x="3"    y="6.135"  width="2.79" height="1.98" rx="0.5" fill="black"/>
       <rect x="3"    y="10.885" width="2.79" height="1.98" rx="0.5" fill="black"/>
       <rect x="3"    y="15.635" width="2.79" height="1.98" rx="0.5" fill="black"/>
       <rect x="3"    y="20.385" width="2.79" height="1.98" rx="0.5" fill="black"/>
-
-      <!-- Right side: 5 holes, symmetric (x = 65 - 3 - 2.79 = 59.21) -->
+      <!-- Right side: 5 holes, symmetric -->
       <rect x="59.21" y="1.385"  width="2.79" height="1.98" rx="0.5" fill="black"/>
       <rect x="59.21" y="6.135"  width="2.79" height="1.98" rx="0.5" fill="black"/>
       <rect x="59.21" y="10.885" width="2.79" height="1.98" rx="0.5" fill="black"/>
       <rect x="59.21" y="15.635" width="2.79" height="1.98" rx="0.5" fill="black"/>
       <rect x="59.21" y="20.385" width="2.79" height="1.98" rx="0.5" fill="black"/>
-
-      <!-- Big centered hole (rounded corners preserved) -->
-      <rect x="6.185" y="0.375" width="52.63" height="23" rx="0.5" ry="0.5" fill="black"/>
     </mask>
   </defs>
-
+  
+  <!-- Orange, semi-transparent film emulsion with grayscale fine grain -->
+  <rect width="65" height="23.75" fill="orange" fill-opacity="0.7" filter="url(#noise)" mask="url(#holesMask)"/>
+  
+  <!-- Black smoke shadows inside holes -->
+  <!-- Left side shadows -->
+  <rect x="3"    y="1.385"  width="2.79" height="1.98" rx="0.5" fill="url(#holeShadow)"/>
+  <rect x="3"    y="6.135"  width="2.79" height="1.98" rx="0.5" fill="url(#holeShadow)"/>
+  <rect x="3"    y="10.885" width="2.79" height="1.98" rx="0.5" fill="url(#holeShadow)"/>
+  <rect x="3"    y="15.635" width="2.79" height="1.98" rx="0.5" fill="url(#holeShadow)"/>
+  <rect x="3"    y="20.385" width="2.79" height="1.98" rx="0.5" fill="url(#holeShadow)"/>
+  <!-- Right side shadows -->
+  <rect x="59.21" y="1.385"  width="2.79" height="1.98" rx="0.5" fill="url(#holeShadow)"/>
+  <rect x="59.21" y="6.135"  width="2.79" height="1.98" rx="0.5" fill="url(#holeShadow)"/>
+  <rect x="59.21" y="10.885" width="2.79" height="1.98" rx="0.5" fill="url(#holeShadow)"/>
+  <rect x="59.21" y="15.635" width="2.79" height="1.98" rx="0.5" fill="url(#holeShadow)"/>
+  <rect x="59.21" y="20.385" width="2.79" height="1.98" rx="0.5" fill="url(#holeShadow)"/>
   <!-- Orange, semi-transparent film emulsion with grayscale fine grain -->
   <rect width="65" height="23.75" fill="orange" fill-opacity="0.7" filter="url(#noise)" mask="url(#holesMask)"/>
 </svg>

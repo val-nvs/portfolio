@@ -3,581 +3,126 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Portfolio - Scroll Snap</title>
+	<title>Portfolio</title>
 	<link rel="preload" href="15perf-frame.svg" as="image">
 	<link rel="preload" href="5perf-frame.svg" as="image">
 	<style>
-		/* Reset and basic setup */
 		* {
 			margin: 0;
 			padding: 0;
 			box-sizing: border-box;
+			background-color: rgba(255, 0, 255, 0.1);
 		}
-
-		html, body {
-			margin: 0;
-			padding: 0;
-			/* Hide scrollbar for all browsers */
-			scrollbar-width: none; /* Firefox */
-			-ms-overflow-style: none; /* IE/Edge */
+		html {
+			background-color: #000;
+			font-size: clamp(0.2rem, 1.5vw, 1.5rem);
 		}
-
-		/* Hide scrollbar for Chrome/Safari/Opera */
-		html::-webkit-scrollbar,
-		body::-webkit-scrollbar {
-			width: 0;
-			height: 0;
-		}
-
-		/* CSS Variables for strip positioning */
-		:root {
-			--red-strip-left: 50%;
-			--blue-strip-current: 0%;
-			--blue-strip-top: 0%;
-			--blue-strip-top-hover: calc(0% - 1rem + 3rem);
-			--blue-strip-top-active: calc(50% - 1rem + 130px);
-		}
-
-		/* Main body styles */
 		body {
-			font-family: Arial, sans-serif;
-			background: #0a0a0a;
-			color: white;
-			overflow-x: hidden;
-			/* CSS Scroll Snap */
-			scroll-snap-type: y mandatory;
-			scroll-behavior: auto;
-			/* Mobile optimization */
-			-webkit-overflow-scrolling: touch;
-		}
-
-		/* Fixed white rectangle in center */
-		.center-rectangle {
-			position: fixed;
-			top: 50%;
-			left: 50%;
-			width: 278px;
-			height: 120px;
-			background: white;
-			transform: translate(-50%, -50%);
-			z-index: 1;
-			border: 5px solid #444;
-			border-radius: 1rem;
-		}
-
-		/* Project sections for scroll snap */
-		.project-section {
-			height: 60vh;
-			scroll-snap-align: start;
-			scroll-snap-stop: always;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			background: #0a0a0a;
-		}
-
-		/* Blue strip (15perf) - horizontal scrolling, positioned vertically */
-		.blue-strip {
-			position: fixed;
-			left: 0;
-			right: 0;
-			top: calc(var(--blue-strip-current));
-			height: 260px;
-			background: rgba(100, 100, 100, 0.2);
-			box-shadow: 0 0 0 1px #2a4a6a;
-			overflow: hidden;
-			z-index: 100;
-			transition: top 0.5s ease;
-			transform: translateY(calc(-100% + 1rem));
-			will-change: top;
-		}
-
-		.blue-project-list {
-			display: flex;
-			flex-direction: row;
-			height: 100%;
-			transition: transform 0.3s ease;
-			transform: translateZ(0);
-			will-change: transform;
-		}
-
-		.blue-project-item {
-			flex: 0 0 285px;
-			width: 285px;
-			height: 260px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			color: white;
-			font-size: 18px;
-			background: url('15perf-frame.svg') no-repeat center center;
-			background-size: 285px 260px;
-			transition: all 0.3s ease;
-			cursor: default;
-			opacity: 1;
-			transform: scale(1);
-			touch-action: manipulation;
-		}
-
-		/* Red strip (5perf) - vertical scrolling, positioned horizontally */
-		.red-strip {
-			position: fixed;
-			top: 0;
-			bottom: 0;
-			left: var(--red-strip-left);
-			width: 260px;
-			background: rgba(100, 100, 100, 0);
-			box-shadow: 0 0 0 1px #6a2a2a;
-			overflow: hidden;
-			z-index: 50;
-			transform: translateX(-50%);
-		}
-
-		.red-project-list {
 			display: flex;
 			flex-direction: column;
-			height: 100%;
-			transition: transform 0.3s ease;
-			transform: translateZ(0);
-			will-change: transform;
-		}
-
-		.red-project-item {
-			flex: 0 0 95px;
-			width: 260px;
-			height: 95px;
-			display: flex;
+			justify-content: start;
 			align-items: center;
-			justify-content: center;
-			color: white;
-			font-size: 16px;
-			background: url('5perf-frame.svg') no-repeat center center;
-			background-size: 260px 95px;
-			transition: all 0.3s ease;
-			cursor: default;
-			opacity: 1;
-			transform: scale(1);
-			position: relative;
-			touch-action: manipulation;
 		}
 
-		/* Project button styling */
-		.project-button {
-			background: transparent;
-			border: 1px solid rgba(255, 255, 255, 0.3);
-			color: white;
-			border-radius: 4px;
-			cursor: pointer;
-			font-size: inherit;
-			transition: background 0.2s ease;
+		.strip {}
+		.carousel {
 			display: flex;
+			flex: 0 0 auto;
+			position: fixed;
+			transform: translateY(-50%);
+			left: 0;
+			top: 50dvh;
+			width: 100vw;
+			flex-direction: row;
+			justify-content: flex-start;
 			align-items: center;
-			justify-content: center;
-			box-shadow: 0 0 0 1px rgba(2, 0, 0, 1.0);
-			overflow: hidden;
-			padding: 0;
+			overflow-x: auto; overflow-y: hidden;
+		}
+		.carousel::-webkit-scrollbar {display: none;}
+		.ladder {}
+
+		.frame {
 			position: relative;
 		}
-
-		.blue-project-item .project-button {
-			width: 282px;
-			height: 210.4px;
-		}
-
-		.red-project-item .project-button {
-			width: 210.4px;
-			height: 92px;
-			background: transparent;
-			border: none;
-			z-index: 10;
-			position: relative;
-		}
-
-		/* Project thumbnail image */
-		.project-thumbnail {
-			position: absolute;
-			top: 0;
-			left: 0;
+		.frame > img {
 			width: 100%;
-			height: 100%;
-			object-fit: cover;
-			border-radius: 3px;
-			pointer-events: none;
-			z-index: 5;
-			opacity: 1;
+		}
+		.imax {
+			width: 71.25rem;
+			height: 65rem;
+		}
+		.toddao {
+			width: 65rem;
+			height: 23.75rem;
 		}
 
-		/* GIF system for red projects */
-		.project-gif {
+		.frame button {
 			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-			border-radius: 3px;
-			pointer-events: none;
-			z-index: 10;
-			opacity: 0;
-			transition: opacity 0.3s ease;
-		}
-
-		.project-gif.active {
-			opacity: 1;
-		}
-
-		/* Button hover effects */
-		.project-button:hover {
-			background: rgba(255, 255, 255, 0.3);
-		}
-
-		/* Text overlays for blue projects */
-		.blue-text-overlay {
-			position: absolute;
-			bottom: 8px;
+			transform: translate(-50%, -50%);
+			top: 50%;
 			left: 50%;
-			transform: translateX(-50%);
-			background: rgba(0, 0, 0, 0.8);
-			color: white;
-			padding: 4px 12px;
-			border-radius: 4px;
-			font-size: 14px;
-			font-weight: 500;
-			white-space: nowrap;
-			z-index: 15;
-			pointer-events: none;
+		}
+		.imax button {
+			width: 70.5rem;
+			height: 52.6rem;
+		}
+		.toddao button {
+			width: 52.6rem;
+			height: 23rem;
 		}
 
-		/* Text overlays for red projects */
-		.red-text-overlay {
+		.frame button img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+		.frame button {
 			position: absolute;
-			bottom: 4px;
-			font-size: 11px;
-			font-weight: 500;
-			z-index: 15;
-			pointer-events: none;
 			color: white;
-			text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+			font-size: 10rem;
+			cursor: pointer;
+			border-radius: 1rem; overflow: hidden;
+		}
+		.frame button:hover {
+			filter: brightness(1.1); 
+			box-shadow: 
+				0 0 0.5rem rgba(0,0,0,1),
+				0 0 0.5rem rgba(0,0,0,1),
+				0 0 0 0.1rem rgba(255,0,0,0.9);
 		}
 
-		.red-text-left {
-			left: 8px;
-		}
+</style></head><body>
 
-		.red-text-right {
-			right: 8px;
-		}
+	<div class="carousel strip">
 
-		/* Mobile optimizations */
-		@media (max-width: 768px) {
-			.blue-project-item {
-				min-height: 44px;
-			}
-			.red-project-item {
-				min-height: 44px;
-			}
-			.blue-project-list,
-			.red-project-list {
-				transition-duration: 0.2s;
-			}
-		}
+		<div class="imax frame">
+			<img src="imax.svg">
+			<button>
+				<img src="./media/free.gif">
+			</button>
+		</div>
 
-		/* Accessibility - reduced motion */
-		@media (prefers-reduced-motion: reduce) {
-			* {
-				transition-duration: 0.1s !important;
-				animation-duration: 0.1s !important;
-			}
-		}
-	</style>
-</head>
-<body>
-	<!-- Fixed white rectangle in center -->
-	<div class="center-rectangle"></div>
-
-	<!-- Project sections for scroll snap navigation -->
-	<div class="project-section" data-project="0"></div>
-	<div class="project-section" data-project="1"></div>
-	<div class="project-section" data-project="2"></div>
-
-	<!-- Blue strip (15perf) with static blur images -->
-	<div class="blue-strip">
-		<div class="blue-project-list" id="blueProjectList"></div>
 	</div>
 
-	<!-- Red strip (5perf) with GIF system -->
-	<div class="red-strip">
-		<div class="red-project-list" id="redProjectList"></div>
+	<div class="ladder strip">
+
+		<div class="toddao frame">
+			<img src="toddao.svg">
+			<button>
+				<img src="./media/bang.gif">
+			</button>
+		</div>
+
+		<div class="toddao frame">
+			<img src="toddao.svg">
+			<button>
+				<img src="./media/monitor.jpg">
+			</button>
+		</div>
+
 	</div>
 
 	<script>
-		// Project data configuration
-		const projectsData = [
-			{
-				"id": "clapper",
-				"left-text": "text",
-				"right-text": "text",
-				"15perf-text": "text"
-			},
-			{
-				"id": "free",
-				"left-text": "text",
-				"right-text": "text",
-				"15perf-text": "text"
-			},
-			{
-				"id": "curta",
-				"left-text": "text",
-				"right-text": "text",
-				"15perf-text": "text"
-			}
-		];
-
-		// DOM elements
-		const blueProjectList = document.getElementById('blueProjectList');
-		const redProjectList = document.getElementById('redProjectList');
-		const projectSections = document.querySelectorAll('.project-section');
-		const totalProjects = projectsData.length;
-		
-		// State management
-		let currentIndex = 0;
-		let blueStripCentered = false;
-		let blueProjects, redProjects;
-		let activeGifs = new Map(); // Track active GIF elements for red projects
-
-		/**
-		 * Creates HTML for individual project items
-		 * @param {Object} project - Project data object
-		 * @param {number} index - Project index
-		 * @param {string} type - 'blue' or 'red' project type
-		 * @returns {string} HTML string for the project
-		 */
-		function createProjectHTML(project, index, type) {
-			const activeClass = index === 0 ? ' active' : '';
-			
-			if (type === 'blue') {
-				// Blue projects: static pre-blurred images only
-				const thumbnailSrc = `media/${project.id}-blur.jpg`;
-				return `
-					<div class="blue-project-item${activeClass}" data-project="${index}">
-						<button class="project-button">
-							<img class="project-thumbnail" src="${thumbnailSrc}" alt="${project['15perf-text']}" loading="${index === 0 ? 'eager' : 'lazy'}">
-							<div class="blue-text-overlay">${project['15perf-text']}</div>
-						</button>
-					</div>
-				`;
-			} else {
-				// Red projects: regular thumbnail + GIF system
-				const thumbnailSrc = `media/${project.id}.jpg`;
-				return `
-					<div class="red-project-item${activeClass}" data-project="${index}">
-						<button class="project-button">
-							<img class="project-thumbnail" src="${thumbnailSrc}" alt="${project['left-text']} ${project['right-text']}" loading="${index === 0 ? 'eager' : 'lazy'}">
-							<div class="gif-container" data-project="${index}"></div>
-							<div class="red-text-overlay red-text-left">${project['left-text']}</div>
-							<div class="red-text-overlay red-text-right">${project['right-text']}</div>
-						</button>
-					</div>
-				`;
-			}
-		}
-
-		/**
-		 * Populates both blue and red project lists
-		 */
-		function populateProjects() {
-			const blueFragment = document.createDocumentFragment();
-			const redFragment = document.createDocumentFragment();
-			
-			projectsData.forEach((project, index) => {
-				// Create blue project (15perf)
-				const blueDiv = document.createElement('div');
-				blueDiv.innerHTML = createProjectHTML(project, index, 'blue');
-				blueFragment.appendChild(blueDiv.firstElementChild);
-				
-				// Create red project (5perf)
-				const redDiv = document.createElement('div');
-				redDiv.innerHTML = createProjectHTML(project, index, 'red');
-				redFragment.appendChild(redDiv.firstElementChild);
-			});
-			
-			// Add fragments to DOM in single operation for performance
-			blueProjectList.appendChild(blueFragment);
-			redProjectList.appendChild(redFragment);
-
-			// Update element references
-			blueProjects = document.querySelectorAll('.blue-project-item');
-			redProjects = document.querySelectorAll('.red-project-item');
-		}
-
-		/**
-		 * Adds GIF animation to red project
-		 * @param {number} index - Project index
-		 */
-		function addGifToRedProject(index) {
-			if (activeGifs.has(index)) return;
-			
-			const project = projectsData[index];
-			const gif = document.createElement('img');
-			gif.className = 'project-gif active';
-			gif.src = `media/${project.id}.gif`;
-			gif.alt = `${project.id} animation`;
-			
-			const container = redProjects[index]?.querySelector('.gif-container');
-			if (container) {
-				container.appendChild(gif);
-				activeGifs.set(index, gif);
-			}
-		}
-
-		/**
-		 * Removes GIF from red project to save memory
-		 * @param {number} index - Project index
-		 */
-		function removeGifFromRedProject(index) {
-			if (!activeGifs.has(index)) return;
-			
-			const gif = activeGifs.get(index);
-			if (gif) {
-				gif.src = ''; // Stop animation
-				gif.remove(); // Remove from DOM
-			}
-			activeGifs.delete(index);
-		}
-
-		/**
-		 * Updates the active project and manages media loading
-		 * @param {number} index - New active project index
-		 */
-		function updateProject(index) {
-			// Update active classes
-			blueProjects.forEach(p => p.classList.remove('active'));
-			redProjects.forEach(p => p.classList.remove('active'));
-			
-			if (blueProjects[index]) blueProjects[index].classList.add('active');
-			if (redProjects[index]) redProjects[index].classList.add('active');
-			
-			// Update strip positions with hardware acceleration
-			const viewportCenterX = window.innerWidth / 2;
-			const blueTranslateX = viewportCenterX - 142.5 - (index * 285);
-			blueProjectList.style.transform = `translate3d(${blueTranslateX}px, 0, 0)`;
-			
-			const viewportCenterY = window.innerHeight / 2;
-			const redTranslateY = viewportCenterY - 47.5 - (index * 95);
-			redProjectList.style.transform = `translate3d(0, ${redTranslateY}px, 0)`;
-			
-			currentIndex = index;
-			
-			// Memory management - remove GIFs from inactive projects
-			for (let i = 0; i < totalProjects; i++) {
-				if (i !== index) {
-					removeGifFromRedProject(i);
-				}
-			}
-			
-			// Load GIF for active project
-			addGifToRedProject(index);
-		}
-
-		// Mouse wheel navigation with cooldown
-		let wheelCooldown = false;
-		window.addEventListener('wheel', (e) => {
-			if (wheelCooldown) return;
-			
-			const direction = e.deltaY > 0 ? 1 : -1;
-			const newIndex = Math.max(0, Math.min(currentIndex + direction, totalProjects - 1));
-			
-			if (newIndex !== currentIndex) {
-				updateProject(newIndex);
-				projectSections[newIndex]?.scrollIntoView({ behavior: 'auto' });
-				
-				wheelCooldown = true;
-				setTimeout(() => { wheelCooldown = false; }, 120);
-			}
-		}, { passive: true });
-
-		// Intersection Observer for mobile touch navigation
-		const observer = new IntersectionObserver((entries) => {
-			entries.forEach(entry => {
-				if (entry.isIntersecting && !wheelCooldown) {
-					const newIndex = parseInt(entry.target.dataset.project);
-					if (newIndex !== currentIndex) updateProject(newIndex);
-				}
-			});
-		}, { threshold: 0.5 });
-
-		/**
-		 * Handles clicks on project items
-		 * @param {Event} e - Click event
-		 */
-		function handleProjectClick(e) {
-			const project = e.target.closest('.blue-project-item, .red-project-item');
-			if (!project) return;
-			
-			const projectIndex = parseInt(project.dataset.project);
-			
-			// If clicking on active project, toggle blue strip visibility
-			if (project.classList.contains('active')) {
-				if (blueStripCentered) {
-					document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top)');
-					blueStripCentered = false;
-				} else {
-					document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top-active)');
-					blueStripCentered = true;
-				}
-				return;
-			}
-			
-			// Navigate to clicked project
-			if (projectIndex >= 0 && projectIndex < totalProjects) {
-				wheelCooldown = true;
-				updateProject(projectIndex);
-				projectSections[projectIndex]?.scrollIntoView({ behavior: 'auto' });
-				setTimeout(() => { wheelCooldown = false; }, 100);
-			}
-		}
-
-		/**
-		 * Handles hover effects on red projects
-		 * @param {Event} e - Mouse event
-		 */
-		function handleRedHover(e) {
-			const project = e.target.closest('.red-project-item');
-			if (!project?.classList.contains('active')) return;
-			
-			if (e.type === 'mouseenter') {
-				document.documentElement.style.setProperty('--blue-strip-current', 'var(--blue-strip-top-hover)');
-			} else {
-				const targetState = blueStripCentered ? 'var(--blue-strip-top-active)' : 'var(--blue-strip-top)';
-				document.documentElement.style.setProperty('--blue-strip-current', targetState);
-			}
-		}
-
-		/**
-		 * Initialize the application
-		 */
-		function init() {
-			populateProjects();
-			
-			// Set up event listeners
-			projectSections.forEach(section => observer.observe(section));
-			blueProjectList.addEventListener('click', handleProjectClick);
-			redProjectList.addEventListener('click', handleProjectClick);
-			redProjectList.addEventListener('mouseenter', handleRedHover, true);
-			redProjectList.addEventListener('mouseleave', handleRedHover, true);
-			
-			// Start with first project active
-			updateProject(0);
-		}
-
-		// Clean up resources when page is unloaded
-		window.addEventListener('beforeunload', () => {
-			// Clean up all active GIFs to free memory
-			activeGifs.forEach((_, index) => removeGifFromRedProject(index));
-		});
-
-		// Start the application
-		init();
 	</script>
-</body>
-</html>
+
+</body></html>
