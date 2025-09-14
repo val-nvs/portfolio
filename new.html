@@ -212,81 +212,7 @@
 
 	<div class="ladder strip">
 		<div class="toddao frame"></div>
-		<div class="toddao frame">
-			<button>
-				<img src="./media/monitor.jpg">
-				<span class="left">Music Video</span>
-				<span class="right">Camera</span>
-			</button>
-		</div>
-		<div class="toddao frame">
-			<button>
-				<img src="./media/monitor.jpg">
-				<span class="left">Short Film</span>
-				<span class="right">Sound</span>
-			</button>
-		</div>
-		<div class="toddao frame">
-			<button>
-				<img src="./media/chapito.jpg">
-				<span class="left">Documentary</span>
-				<span class="right">Camera</span>
-			</button>
-		</div>
-		<div class="toddao frame">
-			<button>
-				<img src="./media/doclis.png">
-				<span class="left">Film Festival Coverage</span>
-				<span class="right"></span>
-			</button>
-		</div>
-		<div class="toddao frame">
-			<button>
-				<span class="left">Interview</span>
-				<span class="right">Camera</span>
-				<img src="./media/seb.jpg">
-			</button>
-		</div>
-		<div class="toddao frame">
-			<button>
-				<span class="left">Short Film</span>
-				<span class="right">Camera</span>
-				<img src="./media/free.jpg">
-			</button>
-		</div>
-		<div class="toddao frame">
-			<button>
-				<span class="left">TV Pilot</span>
-				<span class="right">Crane Cam & Pre-Vis</span>
-				<img src="./media/group1.png">
-			</button>
-		</div>
-		<div class="toddao frame">
-			<button>
-				<span class="left">TV Pilot</span>
-				<span class="right">Crane Cam AC</span>
-				<img src="./media/redroom.jpg">
-			</button>
-		</div>
-		<div class="toddao frame">
-			<button>
-				<span class="left">Music Video</span>
-				<span class="right">Camera</span>
-				<img src="./media/alges.png">
-			</button>
-		</div>
-		<div class="toddao frame">
-			<button>
-				<span class="left">Short Film</span>
-				<span class="right">Sound</span>
-				<img src="./media/cinema.png">
-			</button>
-		</div>
-		<div class="toddao frame">
-			<button>
-				<img src="./media/cctv.jpg">
-			</button>
-		</div>
+		<!-- Projects will be generated here dynamically -->
 		<div class="toddao frame"></div>
 	</div>
 
@@ -436,6 +362,71 @@
 	};
 	let currentLanguage = 0;
 
+	function generateProjects() {
+		const ladderStrip = document.querySelector('.ladder.strip');
+		const firstFrame = ladderStrip.children[0];
+		const lastFrame = ladderStrip.children[ladderStrip.children.length - 1];
+		
+		// Remove existing project frames (keep first and last empty frames)
+		while (ladderStrip.children.length > 2) {
+			ladderStrip.removeChild(ladderStrip.children[1]);
+		}
+		
+		// Generate project frames from JSON
+		projectsData.projects.forEach((project, index) => {
+			const frame = document.createElement('div');
+			frame.className = 'toddao frame';
+			
+			const button = document.createElement('button');
+			const img = document.createElement('img');
+			const leftSpan = document.createElement('span');
+			const rightSpan = document.createElement('span');
+			
+			img.src = project.media;
+			leftSpan.className = 'left';
+			rightSpan.className = 'right';
+			
+			button.appendChild(img);
+			button.appendChild(leftSpan);
+			button.appendChild(rightSpan);
+			frame.appendChild(button);
+			
+			// Insert before the last empty frame
+			ladderStrip.insertBefore(frame, lastFrame);
+		});
+		
+		// Re-attach event listeners for the new buttons
+		attachProjectListeners();
+	}
+
+	function attachProjectListeners() {
+		const ladderButtons = document.querySelectorAll('.ladder .toddao button');
+		const ladderFrames = document.querySelectorAll('.ladder .toddao');
+
+		ladderButtons.forEach((button, index) => {
+			button.addEventListener('click', () => {
+				const isExpanded = button.classList.contains('expanded');
+				
+				ladderButtons.forEach(btn => btn.classList.remove('expanded'));
+				ladderFrames.forEach(frame => {
+					frame.classList.remove('move-up', 'move-down');
+				});
+				
+				if (!isExpanded) {
+					button.classList.add('expanded');
+					
+					ladderFrames.forEach((frame, frameIndex) => {
+						if (frameIndex < index + 1) {
+							frame.classList.add('move-up');
+						} else if (frameIndex > index + 1) {
+							frame.classList.add('move-down');
+						}
+					});
+				}
+			});
+		});
+	}
+
 	function updateLanguage() {
 		const lang = languages[currentLanguage];
 		const langButton = document.querySelector('nav button span:last-child');
@@ -447,7 +438,7 @@
 		aboutButton.textContent = navTranslations.about[lang];
 		contactButton.textContent = navTranslations.contact[lang];
 
-		// Update all project texts and images
+		// Update all project texts
 		const buttons = document.querySelectorAll('.ladder .toddao button');
 		buttons.forEach((button, index) => {
 			if (index < projectsData.projects.length) {
@@ -456,11 +447,9 @@
 				
 				const leftSpan = button.querySelector('.left');
 				const rightSpan = button.querySelector('.right');
-				const img = button.querySelector('img');
 				
 				if (leftSpan) leftSpan.textContent = translations[0];
 				if (rightSpan) rightSpan.textContent = translations[1];
-				if (img && project.media) img.src = project.media;
 			}
 		});
 	}
@@ -479,46 +468,14 @@
 		navLinks.classList.toggle('show');
 	}
 
-	// Initialize language on load
+	// Initialize on page load
 	document.addEventListener('DOMContentLoaded', () => {
+		generateProjects();
 		updateLanguage();
 		
 		// Add click event to translate button
 		const translateButton = document.querySelector('nav ul li:last-child button');
 		translateButton.addEventListener('click', cycleLanguage);
-	});
-
-	// Ladder button expansion
-	const ladderButtons = document.querySelectorAll('.ladder .toddao button');
-	const ladderFrames = document.querySelectorAll('.ladder .toddao');
-
-	ladderButtons.forEach((button, index) => {
-		button.addEventListener('click', () => {
-			// Check if this button is already expanded
-			const isExpanded = button.classList.contains('expanded');
-			
-			// Reset all buttons and frames
-			ladderButtons.forEach(btn => btn.classList.remove('expanded'));
-			ladderFrames.forEach(frame => {
-				frame.classList.remove('move-up', 'move-down');
-			});
-			
-			// If it wasn't expanded, expand it
-			if (!isExpanded) {
-				button.classList.add('expanded');
-				
-				// Move other frames
-				ladderFrames.forEach((frame, frameIndex) => {
-					if (frameIndex < index + 1) {
-						// Frames before the clicked one move up
-						frame.classList.add('move-up');
-					} else if (frameIndex > index + 1) {
-						// Frames after the clicked one move down
-						frame.classList.add('move-down');
-					}
-				});
-			}
-		});
 	});
 	</script>
 
