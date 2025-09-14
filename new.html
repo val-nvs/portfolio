@@ -6,12 +6,22 @@
 	<title>Portfolio</title>
 	<link rel="preload" href="15perf-frame.svg" as="image">
 	<link rel="preload" href="5perf-frame.svg" as="image">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=Noto+Sans+Symbols+2&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu,translate" />
+
 	<style>
+@font-face {
+    font-family: 'neue';
+    src: url('./HelveticaNeue-BoldExt.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
 		* {
 			margin: 0;
 			padding: 0;
 			box-sizing: border-box;
-			background-color: rgba(255, 0, 255, 0.1);
 		}
 		button {
 			all: unset;
@@ -28,17 +38,7 @@
 			align-items: center;
 		}
 
-		#burger {
-			position: fixed;
-			top: 2rem;
-			right: 2rem;
-			font-size: 8rem;
-			z-index: 1000;
-			padding: 1rem;
-			background: darkgray;
-			border-radius: 1rem;
-			font-weight: bold;
-		}
+
 
 		.strip {}
 		.carousel {
@@ -56,6 +56,7 @@
 		}
 		.carousel::-webkit-scrollbar {display: none;}
 		.ladder {}
+		.visual {position: absolute;}
 
 		.frame {
 			position: relative;
@@ -85,6 +86,25 @@
 		.toddao button {
 			width: 52.6rem;
 			height: 23rem;
+			transition: height 1s ease, transform 1s ease, filter 3s ease;
+			z-index: 1;
+		}
+		.toddao button.expanded {
+			height: 70.5rem;
+		}
+		.toddao button.expanded, .toddao button.expanded:hover {
+			filter: blur(1rem) contrast(0.2);
+			-webkit-filter: blur(1rem) contrast(0.2);
+		}
+		.toddao.move-down button, .toddao.move-up button {
+			filter: blur(.3rem);
+			-webkit-filter: blur(.3rem);
+		}
+		.toddao.move-up button {
+			transform: translate(-50%, calc(-50% - 23.75rem));
+		}
+		.toddao.move-down button {
+			transform: translate(-50%, calc(-50% + 23.75rem));
 		}
 
 		.frame button img {
@@ -106,111 +126,212 @@
 				0 0 0 0.1rem rgba(255,0,0,0.9);
 		}
 
+		nav {
+			z-index: 10001;
+			width: 100%;
+			height: 10rem;
+			position: fixed;
+		}
+		nav ul {
+			background: rgba(255, 255, 255, 0.1);  /* Semi-transparent background */
+			backdrop-filter: blur(10px);           /* The blur that creates the frost */
+			-webkit-backdrop-filter: blur(10px);   /* Safari support */			border-radius: 1rem;
+			box-shadow: inset 0 0 .5rem #aaa;
+			font-size: 3rem;
+			align-items: center;
+			text-align: center;
+			padding: 1rem;
+			margin: 1rem;
+			display: flex;
+			justify-content: center;
+			list-style: none;
+			gap: 1rem;
+			transition: opacity 0.2s linear;
+			opacity: 0;
+		}
+		nav ul.show {
+			opacity: 1;
+		}
+		nav button {
+			background: rgba(255, 255, 255, 0.2);
+			padding: 1rem;
+			font-family: "neue", sans-serif;
+			font-weight: bold;
+			border-radius: 1rem; line-height: 1;
+			box-shadow: inset 0 0 0.5rem #fff;
+			text-shadow: 0 0 0.5rem #fff;
+			color: #000;
+			font-size: 2.7rem;
+			display: flex; justify-content: center; align-items: center;
+			gap: 0.8rem;
+		}
+		nav button:hover {
+			box-shadow: inset 0 0 1.5rem #fff;
+			text-shadow: 0 0 1.5rem #fff;
+		}
+		#burger {
+			position: absolute;
+			top: 2rem;
+			right: 2rem;
+		}
+
+
+
+
+
+		.material-symbols-outlined {font-variation-settings:'FILL' 0,'wght' 700,'GRAD' 0,'opsz' 48;font-size: 3rem;line-height: 1;}
 </style></head><body>
 
-	<button id="burger">+</button>
+	<nav>
+		<ul id="navLinks">
+			<li><button>About</button></li>
+			<li><button>Contact</button></li>
+			<li>
+				<button>
+					<span class="material-symbols-outlined">translate</span>
+					<span style="font-size: 1.9rem;">(EN)</span>
+				</button>
+			</li>
+		</ul>
+
+		<button id="burger" aria-expanded="false" aria-controls="navLinks" onclick="burgerClicked()">
+			<span class="material-symbols-outlined">menu</span>
+		</button>
+
+	</nav>
 
 	<div class="carousel strip">
-
 		<div class="imax frame">
 			<img src="imax.svg">
 			<button>
 				<img src="./media/free.jpg">
 			</button>
 		</div>
+	</div>
 
+	<div class="visual strip">
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
 	</div>
 
 	<div class="ladder strip">
-
+		<div class="toddao frame"></div>
 		<div class="toddao frame">
-			<img src="toddao.svg">
-		</div>
-
-		<div class="toddao frame">
-			<img src="toddao.svg">
 			<button>
 				<img src="./media/chapito.jpg">
 			</button>
 		</div>
-
 		<div class="toddao frame">
-			<img src="toddao.svg">
 			<button>
 				<img src="./media/monitor.jpg">
+				<span>2025s</span>
 			</button>
 		</div>
-
 		<div class="toddao frame">
-			<img src="toddao.svg">
 			<button>
 				<img src="./media/chapito.jpg">
 			</button>
 		</div>
-
 		<div class="toddao frame">
-			<img src="toddao.svg">
 			<button>
 				<img src="./media/doclis.png">
 			</button>
 		</div>
-
 		<div class="toddao frame">
-			<img src="toddao.svg">
 			<button>
 				<img src="./media/seb.jpg">
 			</button>
 		</div>
-
 		<div class="toddao frame">
-			<img src="toddao.svg">
 			<button>
 				<img src="./media/free.jpg">
 			</button>
 		</div>
-
 		<div class="toddao frame">
-			<img src="toddao.svg">
 			<button>
 				<img src="./media/group1.png">
 			</button>
 		</div>
-
 		<div class="toddao frame">
-			<img src="toddao.svg">
 			<button>
 				<img src="./media/redroom.jpg">
 			</button>
 		</div>
-
 		<div class="toddao frame">
-			<img src="toddao.svg">
 			<button>
 				<img src="./media/alges.png">
 			</button>
 		</div>
-
 		<div class="toddao frame">
-			<img src="toddao.svg">
 			<button>
 				<img src="./media/cinema.png">
 			</button>
 		</div>
-
 		<div class="toddao frame">
-			<img src="toddao.svg">
 			<button>
 				<img src="./media/cctv.jpg">
 			</button>
 		</div>
-
-		<div class="toddao frame">
-			<img src="toddao.svg">
-		</div>
-
+		<div class="toddao frame"></div>
 	</div>
 
 	<script>
+
+	function burgerClicked() {
+		const burger = document.getElementById('burger');
+		const navLinks = document.getElementById('navLinks');
+
+	const expanded = burger.getAttribute('aria-expanded') === 'true';
+	burger.setAttribute('aria-expanded', !expanded);
+	navLinks.classList.toggle('show');
+	}
+
+
+
+
+// Ladder button expansion
+const ladderButtons = document.querySelectorAll('.ladder .toddao button');
+const ladderFrames = document.querySelectorAll('.ladder .toddao');
+
+ladderButtons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        // Check if this button is already expanded
+        const isExpanded = button.classList.contains('expanded');
+        
+        // Reset all buttons and frames
+        ladderButtons.forEach(btn => btn.classList.remove('expanded'));
+        ladderFrames.forEach(frame => {
+            frame.classList.remove('move-up', 'move-down');
+        });
+        
+        // If it wasn't expanded, expand it
+        if (!isExpanded) {
+            button.classList.add('expanded');
+            
+            // Move other frames
+            ladderFrames.forEach((frame, frameIndex) => {
+                if (frameIndex < index + 1) {
+                    // Frames before the clicked one move up
+                    frame.classList.add('move-up');
+                } else if (frameIndex > index + 1) {
+                    // Frames after the clicked one move down
+                    frame.classList.add('move-down');
+                }
+            });
+        }
+    });
+});
 	</script>
 
 </body></html>
