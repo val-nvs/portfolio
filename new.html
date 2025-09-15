@@ -7,6 +7,8 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=Noto+Sans+Symbols+2&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128+Text&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu,translate" />
 
 	<style>
@@ -16,6 +18,19 @@
 			font-weight: bold;
 			font-style: normal;
 		}
+		
+		.libre-barcode-128-text-regular {
+			font-family: "Libre Barcode 128 Text", system-ui;
+			font-weight: 400;
+			font-style: normal;
+		}
+		
+		.libre-barcode-128-regular {
+			font-family: "Libre Barcode 128", system-ui;
+			font-weight: 400;
+			font-style: normal;
+		}
+		
 		* {
 			margin: 0;
 			padding: 0;
@@ -27,7 +42,7 @@
 		}
 		html {
 			background-color: #000;
-			font-size: clamp(0.2rem, 1.75vw, .95rem);
+			font-size: clamp(0.2rem, 1.48vw, .95rem);
 		}
 		body {
 			display: flex;
@@ -52,6 +67,43 @@
 		/* Project container - wraps button and video */
 		.project-container {
 			position: relative;
+		}
+
+		/* Vertical text overlay - pinned to left edge */
+		.vertical-text {
+			position: absolute;
+			top: 0;
+			left: -.8rem;
+			width: 4rem;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: 3;
+			pointer-events: none;
+		}
+
+		.vertical-text span {
+			transform: rotate(-90deg);
+			transform-origin: center center;
+			font-size: 4rem;
+			color: black;
+			white-space: nowrap;
+			letter-spacing: 0.1rem;
+			display: flex;
+			align-items: center;
+		}
+		
+		.vertical-text .libre-barcode-128-regular {
+			font-family: "Libre Barcode 128", system-ui;
+			font-weight: 400;
+			font-style: normal;
+		}
+		
+		.vertical-text .libre-barcode-128-text-regular {
+			font-family: "Libre Barcode 128 Text", system-ui;
+			font-weight: 400;
+			font-style: normal;
 		}
 
 		.frame button {
@@ -373,12 +425,13 @@
 			updateLanguage();
 		} catch (error) {
 			console.error('Error loading project data:', error);
-			// Fallback data with test video
+			// Fallback data with test video and years
 			projectsData = {
 				"projects": [
 					{
 						"media": ["https://picsum.photos/800/600?random=1", "https://picsum.photos/800/600?random=2"],
 						"videoId": "dQw4w9WgXcQ",
+						"year": "2023",
 						"translations": {
 							"en": ["Project One", "Camera"],
 							"pt-pt": ["Projeto Um", "Câmara"],
@@ -397,6 +450,7 @@
 					{
 						"media": ["https://picsum.photos/800/600?random=3", "https://picsum.photos/800/600?random=4"],
 						"videoId": "dQw4w9WgXcQ",
+						"year": "2024",
 						"translations": {
 							"en": ["Project Two", "Design"],
 							"pt-pt": ["Projeto Dois", "Design"],
@@ -450,6 +504,13 @@
 			button.appendChild(leftSpan);
 			button.appendChild(rightSpan);
 			frame.appendChild(button);
+			
+			// Add vertical text overlay - OUTSIDE the button, pinned to left
+			const verticalText = document.createElement('div');
+			verticalText.className = 'vertical-text';
+			const textSpan = document.createElement('span');
+			verticalText.appendChild(textSpan);
+			frame.appendChild(verticalText);
 			
 			// YouTube container - OUTSIDE the button
 			const youtubeContainer = document.createElement('div');
@@ -589,10 +650,16 @@
 				const leftSpan = button.querySelector('.left');
 				const rightSpan = button.querySelector('.right');
 				const descriptionDiv = frame.querySelector('.project-description');
+				const verticalTextSpan = frame.querySelector('.vertical-text span');
 				
 				if (leftSpan) leftSpan.textContent = translations[0];
 				if (rightSpan) rightSpan.textContent = translations[1];
 				if (descriptionDiv) descriptionDiv.textContent = descriptionText;
+				if (verticalTextSpan) {
+					// Create simple text content - use single font for now to avoid rotation issues
+					verticalTextSpan.textContent = `${project.videoId}${project.year}${project.videoId}`;
+					verticalTextSpan.className = 'libre-barcode-128-text-regular';
+				}
 			}
 		});
 	}
