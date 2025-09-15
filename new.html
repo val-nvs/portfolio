@@ -108,7 +108,7 @@
 			opacity: 0;
 			visibility: hidden;
 			transition: opacity 0.5s ease, visibility 0.5s ease;
-			z-index: 10;
+			z-index: 5000;
 			pointer-events: none;
 		}
 		
@@ -463,22 +463,34 @@
 			
 			button.addEventListener('click', () => {
 				const isExpanded = button.classList.contains('expanded');
-				
-				// Collapse all
-				ladderFrames.forEach((frm, frmIndex) => {
-					const btn = frm.querySelector('button');
-					if (btn) {
-						btn.classList.remove('expanded');
-						switchMedia(frm, frmIndex - 1, false); // -1 because first frame is empty
-					}
-					frm.classList.remove('move-up', 'move-down');
-				});
-				
-				// Expand clicked one if it wasn't expanded
-				if (!isExpanded) {
+
+				if (isExpanded) {
+					// CLOSING - just collapse this one
+					button.classList.remove('expanded');
+					switchMedia(frame, index - 1, false);
+					frame.classList.remove('move-up', 'move-down');
+
+					// Reset all move classes since nothing is expanded now
+					ladderFrames.forEach((frm) => {
+						frm.classList.remove('move-up', 'move-down');
+					});
+				} else {
+					// OPENING - collapse all others (but not this one) and expand this one
+					ladderFrames.forEach((frm, frmIndex) => {
+						if (frm !== frame) { // Only collapse others
+							const btn = frm.querySelector('button');
+							if (btn) {
+								btn.classList.remove('expanded');
+								switchMedia(frm, frmIndex - 1, false);
+							}
+							frm.classList.remove('move-up', 'move-down');
+						}
+					});
+
+					// Expand this one
 					button.classList.add('expanded');
-					switchMedia(frame, index - 1, true); // -1 because first frame is empty
-					
+					switchMedia(frame, index - 1, true);
+
 					ladderFrames.forEach((frm, frameIndex) => {
 						if (frameIndex < index) {
 							frm.classList.add('move-up');
