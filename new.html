@@ -218,6 +218,7 @@
 			align-items: center;
 			gap: 1rem;
 			padding: 1rem;
+			pointer-events: none;
 		}
 
 		/* Main Navigation - takes all available space */
@@ -233,11 +234,13 @@
 			border: 0.05rem solid rgba(255, 255, 255, 0.15);
 			padding: 1rem;
 			opacity: 0;
-			transition: opacity 0.2s linear;
+			pointer-events: none;
+			transition: opacity 0.2s linear, pointer-events 0.2s linear;
 		}
 		
 		nav.show {
 			opacity: 1;
+			pointer-events: auto;
 		}
 		
 		nav ul {
@@ -305,6 +308,7 @@
 			align-items: center;
 			transition: all 0.2s ease;
 			border: 0.05rem solid rgba(255, 255, 255, 0.18);
+			pointer-events: visible;
 		}
 		
 		.burger-button:hover {
@@ -433,7 +437,7 @@
 				"projects": [
 					{
 						"media": ["https://picsum.photos/800/600?random=1", "https://picsum.photos/800/600?random=2"],
-						"videoId": "dQw4w9WgXcQ",
+						"videoId": "KUs1Popfd8g",
 						"date": "2024/01",
 						"duration": "30 MIN",
 						"translations": {
@@ -453,7 +457,7 @@
 					},
 					{
 						"media": ["https://picsum.photos/800/600?random=3", "https://picsum.photos/800/600?random=4"],
-						"videoId": "dQw4w9WgXcQ",
+						"videoId": "KUs1Popfd8g",
 						"date": "2023/12",
 						"duration": "10 MIN",
 						"translations": {
