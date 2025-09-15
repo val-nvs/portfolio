@@ -129,7 +129,7 @@
 		/* Description Styles */
 		.project-description {
 			position: absolute;
-			bottom: 1rem;
+			top: 25rem;
 			left: 50%;
 			transform: translateX(-50%);
 			width: min(90%, 50rem);
@@ -176,7 +176,7 @@
 			padding: 1rem;
 			margin: 1rem;
 			display: flex;
-			justify-content: flex-start;
+			justify-content: space-between;
 			list-style: none;
 			gap: 1rem;
 			transition: opacity 0.2s linear;
@@ -184,6 +184,10 @@
 		}
 		nav ul.show {
 			opacity: 1;
+		}
+		nav ul button {
+		}
+		nav ul li {
 		}
 		nav button {
 			background: rgba(255, 255, 255, 0.2);
@@ -475,22 +479,29 @@
 						frm.classList.remove('move-up', 'move-down');
 					});
 				} else {
-					// OPENING - collapse all others (but not this one) and expand this one
+					// OPENING - first reset ALL positions, then collapse others, then expand this one
+					
+					// Step 1: Reset all move classes (including current frame)
+					ladderFrames.forEach((frm) => {
+						frm.classList.remove('move-up', 'move-down');
+					});
+					
+					// Step 2: Collapse all others (but not this one)
 					ladderFrames.forEach((frm, frmIndex) => {
-						if (frm !== frame) { // Only collapse others
+						if (frm !== frame) {
 							const btn = frm.querySelector('button');
 							if (btn) {
 								btn.classList.remove('expanded');
 								switchMedia(frm, frmIndex - 1, false);
 							}
-							frm.classList.remove('move-up', 'move-down');
 						}
 					});
 
-					// Expand this one
+					// Step 3: Expand this one
 					button.classList.add('expanded');
 					switchMedia(frame, index - 1, true);
 
+					// Step 4: Apply new move classes based on the expanded frame
 					ladderFrames.forEach((frm, frameIndex) => {
 						if (frameIndex < index) {
 							frm.classList.add('move-up');
