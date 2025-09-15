@@ -1,551 +1,551 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=Noto+Sans+Symbols+2&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu,translate" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Portfolio</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=Noto+Sans+Symbols+2&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu,translate" />
 
-    <style>
-        @font-face {
-            font-family: 'neue';
-            src: url('./HelveticaNeue-BoldExt.otf') format('opentype');
-            font-weight: bold;
-            font-style: normal;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        button {
-            all: unset;
-            cursor: pointer;
-        }
-        html {
-            background-color: #000;
-            font-size: clamp(0.2rem, 1.75vw, .95rem);
-        }
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: start;
-            align-items: center;
-        }
+	<style>
+		@font-face {
+			font-family: 'neue';
+			src: url('./HelveticaNeue-BoldExt.otf') format('opentype');
+			font-weight: bold;
+			font-style: normal;
+		}
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		button {
+			all: unset;
+			cursor: pointer;
+		}
+		html {
+			background-color: #000;
+			font-size: clamp(0.2rem, 1.75vw, .95rem);
+		}
+		body {
+			display: flex;
+			flex-direction: column;
+			justify-content: start;
+			align-items: center;
+		}
 
-        .visual {position: absolute;}
+		.visual {position: absolute;}
 
-        .frame {
-            position: relative;
-        }
-        .frame > img {
-            width: 100%;
-        }
-        .toddao {
-            width: 65rem;
-            height: 23.75rem;
-        }
+		.frame {
+			position: relative;
+		}
+		.frame > img {
+			width: 100%;
+		}
+		.toddao {
+			width: 65rem;
+			height: 23.75rem;
+		}
 
-        /* Project container - wraps button and video */
-        .project-container {
-            position: relative;
-        }
+		/* Project container - wraps button and video */
+		.project-container {
+			position: relative;
+		}
 
-        .frame button {
-            position: absolute;
-            transform: translate(-50%, -50%);
-            top: 50%;
-            left: 50%;
-        }
-        .toddao button {
-            width: 52.6rem;
-            height: 23rem;
-            transition: height 1s ease, transform 1s ease, filter 3s ease;
-            z-index: 1;
-            /* Remove overflow: hidden to allow video to show */
-            border-radius: 1rem;
-        }
-        .toddao button.expanded {
-            height: 70.5rem;
-        }
-        .toddao.move-up button {
-            transform: translate(-50%, calc(-50% - 23.75rem));
-        }
-        .toddao.move-down button {
-            transform: translate(-50%, calc(-50% + 23.75rem));
-        }
+		.frame button {
+			position: absolute;
+			transform: translate(-50%, -50%);
+			top: 50%;
+			left: 50%;
+		}
+		.toddao button {
+			width: 52.6rem;
+			height: 23rem;
+			transition: height 1s ease, transform 1s ease, filter 3s ease;
+			z-index: 1;
+			/* Remove overflow: hidden to allow video to show */
+			border-radius: 1rem;
+		}
+		.toddao button.expanded {
+			height: 70.5rem;
+		}
+		.toddao.move-up button {
+			transform: translate(-50%, calc(-50% - 23.75rem));
+		}
+		.toddao.move-down button {
+			transform: translate(-50%, calc(-50% + 23.75rem));
+		}
 
-        .frame button img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: opacity 0.5s ease;
-            border-radius: 1rem; /* Add border radius here instead */
-        }
-        .frame button {
-            color: white;
-            font-size: 8rem;
-        }
-        .frame button:hover {
-            filter: brightness(1.1); 
-            box-shadow: 
-                0 0 0.5rem rgba(0,0,0,1),
-                0 0 0.5rem rgba(0,0,0,1),
-                0 0 0 0.1rem rgba(255,0,0,0.9);
-        }
+		.frame button img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			transition: opacity 0.5s ease;
+			border-radius: 1rem; /* Add border radius here instead */
+		}
+		.frame button {
+			color: white;
+			font-size: 8rem;
+		}
+		.frame button:hover {
+			filter: brightness(1.1); 
+			box-shadow: 
+				0 0 0.5rem rgba(0,0,0,1),
+				0 0 0.5rem rgba(0,0,0,1),
+				0 0 0 0.1rem rgba(255,0,0,0.9);
+		}
 
-        /* YouTube Player Styles - Now positioned relative to project-container */
-        .youtube-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: min(90%, 50rem);
-            aspect-ratio: 16/9;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-            z-index: 10;
-            pointer-events: none;
-        }
-        
-        .youtube-container.show {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-        }
-        
-        .youtube-container iframe {
-            width: 100%;
-            height: 100%;
-            border-radius: 1rem;
-            border: none;
-            box-shadow: 0 0 2rem rgba(0, 0, 0, 0.8);
-        }
+		/* YouTube Player Styles - Now positioned relative to project-container */
+		.youtube-container {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: min(90%, 50rem);
+			aspect-ratio: 16/9;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.5s ease, visibility 0.5s ease;
+			z-index: 10;
+			pointer-events: none;
+		}
+		
+		.youtube-container.show {
+			opacity: 1;
+			visibility: visible;
+			pointer-events: auto;
+		}
+		
+		.youtube-container iframe {
+			width: 100%;
+			height: 100%;
+			border-radius: 1rem;
+			border: none;
+			box-shadow: 0 0 2rem rgba(0, 0, 0, 0.8);
+		}
 
-        /* Description Styles */
-        .project-description {
-            position: absolute;
-            bottom: 1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: min(90%, 50rem);
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(1rem);
-            -webkit-backdrop-filter: blur(1rem);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 1rem;
-            font-size: 2rem;
-            line-height: 1.4;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-            z-index: 11;
-            font-family: "Atkinson Hyperlegible Next", sans-serif;
-            pointer-events: none;
-        }
-        
-        .project-description.show {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-        }
+		/* Description Styles */
+		.project-description {
+			position: absolute;
+			bottom: 1rem;
+			left: 50%;
+			transform: translateX(-50%);
+			width: min(90%, 50rem);
+			background: rgba(0, 0, 0, 0.9);
+			backdrop-filter: blur(1rem);
+			-webkit-backdrop-filter: blur(1rem);
+			color: white;
+			padding: 1.5rem;
+			border-radius: 1rem;
+			font-size: 2rem;
+			line-height: 1.4;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.5s ease, visibility 0.5s ease;
+			z-index: 11;
+			font-family: "Atkinson Hyperlegible Next", sans-serif;
+			pointer-events: none;
+		}
+		
+		.project-description.show {
+			opacity: 1;
+			visibility: visible;
+			pointer-events: auto;
+		}
 
-        nav {
-            z-index: 10001;
-            width: 100%;
-            height: 10rem;
-            position: fixed;
-            display: flex;
-            justify-content: space-between;
-            max-width: 57.5rem;
-        }
-        nav ul {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(1rem);
-            -webkit-backdrop-filter: blur(1rem);
-            border-radius: 1rem;
-            box-shadow: inset 0 0 .5rem #aaa;
-            font-size: 3rem;
-            align-items: center;
-            text-align: center;
-            padding: 1rem;
-            margin: 1rem;
-            display: flex;
-            justify-content: flex-start;
-            list-style: none;
-            gap: 1rem;
-            transition: opacity 0.2s linear;
-            opacity: 0;
-        }
-        nav ul.show {
-            opacity: 1;
-        }
-        nav button {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 2rem;
-            font-family: "neue", sans-serif;
-            font-weight: bold;
-            border-radius: 1rem; 
-            line-height: 1;
-            box-shadow: inset 0 0 0.5rem #fff;
-            text-shadow: 0 0 0.5rem #fff;
-            color: #000;
-            font-size: 2.7rem;
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            gap: 0.8rem;
-        }
-        nav button:hover {
-            box-shadow: inset 0 0 1.5rem #fff;
-            text-shadow: 0 0 1.5rem #fff;
-        }
-        #burger {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.2rem;
-            background: rgba(120, 120, 120, 0.7);
-        }
+		nav {
+			z-index: 10001;
+			width: 100%;
+			height: 10rem;
+			position: fixed;
+			display: flex;
+			justify-content: space-between;
+			max-width: 57.5rem;
+		}
+		nav ul {
+			background: rgba(255, 255, 255, 0.1);
+			backdrop-filter: blur(1rem);
+			-webkit-backdrop-filter: blur(1rem);
+			border-radius: 1rem;
+			box-shadow: inset 0 0 .5rem #aaa;
+			font-size: 3rem;
+			align-items: center;
+			text-align: center;
+			padding: 1rem;
+			margin: 1rem;
+			display: flex;
+			justify-content: flex-start;
+			list-style: none;
+			gap: 1rem;
+			transition: opacity 0.2s linear;
+			opacity: 0;
+		}
+		nav ul.show {
+			opacity: 1;
+		}
+		nav button {
+			background: rgba(255, 255, 255, 0.2);
+			padding: 2rem;
+			font-family: "neue", sans-serif;
+			font-weight: bold;
+			border-radius: 1rem; 
+			line-height: 1;
+			box-shadow: inset 0 0 0.5rem #fff;
+			text-shadow: 0 0 0.5rem #fff;
+			color: #000;
+			font-size: 2.7rem;
+			display: flex; 
+			justify-content: center; 
+			align-items: center;
+			gap: 0.8rem;
+		}
+		nav button:hover {
+			box-shadow: inset 0 0 1.5rem #fff;
+			text-shadow: 0 0 1.5rem #fff;
+		}
+		#burger {
+			position: absolute;
+			top: 1.5rem;
+			right: 1.2rem;
+			background: rgba(120, 120, 120, 0.7);
+		}
 
-        .frame button span {
-            position: absolute;
-            bottom: 0;
-            font-size: 2.5rem;
-            color: white;
-            background: rgba(0, 0, 0, .2);
-            backdrop-filter: blur(0.3rem);
-            -webkit-backdrop-filter: blur(0.3rem);
-            z-index: 2;
-            padding: 1rem;
-            font-family: neue;
-            line-height: 1;
-            border-radius: 1rem;
-        }
-        .left {left:0;}
-        .right {right:0}
+		.frame button span {
+			position: absolute;
+			bottom: 0;
+			font-size: 2.5rem;
+			color: white;
+			background: rgba(0, 0, 0, .2);
+			backdrop-filter: blur(0.3rem);
+			-webkit-backdrop-filter: blur(0.3rem);
+			z-index: 2;
+			padding: 1rem;
+			font-family: neue;
+			line-height: 1;
+			border-radius: 1rem;
+		}
+		.left {left:0;}
+		.right {right:0}
 
-        .material-symbols-outlined {
-            font-variation-settings:'FILL' 0,'wght' 700,'GRAD' 0,'opsz' 48;
-            font-size: 3rem;
-            line-height: 1;
-        }
-    </style>
+		.material-symbols-outlined {
+			font-variation-settings:'FILL' 0,'wght' 700,'GRAD' 0,'opsz' 48;
+			font-size: 3rem;
+			line-height: 1;
+		}
+	</style>
 </head>
 <body>
 
-    <nav>
-        <ul id="navLinks">
-            <li><button>About</button></li>
-            <li><button>Contact</button></li>
-            <li>
-                <button>
-                    <span class="material-symbols-outlined">translate</span>
-                    <span style="font-size: 1.9rem;">(EN)</span>
-                </button>
-            </li>
-        </ul>
+	<nav>
+		<ul id="navLinks">
+			<li><button>About</button></li>
+			<li><button>Contact</button></li>
+			<li>
+				<button>
+					<span class="material-symbols-outlined">translate</span>
+					<span style="font-size: 1.9rem;">(EN)</span>
+				</button>
+			</li>
+		</ul>
 
-        <button id="burger" aria-expanded="false" aria-controls="navLinks" onclick="burgerClicked()">
-            <span class="material-symbols-outlined">menu</span>
-        </button>
-    </nav>
+		<button id="burger" aria-expanded="false" aria-controls="navLinks" onclick="burgerClicked()">
+			<span class="material-symbols-outlined">menu</span>
+		</button>
+	</nav>
 
-    <div class="visual strip">
-        <div class="toddao frame"><img src="toddao.svg"></div>
-        <div class="toddao frame"><img src="toddao.svg"></div>
-        <div class="toddao frame"><img src="toddao.svg"></div>
-        <div class="toddao frame"><img src="toddao.svg"></div>
-        <div class="toddao frame"><img src="toddao.svg"></div>
-        <div class="toddao frame"><img src="toddao.svg"></div>
-        <div class="toddao frame"><img src="toddao.svg"></div>
-        <div class="toddao frame"><img src="toddao.svg"></div>
-        <div class="toddao frame"><img src="toddao.svg"></div>
-        <div class="toddao frame"><img src="toddao.svg"></div>
-        <div class="toddao frame"><img src="toddao.svg"></div>
-        <div class="toddao frame"><img src="toddao.svg"></div>
-        <div class="toddao frame"><img src="toddao.svg"></div>
-    </div>
+	<div class="visual strip">
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+	</div>
 
-    <div class="ladder strip">
-        <div class="toddao frame"></div>
-        <!-- Projects will be generated here dynamically -->
-        <div class="toddao frame"></div>
-    </div>
+	<div class="ladder strip">
+		<div class="toddao frame"></div>
+		<!-- Projects will be generated here dynamically -->
+		<div class="toddao frame"></div>
+	</div>
 
-    <script>
-    // Load project data
-    let projectsData = null;
+	<script>
+	// Load project data
+	let projectsData = null;
 
-    // Navigation translations
-    const navTranslations = {
-        "about": {
-            "en": "About",
-            "pt-pt": "Sobre",
-            "zh": "关于",
-            "de": "Über",
-            "ar": "حول"
-        },
-        "contact": {
-            "en": "Contact",
-            "pt-pt": "Contacto",
-            "zh": "联系",
-            "de": "Kontakt",
-            "ar": "اتصال"
-        }
-    };
+	// Navigation translations
+	const navTranslations = {
+		"about": {
+			"en": "About",
+			"pt-pt": "Sobre",
+			"zh": "关于",
+			"de": "Über",
+			"ar": "حول"
+		},
+		"contact": {
+			"en": "Contact",
+			"pt-pt": "Contacto",
+			"zh": "联系",
+			"de": "Kontakt",
+			"ar": "اتصال"
+		}
+	};
 
-    // Language cycling
-    const languages = ['en', 'pt-pt', 'zh', 'de', 'ar'];
-    const languageNames = {
-        'en': 'EN',
-        'pt-pt': 'PT',
-        'zh': '中',
-        'de': 'DE',
-        'ar': 'ع'
-    };
-    let currentLanguage = 0;
+	// Language cycling
+	const languages = ['en', 'pt-pt', 'zh', 'de', 'ar'];
+	const languageNames = {
+		'en': 'EN',
+		'pt-pt': 'PT',
+		'zh': '中',
+		'de': 'DE',
+		'ar': 'ع'
+	};
+	let currentLanguage = 0;
 
-    // Load JSON data
-    async function loadProjectData() {
-        try {
-            const response = await fetch('./data.json');
-            projectsData = await response.json();
-            generateProjects();
-            updateLanguage();
-        } catch (error) {
-            console.error('Error loading project data:', error);
-            // Fallback data with test video
-            projectsData = {
-                "projects": [
-                    {
-                        "media": ["https://picsum.photos/800/600?random=1", "https://picsum.photos/800/600?random=2"],
-                        "videoId": "dQw4w9WgXcQ",
-                        "translations": {
-                            "en": ["Project One", "Camera"],
-                            "pt-pt": ["Projeto Um", "Câmara"],
-                            "zh": ["项目一", "摄影"],
-                            "de": ["Projekt Eins", "Kamera"],
-                            "ar": ["مشروع واحد", "كاميرا"]
-                        },
-                        "description": {
-                            "en": "This is a sample project with a video demonstration.",
-                            "pt-pt": "Este é um projeto exemplo com demonstração em vídeo.",
-                            "zh": "这是一个带有视频演示的示例项目。",
-                            "de": "Dies ist ein Beispielprojekt mit Videodemonstration.",
-                            "ar": "هذا مشروع عينة مع عرض فيديو."
-                        }
-                    },
-                    {
-                        "media": ["https://picsum.photos/800/600?random=3", "https://picsum.photos/800/600?random=4"],
-                        "videoId": "dQw4w9WgXcQ",
-                        "translations": {
-                            "en": ["Project Two", "Design"],
-                            "pt-pt": ["Projeto Dois", "Design"],
-                            "zh": ["项目二", "设计"],
-                            "de": ["Projekt Zwei", "Design"],
-                            "ar": ["مشروع اثنان", "تصميم"]
-                        },
-                        "description": {
-                            "en": "Another sample project showcasing design work.",
-                            "pt-pt": "Outro projeto exemplo mostrando trabalho de design.",
-                            "zh": "另一个展示设计工作的示例项目。",
-                            "de": "Ein weiteres Beispielprojekt mit Designarbeit.",
-                            "ar": "مشروع عينة آخر يعرض أعمال التصميم."
-                        }
-                    }
-                ]
-            };
-            generateProjects();
-            updateLanguage();
-        }
-    }
+	// Load JSON data
+	async function loadProjectData() {
+		try {
+			const response = await fetch('./data.json');
+			projectsData = await response.json();
+			generateProjects();
+			updateLanguage();
+		} catch (error) {
+			console.error('Error loading project data:', error);
+			// Fallback data with test video
+			projectsData = {
+				"projects": [
+					{
+						"media": ["https://picsum.photos/800/600?random=1", "https://picsum.photos/800/600?random=2"],
+						"videoId": "dQw4w9WgXcQ",
+						"translations": {
+							"en": ["Project One", "Camera"],
+							"pt-pt": ["Projeto Um", "Câmara"],
+							"zh": ["项目一", "摄影"],
+							"de": ["Projekt Eins", "Kamera"],
+							"ar": ["مشروع واحد", "كاميرا"]
+						},
+						"description": {
+							"en": "This is a sample project with a video demonstration.",
+							"pt-pt": "Este é um projeto exemplo com demonstração em vídeo.",
+							"zh": "这是一个带有视频演示的示例项目。",
+							"de": "Dies ist ein Beispielprojekt mit Videodemonstration.",
+							"ar": "هذا مشروع عينة مع عرض فيديو."
+						}
+					},
+					{
+						"media": ["https://picsum.photos/800/600?random=3", "https://picsum.photos/800/600?random=4"],
+						"videoId": "dQw4w9WgXcQ",
+						"translations": {
+							"en": ["Project Two", "Design"],
+							"pt-pt": ["Projeto Dois", "Design"],
+							"zh": ["项目二", "设计"],
+							"de": ["Projekt Zwei", "Design"],
+							"ar": ["مشروع اثنان", "تصميم"]
+						},
+						"description": {
+							"en": "Another sample project showcasing design work.",
+							"pt-pt": "Outro projeto exemplo mostrando trabalho de design.",
+							"zh": "另一个展示设计工作的示例项目。",
+							"de": "Ein weiteres Beispielprojekt mit Designarbeit.",
+							"ar": "مشروع عينة آخر يعرض أعمال التصميم."
+						}
+					}
+				]
+			};
+			generateProjects();
+			updateLanguage();
+		}
+	}
 
-    function generateProjects() {
-        if (!projectsData) return;
-        
-        const ladderStrip = document.querySelector('.ladder.strip');
-        const firstFrame = ladderStrip.children[0];
-        const lastFrame = ladderStrip.children[ladderStrip.children.length - 1];
-        
-        // Remove existing project frames
-        while (ladderStrip.children.length > 2) {
-            ladderStrip.removeChild(ladderStrip.children[1]);
-        }
-        
-        // Generate project frames
-        projectsData.projects.forEach((project, index) => {
-            const frame = document.createElement('div');
-            frame.className = 'toddao frame project-container';
-            
-            const button = document.createElement('button');
-            const img = document.createElement('img');
-            const leftSpan = document.createElement('span');
-            const rightSpan = document.createElement('span');
-            
-            img.src = project.media[0];
-            img.dataset.projectIndex = index;
-            leftSpan.className = 'left';
-            rightSpan.className = 'right';
-            
-            button.appendChild(img);
-            button.appendChild(leftSpan);
-            button.appendChild(rightSpan);
-            frame.appendChild(button);
-            
-            // YouTube container - OUTSIDE the button
-            const youtubeContainer = document.createElement('div');
-            youtubeContainer.className = 'youtube-container';
-            frame.appendChild(youtubeContainer);
-            
-            // Description container - OUTSIDE the button
-            const descriptionDiv = document.createElement('div');
-            descriptionDiv.className = 'project-description';
-            frame.appendChild(descriptionDiv);
-            
-            ladderStrip.insertBefore(frame, lastFrame);
-        });
-        
-        attachProjectListeners();
-    }
+	function generateProjects() {
+		if (!projectsData) return;
+		
+		const ladderStrip = document.querySelector('.ladder.strip');
+		const firstFrame = ladderStrip.children[0];
+		const lastFrame = ladderStrip.children[ladderStrip.children.length - 1];
+		
+		// Remove existing project frames
+		while (ladderStrip.children.length > 2) {
+			ladderStrip.removeChild(ladderStrip.children[1]);
+		}
+		
+		// Generate project frames
+		projectsData.projects.forEach((project, index) => {
+			const frame = document.createElement('div');
+			frame.className = 'toddao frame project-container';
+			
+			const button = document.createElement('button');
+			const img = document.createElement('img');
+			const leftSpan = document.createElement('span');
+			const rightSpan = document.createElement('span');
+			
+			img.src = project.media[0];
+			img.dataset.projectIndex = index;
+			leftSpan.className = 'left';
+			rightSpan.className = 'right';
+			
+			button.appendChild(img);
+			button.appendChild(leftSpan);
+			button.appendChild(rightSpan);
+			frame.appendChild(button);
+			
+			// YouTube container - OUTSIDE the button
+			const youtubeContainer = document.createElement('div');
+			youtubeContainer.className = 'youtube-container';
+			frame.appendChild(youtubeContainer);
+			
+			// Description container - OUTSIDE the button
+			const descriptionDiv = document.createElement('div');
+			descriptionDiv.className = 'project-description';
+			frame.appendChild(descriptionDiv);
+			
+			ladderStrip.insertBefore(frame, lastFrame);
+		});
+		
+		attachProjectListeners();
+	}
 
-    function switchMedia(frame, projectIndex, expanded) {
-        const button = frame.querySelector('button');
-        const img = button.querySelector('img');
-        const project = projectsData.projects[projectIndex];
-        const youtubeContainer = frame.querySelector('.youtube-container');
-        const description = frame.querySelector('.project-description');
-        
-        if (expanded) {
-            img.src = project.media[1] || project.media[0];
-            
-            // Show YouTube video
-            if (project.videoId) {
-                youtubeContainer.innerHTML = `
-                    <iframe 
-                        src="https://www.youtube.com/embed/${project.videoId}?autoplay=0&rel=0&modestbranding=1" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        allowfullscreen>
-                    </iframe>
-                `;
-                setTimeout(() => {
-                    youtubeContainer.classList.add('show');
-                }, 100);
-            }
-            
-            // Show description
-            setTimeout(() => {
-                description.classList.add('show');
-            }, 100);
-        } else {
-            img.src = project.media[0];
-            
-            // Hide YouTube video and description
-            youtubeContainer.classList.remove('show');
-            description.classList.remove('show');
-            setTimeout(() => {
-                youtubeContainer.innerHTML = '';
-            }, 500);
-        }
-    }
+	function switchMedia(frame, projectIndex, expanded) {
+		const button = frame.querySelector('button');
+		const img = button.querySelector('img');
+		const project = projectsData.projects[projectIndex];
+		const youtubeContainer = frame.querySelector('.youtube-container');
+		const description = frame.querySelector('.project-description');
+		
+		if (expanded) {
+			img.src = project.media[1] || project.media[0];
+			
+			// Show YouTube video
+			if (project.videoId) {
+				youtubeContainer.innerHTML = `
+					<iframe 
+						src="https://www.youtube.com/embed/${project.videoId}?autoplay=0&rel=0&modestbranding=1" 
+						frameborder="0" 
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+						allowfullscreen>
+					</iframe>
+				`;
+				setTimeout(() => {
+					youtubeContainer.classList.add('show');
+				}, 100);
+			}
+			
+			// Show description
+			setTimeout(() => {
+				description.classList.add('show');
+			}, 100);
+		} else {
+			img.src = project.media[0];
+			
+			// Hide YouTube video and description
+			youtubeContainer.classList.remove('show');
+			description.classList.remove('show');
+			setTimeout(() => {
+				youtubeContainer.innerHTML = '';
+			}, 500);
+		}
+	}
 
-    function attachProjectListeners() {
-        const ladderFrames = document.querySelectorAll('.ladder .toddao');
+	function attachProjectListeners() {
+		const ladderFrames = document.querySelectorAll('.ladder .toddao');
 
-        ladderFrames.forEach((frame, index) => {
-            const button = frame.querySelector('button');
-            if (!button) return;
-            
-            button.addEventListener('click', () => {
-                const isExpanded = button.classList.contains('expanded');
-                
-                // Collapse all
-                ladderFrames.forEach((frm, frmIndex) => {
-                    const btn = frm.querySelector('button');
-                    if (btn) {
-                        btn.classList.remove('expanded');
-                        switchMedia(frm, frmIndex - 1, false); // -1 because first frame is empty
-                    }
-                    frm.classList.remove('move-up', 'move-down');
-                });
-                
-                // Expand clicked one if it wasn't expanded
-                if (!isExpanded) {
-                    button.classList.add('expanded');
-                    switchMedia(frame, index - 1, true); // -1 because first frame is empty
-                    
-                    ladderFrames.forEach((frm, frameIndex) => {
-                        if (frameIndex < index) {
-                            frm.classList.add('move-up');
-                        } else if (frameIndex > index) {
-                            frm.classList.add('move-down');
-                        }
-                    });
-                }
-            });
-        });
-    }
+		ladderFrames.forEach((frame, index) => {
+			const button = frame.querySelector('button');
+			if (!button) return;
+			
+			button.addEventListener('click', () => {
+				const isExpanded = button.classList.contains('expanded');
+				
+				// Collapse all
+				ladderFrames.forEach((frm, frmIndex) => {
+					const btn = frm.querySelector('button');
+					if (btn) {
+						btn.classList.remove('expanded');
+						switchMedia(frm, frmIndex - 1, false); // -1 because first frame is empty
+					}
+					frm.classList.remove('move-up', 'move-down');
+				});
+				
+				// Expand clicked one if it wasn't expanded
+				if (!isExpanded) {
+					button.classList.add('expanded');
+					switchMedia(frame, index - 1, true); // -1 because first frame is empty
+					
+					ladderFrames.forEach((frm, frameIndex) => {
+						if (frameIndex < index) {
+							frm.classList.add('move-up');
+						} else if (frameIndex > index) {
+							frm.classList.add('move-down');
+						}
+					});
+				}
+			});
+		});
+	}
 
-    function updateLanguage() {
-        if (!projectsData) return;
-        
-        const lang = languages[currentLanguage];
-        const langButton = document.querySelector('nav button span:last-child');
-        langButton.textContent = `(${languageNames[lang]})`;
+	function updateLanguage() {
+		if (!projectsData) return;
+		
+		const lang = languages[currentLanguage];
+		const langButton = document.querySelector('nav button span:last-child');
+		langButton.textContent = `(${languageNames[lang]})`;
 
-        // Update navigation
-        const aboutButton = document.querySelector('nav ul li:first-child button');
-        const contactButton = document.querySelector('nav ul li:nth-child(2) button');
-        aboutButton.textContent = navTranslations.about[lang];
-        contactButton.textContent = navTranslations.contact[lang];
+		// Update navigation
+		const aboutButton = document.querySelector('nav ul li:first-child button');
+		const contactButton = document.querySelector('nav ul li:nth-child(2) button');
+		aboutButton.textContent = navTranslations.about[lang];
+		contactButton.textContent = navTranslations.contact[lang];
 
-        // Update project texts
-        const frames = document.querySelectorAll('.ladder .toddao.project-container');
-        frames.forEach((frame, index) => {
-            if (index < projectsData.projects.length) {
-                const project = projectsData.projects[index];
-                const translations = project.translations[lang];
-                const descriptionText = project.description[lang];
-                
-                const button = frame.querySelector('button');
-                const leftSpan = button.querySelector('.left');
-                const rightSpan = button.querySelector('.right');
-                const descriptionDiv = frame.querySelector('.project-description');
-                
-                if (leftSpan) leftSpan.textContent = translations[0];
-                if (rightSpan) rightSpan.textContent = translations[1];
-                if (descriptionDiv) descriptionDiv.textContent = descriptionText;
-            }
-        });
-    }
+		// Update project texts
+		const frames = document.querySelectorAll('.ladder .toddao.project-container');
+		frames.forEach((frame, index) => {
+			if (index < projectsData.projects.length) {
+				const project = projectsData.projects[index];
+				const translations = project.translations[lang];
+				const descriptionText = project.description[lang];
+				
+				const button = frame.querySelector('button');
+				const leftSpan = button.querySelector('.left');
+				const rightSpan = button.querySelector('.right');
+				const descriptionDiv = frame.querySelector('.project-description');
+				
+				if (leftSpan) leftSpan.textContent = translations[0];
+				if (rightSpan) rightSpan.textContent = translations[1];
+				if (descriptionDiv) descriptionDiv.textContent = descriptionText;
+			}
+		});
+	}
 
-    function cycleLanguage() {
-        currentLanguage = (currentLanguage + 1) % languages.length;
-        updateLanguage();
-    }
+	function cycleLanguage() {
+		currentLanguage = (currentLanguage + 1) % languages.length;
+		updateLanguage();
+	}
 
-    function burgerClicked() {
-        const burger = document.getElementById('burger');
-        const navLinks = document.getElementById('navLinks');
+	function burgerClicked() {
+		const burger = document.getElementById('burger');
+		const navLinks = document.getElementById('navLinks');
 
-        const expanded = burger.getAttribute('aria-expanded') === 'true';
-        burger.setAttribute('aria-expanded', !expanded);
-        navLinks.classList.toggle('show');
-    }
+		const expanded = burger.getAttribute('aria-expanded') === 'true';
+		burger.setAttribute('aria-expanded', !expanded);
+		navLinks.classList.toggle('show');
+	}
 
-    // Initialize
-    document.addEventListener('DOMContentLoaded', () => {
-        loadProjectData();
-        
-        const translateButton = document.querySelector('nav ul li:last-child button');
-        translateButton.addEventListener('click', cycleLanguage);
-    });
-    </script>
+	// Initialize
+	document.addEventListener('DOMContentLoaded', () => {
+		loadProjectData();
+		
+		const translateButton = document.querySelector('nav ul li:last-child button');
+		translateButton.addEventListener('click', cycleLanguage);
+	});
+	</script>
 
 </body>
 </html>
