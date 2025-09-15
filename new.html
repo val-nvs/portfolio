@@ -69,8 +69,9 @@
 			position: relative;
 		}
 
-		/* Vertical text overlay - pinned to left edge */
-		.vertical-text {
+		/* Vertical text overlays */
+		.vertical-text-left {
+			writing-mode: sideways-lr;
 			position: absolute;
 			top: 50%;
 			left: -2.1rem;
@@ -79,8 +80,18 @@
 			pointer-events: none;
 		}
 
-		.vertical-text span {
-			writing-mode: sideways-lr;
+		.vertical-text-right {
+			writing-mode: vertical-rl;
+			position: absolute;
+			top: 50%;
+			right: -1.2rem;
+			transform: translateY(-50%);
+			z-index: 3;
+			pointer-events: none;
+		}
+
+		.vertical-text-left span,
+		.vertical-text-right span {
 			text-orientation: mixed;
 			font-size: 4rem;
 			color: black;
@@ -89,7 +100,8 @@
 			display: block;
 		}
 
-		.vertical-text span > span {
+		.vertical-text-left span > span,
+		.vertical-text-right span > span {
 			display: inline;
 		}
 
@@ -374,6 +386,10 @@
 	// Load project data
 	let projectsData = null;
 
+	// Text variables
+	const leftTextWord = "bar";
+	const rightTextWord = "nim";
+
 	// Navigation translations
 	const navTranslations = {
 		"about": {
@@ -419,7 +435,7 @@
 						"media": ["https://picsum.photos/800/600?random=1", "https://picsum.photos/800/600?random=2"],
 						"videoId": "dQw4w9WgXcQ",
 						"date": "2024/01",
-						"duration": "30 min",
+						"duration": "30 MIN",
 						"translations": {
 							"en": ["Project One", "Camera"],
 							"pt-pt": ["Projeto Um", "Câmara"],
@@ -439,7 +455,7 @@
 						"media": ["https://picsum.photos/800/600?random=3", "https://picsum.photos/800/600?random=4"],
 						"videoId": "dQw4w9WgXcQ",
 						"date": "2023/12",
-						"duration": "10 min",
+						"duration": "10 MIN",
 						"translations": {
 							"en": ["Project Two", "Design"],
 							"pt-pt": ["Projeto Dois", "Design"],
@@ -494,12 +510,19 @@
 			button.appendChild(rightSpan);
 			frame.appendChild(button);
 			
-			// Add vertical text overlay - OUTSIDE the button, pinned to left
-			const verticalText = document.createElement('div');
-			verticalText.className = 'vertical-text';
-			const textSpan = document.createElement('span');
-			verticalText.appendChild(textSpan);
-			frame.appendChild(verticalText);
+			// Add left vertical text overlay
+			const verticalTextLeft = document.createElement('div');
+			verticalTextLeft.className = 'vertical-text-left';
+			const textSpanLeft = document.createElement('span');
+			verticalTextLeft.appendChild(textSpanLeft);
+			frame.appendChild(verticalTextLeft);
+			
+			// Add right vertical text overlay
+			const verticalTextRight = document.createElement('div');
+			verticalTextRight.className = 'vertical-text-right';
+			const textSpanRight = document.createElement('span');
+			verticalTextRight.appendChild(textSpanRight);
+			frame.appendChild(verticalTextRight);
 			
 			// YouTube container - OUTSIDE the button
 			const youtubeContainer = document.createElement('div');
@@ -639,13 +662,21 @@
 				const leftSpan = button.querySelector('.left');
 				const rightSpan = button.querySelector('.right');
 				const descriptionDiv = frame.querySelector('.project-description');
-				const verticalTextSpan = frame.querySelector('.vertical-text span');
+				const verticalTextLeftSpan = frame.querySelector('.vertical-text-left span');
+				const verticalTextRightSpan = frame.querySelector('.vertical-text-right span');
 				
 				if (leftSpan) leftSpan.textContent = translations[0];
 				if (rightSpan) rightSpan.textContent = translations[1];
 				if (descriptionDiv) descriptionDiv.textContent = descriptionText;
-				if (verticalTextSpan) {
-					verticalTextSpan.innerHTML = `<span class="libre-barcode-128-regular">bars</span><span class="libre-barcode-128-text-regular">${project.date}</span><span class="libre-barcode-128-regular">bars</span>`;
+				
+				// Update left vertical text
+				if (verticalTextLeftSpan) {
+					verticalTextLeftSpan.innerHTML = `<span class="libre-barcode-128-regular">${leftTextWord}</span><span class="libre-barcode-128-text-regular">${project.date}</span><span class="libre-barcode-128-regular">${leftTextWord}</span>`;
+				}
+				
+				// Update right vertical text
+				if (verticalTextRightSpan) {
+					verticalTextRightSpan.innerHTML = `<span class="libre-barcode-128-regular">${rightTextWord}</span><span class="libre-barcode-128-text-regular">${project.duration}</span><span class="libre-barcode-128-regular">${rightTextWord}</span>`;
 				}
 			}
 		});
