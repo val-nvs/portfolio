@@ -72,38 +72,25 @@
 		/* Vertical text overlay - pinned to left edge */
 		.vertical-text {
 			position: absolute;
-			top: 0;
-			left: -.8rem;
-			width: 4rem;
-			height: 100%;
-			display: flex;
-			align-items: center;
-			justify-content: center;
+			top: 50%;
+			left: -2.1rem;
+			transform: translateY(-50%);
 			z-index: 3;
 			pointer-events: none;
 		}
 
 		.vertical-text span {
-			transform: rotate(-90deg);
-			transform-origin: center center;
+			writing-mode: sideways-lr;
+			text-orientation: mixed;
 			font-size: 4rem;
 			color: black;
 			white-space: nowrap;
 			letter-spacing: 0.1rem;
-			display: flex;
-			align-items: center;
+			display: block;
 		}
-		
-		.vertical-text .libre-barcode-128-regular {
-			font-family: "Libre Barcode 128", system-ui;
-			font-weight: 400;
-			font-style: normal;
-		}
-		
-		.vertical-text .libre-barcode-128-text-regular {
-			font-family: "Libre Barcode 128 Text", system-ui;
-			font-weight: 400;
-			font-style: normal;
+
+		.vertical-text span > span {
+			display: inline;
 		}
 
 		.frame button {
@@ -431,7 +418,8 @@
 					{
 						"media": ["https://picsum.photos/800/600?random=1", "https://picsum.photos/800/600?random=2"],
 						"videoId": "dQw4w9WgXcQ",
-						"year": "2023",
+						"date": "2024/01",
+						"duration": "30 min",
 						"translations": {
 							"en": ["Project One", "Camera"],
 							"pt-pt": ["Projeto Um", "Câmara"],
@@ -450,7 +438,8 @@
 					{
 						"media": ["https://picsum.photos/800/600?random=3", "https://picsum.photos/800/600?random=4"],
 						"videoId": "dQw4w9WgXcQ",
-						"year": "2024",
+						"date": "2023/12",
+						"duration": "10 min",
 						"translations": {
 							"en": ["Project Two", "Design"],
 							"pt-pt": ["Projeto Dois", "Design"],
@@ -656,9 +645,7 @@
 				if (rightSpan) rightSpan.textContent = translations[1];
 				if (descriptionDiv) descriptionDiv.textContent = descriptionText;
 				if (verticalTextSpan) {
-					// Create simple text content - use single font for now to avoid rotation issues
-					verticalTextSpan.textContent = `${project.videoId}${project.year}${project.videoId}`;
-					verticalTextSpan.className = 'libre-barcode-128-text-regular';
+					verticalTextSpan.innerHTML = `<span class="libre-barcode-128-regular">bars</span><span class="libre-barcode-128-text-regular">${project.date}</span><span class="libre-barcode-128-regular">bars</span>`;
 				}
 			}
 		});
