@@ -65,7 +65,6 @@
 			height: 23rem;
 			transition: height 1s ease, transform 1s ease, filter 3s ease;
 			z-index: 1;
-			/* Remove overflow: hidden to allow video to show */
 			border-radius: 1rem;
 		}
 		.toddao button.expanded {
@@ -83,7 +82,7 @@
 			height: 100%;
 			object-fit: cover;
 			transition: opacity 0.5s ease;
-			border-radius: 1rem; /* Add border radius here instead */
+			border-radius: 1rem;
 		}
 		.frame button {
 			color: white;
@@ -97,7 +96,7 @@
 				0 0 0 0.1rem rgba(255,0,0,0.9);
 		}
 
-		/* YouTube Player Styles - Now positioned relative to project-container */
+		/* YouTube Player Styles */
 		.youtube-container {
 			position: absolute;
 			top: 50%;
@@ -155,65 +154,97 @@
 			pointer-events: auto;
 		}
 
-		nav {
-			z-index: 10001;
-			width: 100%;
-			height: 10rem;
+		/* Navigation Header */
+		header {
 			position: fixed;
+			top: 0;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 57.5rem;
+			height: 10rem;
+			z-index: 10001;
 			display: flex;
-			justify-content: space-between;
-			max-width: 57.5rem;
+			align-items: center;
+			gap: 1rem;
+			padding: 1rem;
 		}
-		nav ul {
+
+		/* Main Navigation - takes all available space */
+		nav {
+			flex: 1;
 			background: rgba(255, 255, 255, 0.1);
 			backdrop-filter: blur(1rem);
 			-webkit-backdrop-filter: blur(1rem);
 			border-radius: 1rem;
-			box-shadow: inset 0 0 .5rem #aaa;
-			font-size: 3rem;
-			align-items: center;
-			text-align: center;
+			box-shadow: inset 0 0 0.5rem #aaa;
 			padding: 1rem;
-			margin: 1rem;
-			display: flex;
-			justify-content: space-between;
-			list-style: none;
-			gap: 1rem;
-			transition: opacity 0.2s linear;
 			opacity: 0;
+			transition: opacity 0.2s linear;
 		}
-		nav ul.show {
+		
+		nav.show {
 			opacity: 1;
 		}
-		nav ul button {
+		
+		nav ul {
+			display: grid;
+			grid-template-columns: 1fr 1fr 9rem;
+			align-items: center;
+			list-style: none;
+			gap: 1rem;
+			margin: 0;
+			padding: 0;
+			height: 100%;
 		}
-		nav ul li {
-		}
+		
 		nav button {
 			background: rgba(255, 255, 255, 0.2);
-			padding: 2rem;
+			padding: 1rem 0;
 			font-family: "neue", sans-serif;
 			font-weight: bold;
-			border-radius: 1rem; 
+			border-radius: 1rem;
 			line-height: 1;
 			box-shadow: inset 0 0 0.5rem #fff;
 			text-shadow: 0 0 0.5rem #fff;
 			color: #000;
-			font-size: 2.7rem;
-			display: flex; 
-			justify-content: center; 
+			font-size: 2.6rem;
+			display: flex;
+			justify-content: center;
 			align-items: center;
-			gap: 0.8rem;
+			gap: 1rem;
+			width: 100%;
+			transition: box-shadow 0.2s ease, text-shadow 0.2s ease;
 		}
+		
 		nav button:hover {
 			box-shadow: inset 0 0 1.5rem #fff;
 			text-shadow: 0 0 1.5rem #fff;
 		}
-		#burger {
-			position: absolute;
-			top: 1.5rem;
-			right: 1.2rem;
+
+		/* Burger Menu Button - fixed width */
+		.burger-button {
+			flex-shrink: 0;
+			width: 6rem;
+			height: 6rem;
 			background: rgba(120, 120, 120, 0.7);
+			backdrop-filter: blur(1rem);
+			-webkit-backdrop-filter: blur(1rem);
+			border-radius: 1rem;
+			font-family: "neue", sans-serif;
+			font-weight: bold;
+			box-shadow: inset 0 0 0.5rem #fff;
+			text-shadow: 0 0 0.5rem #fff;
+			color: #000;
+			font-size: 2.6rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transition: box-shadow 0.2s ease, text-shadow 0.2s ease;
+		}
+		
+		.burger-button:hover {
+			box-shadow: inset 0 0 1.5rem #fff;
+			text-shadow: 0 0 1.5rem #fff;
 		}
 
 		.frame button span {
@@ -235,29 +266,31 @@
 
 		.material-symbols-outlined {
 			font-variation-settings:'FILL' 0,'wght' 700,'GRAD' 0,'opsz' 48;
-			font-size: 3rem;
+			font-size: 2.6rem;
 			line-height: 1;
 		}
 	</style>
 </head>
 <body>
 
-	<nav>
-		<ul id="navLinks">
-			<li><button>About</button></li>
-			<li><button>Contact</button></li>
-			<li>
-				<button>
-					<span class="material-symbols-outlined">translate</span>
-					<span style="font-size: 1.9rem;">(EN)</span>
-				</button>
-			</li>
-		</ul>
+	<header>
+		<nav id="mainNav">
+			<ul>
+				<li><button>About</button></li>
+				<li><button>Contact</button></li>
+				<li>
+					<button>
+						<span class="material-symbols-outlined">translate</span>
+						<span style="font-size: 1.5rem;">(EN)</span>
+					</button>
+				</li>
+			</ul>
+		</nav>
 
-		<button id="burger" aria-expanded="false" aria-controls="navLinks" onclick="burgerClicked()">
+		<button class="burger-button" id="burger" aria-expanded="false" aria-controls="mainNav" onclick="burgerClicked()">
 			<span class="material-symbols-outlined">menu</span>
 		</button>
-	</nav>
+	</header>
 
 	<div class="visual strip">
 		<div class="toddao frame"><img src="toddao.svg"></div>
@@ -554,11 +587,11 @@
 
 	function burgerClicked() {
 		const burger = document.getElementById('burger');
-		const navLinks = document.getElementById('navLinks');
+		const mainNav = document.getElementById('mainNav');
 
 		const expanded = burger.getAttribute('aria-expanded') === 'true';
 		burger.setAttribute('aria-expanded', !expanded);
-		navLinks.classList.toggle('show');
+		mainNav.classList.toggle('show');
 	}
 
 	// Initialize
