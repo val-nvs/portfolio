@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&family=Michroma&display=swap" rel="stylesheet" />
+<style>
+  /* Variables for easy theming */
+  :root {
+    --gray-noise-opacity: 1;         /* opacity of noise over gray background */
+    --strip-noise-opacity: 0.3;      /* opacity of noise over the strip */
+    --font-scale: 3;                 /* base multiplier for font sizing */
+    --font-scale-keycode: 2;       /* multiplier for side keycode text */
+    --border-r-perf: 0.5;            /* border radius for perf blocks */
+    --border-r-content: 1.2;         /* border radius for content images */
+    --border-r-light: 1.8;           /* border radius for white-box shadow */
+    --content-gap-w: 1.2;            /* horizontal padding inside content */
+    --content-gap-h: 0.6;            /* vertical padding inside content */
+    --button-stuff: 1;               /* reserved for button theming */
+  }
+
+  /* Full‑page reset and background */
+  html, body {
+    height: 100%;
+    margin: 0;
+    background-color: #0D1117;
+  }
+  body {
+    height: 100vh;
+    height: 100dvh;                  /* ensure correct mobile viewport height */
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+  }
+
+  /* Gray outer container with centered content */
+  .gray-box {
+    position: relative;
+    height: 100vh;
+    height: 100dvh;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+    overflow: hidden;
+  }
+  /* Noise overlay on gray-box */
+  .gray-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("media/blues.png");
+    background-repeat: repeat;
+    background-size: 64px 64px;
+    image-rendering: pixelated;
+    mix-blend-mode: soft-light;
+    opacity: var(--gray-noise-opacity);
+    z-index: 1;
+  }
+
+  /* Top row of buttons */
+  .button-row {
+    position: absolute;
+    top: min(calc(1 * 1vw), calc(600 * (1/100) * 1px));
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: min(calc(1 * 1vw), calc(600 * (1/100) * 1px));
+    z-index: 10;
+  }
+  .gray-btn {
+    all: unset;                      /* remove default button styling */
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-size: min(calc(var(--font-scale) * 1vw),
+                   calc(600 * (var(--font-scale)/100) * 1px));
+    background-image: url("media/noise3.png");
+    background-repeat: repeat;
+    background-size: 64px 64px;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.6rem;
+    cursor: pointer;
+    transition: background 0.3s,
+                transform 0.2s,
+                box-shadow 0.2s;
+    box-shadow: 0 0 0.4rem rgba(0,0,0,0.6);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    user-select: none;
+  }
+  .gray-btn:hover {
+    background: rgba(255,200,0,1);
+    transform: translateY(-1px);
+    box-shadow: 0 0 0.6rem rgba(255,140,0,0.8);
+  }
+  .gray-btn:active {
+    transform: translateY(1px);
+    box-shadow: inset 0 0 0.4rem rgba(0,0,0,0.6);
+  }
+
+  /* White box that sits behind the strip */
+  .white-box {
+    position: absolute;
+    top: min(calc(10 * 1vw), calc(600 * (10/100) * 1px));
+    bottom: min(calc(3 * 1vw), calc(600 * (3/100) * 1px));
+    width: 95%;
+    background-color: #fff;
+    overflow: hidden;
+    box-shadow: inset 0 0 2rem rgba(0,0,0,1);
+    z-index: 1;
+    border-radius: min(calc(var(--border-r-light) * 1vw),
+                       calc(600 * (var(--border-r-light)/100) * 1px));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Grid of flicker cells over white-box */
+  .flicker-grid {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .flicker-cell {
+    background-color: #333;
+    animation: lampOn 1s ease-out forwards;
+  }
+  @keyframes lampOn {
+    from { background-color: #333; }
+    to   { background-color: #fff; }
+  }
+
+  /* Strip that slides down and contains frames */
+  .strip {
+    position: relative;
+    width: 95%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    transform: translateY(100%);
+    animation: slideDown 1s ease forwards;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    background-image: url("media/noise2.png");
+    background-repeat: repeat;
+    background-size: 64px 64px;
+    z-index: 2;
+    box-shadow: 0 0 calc(min(calc(var(--border-r-perf)*1vw),
+                          calc(600 * (var(--border-r-perf)/100) * 1px)))
+               rgba(0,0,0,0.8);
+  }
+  .strip::-webkit-scrollbar { display: none; }
+  @keyframes slideDown { to { transform: translateY(0); } }
+
+  /* Glint overlay on the strip 
+  .strip::after {
+    content: "";
+    position: absolute;
+    top: 0; left: -25%;
+    width: 150%; height: 20%;
+    background: linear-gradient(120deg,
+      rgba(255,255,255,0) 35%,
+      rgba(255,255,255,0.5) 50%,
+      rgba(255,255,255,0) 65%);
+    pointer-events: none;
+    mix-blend-mode: screen;
+    filter: blur(10px);
+    animation: streakDrift 4s ease-in-out infinite alternate;
+    z-index: 3;
+  }
+  @keyframes streakDrift {
+    0%   { transform: translateY(-10%) translateX(0) rotate(0deg); }
+    50%  { transform: translateY(10%) translateX(50%) rotate(10deg); }
+    100% { transform: translateY(-10%) translateX(100%) rotate(-10deg); }
+  }*/
+
+  /* Frames and their content layout */
+  .frame {
+    background: transparent;
+    width: 100%;
+    aspect-ratio: 65 / 23.75;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+  .left-keycode, .right-keycode, .perf-column, .content {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    flex: 0 0 auto;
+  }
+  .left-keycode, .right-keycode {
+    width: 4.7%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: black;
+    font-family: 'Michroma', sans-serif !important;
+    font-size: min(calc(var(--font-scale-keycode) * 1vw),
+                   calc(600 * (var(--font-scale-keycode)/100) * 1px));
+  }
+  .rotated-right { transform: rotate(90deg); display: inline-block; white-space: nowrap; }
+  .rotated-left  { transform: rotate(-90deg); display: inline-block; white-space: nowrap; }
+
+  .perf-column {
+    width: 4.3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .perf-blocks {
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    gap: 11.66%;
+    width: 100%;
+    height: 88.30%;
+  }
+  .perf-blocks > div {
+    border-radius: min(calc(var(--border-r-perf)*1vw),
+                       calc(600*(var(--border-r-perf)/100)*1px));
+    box-shadow: inset 0 0 calc(min(calc(var(--border-r-perf)*1vw),
+                          calc(600*(var(--border-r-perf)/100)*1px))) rgba(0,0,0,0.8);
+    background-color: rgba(230,230,230,1);
+  }
+  .content {
+    width: 82%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  .content img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(100% - min(var(--content-gap-w)*1vw,
+                            calc(600*(var(--content-gap-w)/100)*1px)));
+    height: calc(100% - min(var(--content-gap-h)*1vw,
+                             calc(600*(var(--content-gap-h)/100)*1px)));
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    user-select: none;
+    border-radius: min(calc(var(--border-r-content)*1vw),
+                       calc(600*(var(--border-r-content)/100)*1px));
+  }
+  .text {
+    position: absolute;
+    top: 80%;
+    left: 4%;
+    color: white;
+    font-family: 'Michroma', sans-serif;
+    font-weight: bold;
+    font-size: min(calc(var(--font-scale)*1vw),
+                   calc(600*(var(--font-scale)/100)*1px));
+    user-select: none;
+    white-space: nowrap;
+    text-shadow:
+      0 0 3px rgba(0,0,0,0.8),
+      5px 5px 5px rgba(0,0,0,0.7),
+      -5px -5px 5px rgba(0,0,0,0.6),
+      5px -5px 5px rgba(0,0,0,0.5),
+      -5px 5px 5px rgba(0,0,0,0.4),
+      0 0 12px rgba(0,0,0,0.3);
+    z-index: 10;
+    /* 🔥 Subtitle background */
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0.1em 0.7em 0.3em 0.7em; /* top right bottom left */
+    border-radius: 0.4em;           /* Rounded edges */
+  }
+
+  /* Modal overlay and content */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: none;                 /* shown/hidden via JS */
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+  }
+  .modal {
+    background: #ccc;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    width: 95%;
+    max-width: 600px;
+    max-height: 80%;
+    overflow-y: auto;
+    position: relative;
+    font-family: 'Atkinson Hyperlegible', monospace;
+    font-size: 1.5rem;
+  }
+  .modal .close {
+    position: absolute;
+    top: 0.5rem; right: 0.75rem;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+  .modal img, .modal iframe {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 1rem;
+  }
+  .modal h2 { margin-top: 0; }
+  .modal .meta {
+    margin: 0.5rem 0;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .modal .video-wrapper {
+    position: relative;
+    padding-top: 56.25%;           /* maintain 16:9 aspect */
+    margin-top: 1rem;
+  }
+  .modal .video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 95%;
+  }
+</style>
+
+
+</head>
+<body>
+  <div class="gray-box">
+    <div class="button-row">
+      <button class="gray-btn">About</button>
+      <button class="gray-btn">Contact</button>
+    </div>
+    <div class="white-box">
+      <div class="flicker-grid">
+        <!-- 15 cells -->
+        <div class="flicker-cell"></div><div class="flicker-cell"></div><div class="flicker-cell"></div>
+        <div class="flicker-cell"></div><div class="flicker-cell"></div><div class="flicker-cell"></div>
+        <div class="flicker-cell"></div><div class="flicker-cell"></div><div class="flicker-cell"></div>
+        <div class="flicker-cell"></div><div class="flicker-cell"></div><div class="flicker-cell"></div>
+        <div class="flicker-cell"></div><div class="flicker-cell"></div><div class="flicker-cell"></div>
+      </div>
+      <div class="strip" id="strip"></div>
+    </div>
+  </div>
+
+  <!-- Modal structure -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <span class="close" id="modalClose">✕</span>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- 1) Data definition -->
+  <script defer>
+    window.projects = [
+
+{ dateL:     "JUN 2025",
+    img:       "media/bang.jpg",
+    gif:       "media/bang.gif",
+    text:      "Music Video - Camera",
+    right:     "3 MIN",
+    detail:    `K-pop dance cover filmed using two cameras with the same sensor, including one operated by me on a gimbal, capturing dynamic multi-angle footage inspired by 1theK’s On The Spot series, featuring quick camera changes and elevated angles.<br>
+                <br>Director: Inês Serra
+                    · <a href=https://www.instagram.com/_nene.05_/ target='_blank'>IG</a>
+                    · <a href=https://ines05serra.wixsite.com/portfolio target='_blank'>Website</a>
+                <br>Photography: Sofia Serra
+                    · <a href=https://www.instagram.com/photosby.sofs_/ target='_blank'>IG</a>
+                    · <a href=https://sofia05serra.wixsite.com/my-site-2 target='_blank'>Website</a>
+                <br>Talent: NUNCHI
+                    · <a href=https://www.instagram.com/nunchiverse/ target='_blank'>IG</a>
+                    · <a href=https://www.youtube.com/@nunchiisus target='_blank'>YouTube</a>
+    `,
+    youtube:   ""},
+  { dateL:     "MAY 2025",
+    img:       "media/monitor.jpg",
+    gif:       "",
+    text:      "Short film - Sound",
+    right:     "30 MIN",
+    detail:    `Recorded production sound and streamlined file workflow with batch-edit scripts and spreadsheet tracking for a 30-minute action thriller, shot in 13 days at 5 varied locations across Lisbon.<br>
+                <br>Director: Charlie Chaves
+                    · <a href=https://www.instagram.com/charliechavess/ target='_blank'>IG</a>
+                    · <a href=https://www.instagram.com/thebenaresclub/ target='_blank'>Club</a>
+                <br>Director: Nityam
+                    · <a href=https://www.instagram.com/nityamnow/ target='_blank'>IG</a>
+                    · <a href=https://www.satorifilms.org/ target='_blank'>Website</a>
+                    · <a href=https://www.behance.net/nityamnow target='_blank'>Behance</a>
+                    · <a href=https://www.youtube.com/@satorifilmsorg target='_blank'>YouTube</a>
+                <br>Camera: Wrasmus
+                    · <a href=https://www.instagram.com/wrasmus/ target='_blank'>IG</a>
+                <br>Inês Serra
+                    · <a href=https://www.instagram.com/_nene.05_/ target='_blank'>IG</a>
+                    · <a href=https://ines05serra.wixsite.com/portfolio target='_blank'>Website</a>
+                <br>Madalena Oliveira
+                    · <a href=https://www.instagram.com/blueyy.biker/ target='_blank'>IG</a>
+                <br>Lia Paladino
+                    · <a href=https://www.instagram.com/liapaladinoo/ target='_blank'>IG</a>
+                <br>José Machado
+                    · <a href=https://www.instagram.com/zemariamachado__/ target='_blank'>IG</a>
+                <br>Talent: Akshay Thorbole
+                    · <a href=https://www.instagram.com/akzzz_0.2/ target='_blank'>IG</a>
+                <br>Talent: 
+                    · <a href=here target='_blank'>IG</a>
+                <br>Talent: 
+                    · <a href=here target='_blank'>IG</a>
+                <br>Talent: 
+                    · <a href=here target='_blank'>IG</a>
+
+    `,
+    youtube:   ""},
+  { dateL:     "JAN 2025",
+    img:       "media/chapito.jpg",
+    gif:       "media/chapito.gif",
+    text:      "Documentary - Camera & Sound",
+    right:     "13 MIN",
+    detail:    `Documentary about Pascoal Furtado, a teacher at Chapitô, a circus school in Lisbon.<br>
+                <br>Inês Serra
+                    · <a href=https://www.instagram.com/_nene.05_/ target='_blank'>IG</a>
+                    · <a href=https://ines05serra.wixsite.com/portfolio target='_blank'>Website</a>
+                <br>Madalena Oliveira
+                    · <a href=https://www.instagram.com/blueyy.biker/ target='_blank'>IG</a>
+                <br>Nityam
+                    · <a href=https://www.instagram.com/nityamnow/ target='_blank'>IG</a>
+                    · <a href=https://www.satorifilms.org/ target='_blank'>Website</a>
+                    · <a href=https://www.behance.net/nityamnow target='_blank'>Behance</a>
+                    · <a href=https://www.youtube.com/@satorifilmsorg target='_blank'>YouTube</a>
+                <br>Charlie Chaves
+                    · <a href=https://www.instagram.com/charliechavess/ target='_blank'>IG</a>
+                    · <a href=https://www.instagram.com/thebenaresclub/ target='_blank'>Club</a>
+    `,
+    youtube:   "ztUn9QWYk_Y"},
+  { dateL:     "OCT 2024",
+    img:       "media/doclis.png",
+    gif:       "",
+    text:      "Film festival coverage",
+    right:     "X DAYS",
+    detail:    `Filmed B-roll and presentations for Doclisboa, Portugal’s leading international documentary film festival.<br>
+                <br>Portugal Film Commission
+                    · <a href=https://portugalfilmcommission.com/en/entities/doclisboa-international-film-festival/ target='_blank'>Website</a>
+                <br>Charlie Chaves
+                    · <a href=https://www.instagram.com/charliechavess/ target='_blank'>IG</a>
+                    · <a href=https://www.instagram.com/thebenaresclub/ target='_blank'>Club</a>
+                <br>Inês Serra
+                    · <a href=https://www.instagram.com/_nene.05_/ target='_blank'>IG</a>
+                    · <a href=https://ines05serra.wixsite.com/portfolio target='_blank'>Website</a>
+    `,
+    youtube:   "NPPzUJvmkq8"},
+  { dateL:     "AUG 2024",
+    img:       "media/seb.jpg",
+    gif:       "media/seb.gif",
+    text:      "Interview - Camera",
+    right:     "4 MIN",
+    detail:    `Interview about Sebastião Ogando<br>
+                <br>Inês Serra
+                    · <a href=https://www.instagram.com/_nene.05_/ target='_blank'>IG</a>
+                    · <a href=https://ines05serra.wixsite.com/portfolio target='_blank'>Website</a>
+                <br>Sebastião Ogando
+                    · <a href=https://www.instagram.com/sebastiaoogando/ target='_blank'>IG</a>
+    `,
+    youtube:   "__UxmK7BD68"},
+  { dateL:      "AUG 2024",
+    img:       "media/free.jpg",
+    gif:       "media/free.gif",
+    text:      "Short film - Camera",
+    right:     "4 MIN",
+    detail:    `Experimental short film.<br>
+
+                <br>Inês Serra
+                    · <a href=https://www.instagram.com/_nene.05_/ target='_blank'>IG</a>
+                    · <a href=https://ines05serra.wixsite.com/portfolio target='_blank'>Website</a>
+                <br>Sofia Serra
+                    · <a href=https://www.instagram.com/photosby.sofs_/ target='_blank'>IG</a>
+                    · <a href=https://sofia05serra.wixsite.com/my-site-2 target='_blank'>Website</a>
+                <br>Frederico Ferreira
+                    · <a href=https://www.instagram.com/fredfrreira/ target='_blank'>IG</a>
+                    · <a href=https://linktr.ee/fredffilm target='_blank'>Linktree</a>
+                    · <a href=https://www.fredffilm.com/ target='_blank'>Website</a>
+
+
+
+
+    `,
+    youtube:   "FcrQnCTnG0M"},
+  { dateL:     "JUN 2024",
+    img:       "media/group1.png",
+    gif:       "",
+    text:      "TV Pilot - Crane Cam & Pre-Vis",
+    right:     "32 MIN",
+    detail:    `Crane Cam in a Live TV program mock-up and Pre-Vis in Blender using photogrammetry.<br>
+
+
+                <br>Miguel Bras
+                    · <a href=https://letterboxd.com/director/miguel-bras/ target='_blank'>Letterboxd</a>
+                <br>#
+                <br>#
+                <br>#
+                <br>#
+                <br>#
+                <br>#
+
+
+
+
+
+    `,
+    youtube:   "5LlSdajis7g"},
+  { dateL:     "JUN 2024",
+    img:       "media/redroom.jpg",
+    gif:       "",
+    text:      "TV Pilot - Crane Cam AC",
+    right:     "30 MIN",
+    detail:    `Assistant camera of the crane cam.<br>
+
+
+
+
+                <br>Camera: Charlie Chaves
+                    · <a href=https://www.instagram.com/charliechavess/ target='_blank'>IG</a>
+                    · <a href=https://www.instagram.com/thebenaresclub/ target='_blank'>Club</a>
+
+
+
+
+    `,
+    youtube:   ""},
+  { dateL:     "MAY 2024",
+    img:       "media/alges.png",
+    gif:       "",
+    text:      "Music Video - Camera",
+    right:     "4 MIN",
+    detail:    `Dance cover, RIIZE 라이즈 - 'Impossible'.
+
+
+
+
+
+
+
+
+    `,
+    youtube:   "UsGJUCy7Mx0"},
+  { dateL:     "APR 2024",
+    img:       "media/cinema.png",
+    gif:       "",
+    text:      "Short film - Sound",
+    right:     "4 MIN",
+    detail:    `Sound recording https://vimeo.com/930022904
+
+
+
+
+
+
+    `,
+    youtube:   ""},
+  { dateL:     "FEB 2024",
+    img:       "media/curta.jpg",
+    gif:       "",
+    text:      "Short",
+    right:     "2 MIN",
+    detail:    "A very short experimental piece.",
+    youtube:   ""},
+
+  { dateL:     "JAN 2024",
+    img:       "media/people.png",
+    gif:       "",
+    text:      "Photography & App UI",
+    right:     "2 MIN",
+    detail:    "Behind the scenes photographs",
+    youtube:   "ayyPyMsfCJo"},
+
+  { dateL:     "SEP 2023",
+    img:       "media/cctv.jpg",
+    gif:       "",
+    text:      "Enrolled at ETIC Lisboa",
+    right:     "",
+    detail:    "",
+    youtube:   ""},
+
+  { dateL:     "SEP 2023",
+    img:       "media/mms.png",
+    gif:       "",
+    text:      "Assistant Director Classes",
+    right:     "",
+    detail:    `AD and Movie Magic Scheduling classes with Hsu Chien<br>
+                <br>Hsu Chien
+                    · <a href=https://www.imdb.com/name/nm0398789/ target='_blank'>IMDb</a>
+    `,
+    youtube:   ""},
+
+  { dateL:     "JUN 2023",
+    img:       "media/steady.png",
+    gif:       "",
+    text:      "Short",
+    right:     "2 MIN",
+    detail:    "Experimenting with steady cam techniques.",
+    youtube:   ""},
+
+  { dateL:     "NOV 2022",
+    img:       "media/pop.png",
+    gif:       "",
+    text:      "Procedural 3D",
+    right:     "",
+    detail:    `Procedural 3D Models & Textures - Blender Nodes (Nodevember) following tutorials by CGMatter<br>
+                <br>CGMatter
+                    · <a href=https://www.cgmatter.com/ target='_blank'>Website</a>
+    `,
+    youtube:   ""},
+
+  { dateL:     "FEB 2022",
+    img:       "media/moon.jpg",
+    gif:       "",
+    text:      "Virtual Production tests",
+    right:     "",
+    detail:    `Virtual Production tests in Unreal Engine with an HTC Vive<br>
+    `,
+    youtube:   ""},
+
+  { dateL:     "DEC 2021",
+    img:       "media/film.png",
+    gif:       "",
+    text:      "C‑41 Developing",
+    right:     "XX",
+    detail:    "C‑41 Developing",
+    youtube:   ""},
+
+  { dateL:     "JUN 2021",
+    img:       "media/boat.png",
+    gif:       "",
+    text:      "Short",
+    right:     "1 MIN",
+    detail:    "A quick boating-themed video.",
+    youtube:   ""},
+
+  { dateL:     "2019 - 2020",
+    img:       "media/moon.jpg",
+    gif:       "",
+    text:      "Other Shenanigans",
+    right:     "",
+    detail:    `FDM 3D Printing, then SLA;
+                <br>PCB Designing and ordering;
+                <br> Unity level designing for VRChat;
+    `,
+    youtube:   ""},
+
+  { dateL:     "OCT 2015",
+    img:       "media/skydive.png",
+    gif:       "",
+    text:      "Camera animation",
+    right:     "1 MIN",
+    detail:    "Animating camera movements in 3D.",
+    youtube:   ""},
+
+  { dateL:     "CC0 1929",
+    img:       "media/moon.jpg",
+    gif:       "media/end.gif",
+    text:      "",
+    right:     "65MM",
+    detail:    "Public domain footage from 1929.",
+    youtube:   ""}
+      // …add more items here…
+    ];
+  </script>
+
+  <!-- 2) Build frames into the strip -->
+  <script defer>
+    document.addEventListener("DOMContentLoaded", () => {
+      const strip = document.getElementById("strip");
+      window.projects.forEach((p, idx) => {
+        const f = document.createElement("div");
+        f.className = "frame";
+        f.dataset.index = idx;
+        f.innerHTML = `
+          <div class="left-keycode"><span class="rotated-left">${p.dateL}</span></div>
+          <div class="perf-column"><div class="perf-blocks">${"<div></div>".repeat(5)}</div></div>
+          <div class="content">
+            <img src="${p.img}" ${p.gif ? `data-gif="${p.gif}"` : ""} alt="${p.text}">
+            <div class="text">${p.text}</div>
+          </div>
+          <div class="perf-column"><div class="perf-blocks">${"<div></div>".repeat(5)}</div></div>
+          <div class="right-keycode"><span class="rotated-right">${p.right}</span></div>
+        `;
+        strip.appendChild(f);
+      });
+    });
+  </script>
+
+  <!-- 3) Preload JPEG→GIF and randomize flicker delays -->
+  <script defer>
+    document.addEventListener("DOMContentLoaded", () => {
+      const imgs = Array.from(document.querySelectorAll('.content img[data-gif]'));
+      let loaded = 0;
+      imgs.forEach(img => {
+        const pre = new Image();
+        pre.onload = pre.onerror = () => {
+          if (++loaded === imgs.length) {
+            imgs.forEach(i => i.src = i.dataset.gif);
+          }
+        };
+        pre.src = img.src;
+      });
+      document.querySelectorAll('.flicker-cell').forEach(c => {
+        c.style.animationDelay = (Math.random() * 0.3).toFixed(3) + 's';
+      });
+    });
+  </script>
+
+  <!-- 4) Frame click → open modal -->
+  <script defer>
+    document.addEventListener("DOMContentLoaded", () => {
+      const strip = document.getElementById("strip");
+      const overlay = document.getElementById("modalOverlay");
+      const modalContent = document.getElementById("modalContent");
+
+      strip.addEventListener("click", e => {
+        const frame = e.target.closest(".frame");
+        if (!frame) return;
+        const p = window.projects[frame.dataset.index];
+        modalContent.innerHTML = `
+          <h2>${p.text || p.dateL}</h2>
+          <p class="meta">${p.dateL}${p.right ? ` | ${p.right}` : ""}</p>
+          <p>${p.detail}</p>
+          <div id="videoPlaceholder"></div>
+          <img src="${p.gif || p.img}" alt="${p.text}">
+        `;
+        overlay.style.display = "flex";
+
+        if (p.youtube) {
+          requestAnimationFrame(() => {
+            const ph = document.getElementById("videoPlaceholder");
+            const w  = document.createElement("div");
+            w.className = "video-wrapper";
+            w.innerHTML = `<iframe src="https://www.youtube.com/embed/${p.youtube}" allowfullscreen></iframe>`;
+            ph.replaceWith(w);
+          });
+        }
+      });
+    });
+  </script>
+
+  <!-- 5) Close modal on overlay or close‑button -->
+  <script defer>
+    document.addEventListener("DOMContentLoaded", () => {
+      const overlay = document.getElementById("modalOverlay");
+      const modalClose = document.getElementById("modalClose");
+
+      modalClose.addEventListener("click", () => overlay.style.display = "none");
+      overlay.addEventListener("click", e => {
+        if (e.target === overlay) overlay.style.display = "none";
+      });
+    });
+  </script>
+
+  <!-- 6) About & Contact button popups -->
+  <script defer>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll('.gray-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const t = btn.textContent.trim().toLowerCase();
+          const overlay = document.getElementById("modalOverlay");
+          const modalContent = document.getElementById("modalContent");
+          modalContent.innerHTML = `
+            <h2>${t === 'about' ? 'About Me' : 'Contact Me'}</h2>
+            <p>${t === 'about'
+               ? `
+                Brazilian living in Lisbon, Portugal<br><br>
+                Passionate about filmmaking, photography, opticsm, architecture and engineering<br><br>
+                Fluent in English<br><br>
+                Student at ETIC Lisboa<br>
+                <img src="media/group.jpg" style="border-radius:1rem; margin-top:1rem;">
+
+              `
+               : `
+                <strong>Instagram:</strong> <a href="https://instagram.com/val.nevs" target="_blank">@val.nevs</a><br><br>
+                <strong>Email:</strong> valdir.nvs@hotmail.com<br>
+                <strong>Phone:</strong> +351 <strong>930 946 697</strong><br><br>
+                <em>Looking to collaborate or share ideas?<br>
+                Drop me a message- I’d love to connect.</em>
+              `
+                }
+            </p>
+          `;
+          overlay.style.display = "flex";
+        });
+      });
+    });
+  </script>
+</body>
+
+
+</html>

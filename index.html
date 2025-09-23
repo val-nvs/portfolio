@@ -1,808 +1,958 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>page</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&family=Michroma&display=swap" rel="stylesheet" />
-<style>
-  /* Variables for easy theming */
-  :root {
-    --gray-noise-opacity: 1;         /* opacity of noise over gray background */
-    --strip-noise-opacity: 0.3;      /* opacity of noise over the strip */
-    --font-scale: 3;                 /* base multiplier for font sizing */
-    --font-scale-keycode: 2;       /* multiplier for side keycode text */
-    --border-r-perf: 0.5;            /* border radius for perf blocks */
-    --border-r-content: 1.2;         /* border radius for content images */
-    --border-r-light: 1.8;           /* border radius for white-box shadow */
-    --content-gap-w: 1.2;            /* horizontal padding inside content */
-    --content-gap-h: 0.6;            /* vertical padding inside content */
-    --button-stuff: 1;               /* reserved for button theming */
-  }
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Portfolio</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=Noto+Sans+Symbols+2&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128+Text&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=close,menu,translate" />
+	<link rel="icon" href="./favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
 
-  /* Full‑page reset and background */
-  html, body {
-    height: 100%;
-    margin: 0;
-    background-color: #0D1117;
-  }
-  body {
-    height: 100vh;
-    height: 100dvh;                  /* ensure correct mobile viewport height */
-    font-family: 'Atkinson Hyperlegible', sans-serif;
-  }
+	<style>
+		@font-face {
+			font-family: 'neue';
+			src: url('./HelveticaNeue-BoldExt.otf') format('opentype');
+			font-weight: bold;
+			font-style: normal;
+		}
+		
+		.libre-barcode-128-text-regular {
+			font-family: "Libre Barcode 128 Text", system-ui;
+			font-weight: 400;
+			font-style: normal;
+		}
+		
+		.libre-barcode-128-regular {
+			font-family: "Libre Barcode 128", system-ui;
+			font-weight: 400;
+			font-style: normal;
+		}
+		
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		button {
+			all: unset;
+			cursor: pointer;
+		}
+		html {
+			background-color: #000;
+			font-size: clamp(0.2rem, 1.48vw, .95rem);
+		}
+		body {
+			display: flex;
+			flex-direction: column;
+			justify-content: start;
+			align-items: center;
+		}
 
-  /* Gray outer container with centered content */
-  .gray-box {
-    position: relative;
-    height: 100vh;
-    height: 100dvh;
-    max-width: 600px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #333;
-    overflow: hidden;
-  }
-  /* Noise overlay on gray-box */
-  .gray-box::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background-image: url("media/blues.png");
-    background-repeat: repeat;
-    background-size: 64px 64px;
-    image-rendering: pixelated;
-    mix-blend-mode: soft-light;
-    opacity: var(--gray-noise-opacity);
-    z-index: 1;
-  }
+		.visual {position: absolute;}
 
-  /* Top row of buttons */
-  .button-row {
-    position: absolute;
-    top: min(calc(1 * 1vw), calc(600 * (1/100) * 1px));
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: min(calc(1 * 1vw), calc(600 * (1/100) * 1px));
-    z-index: 10;
-  }
-  .gray-btn {
-    all: unset;                      /* remove default button styling */
-    font-family: 'Atkinson Hyperlegible', sans-serif;
-    font-size: min(calc(var(--font-scale) * 1vw),
-                   calc(600 * (var(--font-scale)/100) * 1px));
-    background-image: url("media/noise3.png");
-    background-repeat: repeat;
-    background-size: 64px 64px;
-    padding: 0.6rem 1.2rem;
-    border-radius: 0.6rem;
-    cursor: pointer;
-    transition: background 0.3s,
-                transform 0.2s,
-                box-shadow 0.2s;
-    box-shadow: 0 0 0.4rem rgba(0,0,0,0.6);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    user-select: none;
-  }
-  .gray-btn:hover {
-    background: rgba(255,200,0,1);
-    transform: translateY(-1px);
-    box-shadow: 0 0 0.6rem rgba(255,140,0,0.8);
-  }
-  .gray-btn:active {
-    transform: translateY(1px);
-    box-shadow: inset 0 0 0.4rem rgba(0,0,0,0.6);
-  }
+		.frame {
+			position: relative;
+		}
+		.frame > img {
+			width: 100%;
+		}
+		.toddao {
+			width: 65rem;
+			height: 23.75rem;
+		}
 
-  /* White box that sits behind the strip */
-  .white-box {
-    position: absolute;
-    top: min(calc(10 * 1vw), calc(600 * (10/100) * 1px));
-    bottom: min(calc(3 * 1vw), calc(600 * (3/100) * 1px));
-    width: 95%;
-    background-color: #fff;
-    overflow: hidden;
-    box-shadow: inset 0 0 2rem rgba(0,0,0,1);
-    z-index: 1;
-    border-radius: min(calc(var(--border-r-light) * 1vw),
-                       calc(600 * (var(--border-r-light)/100) * 1px));
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+		/* Project container - wraps button and video */
+		.project-container {
+			position: relative;
+		}
 
-  /* Grid of flicker cells over white-box */
-  .flicker-grid {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    z-index: 1;
-    pointer-events: none;
-  }
-  .flicker-cell {
-    background-color: #333;
-    animation: lampOn 1s ease-out forwards;
-  }
-  @keyframes lampOn {
-    from { background-color: #333; }
-    to   { background-color: #fff; }
-  }
+		/* Vertical text overlays */
+		.vertical-text-left {
+			writing-mode: vertical-rl;
+			position: absolute;
+			top: 50%;
+			left: -1.2rem;
+			transform: translateY(-50%) rotate(180deg);
+			z-index: 3;
+			pointer-events: none;
+		}
 
-  /* Strip that slides down and contains frames */
-  .strip {
-    position: relative;
-    width: 95%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    transform: translateY(100%);
-    animation: slideDown 1s ease forwards;
-    overflow-y: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    background-image: url("media/noise2.png");
-    background-repeat: repeat;
-    background-size: 64px 64px;
-    z-index: 2;
-    box-shadow: 0 0 calc(min(calc(var(--border-r-perf)*1vw),
-                          calc(600 * (var(--border-r-perf)/100) * 1px)))
-               rgba(0,0,0,0.8);
-  }
-  .strip::-webkit-scrollbar { display: none; }
-  @keyframes slideDown { to { transform: translateY(0); } }
+		.vertical-text-right {
+			writing-mode: vertical-rl;
+			position: absolute;
+			top: 50%;
+			right: -1.2rem;
+			transform: translateY(-50%);
+			z-index: 3;
+			pointer-events: none;
+		}
 
-  /* Glint overlay on the strip 
-  .strip::after {
-    content: "";
-    position: absolute;
-    top: 0; left: -25%;
-    width: 150%; height: 20%;
-    background: linear-gradient(120deg,
-      rgba(255,255,255,0) 35%,
-      rgba(255,255,255,0.5) 50%,
-      rgba(255,255,255,0) 65%);
-    pointer-events: none;
-    mix-blend-mode: screen;
-    filter: blur(10px);
-    animation: streakDrift 4s ease-in-out infinite alternate;
-    z-index: 3;
-  }
-  @keyframes streakDrift {
-    0%   { transform: translateY(-10%) translateX(0) rotate(0deg); }
-    50%  { transform: translateY(10%) translateX(50%) rotate(10deg); }
-    100% { transform: translateY(-10%) translateX(100%) rotate(-10deg); }
-  }*/
+		.vertical-text-left span,
+		.vertical-text-right span {
+			text-orientation: mixed;
+			font-size: 4rem;
+			color: black;
+			white-space: nowrap;
+			letter-spacing: 0.1rem;
+			display: block;
+		}
 
-  /* Frames and their content layout */
-  .frame {
-    background: transparent;
-    width: 100%;
-    aspect-ratio: 65 / 23.75;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    cursor: pointer;
-  }
-  .left-keycode, .right-keycode, .perf-column, .content {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    flex: 0 0 auto;
-  }
-  .left-keycode, .right-keycode {
-    width: 4.7%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    color: black;
-    font-family: 'Michroma', sans-serif !important;
-    font-size: min(calc(var(--font-scale-keycode) * 1vw),
-                   calc(600 * (var(--font-scale-keycode)/100) * 1px));
-  }
-  .rotated-right { transform: rotate(90deg); display: inline-block; white-space: nowrap; }
-  .rotated-left  { transform: rotate(-90deg); display: inline-block; white-space: nowrap; }
+		.vertical-text-left span > span,
+		.vertical-text-right span > span {
+			display: inline;
+		}
 
-  .perf-column {
-    width: 4.3%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .perf-blocks {
-    display: grid;
-    grid-template-rows: repeat(5, 1fr);
-    gap: 11.66%;
-    width: 100%;
-    height: 88.30%;
-  }
-  .perf-blocks > div {
-    border-radius: min(calc(var(--border-r-perf)*1vw),
-                       calc(600*(var(--border-r-perf)/100)*1px));
-    box-shadow: inset 0 0 calc(min(calc(var(--border-r-perf)*1vw),
-                          calc(600*(var(--border-r-perf)/100)*1px))) rgba(0,0,0,0.8);
-    background-color: rgba(230,230,230,1);
-  }
-  .content {
-    width: 82%;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-    box-sizing: border-box;
-  }
-  .content img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: calc(100% - min(var(--content-gap-w)*1vw,
-                            calc(600*(var(--content-gap-w)/100)*1px)));
-    height: calc(100% - min(var(--content-gap-h)*1vw,
-                             calc(600*(var(--content-gap-h)/100)*1px)));
-    object-fit: cover;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    user-select: none;
-    border-radius: min(calc(var(--border-r-content)*1vw),
-                       calc(600*(var(--border-r-content)/100)*1px));
-  }
-  .text {
-    position: absolute;
-    top: 80%;
-    left: 4%;
-    color: white;
-    font-family: 'Michroma', sans-serif;
-    font-weight: bold;
-    font-size: min(calc(var(--font-scale)*1vw),
-                   calc(600*(var(--font-scale)/100)*1px));
-    user-select: none;
-    white-space: nowrap;
-    text-shadow:
-      0 0 3px rgba(0,0,0,0.8),
-      5px 5px 5px rgba(0,0,0,0.7),
-      -5px -5px 5px rgba(0,0,0,0.6),
-      5px -5px 5px rgba(0,0,0,0.5),
-      -5px 5px 5px rgba(0,0,0,0.4),
-      0 0 12px rgba(0,0,0,0.3);
-    z-index: 10;
-    /* 🔥 Subtitle background */
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 0.1em 0.7em 0.3em 0.7em; /* top right bottom left */
-    border-radius: 0.4em;           /* Rounded edges */
-  }
+		.frame button {
+			position: absolute;
+			transform: translate(-50%, -50%);
+			top: 50%;
+			left: 50%;
+		}
+		.toddao button {
+			width: 52.6rem;
+			height: 23rem;
+			transition: height 1s ease, transform 1s ease, filter 3s ease;
+			z-index: 1;
+			border-radius: 1rem;
+		}
+		.toddao button.expanded {
+			height: 70.5rem;
+		}
+		.toddao.move-up button {
+			transform: translate(-50%, calc(-50% - 23.75rem));
+		}
+		.toddao.move-down button {
+			transform: translate(-50%, calc(-50% + 23.75rem));
+		}
 
-  /* Modal overlay and content */
-  .modal-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
-    display: none;                 /* shown/hidden via JS */
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-  }
-  .modal {
-    background: #ccc;
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    width: 95%;
-    max-width: 600px;
-    max-height: 80%;
-    overflow-y: auto;
-    position: relative;
-    font-family: 'Atkinson Hyperlegible', monospace;
-    font-size: 1.5rem;
-  }
-  .modal .close {
-    position: absolute;
-    top: 0.5rem; right: 0.75rem;
-    font-size: 2rem;
-    cursor: pointer;
-  }
-  .modal img, .modal iframe {
-    width: 100%;
-    height: auto;
-    display: block;
-    margin-bottom: 1rem;
-  }
-  .modal h2 { margin-top: 0; }
-  .modal .meta {
-    margin: 0.5rem 0;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-  }
-  .modal .video-wrapper {
-    position: relative;
-    padding-top: 56.25%;           /* maintain 16:9 aspect */
-    margin-top: 1rem;
-  }
-  .modal .video-wrapper iframe {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 95%;
-  }
-</style>
+		.frame button img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			transition: opacity 0.5s ease;
+			border-radius: 1rem;
+		}
+		.frame button {
+			color: white;
+			font-size: 8rem;
+		}
+		.frame button:hover {
+			filter: brightness(1.1); 
+			box-shadow: 
+				0 0 0.5rem rgba(0,0,0,1),
+				0 0 0.5rem rgba(0,0,0,1),
+				0 0 0 0.1rem rgba(255,0,0,0.9);
+		}
 
+		/* YouTube Player Styles */
+		.youtube-container {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: min(90%, 50rem);
+			aspect-ratio: 16/9;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.5s ease, visibility 0.5s ease;
+			z-index: 5000;
+			pointer-events: none;
+		}
+		
+		.youtube-container.show {
+			opacity: 1;
+			visibility: visible;
+			pointer-events: auto;
+		}
+		
+		.youtube-container iframe {
+			width: 100%;
+			height: 100%;
+			border-radius: 1rem;
+			border: none;
+			box-shadow: 0 0 2rem rgba(0, 0, 0, 0.8);
+		}
 
+		/* Description Styles */
+		.project-description {
+			position: absolute;
+			top: 25rem;
+			left: 50%;
+			transform: translateX(-50%);
+			width: min(90%, 50rem);
+			background: rgba(0, 0, 0, 0.9);
+			backdrop-filter: blur(1rem);
+			-webkit-backdrop-filter: blur(1rem);
+			color: white;
+			padding: 1.5rem;
+			border-radius: 1rem;
+			font-size: 2rem;
+			line-height: 1.4;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.5s ease, visibility 0.5s ease;
+			z-index: 11;
+			font-family: "Atkinson Hyperlegible Next", sans-serif;
+			pointer-events: none;
+		}
+		
+		.project-description.show {
+			opacity: 1;
+			visibility: visible;
+			pointer-events: auto;
+		}
+
+		/* Navigation Header */
+		header {
+			position: fixed;
+			top: 0;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 57.5rem;
+			height: 10rem;
+			z-index: 10001;
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+			padding: 1rem;
+			pointer-events: none;
+		}
+
+		/* Main Navigation - takes all available space */
+		nav {
+			flex: 1;
+			background: rgba(240, 248, 255, 0.12);
+			backdrop-filter: blur(1.5rem) saturate(1.3);
+			-webkit-backdrop-filter: blur(1.5rem) saturate(1.3);
+			border-radius: 1rem;
+			box-shadow: 
+				inset 0 0 0.1rem rgba(255, 255, 255, 0.2),
+				0 0.3rem 1rem rgba(0, 0, 0, 0.1);
+			border: 0.05rem solid rgba(255, 255, 255, 0.15);
+			padding: 1rem;
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.2s linear, pointer-events 0.2s linear;
+		}
+		
+		nav.show {
+			opacity: 1;
+			pointer-events: auto;
+		}
+		
+		nav ul {
+			display: grid;
+			grid-template-columns: 1fr 1fr 9rem;
+			align-items: center;
+			list-style: none;
+			gap: 1rem;
+			margin: 0;
+			padding: 0;
+			height: 100%;
+		}
+		
+		nav button {
+			background: rgba(255, 255, 255, 0.25);
+			backdrop-filter: blur(0.5rem);
+			-webkit-backdrop-filter: blur(0.5rem);
+			padding: 1rem 0;
+			font-family: "neue", sans-serif;
+			font-weight: bold;
+			border-radius: 1rem;
+			line-height: 1;
+			box-shadow: 
+				inset 0 0.1rem 0 rgba(255, 255, 255, 0.3),
+				0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+			text-shadow: 0 0 0.8rem rgba(255, 255, 255, 0.6);
+			color: #000;
+			font-size: 2.6rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 1rem;
+			width: 100%;
+			transition: all 0.2s ease;
+			border: 0.05rem solid rgba(255, 255, 255, 0.2);
+		}
+		
+		nav button:hover {
+			background: rgba(255, 255, 255, 0.35);
+			box-shadow: 
+				inset 0 0.1rem 0 rgba(255, 255, 255, 0.4),
+				0 0.3rem 0.8rem rgba(0, 0, 0, 0.15);
+			text-shadow: 0 0 1.2rem rgba(255, 255, 255, 0.8);
+		}
+
+		/* Burger Menu Button - fixed width */
+		.burger-button {
+			flex-shrink: 0;
+			width: 6rem;
+			height: 6rem;
+			background: rgba(200, 210, 220, 0.3);
+			backdrop-filter: blur(1.5rem) saturate(1.2);
+			-webkit-backdrop-filter: blur(1.5rem) saturate(1.2);
+			border-radius: 1rem;
+			font-family: "neue", sans-serif;
+			font-weight: bold;
+			box-shadow: 
+				inset 0 0.1rem 0 rgba(255, 255, 255, 0.2),
+				0 0.3rem 1rem rgba(0, 0, 0, 0.12);
+			text-shadow: 0 0 0.8rem rgba(255, 255, 255, 0.7);
+			color: #000;
+			font-size: 2.6rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transition: all 0.2s ease;
+			border: 0.05rem solid rgba(255, 255, 255, 0.18);
+			pointer-events: visible;
+		}
+		
+		.burger-button:hover {
+			background: rgba(220, 230, 240, 0.4);
+			box-shadow: 
+				inset 0 0.1rem 0 rgba(255, 255, 255, 0.3),
+				0 0.4rem 1.2rem rgba(0, 0, 0, 0.15);
+			text-shadow: 0 0 1.2rem rgba(255, 255, 255, 0.9);
+		}
+
+		.frame button span {
+			position: absolute;
+			bottom: 0;
+			font-size: 2.5rem;
+			color: white;
+			background: rgba(0, 0, 0, .2);
+			backdrop-filter: blur(0.3rem);
+			-webkit-backdrop-filter: blur(0.3rem);
+			z-index: 2;
+			padding: 1rem;
+			font-family: neue;
+			line-height: 1;
+			border-radius: 1rem;
+		}
+		.left {right:0;}
+		.right {left:0}
+
+		.material-symbols-outlined {
+			font-variation-settings:'FILL' 0,'wght' 700,'GRAD' 0,'opsz' 48;
+			font-size: 2.6rem;
+			line-height: 1;
+		}
+
+		/* Hero Popup Styles */
+		.hero-popup {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.8);
+			backdrop-filter: blur(1rem);
+			-webkit-backdrop-filter: blur(1rem);
+			z-index: 20000;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.3s ease, visibility 0.3s ease;
+		}
+
+		.hero-popup.show {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.hero-content {
+			background: rgba(255, 255, 255, 0.1);
+			backdrop-filter: blur(2rem) saturate(1.5);
+			-webkit-backdrop-filter: blur(2rem) saturate(1.5);
+			border: 0.1rem solid rgba(255, 255, 255, 0.2);
+			border-radius: 2rem;
+			box-shadow: 
+				0 0 4rem rgba(0, 0, 0, 0.5),
+				inset 0 0 2rem rgba(255, 255, 255, 0.1);
+			width: min(90%, 80rem);
+			max-height: 90vh;
+			overflow-y: auto;
+			position: relative;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.hero-close {
+			position: absolute;
+			top: 2rem;
+			right: 2rem;
+			width: 6rem;
+			height: 6rem;
+			background: rgba(255, 0, 0, 0.6);
+			backdrop-filter: blur(0.5rem);
+			-webkit-backdrop-filter: blur(0.5rem);
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 10;
+			transition: all 0.2s ease;
+			border: 0.1rem solid rgba(255, 255, 255, 0.3);
+		}
+
+		.hero-close:hover {
+			background: rgba(255, 0, 0, 1);
+			transform: scale(1.1);
+		}
+
+		.hero-close .material-symbols-outlined {
+			color: white;
+			font-size: 3rem;
+		}
+
+		.hero-image {
+			width: 100%;
+			height: auto;
+			object-fit: cover;
+			border-radius: 2rem 2rem 0 0;
+		}
+
+		.hero-text {
+			padding: 4rem;
+			color: white;
+			font-family: "Atkinson Hyperlegible Next", sans-serif;
+		}
+
+		.hero-text h1 {
+			font-family: "neue", sans-serif;
+			font-size: 4rem;
+			margin-bottom: 2rem;
+			text-shadow: 0 0 2rem rgba(255, 255, 255, 0.3);
+		}
+
+		.hero-text p {
+			font-size: 3rem;
+			line-height: 1.6;
+			text-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+		}
+
+		/* Scrollbar styling for popup */
+		.hero-content::-webkit-scrollbar {
+			width: 0.8rem;
+		}
+
+		.hero-content::-webkit-scrollbar-track {
+			background: rgba(255, 255, 255, 0.1);
+			border-radius: 0.4rem;
+		}
+
+		.hero-content::-webkit-scrollbar-thumb {
+			background: rgba(255, 255, 255, 0.3);
+			border-radius: 0.4rem;
+		}
+
+		.hero-content::-webkit-scrollbar-thumb:hover {
+			background: rgba(255, 255, 255, 0.4);
+		}
+	</style>
 </head>
 <body>
-  <div class="gray-box">
-    <div class="button-row">
-      <button class="gray-btn">About</button>
-      <button class="gray-btn">Contact</button>
-    </div>
-    <div class="white-box">
-      <div class="flicker-grid">
-        <!-- 15 cells -->
-        <div class="flicker-cell"></div><div class="flicker-cell"></div><div class="flicker-cell"></div>
-        <div class="flicker-cell"></div><div class="flicker-cell"></div><div class="flicker-cell"></div>
-        <div class="flicker-cell"></div><div class="flicker-cell"></div><div class="flicker-cell"></div>
-        <div class="flicker-cell"></div><div class="flicker-cell"></div><div class="flicker-cell"></div>
-        <div class="flicker-cell"></div><div class="flicker-cell"></div><div class="flicker-cell"></div>
-      </div>
-      <div class="strip" id="strip"></div>
-    </div>
-  </div>
 
-  <!-- Modal structure -->
-  <div class="modal-overlay" id="modalOverlay">
-    <div class="modal" id="modal">
-      <span class="close" id="modalClose">✕</span>
-      <div id="modalContent"></div>
-    </div>
-  </div>
+	<header>
+		<nav id="mainNav">
+			<ul>
+				<li><button onclick="openPopup('about')">About</button></li>
+				<li><button onclick="openPopup('contact')">Contact</button></li>
+				<li>
+					<button>
+						<span class="material-symbols-outlined">translate</span>
+						<span style="font-size: 1.5rem;">(EN)</span>
+					</button>
+				</li>
+			</ul>
+		</nav>
 
-  <!-- 1) Data definition -->
-  <script defer>
-    window.projects = [
+		<button class="burger-button" id="burger" aria-expanded="false" aria-controls="mainNav" onclick="burgerClicked()">
+			<span class="material-symbols-outlined">menu</span>
+		</button>
+	</header>
 
-{ dateL:     "JUN 2025",
-    img:       "media/bang.jpg",
-    gif:       "media/bang.gif",
-    text:      "Music Video - Camera",
-    right:     "3 MIN",
-    detail:    `K-pop dance cover filmed using two cameras with the same sensor, including one operated by me on a gimbal, capturing dynamic multi-angle footage inspired by 1theK’s On The Spot series, featuring quick camera changes and elevated angles.<br>
-                <br>Director: Inês Serra
-                    · <a href=https://www.instagram.com/_nene.05_/ target='_blank'>IG</a>
-                    · <a href=https://ines05serra.wixsite.com/portfolio target='_blank'>Website</a>
-                <br>Photography: Sofia Serra
-                    · <a href=https://www.instagram.com/photosby.sofs_/ target='_blank'>IG</a>
-                    · <a href=https://sofia05serra.wixsite.com/my-site-2 target='_blank'>Website</a>
-                <br>Talent: NUNCHI
-                    · <a href=https://www.instagram.com/nunchiverse/ target='_blank'>IG</a>
-                    · <a href=https://www.youtube.com/@nunchiisus target='_blank'>YouTube</a>
-    `,
-    youtube:   ""},
-  { dateL:     "MAY 2025",
-    img:       "media/monitor.jpg",
-    gif:       "",
-    text:      "Short film - Sound",
-    right:     "30 MIN",
-    detail:    `Recorded production sound and streamlined file workflow with batch-edit scripts and spreadsheet tracking for a 30-minute action thriller, shot in 13 days at 5 varied locations across Lisbon.<br>
-                <br>Director: Charlie Chaves
-                    · <a href=https://www.instagram.com/charliechavess/ target='_blank'>IG</a>
-                    · <a href=https://www.instagram.com/thebenaresclub/ target='_blank'>Club</a>
-                <br>Director: Nityam
-                    · <a href=https://www.instagram.com/nityamnow/ target='_blank'>IG</a>
-                    · <a href=https://www.satorifilms.org/ target='_blank'>Website</a>
-                    · <a href=https://www.behance.net/nityamnow target='_blank'>Behance</a>
-                    · <a href=https://www.youtube.com/@satorifilmsorg target='_blank'>YouTube</a>
-                <br>Camera: Wrasmus
-                    · <a href=https://www.instagram.com/wrasmus/ target='_blank'>IG</a>
-                <br>Inês Serra
-                    · <a href=https://www.instagram.com/_nene.05_/ target='_blank'>IG</a>
-                    · <a href=https://ines05serra.wixsite.com/portfolio target='_blank'>Website</a>
-                <br>Madalena Oliveira
-                    · <a href=https://www.instagram.com/blueyy.biker/ target='_blank'>IG</a>
-                <br>Lia Paladino
-                    · <a href=https://www.instagram.com/liapaladinoo/ target='_blank'>IG</a>
-                <br>José Machado
-                    · <a href=https://www.instagram.com/zemariamachado__/ target='_blank'>IG</a>
-                <br>Talent: Akshay Thorbole
-                    · <a href=https://www.instagram.com/akzzz_0.2/ target='_blank'>IG</a>
-                <br>Talent: 
-                    · <a href=here target='_blank'>IG</a>
-                <br>Talent: 
-                    · <a href=here target='_blank'>IG</a>
-                <br>Talent: 
-                    · <a href=here target='_blank'>IG</a>
+	<!-- About Popup -->
+	<div class="hero-popup" id="aboutPopup">
+		<div class="hero-content">
+			<button class="hero-close" onclick="closePopup('about')">
+				<span class="material-symbols-outlined">close</span>
+			</button>
+			<img class="hero-image" id="aboutImage" src="./media/group.jpg" alt="About">
+			<div class="hero-text">
+				<h1 id="aboutTitle">About</h1>
+				<p id="aboutText">Welcome to my creative portfolio. I'm a designer and developer passionate about creating innovative digital experiences.</p>
+			</div>
+		</div>
+	</div>
 
-    `,
-    youtube:   ""},
-  { dateL:     "JAN 2025",
-    img:       "media/chapito.jpg",
-    gif:       "media/chapito.gif",
-    text:      "Documentary - Camera & Sound",
-    right:     "13 MIN",
-    detail:    `Documentary about Pascoal Furtado, a teacher at Chapitô, a circus school in Lisbon.<br>
-                <br>Inês Serra
-                    · <a href=https://www.instagram.com/_nene.05_/ target='_blank'>IG</a>
-                    · <a href=https://ines05serra.wixsite.com/portfolio target='_blank'>Website</a>
-                <br>Madalena Oliveira
-                    · <a href=https://www.instagram.com/blueyy.biker/ target='_blank'>IG</a>
-                <br>Nityam
-                    · <a href=https://www.instagram.com/nityamnow/ target='_blank'>IG</a>
-                    · <a href=https://www.satorifilms.org/ target='_blank'>Website</a>
-                    · <a href=https://www.behance.net/nityamnow target='_blank'>Behance</a>
-                    · <a href=https://www.youtube.com/@satorifilmsorg target='_blank'>YouTube</a>
-                <br>Charlie Chaves
-                    · <a href=https://www.instagram.com/charliechavess/ target='_blank'>IG</a>
-                    · <a href=https://www.instagram.com/thebenaresclub/ target='_blank'>Club</a>
-    `,
-    youtube:   "ztUn9QWYk_Y"},
-  { dateL:     "OCT 2024",
-    img:       "media/doclis.png",
-    gif:       "",
-    text:      "Film festival coverage",
-    right:     "X DAYS",
-    detail:    `Filmed B-roll and presentations for Doclisboa, Portugal’s leading international documentary film festival.<br>
-                <br>Portugal Film Commission
-                    · <a href=https://portugalfilmcommission.com/en/entities/doclisboa-international-film-festival/ target='_blank'>Website</a>
-                <br>Charlie Chaves
-                    · <a href=https://www.instagram.com/charliechavess/ target='_blank'>IG</a>
-                    · <a href=https://www.instagram.com/thebenaresclub/ target='_blank'>Club</a>
-                <br>Inês Serra
-                    · <a href=https://www.instagram.com/_nene.05_/ target='_blank'>IG</a>
-                    · <a href=https://ines05serra.wixsite.com/portfolio target='_blank'>Website</a>
-    `,
-    youtube:   "NPPzUJvmkq8"},
-  { dateL:     "AUG 2024",
-    img:       "media/seb.jpg",
-    gif:       "media/seb.gif",
-    text:      "Interview - Camera",
-    right:     "4 MIN",
-    detail:    `Interview about Sebastião Ogando<br>
-                <br>Inês Serra
-                    · <a href=https://www.instagram.com/_nene.05_/ target='_blank'>IG</a>
-                    · <a href=https://ines05serra.wixsite.com/portfolio target='_blank'>Website</a>
-                <br>Sebastião Ogando
-                    · <a href=https://www.instagram.com/sebastiaoogando/ target='_blank'>IG</a>
-    `,
-    youtube:   "__UxmK7BD68"},
-  { dateL:      "AUG 2024",
-    img:       "media/free.jpg",
-    gif:       "media/free.gif",
-    text:      "Short film - Camera",
-    right:     "4 MIN",
-    detail:    `Experimental short film.<br>
+	<!-- Contact Popup -->
+	<div class="hero-popup" id="contactPopup">
+		<div class="hero-content">
+			<button class="hero-close" onclick="closePopup('contact')">
+				<span class="material-symbols-outlined">close</span>
+			</button>
+			<img class="hero-image" id="contactImage" src="./media/nodes.png" alt="Contact">
+			<div class="hero-text">
+				<h1 id="contactTitle">Contact</h1>
+				<p id="contactText">Let's collaborate! Reach out to discuss your next project or just say hello.</p>
+			</div>
+		</div>
+	</div>
 
-                <br>Inês Serra
-                    · <a href=https://www.instagram.com/_nene.05_/ target='_blank'>IG</a>
-                    · <a href=https://ines05serra.wixsite.com/portfolio target='_blank'>Website</a>
-                <br>Sofia Serra
-                    · <a href=https://www.instagram.com/photosby.sofs_/ target='_blank'>IG</a>
-                    · <a href=https://sofia05serra.wixsite.com/my-site-2 target='_blank'>Website</a>
-                <br>Frederico Ferreira
-                    · <a href=https://www.instagram.com/fredfrreira/ target='_blank'>IG</a>
-                    · <a href=https://linktr.ee/fredffilm target='_blank'>Linktree</a>
-                    · <a href=https://www.fredffilm.com/ target='_blank'>Website</a>
+	<div class="visual strip">
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
+	</div>
 
+	<div class="ladder strip">
+		<div class="toddao frame"></div>
+		<!-- Projects will be generated here dynamically -->
+		<div class="toddao frame"></div>
+	</div>
 
+	<script>
+	// Load project data
+	let projectsData = null;
 
+	// Text variables
+	const leftTextWord = "bar";
+	const rightTextWord = "nim";
 
-    `,
-    youtube:   "FcrQnCTnG0M"},
-  { dateL:     "JUN 2024",
-    img:       "media/group1.png",
-    gif:       "",
-    text:      "TV Pilot - Crane Cam & Pre-Vis",
-    right:     "32 MIN",
-    detail:    `Crane Cam in a Live TV program mock-up and Pre-Vis in Blender using photogrammetry.<br>
+	// Image variables (replace with your actual images)
+	const aboutImageSrc = "./media/group.jpg";
+	const contactImageSrc = "./media/nodes.png";
 
+	// Popup content translations
+	const popupContent = {
+		about: {
+			en: {
+				title: "About",
+				text: "Brazilian living in Lisbon, Portugal. Passionate about filmmaking, photography, optics, architecture, and engineering. Former student at ETIC Lisboa. Fluent in English and Portuguese."
+			},
+			"pt-pt": {
+				title: "Sobre",
+				text: "Brasileiro a viver em Lisboa, Portugal. Apaixonado por cinema, fotografia, ótica, arquitetura e engenharia. Ex-aluno da ETIC Lisboa. Fluente em inglês e português."
+			},
+			zh: {
+				title: "关于",
+				text: "巴西人，现居葡萄牙里斯本。热爱电影制作、摄影、光学、建筑和工程。ETIC-Lisboa前学生。精通英语和葡萄牙语。"
+			},
+			de: {
+				title: "Über",
+				text: "Brasilianer mit Wohnsitz in Lissabon, Portugal. Leidenschaftlich für Filmemachen, Fotografie, Optik, Architektur und Ingenieurwesen. Ehemaliger Student der ETIC Lisboa. Fließend in Englisch und Portugiesisch."
+			},
+			ar: {
+				title: "حول",
+				text: "برازيلي يعيش في لشبونة، البرتغال. شغوف بصناعة الأفلام والتصوير الفوتوغرافي والبصريات والهندسة المعمارية والهندسة. طالب سابق في ETIC-Lisboa. يتحدث الإنجليزية والبرتغالية بطلاقة."
+			}
+		},
+		contact: {
+			en: {
+				title: "Contact",
+				text: "Looking to collaborate or share ideas? Drop me a message- I'd love to connect. ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ig: @val.nevs ⠀⠀⠀ valdir.nvs@hotmail.com +351 930 946 697"
+			},
+			"pt-pt": {
+				title: "Contacto",
+				text: "Procura colaborar ou partilhar ideias? Envie-me uma mensagem - adoraria conectar. ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ig: @val.nevs ⠀⠀⠀ valdir.nvs@hotmail.com +351 930 946 697"
+			},
+			zh: {
+				title: "联系",
+				text: "想要合作或分享想法？给我留言吧 - 我很乐意与您联系。 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ig: @val.nevs ⠀⠀⠀ valdir.nvs@hotmail.com +351 930 946 697"
+			},
+			de: {
+				title: "Kontakt",
+				text: "Möchten Sie zusammenarbeiten oder Ideen austauschen? Schreiben Sie mir - ich würde mich freuen, von Ihnen zu hören. ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ig: @val.nevs ⠀⠀⠀ valdir.nvs@hotmail.com +351 930 946 697"
+			},
+			ar: {
+				title: "اتصال",
+				text: "تبحث عن التعاون أو مشاركة الأفكار؟ أرسل لي رسالة - سأكون سعيداً بالتواصل معك.  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ig: @val.nevs ⠀⠀⠀ valdir.nvs@hotmail.com +351 930 946 697"
+			}
+		}
+	};
 
-                <br>Miguel Bras
-                    · <a href=https://letterboxd.com/director/miguel-bras/ target='_blank'>Letterboxd</a>
-                <br>#
-                <br>#
-                <br>#
-                <br>#
-                <br>#
-                <br>#
+	// Navigation translations
+	const navTranslations = {
+		"about": {
+			"en": "About",
+			"pt-pt": "Sobre",
+			"zh": "关于",
+			"de": "Über",
+			"ar": "حول"
+		},
+		"contact": {
+			"en": "Contact",
+			"pt-pt": "Contacto",
+			"zh": "联系",
+			"de": "Kontakt",
+			"ar": "اتصال"
+		}
+	};
 
+	// Language cycling
+	const languages = ['en', 'pt-pt', 'zh', 'de', 'ar'];
+	const languageNames = {
+		'en': 'EN',
+		'pt-pt': 'PT',
+		'zh': '中',
+		'de': 'DE',
+		'ar': 'ع'
+	};
+	let currentLanguage = 0;
 
+	// Set images on load
+	document.getElementById('aboutImage').src = aboutImageSrc;
+	document.getElementById('contactImage').src = contactImageSrc;
 
+	// Popup functions
+	function openPopup(type) {
+		const popup = document.getElementById(type + 'Popup');
+		popup.classList.add('show');
+		document.body.style.overflow = 'hidden';
+	}
 
+	function closePopup(type) {
+		const popup = document.getElementById(type + 'Popup');
+		popup.classList.remove('show');
+		document.body.style.overflow = '';
+	}
 
-    `,
-    youtube:   "5LlSdajis7g"},
-  { dateL:     "JUN 2024",
-    img:       "media/redroom.jpg",
-    gif:       "",
-    text:      "TV Pilot - Crane Cam AC",
-    right:     "30 MIN",
-    detail:    `Assistant camera of the crane cam.<br>
+	// Close popup on background click
+	document.getElementById('aboutPopup').addEventListener('click', (e) => {
+		if (e.target === e.currentTarget) {
+			closePopup('about');
+		}
+	});
 
+	document.getElementById('contactPopup').addEventListener('click', (e) => {
+		if (e.target === e.currentTarget) {
+			closePopup('contact');
+		}
+	});
 
+	// Close popup on Escape key
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape') {
+			document.querySelectorAll('.hero-popup.show').forEach(popup => {
+				const type = popup.id.replace('Popup', '');
+				closePopup(type);
+			});
+		}
+	});
 
+	// Load JSON data
+	async function loadProjectData() {
+		try {
+			const response = await fetch('./data.json');
+			projectsData = await response.json();
+			generateProjects();
+			updateLanguage();
+		} catch (error) {
+			console.error('Error loading project data:', error);
+			// Fallback data with test video and years
+			projectsData = {
+				"projects": [
+					{
+						"media": ["https://picsum.photos/800/600?random=1", "https://picsum.photos/800/600?random=2"],
+						"videoId": "KUs1Popfd8g",
+						"date": "2024/01",
+						"duration": "30 MIN",
+						"translations": {
+							"en": ["Project One", "Camera"],
+							"pt-pt": ["Projeto Um", "Câmara"],
+							"zh": ["项目一", "摄影"],
+							"de": ["Projekt Eins", "Kamera"],
+							"ar": ["مشروع واحد", "كاميرا"]
+						},
+						"description": {
+							"en": "This is a sample project with a video demonstration.",
+							"pt-pt": "Este é um projeto exemplo com demonstração em vídeo.",
+							"zh": "这是一个带有视频演示的示例项目。",
+							"de": "Dies ist ein Beispielprojekt mit Videodemonstration.",
+							"ar": "هذا مشروع عينة مع عرض فيديو."
+						}
+					},
+					{
+						"media": ["https://picsum.photos/800/600?random=3", "https://picsum.photos/800/600?random=4"],
+						"videoId": "KUs1Popfd8g",
+						"date": "2023/12",
+						"duration": "10 MIN",
+						"translations": {
+							"en": ["Project Two", "Design"],
+							"pt-pt": ["Projeto Dois", "Design"],
+							"zh": ["项目二", "设计"],
+							"de": ["Projekt Zwei", "Design"],
+							"ar": ["مشروع اثنان", "تصميم"]
+						},
+						"description": {
+							"en": "Another sample project showcasing design work.",
+							"pt-pt": "Outro projeto exemplo mostrando trabalho de design.",
+							"zh": "另一个展示设计工作的示例项目。",
+							"de": "Ein weiteres Beispielprojekt mit Designarbeit.",
+							"ar": "مشروع عينة آخر يعرض أعمال التصميم."
+						}
+					}
+				]
+			};
+			generateProjects();
+			updateLanguage();
+		}
+	}
 
-                <br>Camera: Charlie Chaves
-                    · <a href=https://www.instagram.com/charliechavess/ target='_blank'>IG</a>
-                    · <a href=https://www.instagram.com/thebenaresclub/ target='_blank'>Club</a>
+	function generateProjects() {
+		if (!projectsData) return;
+		
+		const ladderStrip = document.querySelector('.ladder.strip');
+		const firstFrame = ladderStrip.children[0];
+		const lastFrame = ladderStrip.children[ladderStrip.children.length - 1];
+		
+		// Remove existing project frames
+		while (ladderStrip.children.length > 2) {
+			ladderStrip.removeChild(ladderStrip.children[1]);
+		}
+		
+		// Generate project frames
+		projectsData.projects.forEach((project, index) => {
+			const frame = document.createElement('div');
+			frame.className = 'toddao frame project-container';
+			
+			const button = document.createElement('button');
+			const img = document.createElement('img');
+			const leftSpan = document.createElement('span');
+			const rightSpan = document.createElement('span');
+			
+			img.src = project.media[0];
+			img.dataset.projectIndex = index;
+			leftSpan.className = 'left';
+			rightSpan.className = 'right';
+			
+			button.appendChild(img);
+			button.appendChild(leftSpan);
+			button.appendChild(rightSpan);
+			frame.appendChild(button);
+			
+			// Add left vertical text overlay
+			const verticalTextLeft = document.createElement('div');
+			verticalTextLeft.className = 'vertical-text-left';
+			const textSpanLeft = document.createElement('span');
+			verticalTextLeft.appendChild(textSpanLeft);
+			frame.appendChild(verticalTextLeft);
+			
+			// Add right vertical text overlay
+			const verticalTextRight = document.createElement('div');
+			verticalTextRight.className = 'vertical-text-right';
+			const textSpanRight = document.createElement('span');
+			verticalTextRight.appendChild(textSpanRight);
+			frame.appendChild(verticalTextRight);
+			
+			// YouTube container - OUTSIDE the button
+			const youtubeContainer = document.createElement('div');
+			youtubeContainer.className = 'youtube-container';
+			frame.appendChild(youtubeContainer);
+			
+			// Description container - OUTSIDE the button
+			const descriptionDiv = document.createElement('div');
+			descriptionDiv.className = 'project-description';
+			frame.appendChild(descriptionDiv);
+			
+			ladderStrip.insertBefore(frame, lastFrame);
+		});
+		
+		attachProjectListeners();
+	}
 
+	function switchMedia(frame, projectIndex, expanded) {
+		const button = frame.querySelector('button');
+		const img = button.querySelector('img');
+		const project = projectsData.projects[projectIndex];
+		const youtubeContainer = frame.querySelector('.youtube-container');
+		const description = frame.querySelector('.project-description');
+		
+		if (expanded) {
+			img.src = project.media[1] || project.media[0];
+			
+			// Show YouTube video
+			if (project.videoId) {
+				youtubeContainer.innerHTML = `
+					<iframe 
+						src="https://www.youtube.com/embed/${project.videoId}?autoplay=0&rel=0&modestbranding=1" 
+						frameborder="0" 
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+						allowfullscreen>
+					</iframe>
+				`;
+				setTimeout(() => {
+					youtubeContainer.classList.add('show');
+				}, 100);
+			}
+			
+			// Show description
+			setTimeout(() => {
+				description.classList.add('show');
+			}, 100);
+		} else {
+			img.src = project.media[0];
+			
+			// Hide YouTube video and description
+			youtubeContainer.classList.remove('show');
+			description.classList.remove('show');
+			setTimeout(() => {
+				youtubeContainer.innerHTML = '';
+			}, 500);
+		}
+	}
 
+	function attachProjectListeners() {
+		const ladderFrames = document.querySelectorAll('.ladder .toddao');
 
+		ladderFrames.forEach((frame, index) => {
+			const button = frame.querySelector('button');
+			if (!button) return;
+			
+			button.addEventListener('click', () => {
+				const isExpanded = button.classList.contains('expanded');
 
-    `,
-    youtube:   ""},
-  { dateL:     "MAY 2024",
-    img:       "media/alges.png",
-    gif:       "",
-    text:      "Music Video - Camera",
-    right:     "4 MIN",
-    detail:    `Dance cover, RIIZE 라이즈 - 'Impossible'.
+				if (isExpanded) {
+					// CLOSING - just collapse this one
+					button.classList.remove('expanded');
+					switchMedia(frame, index - 1, false);
+					frame.classList.remove('move-up', 'move-down');
 
+					// Reset all move classes since nothing is expanded now
+					ladderFrames.forEach((frm) => {
+						frm.classList.remove('move-up', 'move-down');
+					});
+				} else {
+					// OPENING - first reset ALL positions, then collapse others, then expand this one
+					
+					// Step 1: Reset all move classes (including current frame)
+					ladderFrames.forEach((frm) => {
+						frm.classList.remove('move-up', 'move-down');
+					});
+					
+					// Step 2: Collapse all others (but not this one)
+					ladderFrames.forEach((frm, frmIndex) => {
+						if (frm !== frame) {
+							const btn = frm.querySelector('button');
+							if (btn) {
+								btn.classList.remove('expanded');
+								switchMedia(frm, frmIndex - 1, false);
+							}
+						}
+					});
 
+					// Step 3: Expand this one
+					button.classList.add('expanded');
+					switchMedia(frame, index - 1, true);
 
+					// Step 4: Apply new move classes based on the expanded frame
+					ladderFrames.forEach((frm, frameIndex) => {
+						if (frameIndex < index) {
+							frm.classList.add('move-up');
+						} else if (frameIndex > index) {
+							frm.classList.add('move-down');
+						}
+					});
+				}
+			});
+		});
+	}
 
+	function updateLanguage() {
+		if (!projectsData) return;
+		
+		const lang = languages[currentLanguage];
+		const langButton = document.querySelector('nav button span:last-child');
+		langButton.textContent = `(${languageNames[lang]})`;
 
+		// Update navigation
+		const aboutButton = document.querySelector('nav ul li:first-child button');
+		const contactButton = document.querySelector('nav ul li:nth-child(2) button');
+		aboutButton.textContent = navTranslations.about[lang];
+		contactButton.textContent = navTranslations.contact[lang];
 
+		// Update popup content
+		document.getElementById('aboutTitle').textContent = popupContent.about[lang].title;
+		document.getElementById('aboutText').textContent = popupContent.about[lang].text;
+		document.getElementById('contactTitle').textContent = popupContent.contact[lang].title;
+		document.getElementById('contactText').textContent = popupContent.contact[lang].text;
 
+		// Update project texts
+		const frames = document.querySelectorAll('.ladder .toddao.project-container');
+		frames.forEach((frame, index) => {
+			if (index < projectsData.projects.length) {
+				const project = projectsData.projects[index];
+				const translations = project.translations[lang];
+				const descriptionText = project.description[lang];
+				
+				const button = frame.querySelector('button');
+				const leftSpan = button.querySelector('.left');
+				const rightSpan = button.querySelector('.right');
+				const descriptionDiv = frame.querySelector('.project-description');
+				const verticalTextLeftSpan = frame.querySelector('.vertical-text-left span');
+				const verticalTextRightSpan = frame.querySelector('.vertical-text-right span');
+				
+				if (leftSpan) leftSpan.textContent = translations[0];
+				if (rightSpan) rightSpan.textContent = translations[1];
+				if (descriptionDiv) descriptionDiv.textContent = descriptionText;
+				
+				// Update left vertical text
+				if (verticalTextLeftSpan) {
+					verticalTextLeftSpan.innerHTML = `<span class="libre-barcode-128-regular">${leftTextWord}</span><span class="libre-barcode-128-text-regular">${project.date}</span><span class="libre-barcode-128-regular">${leftTextWord}</span>`;
+				}
+				
+				// Update right vertical text
+				if (verticalTextRightSpan) {
+					verticalTextRightSpan.innerHTML = `<span class="libre-barcode-128-regular">${rightTextWord}</span><span class="libre-barcode-128-text-regular">${project.duration}</span><span class="libre-barcode-128-regular">${rightTextWord}</span>`;
+				}
+			}
+		});
+	}
 
-    `,
-    youtube:   "UsGJUCy7Mx0"},
-  { dateL:     "APR 2024",
-    img:       "media/cinema.png",
-    gif:       "",
-    text:      "Short film - Sound",
-    right:     "4 MIN",
-    detail:    `Sound recording https://vimeo.com/930022904
+	function cycleLanguage() {
+		currentLanguage = (currentLanguage + 1) % languages.length;
+		updateLanguage();
+	}
 
+	function burgerClicked() {
+		const burger = document.getElementById('burger');
+		const mainNav = document.getElementById('mainNav');
 
+		const expanded = burger.getAttribute('aria-expanded') === 'true';
+		burger.setAttribute('aria-expanded', !expanded);
+		mainNav.classList.toggle('show');
+	}
 
+	// Initialize
+	document.addEventListener('DOMContentLoaded', () => {
+		loadProjectData();
+		
+		const translateButton = document.querySelector('nav ul li:last-child button');
+		translateButton.addEventListener('click', cycleLanguage);
+	});
+	</script>
 
-
-
-    `,
-    youtube:   ""},
-  { dateL:     "FEB 2024",
-    img:       "media/curta.jpg",
-    gif:       "",
-    text:      "Short",
-    right:     "2 MIN",
-    detail:    "A very short experimental piece.",
-    youtube:   ""},
-
-  { dateL:     "JAN 2024",
-    img:       "media/people.png",
-    gif:       "",
-    text:      "Photography & App UI",
-    right:     "2 MIN",
-    detail:    "Behind the scenes photographs",
-    youtube:   "ayyPyMsfCJo"},
-
-  { dateL:     "SEP 2023",
-    img:       "media/cctv.jpg",
-    gif:       "",
-    text:      "Enrolled at ETIC Lisboa",
-    right:     "",
-    detail:    "",
-    youtube:   ""},
-
-  { dateL:     "SEP 2023",
-    img:       "media/mms.png",
-    gif:       "",
-    text:      "Assistant Director Classes",
-    right:     "",
-    detail:    `AD and Movie Magic Scheduling classes with Hsu Chien<br>
-                <br>Hsu Chien
-                    · <a href=https://www.imdb.com/name/nm0398789/ target='_blank'>IMDb</a>
-    `,
-    youtube:   ""},
-
-  { dateL:     "JUN 2023",
-    img:       "media/steady.png",
-    gif:       "",
-    text:      "Short",
-    right:     "2 MIN",
-    detail:    "Experimenting with steady cam techniques.",
-    youtube:   ""},
-
-  { dateL:     "NOV 2022",
-    img:       "media/pop.png",
-    gif:       "",
-    text:      "Procedural 3D",
-    right:     "",
-    detail:    `Procedural 3D Models & Textures - Blender Nodes (Nodevember) following tutorials by CGMatter<br>
-                <br>CGMatter
-                    · <a href=https://www.cgmatter.com/ target='_blank'>Website</a>
-    `,
-    youtube:   ""},
-
-  { dateL:     "FEB 2022",
-    img:       "media/moon.jpg",
-    gif:       "",
-    text:      "Virtual Production tests",
-    right:     "",
-    detail:    `Virtual Production tests in Unreal Engine with an HTC Vive<br>
-    `,
-    youtube:   ""},
-
-  { dateL:     "DEC 2021",
-    img:       "media/film.png",
-    gif:       "",
-    text:      "C‑41 Developing",
-    right:     "XX",
-    detail:    "C‑41 Developing",
-    youtube:   ""},
-
-  { dateL:     "JUN 2021",
-    img:       "media/boat.png",
-    gif:       "",
-    text:      "Short",
-    right:     "1 MIN",
-    detail:    "A quick boating-themed video.",
-    youtube:   ""},
-
-  { dateL:     "2019 - 2020",
-    img:       "media/moon.jpg",
-    gif:       "",
-    text:      "Other Shenanigans",
-    right:     "",
-    detail:    `FDM 3D Printing, then SLA;
-                <br>PCB Designing and ordering;
-                <br> Unity level designing for VRChat;
-    `,
-    youtube:   ""},
-
-  { dateL:     "OCT 2015",
-    img:       "media/skydive.png",
-    gif:       "",
-    text:      "Camera animation",
-    right:     "1 MIN",
-    detail:    "Animating camera movements in 3D.",
-    youtube:   ""},
-
-  { dateL:     "CC0 1929",
-    img:       "media/moon.jpg",
-    gif:       "media/end.gif",
-    text:      "",
-    right:     "65MM",
-    detail:    "Public domain footage from 1929.",
-    youtube:   ""}
-      // …add more items here…
-    ];
-  </script>
-
-  <!-- 2) Build frames into the strip -->
-  <script defer>
-    document.addEventListener("DOMContentLoaded", () => {
-      const strip = document.getElementById("strip");
-      window.projects.forEach((p, idx) => {
-        const f = document.createElement("div");
-        f.className = "frame";
-        f.dataset.index = idx;
-        f.innerHTML = `
-          <div class="left-keycode"><span class="rotated-left">${p.dateL}</span></div>
-          <div class="perf-column"><div class="perf-blocks">${"<div></div>".repeat(5)}</div></div>
-          <div class="content">
-            <img src="${p.img}" ${p.gif ? `data-gif="${p.gif}"` : ""} alt="${p.text}">
-            <div class="text">${p.text}</div>
-          </div>
-          <div class="perf-column"><div class="perf-blocks">${"<div></div>".repeat(5)}</div></div>
-          <div class="right-keycode"><span class="rotated-right">${p.right}</span></div>
-        `;
-        strip.appendChild(f);
-      });
-    });
-  </script>
-
-  <!-- 3) Preload JPEG→GIF and randomize flicker delays -->
-  <script defer>
-    document.addEventListener("DOMContentLoaded", () => {
-      const imgs = Array.from(document.querySelectorAll('.content img[data-gif]'));
-      let loaded = 0;
-      imgs.forEach(img => {
-        const pre = new Image();
-        pre.onload = pre.onerror = () => {
-          if (++loaded === imgs.length) {
-            imgs.forEach(i => i.src = i.dataset.gif);
-          }
-        };
-        pre.src = img.src;
-      });
-      document.querySelectorAll('.flicker-cell').forEach(c => {
-        c.style.animationDelay = (Math.random() * 0.3).toFixed(3) + 's';
-      });
-    });
-  </script>
-
-  <!-- 4) Frame click → open modal -->
-  <script defer>
-    document.addEventListener("DOMContentLoaded", () => {
-      const strip = document.getElementById("strip");
-      const overlay = document.getElementById("modalOverlay");
-      const modalContent = document.getElementById("modalContent");
-
-      strip.addEventListener("click", e => {
-        const frame = e.target.closest(".frame");
-        if (!frame) return;
-        const p = window.projects[frame.dataset.index];
-        modalContent.innerHTML = `
-          <h2>${p.text || p.dateL}</h2>
-          <p class="meta">${p.dateL}${p.right ? ` | ${p.right}` : ""}</p>
-          <p>${p.detail}</p>
-          <div id="videoPlaceholder"></div>
-          <img src="${p.gif || p.img}" alt="${p.text}">
-        `;
-        overlay.style.display = "flex";
-
-        if (p.youtube) {
-          requestAnimationFrame(() => {
-            const ph = document.getElementById("videoPlaceholder");
-            const w  = document.createElement("div");
-            w.className = "video-wrapper";
-            w.innerHTML = `<iframe src="https://www.youtube.com/embed/${p.youtube}" allowfullscreen></iframe>`;
-            ph.replaceWith(w);
-          });
-        }
-      });
-    });
-  </script>
-
-  <!-- 5) Close modal on overlay or close‑button -->
-  <script defer>
-    document.addEventListener("DOMContentLoaded", () => {
-      const overlay = document.getElementById("modalOverlay");
-      const modalClose = document.getElementById("modalClose");
-
-      modalClose.addEventListener("click", () => overlay.style.display = "none");
-      overlay.addEventListener("click", e => {
-        if (e.target === overlay) overlay.style.display = "none";
-      });
-    });
-  </script>
-
-  <!-- 6) About & Contact button popups -->
-  <script defer>
-    document.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll('.gray-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const t = btn.textContent.trim().toLowerCase();
-          const overlay = document.getElementById("modalOverlay");
-          const modalContent = document.getElementById("modalContent");
-          modalContent.innerHTML = `
-            <h2>${t === 'about' ? 'About Me' : 'Contact Me'}</h2>
-            <p>${t === 'about'
-               ? `
-                Brazilian living in Lisbon, Portugal<br><br>
-                Passionate about filmmaking, photography, opticsm, architecture and engineering<br><br>
-                Fluent in English<br><br>
-                Student at ETIC Lisboa<br>
-                <img src="media/group.jpg" style="border-radius:1rem; margin-top:1rem;">
-
-              `
-               : `
-                <strong>Instagram:</strong> <a href="https://instagram.com/val.nevs" target="_blank">@val.nevs</a><br><br>
-                <strong>Email:</strong> valdir.nvs@hotmail.com<br>
-                <strong>Phone:</strong> +351 <strong>930 946 697</strong><br><br>
-                <em>Looking to collaborate or share ideas?<br>
-                Drop me a message- I’d love to connect.</em>
-              `
-                }
-            </p>
-          `;
-          overlay.style.display = "flex";
-        });
-      });
-    });
-  </script>
 </body>
-
-
 </html>
