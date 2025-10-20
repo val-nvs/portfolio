@@ -467,7 +467,7 @@
 <body>
 
 	<header>
-		<nav id="mainNav">
+		<nav id="mainNav" class="show">
 			<ul>
 				<li><button onclick="openPopup('about')">About</button></li>
 				<li><button onclick="openPopup('contact')">Contact</button></li>
@@ -965,14 +965,16 @@ function burgerClicked() {
 		const translateButton = document.querySelector('nav ul li:last-child button');
 		translateButton.addEventListener('click', cycleLanguage);
 	
-		// Scroll listener to hide menu once
-		let hasScrolled = false;
-		window.addEventListener('scroll', () => {
-			if (!hasScrolled && window.scrollY > 50) {
-				hasScrolled = true;
-				document.getElementById('mainNav').classList.add('hide');
-			}
-		});
+// Scroll listener to hide menu once
+let hasScrolled = false;
+window.addEventListener('scroll', () => {
+    if (!hasScrolled && window.scrollY > 50) {
+        hasScrolled = true;
+        const mainNav = document.getElementById('mainNav');
+        mainNav.classList.remove('show');
+        mainNav.classList.add('hide');
+    }
+});
 	});
 	</script>
 
