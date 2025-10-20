@@ -235,9 +235,14 @@
 				0 0.3rem 1rem rgba(0, 0, 0, 0.1);
 			border: 0.05rem solid rgba(255, 255, 255, 0.15);
 			padding: 1rem;
-			opacity: 0;
+			opacity: 1;
 			pointer-events: none;
 			transition: opacity 0.2s linear, pointer-events 0.2s linear;
+		}
+
+		nav.hide {
+			opacity: 0;
+			pointer-events: none;
 		}
 		
 		nav.show {
@@ -936,21 +941,38 @@
 		updateLanguage();
 	}
 
-	function burgerClicked() {
-		const burger = document.getElementById('burger');
-		const mainNav = document.getElementById('mainNav');
+function burgerClicked() {
+    const burger = document.getElementById('burger');
+    const mainNav = document.getElementById('mainNav');
+    const expanded = burger.getAttribute('aria-expanded') === 'true';
+    burger.setAttribute('aria-expanded', !expanded);
+    
+    if (expanded) {
+        // Closing - add hide class
+        mainNav.classList.add('hide');
+        mainNav.classList.remove('show');
+    } else {
+        // Opening - add show class, remove hide
+        mainNav.classList.remove('hide');
+        mainNav.classList.add('show');
+    }
+}
 
-		const expanded = burger.getAttribute('aria-expanded') === 'true';
-		burger.setAttribute('aria-expanded', !expanded);
-		mainNav.classList.toggle('show');
-	}
-
-	// Initialize
+// Initialize
 	document.addEventListener('DOMContentLoaded', () => {
 		loadProjectData();
-		
+	
 		const translateButton = document.querySelector('nav ul li:last-child button');
 		translateButton.addEventListener('click', cycleLanguage);
+	
+		// Scroll listener to hide menu once
+		let hasScrolled = false;
+		window.addEventListener('scroll', () => {
+			if (!hasScrolled && window.scrollY > 50) {
+				hasScrolled = true;
+				document.getElementById('mainNav').classList.add('hide');
+			}
+		});
 	});
 	</script>
 
