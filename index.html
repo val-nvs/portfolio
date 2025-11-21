@@ -66,6 +66,13 @@
 			height: 23.75rem;
 		}
 
+		/* NEW: Hidden Dummy Frame */
+		.dummy-frame {
+			opacity: 0 !important;
+			pointer-events: none !important;
+			visibility: hidden; 
+		}
+
 		/* Project container - wraps button and video */
 		.project-container {
 			position: relative;
@@ -113,21 +120,25 @@
 			top: 50%;
 			left: 50%;
 		}
+		/* MODIFIED: Added will-change hint */
 		.toddao button {
+			will-change: height, transform; 
 			width: 52.6rem;
 			height: 23rem;
-			transition: height 1s ease, transform 1s ease, filter 3s ease;
+			transition: height 1s ease, transform 1s ease, filter 0.3s ease; 
 			z-index: 1;
 			border-radius: 1rem;
 		}
 		.toddao button.expanded {
 			height: 70.5rem;
 		}
+		/* FIXED: Using translate3d for GPU acceleration */
 		.toddao.move-up button {
-			transform: translate(-50%, calc(-50% - 23.75rem));
+			transform: translate3d(-50%, calc(-50% - 23.75rem), 0);
 		}
+		/* FIXED: Using translate3d for GPU acceleration */
 		.toddao.move-down button {
-			transform: translate(-50%, calc(-50% + 23.75rem));
+			transform: translate3d(-50%, calc(-50% + 23.75rem), 0);
 		}
 
 		.frame button img {
@@ -149,7 +160,7 @@
 				0 0 0 0.1rem rgba(255,0,0,0.9);
 		}
 
-		/* YouTube Player Styles */
+		/* YouTube Player Styles - MODIFIED */
 		.youtube-container {
 			position: absolute;
 			top: 50%;
@@ -157,7 +168,8 @@
 			transform: translate(-50%, -50%);
 			width: min(90%, 50rem);
 			aspect-ratio: 16/9;
-			opacity: 0;
+			/* Kept for fade-out, but placeholder makes content visible instantly */
+			opacity: 0; 
 			visibility: hidden;
 			transition: opacity 0.5s ease, visibility 0.5s ease;
 			z-index: 5000;
@@ -176,6 +188,28 @@
 			border-radius: 1rem;
 			border: none;
 			box-shadow: 0 0 2rem rgba(0, 0, 0, 0.8);
+			position: absolute; /* Needed for stacking on top of the placeholder */
+			z-index: 2; /* Ensure iframe is on top */
+			opacity: 0; /* Start hidden */
+			transition: opacity 0.5s ease; /* Smooth transition for video appearance */
+		}
+		
+		/* NEW: Placeholder Styles */
+		.youtube-placeholder {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #333; /* Dark gray background */
+			border-radius: 1rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: white;
+			font-size: 4rem; /* Size of the 'VIDEO' text */
+			font-family: "neue", sans-serif;
+			z-index: 1; /* Ensure it is behind the iframe, but visible before it loads */
 		}
 
 		/* Description Styles */
@@ -463,6 +497,10 @@
 		.hero-content::-webkit-scrollbar-thumb:hover {
 			background: rgba(255, 255, 255, 0.4);
 		}
+.ladder.strip {
+    /* Offset by the height of one frame (23.75rem) to counter the dummy card's space */
+    margin-top: -23.75rem; 
+}
 	</style>
 </head>
 <body>
@@ -486,7 +524,6 @@
 		</button>
 	</header>
 
-	<!-- About Popup -->
 	<div class="hero-popup" id="aboutPopup">
 		<div class="hero-content">
 			<button class="hero-close" onclick="closePopup('about')">
@@ -500,7 +537,6 @@
 		</div>
 	</div>
 
-	<!-- Contact Popup -->
 	<div class="hero-popup" id="contactPopup">
 		<div class="hero-content">
 			<button class="hero-close" onclick="closePopup('contact')">
@@ -535,7 +571,13 @@
 
 	<div class="ladder strip">
 		<div class="toddao frame"></div>
-		<!-- Projects will be generated here dynamically -->
+		
+		<div class="toddao frame dummy-frame project-container">
+			<button class="expanded" style="height: 70.5rem;"></button>
+			<div class="youtube-container"></div>
+			<div class="project-description"></div>
+		</div>
+		
 		<div class="toddao frame"></div>
 	</div>
 
@@ -668,13 +710,14 @@
 		}
 	});
 
-	// Load JSON data
+	// MODIFIED: loadProjectData now returns a promise for proper sequencing
 	async function loadProjectData() {
 		try {
 			const response = await fetch('./data.json');
 			projectsData = await response.json();
 			generateProjects();
 			updateLanguage();
+			return Promise.resolve();
 		} catch (error) {
 			console.error('Error loading project data:', error);
 			// Fallback data with test video and years
@@ -724,6 +767,7 @@
 			};
 			generateProjects();
 			updateLanguage();
+			return Promise.resolve();
 		}
 	}
 
@@ -731,12 +775,13 @@
 		if (!projectsData) return;
 		
 		const ladderStrip = document.querySelector('.ladder.strip');
-		const firstFrame = ladderStrip.children[0];
+		// The last child is the bottom spacer frame
 		const lastFrame = ladderStrip.children[ladderStrip.children.length - 1];
 		
-		// Remove existing project frames
-		while (ladderStrip.children.length > 2) {
-			ladderStrip.removeChild(ladderStrip.children[1]);
+		// Remove existing project frames (starting after the dummy frame at index 2)
+		// We keep the two spacer frames and the dummy frame.
+		while (ladderStrip.children.length > 3) {
+			ladderStrip.removeChild(ladderStrip.children[2]);
 		}
 		
 		// Generate project frames
@@ -789,29 +834,44 @@
 		attachProjectListeners();
 	}
 
-	function switchMedia(frame, projectIndex, expanded) {
-		const button = frame.querySelector('button');
-		const img = button.querySelector('img');
+	/**
+	 * @description Handles loading the video placeholder, video iframe, and description visibility. 
+	 * This is called *after* the card has expanded.
+	 */
+	function toggleMediaAndDescription(frame, projectIndex, expanded) {
+		// Ensure projectIndex is valid
+		if (projectIndex < 0 || projectIndex >= projectsData.projects.length) return;
+
 		const project = projectsData.projects[projectIndex];
 		const youtubeContainer = frame.querySelector('.youtube-container');
 		const description = frame.querySelector('.project-description');
 		
 		if (expanded) {
-			img.src = project.media[1] || project.media[0];
-			
-			// Show YouTube video
+			// Show YouTube video (or placeholder)
 			if (project.videoId) {
+				// 1. Insert Placeholder and Show Container immediately
 				youtubeContainer.innerHTML = `
-					<iframe 
-						src="https://www.youtube.com/embed/${project.videoId}?autoplay=0&rel=0&modestbranding=1" 
-						frameborder="0" 
-						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-						allowfullscreen>
-					</iframe>
+					<div class="youtube-placeholder">VIDEO</div>
 				`;
+				youtubeContainer.classList.add('show');
+				
+				// 2. Wait for the expansion animation (1s) before loading the iframe
 				setTimeout(() => {
-					youtubeContainer.classList.add('show');
-				}, 100);
+					const iframe = document.createElement('iframe');
+					iframe.src = `https://www.youtube.com/embed/${project.videoId}?autoplay=0&rel=0&modestbranding=1`;
+					iframe.frameBorder = "0";
+					iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+					iframe.allowFullscreen = true;
+					
+					// 3. Listener to fade in the video once it loads
+					iframe.onload = () => {
+						// Fade in the iframe, covering the placeholder
+						iframe.style.opacity = '1'; 
+					};
+
+					// Append iframe to container. It will cover the placeholder.
+					youtubeContainer.appendChild(iframe);
+				}, 1000); // Wait 1 second (matches CSS transition time)
 			}
 			
 			// Show description
@@ -819,11 +879,12 @@
 				description.classList.add('show');
 			}, 100);
 		} else {
-			img.src = project.media[0];
-			
+			// CLOSING
 			// Hide YouTube video and description
 			youtubeContainer.classList.remove('show');
 			description.classList.remove('show');
+			
+			// Clear YouTube container content after it fades out (0.5s)
 			setTimeout(() => {
 				youtubeContainer.innerHTML = '';
 			}, 500);
@@ -835,56 +896,126 @@
 
 		ladderFrames.forEach((frame, index) => {
 			const button = frame.querySelector('button');
-			if (!button) return;
 			
+			// Skip spacer frames and the dummy frame
+			if (!button || frame.classList.contains('dummy-frame')) return;
+			
+			const img = button.querySelector('img');
+			
+			// CHANGED: Subtract 2 now (for the top spacer + the dummy card)
+			const projectIndex = index - 2; 
+			
+			if (projectIndex < 0 || projectIndex >= projectsData.projects.length) return;
+			
+			const project = projectsData.projects[projectIndex];
+
 			button.addEventListener('click', () => {
 				const isExpanded = button.classList.contains('expanded');
 
 				if (isExpanded) {
 					// CLOSING - just collapse this one
 					button.classList.remove('expanded');
-					switchMedia(frame, index - 1, false);
+					toggleMediaAndDescription(frame, projectIndex, false);
 					frame.classList.remove('move-up', 'move-down');
+					button.style.filter = ''; // Reset filter
 
 					// Reset all move classes since nothing is expanded now
 					ladderFrames.forEach((frm) => {
 						frm.classList.remove('move-up', 'move-down');
 					});
 				} else {
-					// OPENING - first reset ALL positions, then collapse others, then expand this one
+					// OPENING
 					
-					// Step 1: Reset all move classes (including current frame)
-					ladderFrames.forEach((frm) => {
-						frm.classList.remove('move-up', 'move-down');
-					});
-					
-					// Step 2: Collapse all others (but not this one)
+					// Step 1: Reset all positions and collapse others first
 					ladderFrames.forEach((frm, frmIndex) => {
-						if (frm !== frame) {
-							const btn = frm.querySelector('button');
-							if (btn) {
+						const btn = frm.querySelector('button');
+						if (btn) {
+							// Collapse any other open card
+							if (frm !== frame) {
 								btn.classList.remove('expanded');
-								switchMedia(frm, frmIndex - 1, false);
+								toggleMediaAndDescription(frm, frmIndex - 2, false); // Use index - 2 for projects
 							}
+							// Reset all move classes
+							frm.classList.remove('move-up', 'move-down');
+							btn.style.filter = ''; // Reset filter
 						}
 					});
 
-					// Step 3: Expand this one
-					button.classList.add('expanded');
-					switchMedia(frame, index - 1, true);
+					// --- NEW LOGIC: Load Image Before Expanding ---
+					
+					const expandCard = () => {
+						button.style.filter = ''; // Reset simple animation filter
+						button.style.pointerEvents = 'auto'; // Re-enable clicks
+						
+						// 1. EXPAND the card (triggers CSS height transition)
+						button.classList.add('expanded');
+						
+						// 2. Start video placeholder/loading/description
+						toggleMediaAndDescription(frame, projectIndex, true);
+						
+						// 3. Apply new move classes based on the expanded frame
+						ladderFrames.forEach((frm, frameIndex) => {
+							if (frameIndex < index) {
+								frm.classList.add('move-up');
+							} else if (frameIndex > index) {
+								frm.classList.add('move-down');
+							}
+						});
+					};
+					
+					if (project.media[1]) {
+						// Simple visual cue (dim the card) while loading
+						button.style.filter = 'brightness(0.5)';
+						
+						const loadingImage = new Image();
+						loadingImage.src = project.media[1];
 
-					// Step 4: Apply new move classes based on the expanded frame
-					ladderFrames.forEach((frm, frameIndex) => {
-						if (frameIndex < index) {
-							frm.classList.add('move-up');
-						} else if (frameIndex > index) {
-							frm.classList.add('move-down');
-						}
-					});
+						// Prevent double-clicking while the image is loading
+						button.style.pointerEvents = 'none';
+
+						loadingImage.onload = () => {
+							// Set the image source after it's loaded
+							img.src = project.media[1];
+							expandCard();
+						};
+
+						loadingImage.onerror = () => {
+							console.error(`Failed to load image: ${project.media[1]}. Expanding anyway.`);
+							// Fallback: keep original image and expand
+							expandCard();
+						};
+
+					} else {
+						// No second media, expand immediately
+						expandCard();
+					}
+					// ---------------------------------------------
 				}
 			});
 		});
 	}
+
+	// NEW FUNCTION: Forces the first (dummy) card to expand and collapse
+	function initializeLayoutWithDummyCard() {
+		// 1. Find the dummy frame
+		const dummyFrame = document.querySelector('.dummy-frame');
+		if (!dummyFrame) return;
+
+		const dummyIndex = Array.from(document.querySelectorAll('.ladder .toddao.frame')).indexOf(dummyFrame);
+		
+		// The dummy card is already 'expanded' in HTML to occupy space.
+		// We simulate a 'close' action on it immediately (using its projectIndex, which is dummyIndex - 1)
+		// This forces the full closing logic which cleans up the DOM and removes 'expanded' state.
+		toggleMediaAndDescription(dummyFrame, dummyIndex - 1, false); 
+		
+		// Ensure the dummy button is fully reset after the initial work
+		const dummyButton = dummyFrame.querySelector('button');
+		if (dummyButton) {
+			dummyButton.classList.remove('expanded');
+		}
+		dummyFrame.classList.remove('move-up', 'move-down');
+	}
+
 
 	function updateLanguage() {
 		if (!projectsData) return;
@@ -906,10 +1037,12 @@
 		document.getElementById('contactText').textContent = popupContent.contact[lang].text;
 
 		// Update project texts
-		const frames = document.querySelectorAll('.ladder .toddao.project-container');
+		// Filter out the dummy frame
+		const frames = document.querySelectorAll('.ladder .toddao.project-container:not(.dummy-frame)');
 		frames.forEach((frame, index) => {
-			if (index < projectsData.projects.length) {
-				const project = projectsData.projects[index];
+			// 'index' here corresponds directly to the project index (0, 1, 2, ...)
+			const project = projectsData.projects[index];
+			if (project) {
 				const translations = project.translations[lang];
 				const descriptionText = project.description[lang];
 				
@@ -961,7 +1094,10 @@ function burgerClicked() {
 
 // Initialize
 	document.addEventListener('DOMContentLoaded', () => {
-		loadProjectData();
+		// CHANGED: Now using .then() to sequence the calls
+		loadProjectData().then(() => {
+			initializeLayoutWithDummyCard(); 
+		});
 	
 		const translateButton = document.querySelector('nav ul li:last-child button');
 		translateButton.addEventListener('click', cycleLanguage);
