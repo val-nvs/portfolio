@@ -66,21 +66,16 @@
 			height: 23.75rem;
 		}
 
-		/* NEW: Hidden Dummy Frame */
 		.dummy-frame {
-			/* Makes the dummy card invisible and non-interactive */
 			opacity: 0 !important;
 			pointer-events: none !important;
 			visibility: hidden; 
 		}
 		
-		/* FIXED: Offset to fix content shift from dummy card */
 		.ladder.strip {
-			/* Offsets the whole strip up by one frame height (23.75rem) */
 			margin-top: -23.75rem; 
 		}
 
-		/* Project container - wraps button and video */
 		.project-container {
 			position: relative;
 		}
@@ -127,7 +122,7 @@
 			top: 50%;
 			left: 50%;
 		}
-		/* MODIFIED: Added will-change for GPU hint, restored filter transition time */
+		
 		.toddao button {
 			will-change: height, transform; 
 			width: 52.6rem;
@@ -139,11 +134,11 @@
 		.toddao button.expanded {
 			height: 70.5rem;
 		}
-		/* MODIFIED: Using translate3d for GPU acceleration */
+		
 		.toddao.move-up button {
 			transform: translate3d(-50%, calc(-50% - 23.75rem), 0);
 		}
-		/* MODIFIED: Using translate3d for GPU acceleration */
+		
 		.toddao.move-down button {
 			transform: translate3d(-50%, calc(-50% + 23.75rem), 0);
 		}
@@ -167,7 +162,7 @@
 				0 0 0 0.1rem rgba(255,0,0,0.9);
 		}
 
-		/* YouTube Player Styles - MODIFIED to support placeholder */
+		/* YouTube Player Styles */
 		.youtube-container {
 			position: absolute;
 			top: 50%;
@@ -194,14 +189,12 @@
 			border-radius: 1rem;
 			border: none;
 			box-shadow: 0 0 2rem rgba(0, 0, 0, 0.8);
-			/* NEW/MODIFIED for placeholder support */
 			position: absolute; 
 			z-index: 2; 
 			opacity: 0; 
 			transition: opacity 0.5s ease; 
 		}
 
-		/* NEW: Placeholder Styles */
 		.youtube-placeholder {
 			position: absolute;
 			top: 0;
@@ -216,16 +209,36 @@
 			color: white;
 			font-size: 4rem; 
 			font-family: "neue", sans-serif;
+			text-align: center;
 			z-index: 1; 
 		}
 
-		/* Description Styles */
-		.project-description {
+		/* Description Container and Button Styles */
+		.text-and-button-container {
 			position: absolute;
-			top: 25rem;
+			top: 25rem; 
 			left: 50%;
 			transform: translateX(-50%);
 			width: min(90%, 50rem);
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.5s ease, visibility 0.5s ease;
+			z-index: 11;
+			pointer-events: none;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 1.5rem;
+		}
+
+		.text-and-button-container.show {
+			opacity: 1;
+			visibility: visible;
+			pointer-events: auto;
+		}
+
+		.project-description {
+			width: 100%;
 			background: rgba(0, 0, 0, 0.9);
 			backdrop-filter: blur(1rem);
 			-webkit-backdrop-filter: blur(1rem);
@@ -234,18 +247,42 @@
 			border-radius: 1rem;
 			font-size: 2rem;
 			line-height: 1.4;
-			opacity: 0;
-			visibility: hidden;
-			transition: opacity 0.5s ease, visibility 0.5s ease;
-			z-index: 11;
 			font-family: "Atkinson Hyperlegible Next", sans-serif;
-			pointer-events: none;
+			text-align: left;
 		}
 		
-		.project-description.show {
-			opacity: 1;
-			visibility: visible;
-			pointer-events: auto;
+		.crew-button {
+			width: 20% !important;
+			height: 4rem !important;
+			margin-top: 12rem;
+			background: rgba(50, 50, 50, 0.8);
+			backdrop-filter: blur(0.5rem);
+			-webkit-backdrop-filter: blur(0.5rem);
+			padding: 0 0 !important;
+			font-family: "neue", sans-serif;
+			font-weight: bold;
+			border-radius: 1rem;
+			line-height: 0 !important;
+			box-shadow: 
+				inset 0 0.1rem 0 rgba(255, 255, 255, 0.3),
+				0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+			text-shadow: 0 0 0.8rem rgba(255, 255, 255, 0.6);
+			color: #000;
+			font-size: 2rem !important;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transition: all 0.2s ease;
+			border: 0.05rem solid rgba(255, 255, 255, 0.2);
+		}
+
+		.crew-button:hover {
+			background: rgba(255, 255, 255, 0.35);
+			box-shadow: 
+				inset 0 0.1rem 0 rgba(255, 255, 255, 0.4),
+				0 0.3rem 0.8rem rgba(0, 0, 0, 0.15);
+			text-shadow: 0 0 1.2rem rgba(255, 255, 255, 0.8);
+			color: black;
 		}
 
 		/* Navigation Header */
@@ -264,7 +301,6 @@
 			pointer-events: none;
 		}
 
-		/* Main Navigation - takes all available space */
 		nav {
 			flex: 1;
 			background: rgba(240, 248, 255, 0.12);
@@ -334,7 +370,6 @@
 			text-shadow: 0 0 1.2rem rgba(255, 255, 255, 0.8);
 		}
 
-		/* Burger Menu Button - fixed width */
 		.burger-button {
 			flex-shrink: 0;
 			width: 6rem;
@@ -486,6 +521,65 @@
 			white-space: pre-line;
 		}
 
+		/* MODIFIED: Crew Grid Styles - One Liner */
+		.crew-list {
+			display: grid;
+			grid-template-columns: 1fr; /* Full width rows */
+			gap: 1rem;
+			width: 100%;
+			margin-top: 2rem;
+		}
+
+		.crew-card {
+			background: rgba(255, 255, 255, 0.08);
+			border: 0.1rem solid rgba(255, 255, 255, 0.1);
+			padding: 1.5rem;
+			border-radius: 1rem;
+			display: flex; /* CHANGED to Row */
+			flex-direction: row;
+			align-items: center; /* Vertically center items */
+			gap: 1rem;
+			flex-wrap: wrap; /* Allow wrapping on mobile */
+			transition: background 0.2s ease;
+		}
+
+		.crew-card:hover {
+			background: rgba(255, 255, 255, 0.12);
+		}
+
+		.crew-name {
+			font-family: "neue", sans-serif;
+			font-size: 1.8rem;
+			color: white;
+			text-transform: uppercase;
+			white-space: nowrap; /* Keep name on one line */
+		}
+
+		.crew-role {
+			font-family: "Atkinson Hyperlegible Next", sans-serif;
+			font-size: 1.6rem;
+			color: rgba(255, 255, 255, 0.7);
+			flex-grow: 1; /* Takes available space */
+		}
+
+		.crew-link {
+			font-family: "Atkinson Hyperlegible Next", sans-serif;
+			font-size: 1.4rem;
+			color: #8cc9ff; /* MODIFIED: Colored link */
+			text-decoration: none;
+			opacity: 1;
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			font-weight: bold;
+			margin-left: auto; /* Pushes link to the right if desired, or remove to keep tight */
+		}
+
+		.crew-link:hover {
+			text-decoration: underline;
+			filter: brightness(1.2);
+		}
+
 		/* Scrollbar styling for popup */
 		.hero-content::-webkit-scrollbar {
 			width: 0.8rem;
@@ -578,7 +672,10 @@
 		<div class="toddao frame dummy-frame project-container">
 			<button class="expanded" style="height: 70.5rem;"></button>
 			<div class="youtube-container"></div>
-			<div class="project-description"></div>
+			<div class="text-and-button-container">
+				<div class="project-description"></div>
+				<button class="crew-button">Crew</button>
+			</div>
 		</div>
 
 		<div class="toddao frame"></div>
@@ -595,6 +692,15 @@
 	// Image variables (replace with your actual images)
 	const aboutImageSrc = "./media/group.jpg";
 	const contactImageSrc = "./media/nodes.png";
+
+	// NEW: Translations for the loading text
+	const loadingTranslations = {
+		"en": "LOADING VIDEO...",
+		"pt-pt": "A CARREGAR VÍDEO...",
+		"zh": "加载视频...",
+		"de": "VIDEO WIRD GELADEN...",
+		"ar": "جار التحميل..."
+	};
 
 	// Popup content translations
 	const popupContent = {
@@ -641,7 +747,23 @@
 				title: "اتصال",
 				text: "تبحث عن التعاون أو مشاركة الأفكار؟ أرسل لي رسالة - سأكون سعيداً بالتواصل معك.  \n\nig: @val.nevs\nvaldir.nvs@outlook.com\n+351 930 946 697"
 			}
+		},
+		crew: { 
+			en: { title: "Crew & Credits", text: "" },
+			"pt-pt": { title: "Equipa e Créditos", text: "" },
+			zh: { title: "团队和制作人员", text: "" },
+			de: { title: "Crew & Credits", text: "" },
+			ar: { title: "طاقم العمل والاعتمادات", text: "" }
 		}
+	};
+	
+	// Crew Popup Translation for the button
+	const crewButtonTranslations = {
+		"en": "Crew",
+		"pt-pt": "Equipa",
+		"zh": "团队",
+		"de": "Crew",
+		"ar": "طاقم العمل"
 	};
 
 	// Navigation translations
@@ -673,13 +795,106 @@
 	};
 	let currentLanguage = 0;
 
+	// Track active project for crew popup updates
+	let activeCrewProjectIndex = null;
+
 	// Set images on load
 	document.getElementById('aboutImage').src = aboutImageSrc;
 	document.getElementById('contactImage').src = contactImageSrc;
+	
+	// Create Crew Popup (Structure Modified for Grid)
+	const crewPopup = document.createElement('div');
+	crewPopup.className = 'hero-popup';
+	crewPopup.id = 'crewPopup';
+	crewPopup.innerHTML = `
+		<div class="hero-content">
+			<button class="hero-close" onclick="closePopup('crew')">
+				<span class="material-symbols-outlined">close</span>
+			</button>
+			<div class="hero-text">
+				<h1 id="crewTitle">${popupContent.crew.en.title}</h1>
+				<div id="crewList" class="crew-list">
+					</div>
+			</div>
+		</div>
+	`;
+	document.body.appendChild(crewPopup);
+	
+	// Close crew popup on background click
+	document.getElementById('crewPopup').addEventListener('click', (e) => {
+		if (e.target === e.currentTarget) {
+			closePopup('crew');
+		}
+	});
+
+	// Function to generate HTML from the special text format
+	function generateCrewHTML(project, lang) {
+		if (!project.description.crew_people || !project.description.crew_roles || !project.description.crew_roles[lang]) {
+			return '<p style="color:white; font-size:2rem;">No crew information available.</p>';
+		}
+
+		const peopleRaw = project.description.crew_people.split(';;');
+		const rolesRaw = project.description.crew_roles[lang].split(';;');
+
+		// Map roles by ID for easy lookup
+		const rolesMap = {};
+		rolesRaw.forEach(roleString => {
+			// Extract ID [x] and Role text
+			const match = roleString.match(/\[(\d+)\]\s*(.*)/);
+			if (match) {
+				rolesMap[match[1]] = match[2].trim();
+			}
+		});
+
+		let html = '';
+
+		peopleRaw.forEach(personString => {
+			if (!personString.trim()) return;
+
+			// Parsing Format: [1] **Name** [LinkText](LinkURL)
+			const regex = /\[(\d+)\]\s*\*\*(.*?)\*\*\s*\[(.*?)\]\((.*?)\)/;
+			const match = personString.match(regex);
+
+			if (match) {
+				const id = match[1];
+				const name = match[2];
+				const linkText = match[3];
+				const linkUrl = match[4];
+				const role = rolesMap[id] || "";
+
+				html += `
+					<div class="crew-card">
+						<div class="crew-name">${name}</div>
+						<div class="crew-role">${role}</div>
+						<a href="${linkUrl}" target="_blank" class="crew-link">
+							${linkText} <span class="material-symbols-outlined" style="font-size:1.4rem"></span>
+						</a>
+					</div>
+				`;
+			}
+		});
+
+		return html;
+	}
 
 	// Popup functions
-	function openPopup(type) {
+	function openPopup(type, projectIndex = null) {
 		const popup = document.getElementById(type + 'Popup');
+		
+		if (type === 'crew' && projectIndex !== null) {
+			activeCrewProjectIndex = projectIndex;
+			const project = projectsData.projects[projectIndex];
+			const lang = languages[currentLanguage];
+			
+			// Update Title
+			const crewTitle = document.getElementById('crewTitle');
+			crewTitle.textContent = popupContent.crew[lang].title;
+
+			// Generate and Inject Grid
+			const crewList = document.getElementById('crewList');
+			crewList.innerHTML = generateCrewHTML(project, lang);
+		}
+
 		popup.classList.add('show');
 		document.body.style.overflow = 'hidden';
 	}
@@ -688,6 +903,9 @@
 		const popup = document.getElementById(type + 'Popup');
 		popup.classList.remove('show');
 		document.body.style.overflow = '';
+		if (type === 'crew') {
+			activeCrewProjectIndex = null;
+		}
 	}
 
 	// Close popup on background click
@@ -713,7 +931,6 @@
 		}
 	});
 
-	// MODIFIED: loadProjectData now returns a promise for proper sequencing
 	async function loadProjectData() {
 		try {
 			const response = await fetch('./data.json');
@@ -723,12 +940,15 @@
 			return Promise.resolve();
 		} catch (error) {
 			console.error('Error loading project data:', error);
-			// Fallback data with test video and years
+			// FIXED: Cleaned up Tabbing for projectsData
 			projectsData = {
 				"projects": [
 					{
-						"media": ["https://picsum.photos/800/600?random=1", "https://picsum.photos/800/600?random=2"],
-						"videoId": "KUs1Popfd8g", // Example 11-char YouTube ID
+						"media": [
+							"https://picsum.photos/800/600?random=1", 
+							"https://picsum.photos/800/600?random=2"
+						],
+						"videoId": "KUs1Popfd8g", 
 						"date": "2024/01",
 						"duration": "30 MIN",
 						"translations": {
@@ -739,16 +959,46 @@
 							"ar": ["مشروع واحد", "كاميرا"]
 						},
 						"description": {
-							"en": "This is a sample project with a video demonstration (YouTube).",
+							"en": "This is a sample project (YouTube).",
 							"pt-pt": "Este é um projeto exemplo com demonstração em vídeo (YouTube).",
 							"zh": "这是一个带有视频演示的示例项目（YouTube）。",
 							"de": "Dies ist ein Beispielprojekt mit Videodemonstration (YouTube).",
-							"ar": "هذا مشروع عينة مع عرض فيديو (يوتيوب)."
+							"ar": "هذا مشروع عينة مع عرض فيديو (يوتيوب).",
+							
+							"crew_people": `
+									[1] **Alice** [Portfolio](https://www.alice.com);;
+									[2] **Bob** [Instagram](https://www.instagram.com/bob_ig);;
+									[3] **Charlie** [Vimeo](https://vimeo.com/charlie_vid)`,
+							"crew_roles": {
+								"en": `
+									[1] Director, Writer, Gaffer;;
+									[2] Camera Operator, Grip;;
+									[3] Editor, Colorist`,
+								"pt-pt": `
+									[1] Realizador, Escritor, Maquinista;;
+									[2] Operador de Câmara, Assistente de Eléctrica;;
+									[3] Editor, Colorista`,
+								"zh": `
+									[1] 导演, 编剧, 灯光师;;
+									[2] 摄影师, 场务;;
+									[3] 剪辑师, 调色师`,
+								"de": `
+									[1] Regisseur, Autor, Beleuchter;;
+									[2] Kameramann, Grips;;
+									[3] Cutter, Kolorist`,
+								"ar": `
+									[1] مخرج، كاتب، مساعد الإضاءة;;
+									[2] مشغل الكاميرا، معدات خفيفة;;
+									[3] مونتير، مصحح ألوان`
+							}
 						}
 					},
 					{
-						"media": ["https://picsum.photos/800/600?random=3", "https://picsum.photos/800/600?random=4"],
-						"videoId": "930022904", // Example 9-char Vimeo ID
+						"media": [
+							"https://picsum.photos/800/600?random=3", 
+							"https://picsum.photos/800/600?random=4"
+						],
+						"videoId": "930022904",
 						"date": "2023/12",
 						"duration": "10 MIN",
 						"translations": {
@@ -763,7 +1013,28 @@
 							"pt-pt": "Outro projeto exemplo mostrando trabalho de design (Vimeo).",
 							"zh": "另一个展示设计工作的示例项目（Vimeo）。",
 							"de": "Ein weiteres Beispielprojekt mit Designarbeit (Vimeo).",
-							"ar": "مشروع عينة آخر يعرض أعمال التصميم (فيميو)."
+							"ar": "مشروع عينة آخر يعرض أعمال التصميم (فيميو).",
+							"crew_people": `
+								[1] **David** [Instagram](https://www.instagram.com/david_ig);;
+								[2] **Eve** [LinkedIn](https://www.linkedin.com/in/eve)`,
+							
+							"crew_roles": {
+								"en": `
+									[1] Director, Editor;;
+									[2] Producer, Runner`,
+								"pt-pt": `
+									[1] Realizador, Editor;;
+									[2] Produtor, Assistente de Produção`,
+								"zh": `
+									[1] 导演, 剪辑师;;
+									[2] 制片人, 跑腿`,
+								"de": `
+									[1] Regisseur, Cutter;;
+									[2] Produzent, Runner`,
+								"ar": `
+									[1] مخرج، مونتير;;
+									[2] منتج، مساعد إنتاج`
+							}
 						}
 					}
 				]
@@ -778,17 +1049,12 @@
 		if (!projectsData) return;
 		
 		const ladderStrip = document.querySelector('.ladder.strip');
-		// The last child is the bottom spacer frame
 		const lastFrame = ladderStrip.children[ladderStrip.children.length - 1];
 		
-		// FIXED LOGIC: Remove existing project frames. Start removing from index 2,
-		// and continue as long as there are MORE than 3 children (Spacer, Dummy, Bottom Spacer).
 		while (ladderStrip.children.length > 3) {
-			// Remove the element at index 2 (the first project) repeatedly
 			ladderStrip.removeChild(ladderStrip.children[2]);
 		}
 		
-		// Generate project frames
 		projectsData.projects.forEach((project, index) => {
 			const frame = document.createElement('div');
 			frame.className = 'toddao frame project-container';
@@ -808,29 +1074,38 @@
 			button.appendChild(rightSpan);
 			frame.appendChild(button);
 			
-			// Add left vertical text overlay
 			const verticalTextLeft = document.createElement('div');
 			verticalTextLeft.className = 'vertical-text-left';
 			const textSpanLeft = document.createElement('span');
 			verticalTextLeft.appendChild(textSpanLeft);
 			frame.appendChild(verticalTextLeft);
 			
-			// Add right vertical text overlay
 			const verticalTextRight = document.createElement('div');
 			verticalTextRight.className = 'vertical-text-right';
 			const textSpanRight = document.createElement('span');
 			verticalTextRight.appendChild(textSpanRight);
 			frame.appendChild(verticalTextRight);
 			
-			// YouTube container - OUTSIDE the button
 			const youtubeContainer = document.createElement('div');
 			youtubeContainer.className = 'youtube-container';
 			frame.appendChild(youtubeContainer);
 			
-			// Description container - OUTSIDE the button
+			const textAndButtonContainer = document.createElement('div');
+			textAndButtonContainer.className = 'text-and-button-container';
+			
 			const descriptionDiv = document.createElement('div');
 			descriptionDiv.className = 'project-description';
-			frame.appendChild(descriptionDiv);
+			textAndButtonContainer.appendChild(descriptionDiv);
+			
+			const crewButton = document.createElement('button');
+			crewButton.className = 'crew-button';
+			crewButton.addEventListener('click', (e) => {
+				e.stopPropagation(); 
+				openPopup('crew', index);
+			});
+			textAndButtonContainer.appendChild(crewButton);
+			
+			frame.appendChild(textAndButtonContainer);
 			
 			ladderStrip.insertBefore(frame, lastFrame);
 		});
@@ -838,30 +1113,24 @@
 		attachProjectListeners();
 	}
 
-	/**
-	 * @description Determines video source (YouTube/Vimeo) by ID length and loads media.
-	 */
 	function toggleMediaAndDescription(frame, projectIndex, expanded) {
 		if (projectIndex < 0 || projectIndex >= projectsData.projects.length) return;
 
 		const project = projectsData.projects[projectIndex];
 		const youtubeContainer = frame.querySelector('.youtube-container');
-		const description = frame.querySelector('.project-description');
+		const textAndButtonContainer = frame.querySelector('.text-and-button-container'); 
 		const img = frame.querySelector('button img');
 
 		if (expanded) {
-			// Swap image immediately
 			img.src = project.media[1] || project.media[0];
 
 			if (project.videoId) {
 				const videoId = project.videoId;
 				let videoUrl = '';
 				
-				// Vimeo IDs are typically 9 characters
 				if (videoId.length === 9) {
 					videoUrl = `https://player.vimeo.com/video/${videoId}?autoplay=0&dnt=1`;
 				} 
-				// YouTube IDs are typically 11 characters
 				else if (videoId.length === 11) {
 					videoUrl = `https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0&modestbranding=1`;
 				} else {
@@ -870,43 +1139,34 @@
 				}
 				
 				if (videoUrl) {
-					// 1. Insert Placeholder and Show Container immediately
-					youtubeContainer.innerHTML = `<div class="youtube-placeholder">LOADING VIDEO...</div>`;
+					// MODIFIED: Use translated text for loading
+					const lang = languages[currentLanguage];
+					const loadingText = loadingTranslations[lang] || "LOADING VIDEO...";
+					
+					youtubeContainer.innerHTML = `<div class="youtube-placeholder">${loadingText}</div>`;
 					youtubeContainer.classList.add('show');
 					
-					// 2. Wait for the expansion animation (1s) before loading the iframe
 					setTimeout(() => {
 						const iframe = document.createElement('iframe');
 						iframe.src = videoUrl;
 						iframe.frameBorder = "0";
 						iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
 						iframe.allowFullscreen = true;
-						
-						// 3. Listener to fade in the video once it loads
 						iframe.onload = () => {
-							// Fade in the iframe, covering the placeholder
 							iframe.style.opacity = '1'; 
 						};
-
 						youtubeContainer.appendChild(iframe);
-					}, 1000); // Wait 1 second (matches CSS transition time)
+					}, 1000);
 				}
 			}
 			
-			// Show description
 			setTimeout(() => {
-				description.classList.add('show');
+				textAndButtonContainer.classList.add('show');
 			}, 100);
 		} else {
-			// CLOSING
-			// Swap image back
 			img.src = project.media[0];
-
-			// Hide YouTube video and description
 			youtubeContainer.classList.remove('show');
-			description.classList.remove('show');
-			
-			// Clear container content after it fades out (0.5s)
+			textAndButtonContainer.classList.remove('show');
 			setTimeout(() => {
 				youtubeContainer.innerHTML = '';
 			}, 500);
@@ -917,14 +1177,11 @@
 		const ladderFrames = document.querySelectorAll('.ladder .toddao');
 
 		ladderFrames.forEach((frame, index) => {
-			const button = frame.querySelector('button');
+			const button = frame.querySelector('button:not(.crew-button)');
 			
-			// Skip spacer frames and the dummy frame
 			if (!button || frame.classList.contains('dummy-frame')) return;
 			
 			const img = button.querySelector('img');
-			
-			// CHANGED: Subtract 2 now (for the top spacer + the dummy card)
 			const projectIndex = index - 2; 
 			
 			if (projectIndex < 0 || projectIndex >= projectsData.projects.length) return;
@@ -935,49 +1192,35 @@
 				const isExpanded = button.classList.contains('expanded');
 
 				if (isExpanded) {
-					// CLOSING - just collapse this one
 					button.classList.remove('expanded');
 					toggleMediaAndDescription(frame, projectIndex, false);
 					frame.classList.remove('move-up', 'move-down');
-					button.style.filter = ''; // Reset filter
+					button.style.filter = '';
 
-					// Reset all move classes since nothing is expanded now
 					ladderFrames.forEach((frm) => {
 						frm.classList.remove('move-up', 'move-down');
 					});
 				} else {
-					// OPENING
-					
-					// Step 1: Reset all positions and collapse others first
 					ladderFrames.forEach((frm) => {
 						frm.classList.remove('move-up', 'move-down');
 					});
 
-					// Step 2: Collapse all others (but not this one)
 					ladderFrames.forEach((frm, frmIndex) => {
 						if (frm !== frame) {
-							const btn = frm.querySelector('button');
+							const btn = frm.querySelector('button:not(.crew-button)');
 							if (btn) {
 								btn.classList.remove('expanded');
-								// Use index - 2 for project content
 								toggleMediaAndDescription(frm, frmIndex - 2, false); 
 							}
 						}
 					});
 
-					// --- NEW LOGIC: Load Image Before Expanding ---
-					
 					const expandCard = () => {
-						button.style.filter = ''; // Reset simple animation filter
-						button.style.pointerEvents = 'auto'; // Re-enable clicks
-						
-						// 1. EXPAND the card (triggers CSS height transition)
+						button.style.filter = ''; 
+						button.style.pointerEvents = 'auto'; 
 						button.classList.add('expanded');
-						
-						// 2. Start video placeholder/loading/description
 						toggleMediaAndDescription(frame, projectIndex, true);
 						
-						// 3. Apply new move classes based on the expanded frame
 						ladderFrames.forEach((frm, frameIndex) => {
 							if (frameIndex < index) {
 								frm.classList.add('move-up');
@@ -988,17 +1231,12 @@
 					};
 					
 					if (project.media[1]) {
-						// Simple visual cue (dim the card) while loading
 						button.style.filter = 'brightness(0.5)';
-						
 						const loadingImage = new Image();
 						loadingImage.src = project.media[1];
-
-						// Prevent double-clicking while the image is loading
 						button.style.pointerEvents = 'none';
 
 						loadingImage.onload = () => {
-							// Set the image source after it's loaded
 							img.src = project.media[1];
 							expandCard();
 						};
@@ -1009,33 +1247,26 @@
 						};
 
 					} else {
-						// No second media, expand immediately
 						expandCard();
 					}
-					// ---------------------------------------------
 				}
 			});
 		});
 	}
 
-	// NEW FUNCTION: Forces the first (dummy) card to expand and collapse
 	function initializeLayoutWithDummyCard() {
 		const dummyFrame = document.querySelector('.dummy-frame');
 		if (!dummyFrame) return;
 
-		const dummyButton = dummyFrame.querySelector('button');
+		const dummyButton = dummyFrame.querySelector('button:not(.crew-button)');
 
 		if (dummyButton) {
-			// This forces the "expanded" height to be read by the browser on load,
-			// which absorbs the initial layout cost.
 			dummyButton.classList.remove('expanded');
 			dummyFrame.classList.remove('move-up', 'move-down');
-			
-			// Clean up any stray media/description if needed
 			const youtubeContainer = dummyFrame.querySelector('.youtube-container');
-			const description = dummyFrame.querySelector('.project-description');
+			const textAndButtonContainer = dummyFrame.querySelector('.text-and-button-container'); 
 			if(youtubeContainer) youtubeContainer.innerHTML = '';
-			if(description) description.classList.remove('show');
+			if(textAndButtonContainer) textAndButtonContainer.classList.remove('show');
 		}
 	}
 
@@ -1047,20 +1278,27 @@
 		const langButton = document.querySelector('nav button span:last-child');
 		langButton.textContent = `(${languageNames[lang]})`;
 
-		// Update navigation
 		const aboutButton = document.querySelector('nav ul li:first-child button');
 		const contactButton = document.querySelector('nav ul li:nth-child(2) button');
 		aboutButton.textContent = navTranslations.about[lang];
 		contactButton.textContent = navTranslations.contact[lang];
 
-		// Update popup content
 		document.getElementById('aboutTitle').textContent = popupContent.about[lang].title;
 		document.getElementById('aboutText').textContent = popupContent.about[lang].text;
 		document.getElementById('contactTitle').textContent = popupContent.contact[lang].title;
 		document.getElementById('contactText').textContent = popupContent.contact[lang].text;
+		
+		if (document.getElementById('crewTitle')) {
+			document.getElementById('crewTitle').textContent = popupContent.crew[lang].title;
+		}
 
-		// Update project texts
-		// Filter out the dummy frame
+		// Refresh the Crew Popup list if it is currently open and active
+		if (activeCrewProjectIndex !== null) {
+			const crewList = document.getElementById('crewList');
+			const project = projectsData.projects[activeCrewProjectIndex];
+			crewList.innerHTML = generateCrewHTML(project, lang);
+		}
+
 		const frames = document.querySelectorAll('.ladder .toddao.project-container:not(.dummy-frame)');
 		frames.forEach((frame, index) => {
 			if (index < projectsData.projects.length) {
@@ -1068,23 +1306,24 @@
 				const translations = project.translations[lang];
 				const descriptionText = project.description[lang];
 				
-				const button = frame.querySelector('button');
+				const button = frame.querySelector('button:not(.crew-button)');
 				const leftSpan = button.querySelector('.left');
 				const rightSpan = button.querySelector('.right');
 				const descriptionDiv = frame.querySelector('.project-description');
+				const crewButton = frame.querySelector('.crew-button');
+				
 				const verticalTextLeftSpan = frame.querySelector('.vertical-text-left span');
 				const verticalTextRightSpan = frame.querySelector('.vertical-text-right span');
 				
 				if (leftSpan) leftSpan.textContent = translations[0];
 				if (rightSpan) rightSpan.textContent = translations[1];
 				if (descriptionDiv) descriptionDiv.textContent = descriptionText;
+				if (crewButton) crewButton.textContent = crewButtonTranslations[lang];
 				
-				// Update left vertical text
 				if (verticalTextLeftSpan) {
 					verticalTextLeftSpan.innerHTML = `<span class="libre-barcode-128-regular">${leftTextWord}</span><span class="libre-barcode-128-text-regular">${project.date}</span><span class="libre-barcode-128-regular">${leftTextWord}</span>`;
 				}
 				
-				// Update right vertical text
 				if (verticalTextRightSpan) {
 					verticalTextRightSpan.innerHTML = `<span class="libre-barcode-128-regular">${rightTextWord}</span><span class="libre-barcode-128-text-regular">${project.duration}</span><span class="libre-barcode-128-regular">${rightTextWord}</span>`;
 				}
@@ -1097,26 +1336,22 @@
 		updateLanguage();
 	}
 
-function burgerClicked() {
-    const burger = document.getElementById('burger');
-    const mainNav = document.getElementById('mainNav');
-    const expanded = burger.getAttribute('aria-expanded') === 'true';
-    burger.setAttribute('aria-expanded', !expanded);
-    
-    if (expanded) {
-        // Closing - add hide class
-        mainNav.classList.add('hide');
-        mainNav.classList.remove('show');
-    } else {
-        // Opening - add show class, remove hide
-        mainNav.classList.remove('hide');
-        mainNav.classList.add('show');
-    }
-}
+	function burgerClicked() {
+		const burger = document.getElementById('burger');
+		const mainNav = document.getElementById('mainNav');
+		const expanded = burger.getAttribute('aria-expanded') === 'true';
+		burger.setAttribute('aria-expanded', !expanded);
+		
+		if (expanded) {
+			mainNav.classList.add('hide');
+			mainNav.classList.remove('show');
+		} else {
+			mainNav.classList.remove('hide');
+			mainNav.classList.add('show');
+		}
+	}
 
-// Initialize
 	document.addEventListener('DOMContentLoaded', () => {
-		// Calling loadProjectData and then initializing the dummy card layout
 		loadProjectData().then(() => {
 			initializeLayoutWithDummyCard(); 
 		});
@@ -1124,16 +1359,15 @@ function burgerClicked() {
 		const translateButton = document.querySelector('nav ul li:last-child button');
 		translateButton.addEventListener('click', cycleLanguage);
 	
-// Scroll listener to hide menu once
-let hasScrolled = false;
-window.addEventListener('scroll', () => {
-    if (!hasScrolled && window.scrollY > 50) {
-        hasScrolled = true;
-        const mainNav = document.getElementById('mainNav');
-        mainNav.classList.remove('show');
-        mainNav.classList.add('hide');
-    }
-});
+		let hasScrolled = false;
+		window.addEventListener('scroll', () => {
+			if (!hasScrolled && window.scrollY > 50) {
+				hasScrolled = true;
+				const mainNav = document.getElementById('mainNav');
+				mainNav.classList.remove('show');
+				mainNav.classList.add('hide');
+			}
+		});
 	});
 	</script>
 

@@ -1,7 +1,10 @@
 {
 	"projects": [
 		{
-			"media": ["./media/bang.jpg", "./media/bang-alt.jpg"],
+			"media": [
+				"./media/bang.jpg",
+				"./media/bang-alt.jpg"
+			],
 			"videoId": "",
 			"date": "2025/06",
 			"duration": "03 MIN",
@@ -17,11 +20,22 @@
 				"pt-pt": "Cover de dança K-pop filmado com duas câmaras - operei uma num gimbal para capturar ângulos dinâmicos inspirados na série On The Spot da 1theK.",
 				"zh": "K-pop舞蹈翻跳用两台摄像机拍摄 - 我操作稳定器摄像机捕捉动态角度，灵感来自1theK的On The Spot系列。",
 				"de": "K-Pop-Tanzcover mit zwei Kameras gedreht - ich bediente eine auf einem Gimbal, um dynamische Winkel zu erfassen, inspiriert von 1theKs On The Spot-Serie.",
-				"ar": "غطاء رقص كيبوب تم تصويره بكاميرتين - قمت بتشغيل واحدة على محور متوازن لالتقاط زوايا ديناميكية مستوحاة من سلسلة On The Spot من 1theK."
+				"ar": "غطاء رقص كيبوب تم تصويره بكاميرتين - قمت بتشغيل واحدة على محور متوازن لالتقاط زوايا ديناميكية مستوحاة من سلسلة On The Spot من 1theK.",
+				"crew_people": "[1] **Bob** [Portfolio](https://example.com);;",
+				"crew_roles": {
+					"en": "[1] Assistant;;",
+					"pt-pt": "[1] Assistente;;",
+					"zh": "[1] 助手;;",
+					"de": "[1] Assistent;;",
+					"ar": "[1] مساعد;;"
+				}
 			}
 		},
 		{
-			"media": ["./media/monitor.jpg", "./media/liberdade.jpg"],
+			"media": [
+				"./media/monitor.jpg",
+				"./media/liberdade.jpg"
+			],
 			"videoId": "",
 			"date": "2025/05",
 			"duration": "30 MIN",
@@ -37,11 +51,22 @@
 				"pt-pt": "Gravação de som de produção e otimização do fluxo de trabalho de ficheiros com scripts de edição em lote e acompanhamento em folhas de cálculo para um thriller de ação de 30 minutos, filmado em 13 dias em 5 localizações variadas em Lisboa.",
 				"zh": "为一部30分钟的动作惊悚片录制制作音频，并通过批量编辑脚本和电子表格跟踪优化文件工作流程，在里斯本的5个不同地点历时13天拍摄完成。",
 				"de": "Aufnahme des Produktionstons und Optimierung des Datei-Workflows mit Batch-Edit-Skripten und Tabellenverfolgung für einen 30-minütigen Action-Thriller, gedreht in 13 Tagen an 5 verschiedenen Standorten in Lissabon.",
-				"ar": "تسجيل صوت الإنتاج وتبسيط سير عمل الملفات باستخدام نصوص التحرير الجماعي وتتبع جداول البيانات لفيلم إثارة وحركة مدته 30 دقيقة، تم تصويره في 13 يومًا في 5 مواقع متنوعة عبر لشبونة."
+				"ar": "تسجيل صوت الإنتاج وتبسيط سير عمل الملفات باستخدام نصوص التحرير الجماعي وتتبع جداول البيانات لفيلم إثارة وحركة مدته 30 دقيقة، تم تصويره في 13 يومًا في 5 مواقع متنوعة عبر لشبونة.",
+				"crew_people": "[1] **Bob** [Portfolio](https://example.com);;",
+				"crew_roles": {
+					"en": "[1] Assistant;;",
+					"pt-pt": "[1] Assistente;;",
+					"zh": "[1] 助手;;",
+					"de": "[1] Assistent;;",
+					"ar": "[1] مساعد;;"
+				}
 			}
 		},
 		{
-			"media": ["./media/chapito.gif", "./media/chapito.gif"],
+			"media": [
+				"./media/chapito.gif",
+				"./media/chapito.gif"
+			],
 			"videoId": "ztUn9QWYk_Y",
 			"date": "2025/01",
 			"duration": "13 MIN",
@@ -57,11 +82,22 @@
 				"pt-pt": "Documentário sobre Pascoal Furtado, um professor no Chapitô, uma escola de circo em Lisboa.",
 				"zh": "关于帕斯科阿尔·富尔塔多的纪录片，他是里斯本马戏团学校Chapitô的一名教师。",
 				"de": "Dokumentarfilm über Pascoal Furtado, einen Lehrer an der Chapitô, einer Zirkusschule in Lissabon.",
-				"ar": "وثائقي عن باسكوال فورتادو، مدرس في شابيتو، مدرسة سيرك في لشبونة."
+				"ar": "وثائقي عن باسكوال فورتادو، مدرس في شابيتو، مدرسة سيرك في لشبونة.",
+				"crew_people": "[1] **Bob** [Portfolio](https://example.com);;",
+				"crew_roles": {
+					"en": "[1] Assistant;;",
+					"pt-pt": "[1] Assistente;;",
+					"zh": "[1] 助手;;",
+					"de": "[1] Assistent;;",
+					"ar": "[1] مساعد;;"
+				}
 			}
 		},
 		{
-			"media": ["./media/doclis.png", "./media/doclis.png"],
+			"media": [
+				"./media/doclis.png",
+				"./media/doclis.png"
+			],
 			"videoId": "NPPzUJvmkq8",
 			"date": "2024/10",
 			"duration": "DAYS",
@@ -77,11 +113,22 @@
 				"pt-pt": "Filmagem de B-roll e apresentações para o Doclisboa, o principal festival internacional de cinema documental de Portugal.",
 				"zh": "为葡萄牙领先的国际纪录片电影节Doclisboa拍摄花絮镜头和演示。",
 				"de": "Dreharbeiten von B-Roll und Präsentationen für Doclisboa, Portugals führendes internationales Dokumentarfilmfestival.",
-				"ar": "تصوير لقطات إضافية وعروض تقديمية لمهرجان دوكليسبوا، مهرجان الأفلام الوثائقية الدولي الرائد في البرتغال."
+				"ar": "تصوير لقطات إضافية وعروض تقديمية لمهرجان دوكليسبوا، مهرجان الأفلام الوثائقية الدولي الرائد في البرتغال.",
+				"crew_people": "[1] **Bob** [Portfolio](https://example.com);;",
+				"crew_roles": {
+					"en": "[1] Assistant;;",
+					"pt-pt": "[1] Assistente;;",
+					"zh": "[1] 助手;;",
+					"de": "[1] Assistent;;",
+					"ar": "[1] مساعد;;"
+				}
 			}
 		},
 		{
-			"media": ["./media/seb.jpg", "./media/seb.gif"],
+			"media": [
+				"./media/seb.jpg",
+				"./media/seb.gif"
+			],
 			"videoId": "__UxmK7BD68",
 			"date": "2024/08",
 			"duration": "04 MIN",
@@ -97,11 +144,22 @@
 				"pt-pt": "Entrevista sobre Sebastião Ogando.",
 				"zh": "关于塞巴斯蒂昂·奥甘多的采访。",
 				"de": "Interview über Sebastião Ogando.",
-				"ar": "مقابلة حول سيباستياو أوغاندو."
+				"ar": "مقابلة حول سيباستياو أوغاندو.",
+				"crew_people": "[1] **Bob** [Portfolio](https://example.com);;",
+				"crew_roles": {
+					"en": "[1] Assistant;;",
+					"pt-pt": "[1] Assistente;;",
+					"zh": "[1] 助手;;",
+					"de": "[1] Assistent;;",
+					"ar": "[1] مساعد;;"
+				}
 			}
 		},
 		{
-			"media": ["./media/free.jpg", "./media/free.gif"],
+			"media": [
+				"./media/free.jpg",
+				"./media/free.gif"
+			],
 			"videoId": "FcrQnCTnG0M",
 			"date": "2024/08",
 			"duration": "04 MIN",
@@ -117,11 +175,22 @@
 				"pt-pt": "Curta-metragem experimental.",
 				"zh": "实验短片。",
 				"de": "Experimenteller Kurzfilm.",
-				"ar": "فيلم قصير تجريبي."
+				"ar": "فيلم قصير تجريبي.",
+				"crew_people": "[1] **Bob** [Portfolio](https://example.com);;",
+				"crew_roles": {
+					"en": "[1] Assistant;;",
+					"pt-pt": "[1] Assistente;;",
+					"zh": "[1] 助手;;",
+					"de": "[1] Assistent;;",
+					"ar": "[1] مساعد;;"
+				}
 			}
 		},
 		{
-			"media": ["./media/group1.png", "./media/liberdade1.jpg"],
+			"media": [
+				"./media/group1.png",
+				"./media/liberdade1.jpg"
+			],
 			"videoId": "5LlSdajis7g",
 			"date": "2024/06",
 			"duration": "32 MIN",
@@ -137,11 +206,22 @@
 				"pt-pt": "Câmara de grua numa maquete de programa de TV ao vivo e pré-visualização em Blender usando fotogrametria.",
 				"zh": "在现场电视节目模拟中使用摇臂摄像机，并使用摄影测量在Blender中进行预览。",
 				"de": "Krankamera in einem Live-TV-Programm-Mockup und Pre-Vis in Blender mit Photogrammetrie.",
-				"ar": "كاميرا رافعة في نموذج برنامج تلفزيوني مباشر ومعاينة مسبقة في Blender باستخدام التصوير المساحي."
+				"ar": "كاميرا رافعة في نموذج برنامج تلفزيوني مباشر ومعاينة مسبقة في Blender باستخدام التصوير المساحي.",
+				"crew_people": "[1] **Bob** [Portfolio](https://example.com);;",
+				"crew_roles": {
+					"en": "[1] Assistant;;",
+					"pt-pt": "[1] Assistente;;",
+					"zh": "[1] 助手;;",
+					"de": "[1] Assistent;;",
+					"ar": "[1] مساعد;;"
+				}
 			}
 		},
 		{
-			"media": ["./media/redroom.jpg", "./media/blueroom.jpg"],
+			"media": [
+				"./media/redroom.jpg",
+				"./media/blueroom.jpg"
+			],
 			"videoId": "",
 			"date": "2024/06",
 			"duration": "30 MIN",
@@ -157,11 +237,22 @@
 				"pt-pt": "Assistente de câmara da grua.",
 				"zh": "摇臂摄像机助理。",
 				"de": "Kameraassistent der Krankamera.",
-				"ar": "مساعد كاميرا الرافعة."
+				"ar": "مساعد كاميرا الرافعة.",
+				"crew_people": "[1] **Bob** [Portfolio](https://example.com);;",
+				"crew_roles": {
+					"en": "[1] Assistant;;",
+					"pt-pt": "[1] Assistente;;",
+					"zh": "[1] 助手;;",
+					"de": "[1] Assistent;;",
+					"ar": "[1] مساعد;;"
+				}
 			}
 		},
 		{
-			"media": ["./media/alges.png", "./media/alges.png"],
+			"media": [
+				"./media/alges.png",
+				"./media/alges.png"
+			],
 			"videoId": "UsGJUCy7Mx0",
 			"date": "2024/05",
 			"duration": "04 MIN",
@@ -177,11 +268,22 @@
 				"pt-pt": "Cover de dança, RIIZE 라이즈 - 'Impossible'.",
 				"zh": "舞蹈翻跳，RIIZE 라이즈 - 'Impossible'。",
 				"de": "Tanzcover, RIIZE 라이즈 - 'Impossible'.",
-				"ar": "غطاء رقص، RIIZE 라이즈 - 'Impossible'."
+				"ar": "غطاء رقص، RIIZE 라이즈 - 'Impossible'.",
+				"crew_people": "[1] **Bob** [Portfolio](https://example.com);;",
+				"crew_roles": {
+					"en": "[1] Assistant;;",
+					"pt-pt": "[1] Assistente;;",
+					"zh": "[1] 助手;;",
+					"de": "[1] Assistent;;",
+					"ar": "[1] مساعد;;"
+				}
 			}
 		},
 		{
-			"media": ["./media/cinema.png", "./media/artista.jpg"],
+			"media": [
+				"./media/cinema.png",
+				"./media/artista.jpg"
+			],
 			"videoId": "930022904",
 			"date": "2024/04",
 			"duration": "04 MIN",
@@ -197,11 +299,22 @@
 				"pt-pt": "https://vimeo.com/930022904",
 				"zh": "https://vimeo.com/930022904",
 				"de": "https://vimeo.com/930022904",
-				"ar": "https://vimeo.com/930022904"
+				"ar": "https://vimeo.com/930022904",
+				"crew_people": "[1] **Bob** [Portfolio](https://example.com);;",
+				"crew_roles": {
+					"en": "[1] Assistant;;",
+					"pt-pt": "[1] Assistente;;",
+					"zh": "[1] 助手;;",
+					"de": "[1] Assistent;;",
+					"ar": "[1] مساعد;;"
+				}
 			}
 		},
 		{
-			"media": ["./media/curta.jpg", "./media/curta.jpg"],
+			"media": [
+				"./media/curta.jpg",
+				"./media/curta.jpg"
+			],
 			"videoId": "",
 			"date": "2024/02",
 			"duration": "02 MIN",
@@ -217,11 +330,22 @@
 				"pt-pt": "Uma peça experimental muito curta.",
 				"zh": "一部非常短的实验作品。",
 				"de": "Ein sehr kurzes experimentelles Stück.",
-				"ar": "قطعة تجريبية قصيرة جداً."
+				"ar": "قطعة تجريبية قصيرة جداً.",
+				"crew_people": "[1] **Bob** [Portfolio](https://example.com);;",
+				"crew_roles": {
+					"en": "[1] Assistant;;",
+					"pt-pt": "[1] Assistente;;",
+					"zh": "[1] 助手;;",
+					"de": "[1] Assistent;;",
+					"ar": "[1] مساعد;;"
+				}
 			}
 		},
 		{
-			"media": ["./media/people.png", "./media/people.png"],
+			"media": [
+				"./media/people.png",
+				"./media/people.png"
+			],
 			"videoId": "ayyPyMsfCJo",
 			"date": "2024/01",
 			"duration": "02 MIN",
@@ -237,11 +361,22 @@
 				"pt-pt": "Fotografias dos bastidores",
 				"zh": "幕后照片",
 				"de": "Fotografien hinter den Kulissen",
-				"ar": "صور من خلف الكواليس"
+				"ar": "صور من خلف الكواليس",
+				"crew_people": "[1] **Bob** [Portfolio](https://example.com);;",
+				"crew_roles": {
+					"en": "[1] Assistant;;",
+					"pt-pt": "[1] Assistente;;",
+					"zh": "[1] 助手;;",
+					"de": "[1] Assistent;;",
+					"ar": "[1] مساعد;;"
+				}
 			}
 		},
 		{
-			"media": ["./media/skydive.png", "./media/skydive.png"],
+			"media": [
+				"./media/skydive.png",
+				"./media/skydive.png"
+			],
 			"videoId": "KUs1Popfd8g",
 			"date": "2015/10",
 			"duration": "01 MIN",
@@ -257,11 +392,22 @@
 				"pt-pt": "Descrição do projeto pendente.",
 				"zh": "项目描述待定。",
 				"de": "Projektbeschreibung ausstehend.",
-				"ar": "وصف المشروع قيد الانتظار."
+				"ar": "وصف المشروع قيد الانتظار.",
+				"crew_people": "[1] **Bob** [Portfolio](https://example.com);;",
+				"crew_roles": {
+					"en": "[1] Assistant;;",
+					"pt-pt": "[1] Assistente;;",
+					"zh": "[1] 助手;;",
+					"de": "[1] Assistent;;",
+					"ar": "[1] مساعد;;"
+				}
 			}
 		},
 		{
-			"media": ["./media/cctv.jpg", "./media/monitor-alt.jpg"],
+			"media": [
+				"./media/cctv.jpg",
+				"./media/monitor-alt.jpg"
+			],
 			"videoId": "KUs1Popfd8g",
 			"date": "####/##",
 			"duration": "## MIN",
@@ -277,7 +423,15 @@
 				"pt-pt": "Descrição do projeto pendente.",
 				"zh": "项目描述待定。",
 				"de": "Projektbeschreibung ausstehend.",
-				"ar": "وصف المشروع قيد الانتظار."
+				"ar": "وصف المشروع قيد الانتظار.",
+				"crew_people": "[1] **Bob** [Portfolio](https://example.com);;",
+				"crew_roles": {
+					"en": "[1] Assistant;;",
+					"pt-pt": "[1] Assistente;;",
+					"zh": "[1] 助手;;",
+					"de": "[1] Assistent;;",
+					"ar": "[1] مساعد;;"
+				}
 			}
 		}
 	]
