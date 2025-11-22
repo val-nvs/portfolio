@@ -31,7 +31,7 @@
 				}
 			}
 		},
-		{
+{
 			"media": [
 				"./media/monitor.jpg",
 				"./media/liberdade.jpg"
@@ -52,13 +52,13 @@
 				"zh": "为一部30分钟的动作惊悚片录制制作音频，并通过批量编辑脚本和电子表格跟踪优化文件工作流程，在里斯本的5个不同地点历时13天拍摄完成。",
 				"de": "Aufnahme des Produktionstons und Optimierung des Datei-Workflows mit Batch-Edit-Skripten und Tabellenverfolgung für einen 30-minütigen Action-Thriller, gedreht in 13 Tagen an 5 verschiedenen Standorten in Lissabon.",
 				"ar": "تسجيل صوت الإنتاج وتبسيط سير عمل الملفات باستخدام نصوص التحرير الجماعي وتتبع جداول البيانات لفيلم إثارة وحركة مدته 30 دقيقة، تم تصويره في 13 يومًا في 5 مواقع متنوعة عبر لشبونة.",
-				"crew_people": "[1] **Bob** [Portfolio](https://example.com);;",
+				"crew_people": "[1] **Akshay Tharabole** [Link](#);;[2] **Nilesh Suryawanshi** [Link](#);;[3] **Varsha Mehra** [Link](#);;[4] **Yacine Meziti** [Link](#);;[5] **Francisco Lopes** [Link](#);;[6] **Charlie Chaves** [Link](#);;[7] **Nityam** [Link](#);;[8] **Inês Serra** [Link](#);;[9] **Rasmus** [Link](#);;[10] **Valdir Neves** [Link](#);;[11] **Fabio Duarte** [Link](#);;[12] **Lia Paladino** [Link](#);;[13] **Madalena Oliveira** [Link](#);;[14] **José Machado** [Link](#);;[15] **Junta de Freguesia de Alvalade** [Link](#);;[16] **STAL Direcção Regional Lisboa** [Link](#);;[17] **ETIC** [Link](#);;[18] **João Ramos** [Link](#);;[19] **Isabel Castelo-Branco** [Link](#);;[20] **Gustavo Chaves** [Link](#);;[21] **Lorena Calderon** [Link](#);;",
 				"crew_roles": {
-					"en": "[1] Assistant;;",
-					"pt-pt": "[1] Assistente;;",
-					"zh": "[1] 助手;;",
-					"de": "[1] Assistent;;",
-					"ar": "[1] مساعد;;"
+					"en": "[1] Jay Gupta;;[2] Akash;;[3] Veera;;[4] Fábio;;[5] Gustavo;;[6] Original Idea, Director, Writer, Editor, Producer;;[7] Director, Writer, Editor;;[8] Assistant Director, Producer;;[9] Cinematographer;;[10] Sound, Stills;;[11] Sound;;[12] Assistant Editor;;[13] Storyboard;;[14] Production Assistant;;[15] Support;;[16] Support;;[17] Special Thanks;;[18] Special Thanks;;[19] Special Thanks;;[20] Special Thanks;;[21] Special Thanks;;",
+					"pt-pt": "[1] Jay Gupta;;[2] Akash;;[3] Veera;;[4] Fábio;;[5] Gustavo;;[6] Ideia Original, Realização, Escrita, Montagem, Produção;;[7] Realização, Escrita, Montagem;;[8] Assistente Realização, Produção;;[9] Fotografia;;[10] Som, Stills;;[11] Som;;[12] Assistente de Montagem;;[13] Storyboard;;[14] Assistente de Produção;;[15] Apoios;;[16] Apoios;;[17] Agradecimientos Especiais;;[18] Agradecimientos Especiais;;[19] Agradecimientos Especiais;;[20] Agradecimientos Especiais;;[21] Agradecimientos Especiais;;",
+					"zh": "[1] Jay Gupta;;[2] Akash;;[3] Veera;;[4] Fábio;;[5] Gustavo;;[6] 原始概念, 导演, 编剧, 剪辑, 制片;;[7] 导演, 编剧, 剪辑;;[8] 助理导演, 制片;;[9] 摄影;;[10] 音响, 静物摄影;;[11] 音响;;[12] 助理剪辑;;[13] 分镜脚本;;[14] 制作助理;;[15] 支持;;[16] 支持;;[17] 特别鸣谢;;[18] 特别鸣谢;;[19] 特别鸣谢;;[20] 特别鸣谢;;[21] 特别鸣谢;;",
+					"de": "[1] Jay Gupta;;[2] Akash;;[3] Veera;;[4] Fábio;;[5] Gustavo;;[6] Originalidee, Regie, Buch, Schnitt, Produktion;;[7] Regie, Buch, Schnitt;;[8] Regieassistenz, Produktion;;[9] Kamera;;[10] Ton, Standbilder;;[11] Ton;;[12] Schnittassistenz;;[13] Storyboard;;[14] Produktionsassistenz;;[15] Unterstützung;;[16] Unterstützung;;[17] Besonderer Dank;;[18] Besonderer Dank;;[19] Besonderer Dank;;[20] Besonderer Dank;;[21] Besonderer Dank;;",
+					"ar": "[1] Jay Gupta;;[2] Akash;;[3] Veera;;[4] Fábio;;[5] Gustavo;;[6] فكرة أصلية, إخراج, كتابة, مونتاج, إنتاج;;[7] إخراج, كتابة, مونتاج;;[8] مساعد مخرج, إنتاج;;[9] تصوير سينمائي;;[10] صوت, صور فوتوغرافية;;[11] صوت;;[12] مساعد مونتاج;;[13] لوحة قصصية;;[14] مساعد إنتاج;;[15] دعم;;[16] دعم;;[17] شكر خاص;;[18] شكر خاص;;[19] شكر خاص;;[20] شكر خاص;;[21] شكر خاص;;"
 				}
 			}
 		},
