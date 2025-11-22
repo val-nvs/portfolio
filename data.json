@@ -21,17 +21,25 @@
 				"zh": "K-pop舞蹈翻跳用两台摄像机拍摄 - 我操作稳定器摄像机捕捉动态角度，灵感来自1theK的On The Spot系列。",
 				"de": "K-Pop-Tanzcover mit zwei Kameras gedreht - ich bediente eine auf einem Gimbal, um dynamische Winkel zu erfassen, inspiriert von 1theKs On The Spot-Serie.",
 				"ar": "غطاء رقص كيبوب تم تصويره بكاميرتين - قمت بتشغيل واحدة على محور متوازن لالتقاط زوايا ديناميكية مستوحاة من سلسلة On The Spot من 1theK.",
-				"crew_people": "[1] **NUNCHI** [Instagram](https://www.instagram.com/nunchiverse/);;[2] **Valdir Neves** [Instagram](https://www.instagram.com/val.nevs/);;[3] **Inês Serra** [Instagram](https://www.instagram.com/_nene.05_/);;[4] **Sofia Serra** [Instagram](https://www.instagram.com/photosby.sofs_/);;[5] **Inês** [Instagram](https://www.instagram.com/__justines/);;",
+				"crew_people": "[1] **NUNCHI** [Instagram](https://www.instagram.com/nunchiverse/);;[2] **Valdir Neves** [Instagram](https://www.instagram.com/val.nevs/);;[3] **Inês Serra** [Instagram](https://www.instagram.com/_nene.05_/);;[4] **Sofia Serra** [Instagram](https://www.instagram.com/photosby.sofs_/);;",
 				"crew_roles": {
-					"en": "[1] Dance Crew;;[2] Camera;;[3] Camera;;[4] Stills;;[5] Dancer;;",
-					"pt-pt": "[1] x;;",
-					"zh": "[1] x;;",
-					"de": "[1] x;;",
-					"ar": "[1] x;;"
+					"en": "[1] Dance Crew;;[2] Camera;;[3] Camera;;[4] Stills;;",
+					"pt-pt": "[1] Equipa de Dança;;[2] Câmara;;[3] Câmara;;[4] Fotos de Cena;;",
+					"zh": "[1] 舞蹈队;;[2] 摄影;;[3] 摄影;;[4] 静物摄影;;",
+					"de": "[1] Tanzcrew;;[2] Kamera;;[3] Kamera;;[4] Standbilder;;",
+					"ar": "[1] طاقم الرقص;;[2] كاميرا;;[3] كاميرا;;[4] صور فوتوغرافية;;"
+				},
+				"stars_people": "[1] **Inês** [Instagram](https://www.instagram.com/__justines/);;[2] **Sofia** [Instagram](https://www.instagram.com/dysarose/);;[3] **Name** [Instagram](https://www.instagram.com/);;[4] **Name** [Instagram](https://www.instagram.com/);;[5] **Name** [Instagram](https://www.instagram.com/);;",
+				"stars_roles": {
+					"en": "[1] Dancer;;[2] Dancer;;[3] Dancer;;[4] Dancer;;[5] Dancer;;",
+					"pt-pt": "[1] Dançarina;;[2] Dançarina;;[3] Dançarina;;[4] Dançarina;;[5] Dançarina;;",
+					"zh": "[1] 舞者;;[2] 舞者;;[3] 舞者;;[4] 舞者;;[5] 舞者;;",
+					"de": "[1] Tänzerin;;[2] Tänzerin;;[3] Tänzerin;;[4] Tänzerin;;[5] Tänzerin;;",
+					"ar": "[1] راقصة;;[2] راقصة;;[3] راقصة;;[4] راقصة;;[5] راقصة;;"
 				}
 			}
 		},
-{
+		{
 			"media": [
 				"./media/monitor.jpg",
 				"./media/liberdade.jpg"
@@ -52,13 +60,21 @@
 				"zh": "为一部30分钟的动作惊悚片录制制作音频，并通过批量编辑脚本和电子表格跟踪优化文件工作流程，在里斯本的5个不同地点历时13天拍摄完成。",
 				"de": "Aufnahme des Produktionstons und Optimierung des Datei-Workflows mit Batch-Edit-Skripten und Tabellenverfolgung für einen 30-minütigen Action-Thriller, gedreht in 13 Tagen an 5 verschiedenen Standorten in Lissabon.",
 				"ar": "تسجيل صوت الإنتاج وتبسيط سير عمل الملفات باستخدام نصوص التحرير الجماعي وتتبع جداول البيانات لفيلم إثارة وحركة مدته 30 دقيقة، تم تصويره في 13 يومًا في 5 مواقع متنوعة عبر لشبونة.",
-				"crew_people": "[1] **Akshay Tharabole** [Instagram](https://www.instagram.com/akzzz_0.2/);;[2] **Nilesh Suryawanshi** [Instagram](https://www.instagram.com/champ_nilnilesh/);;[3] **Varsha Mehra** [Instagram](https://www.instagram.com/varsha_dabhi/);;[4] **Yacine Meziti** [Instagram](https://www.instagram.com/alchemist__777/);;[5] **Francisco Lopes** [Instagram](https://www.instagram.com/flsantos793/);;[6] **Charlie Chaves** [Instagram](https://www.instagram.com/charliechavess);;[7] **Nityam** [Instagram](https://www.instagram.com/nityamnow);;[8] **Inês Serra** [Instagram](https://www.instagram.com/_nene.05_/);;[9] **Rasmus** [Instagram](https://www.instagram.com/wrasmus/);;[10] **Valdir Neves** [Instagram](https://www.instagram.com/val.nevs/);;[11] **Fabio Duarte** [#]();;[12] **Lia Paladino** [Instagram](https://www.instagram.com/liapaladinoo/);;[13] **Madalena Oliveira** [Instagram](https://www.instagram.com/blueyy.biker/);;[14] **José Machado** [Instagram](https://www.instagram.com/zemariamachado__/);;[15] **Junta de Freguesia de Alvalade** [Instagram](https://www.instagram.com/jfalvalade/);;[16] **STAL Direcção Regional Lisboa** [Instagram](https://www.instagram.com/stallisboa/);;[17] **ETIC** [Instagram](https://www.instagram.com/eticoficial/);;[18] **João Ramos** [#]();;[19] **Isabel Castelo-Branco** [Instagram](https://www.instagram.com/castelobranco.isabel/);;[20] **Gustavo Chaves** [#]();;[21] **Lorena Calderon** [#]();;",
+				"stars_people": "[1] **Akshay Tharabole** [Instagram](https://www.instagram.com/akzzz_0.2/);;[2] **Nilesh Suryawanshi** [Instagram](https://www.instagram.com/champ_nilnilesh/);;[3] **Varsha Mehra** [Instagram](https://www.instagram.com/varsha_dabhi/);;[4] **Yacine Meziti** [Instagram](https://www.instagram.com/alchemist__777/);;[5] **Francisco Lopes** [Instagram](https://www.instagram.com/flsantos793/);;",
+				"stars_roles": {
+					"en": "[1] Jay Gupta;;[2] Akash;;[3] Veera;;[4] Fábio;;[5] Gustavo;;",
+					"pt-pt": "[1] Jay Gupta;;[2] Akash;;[3] Veera;;[4] Fábio;;[5] Gustavo;;",
+					"zh": "[1] Jay Gupta;;[2] Akash;;[3] Veera;;[4] Fábio;;[5] Gustavo;;",
+					"de": "[1] Jay Gupta;;[2] Akash;;[3] Veera;;[4] Fábio;;[5] Gustavo;;",
+					"ar": "[1] Jay Gupta;;[2] Akash;;[3] Veera;;[4] Fábio;;[5] Gustavo;;"
+				},
+				"crew_people": "[6] **Charlie Chaves** [Instagram](https://www.instagram.com/charliechavess);;[7] **Nityam** [Instagram](https://www.instagram.com/nityamnow);;[8] **Inês Serra** [Instagram](https://www.instagram.com/_nene.05_/);;[9] **Rasmus** [Instagram](https://www.instagram.com/wrasmus/);;[10] **Valdir Neves** [Instagram](https://www.instagram.com/val.nevs/);;[11] **Fabio Duarte** [#]();;[12] **Lia Paladino** [Instagram](https://www.instagram.com/liapaladinoo/);;[13] **Madalena Oliveira** [Instagram](https://www.instagram.com/blueyy.biker/);;[14] **José Machado** [Instagram](https://www.instagram.com/zemariamachado__/);;[15] **Junta de Freguesia de Alvalade** [Instagram](https://www.instagram.com/jfalvalade/);;[16] **STAL Direcção Regional Lisboa** [Instagram](https://www.instagram.com/stallisboa/);;[17] **ETIC** [Instagram](https://www.instagram.com/eticoficial/);;[18] **João Ramos** [#]();;[19] **Isabel Castelo-Branco** [Instagram](https://www.instagram.com/castelobranco.isabel/);;[20] **Gustavo Chaves** [#]();;[21] **Lorena Calderon** [#]();;",
 				"crew_roles": {
-					"en": "[1] Jay Gupta;;[2] Akash;;[3] Veera;;[4] Fábio;;[5] Gustavo;;[6] Original Idea, Director, Writer, Editor, Producer;;[7] Director, Writer, Editor;;[8] Assistant Director, Producer;;[9] Cinematographer;;[10] Sound, Stills;;[11] Sound;;[12] Assistant Editor;;[13] Storyboard;;[14] Production Assistant;;[15] Support;;[16] Support;;[17] Special Thanks;;[18] Special Thanks;;[19] Special Thanks;;[20] Special Thanks;;[21] Special Thanks;;",
-					"pt-pt": "[1] Jay Gupta;;[2] Akash;;[3] Veera;;[4] Fábio;;[5] Gustavo;;[6] Ideia Original, Realização, Escrita, Montagem, Produção;;[7] Realização, Escrita, Montagem;;[8] Assistente Realização, Produção;;[9] Fotografia;;[10] Som, Stills;;[11] Som;;[12] Assistente de Montagem;;[13] Storyboard;;[14] Assistente de Produção;;[15] Apoios;;[16] Apoios;;[17] Agradecimientos Especiais;;[18] Agradecimientos Especiais;;[19] Agradecimientos Especiais;;[20] Agradecimientos Especiais;;[21] Agradecimientos Especiais;;",
-					"zh": "[1] Jay Gupta;;[2] Akash;;[3] Veera;;[4] Fábio;;[5] Gustavo;;[6] 原始概念, 导演, 编剧, 剪辑, 制片;;[7] 导演, 编剧, 剪辑;;[8] 助理导演, 制片;;[9] 摄影;;[10] 音响, 静物摄影;;[11] 音响;;[12] 助理剪辑;;[13] 分镜脚本;;[14] 制作助理;;[15] 支持;;[16] 支持;;[17] 特别鸣谢;;[18] 特别鸣谢;;[19] 特别鸣谢;;[20] 特别鸣谢;;[21] 特别鸣谢;;",
-					"de": "[1] Jay Gupta;;[2] Akash;;[3] Veera;;[4] Fábio;;[5] Gustavo;;[6] Originalidee, Regie, Buch, Schnitt, Produktion;;[7] Regie, Buch, Schnitt;;[8] Regieassistenz, Produktion;;[9] Kamera;;[10] Ton, Standbilder;;[11] Ton;;[12] Schnittassistenz;;[13] Storyboard;;[14] Produktionsassistenz;;[15] Unterstützung;;[16] Unterstützung;;[17] Besonderer Dank;;[18] Besonderer Dank;;[19] Besonderer Dank;;[20] Besonderer Dank;;[21] Besonderer Dank;;",
-					"ar": "[1] Jay Gupta;;[2] Akash;;[3] Veera;;[4] Fábio;;[5] Gustavo;;[6] فكرة أصلية, إخراج, كتابة, مونتاج, إنتاج;;[7] إخراج, كتابة, مونتاج;;[8] مساعد مخرج, إنتاج;;[9] تصوير سينمائي;;[10] صوت, صور فوتوغرافية;;[11] صوت;;[12] مساعد مونتاج;;[13] لوحة قصصية;;[14] مساعد إنتاج;;[15] دعم;;[16] دعم;;[17] شكر خاص;;[18] شكر خاص;;[19] شكر خاص;;[20] شكر خاص;;[21] شكر خاص;;"
+					"en": "[6] Original Idea, Director, Writer, Editor, Producer;;[7] Director, Writer, Editor;;[8] Assistant Director, Producer;;[9] Cinematographer;;[10] Sound, Stills;;[11] Sound;;[12] Assistant Editor;;[13] Storyboard;;[14] Production Assistant;;[15] Support;;[16] Support;;[17] Special Thanks;;[18] Special Thanks;;[19] Special Thanks;;[20] Special Thanks;;[21] Special Thanks;;",
+					"pt-pt": "[6] Ideia Original, Realização, Escrita, Montagem, Produção;;[7] Realização, Escrita, Montagem;;[8] Assistente Realização, Produção;;[9] Fotografia;;[10] Som, Stills;;[11] Som;;[12] Assistente de Montagem;;[13] Storyboard;;[14] Assistente de Produção;;[15] Apoios;;[16] Apoios;;[17] Agradecimientos Especiais;;[18] Agradecimientos Especiais;;[19] Agradecimientos Especiais;;[20] Agradecimientos Especiais;;[21] Agradecimientos Especiais;;",
+					"zh": "[6] 原始概念, 导演, 编剧, 剪辑, 制片;;[7] 导演, 编剧, 剪辑;;[8] 助理导演, 制片;;[9] 摄影;;[10] 音响, 静物摄影;;[11] 音响;;[12] 助理剪辑;;[13] 分镜脚本;;[14] 制作助理;;[15] 支持;;[16] 支持;;[17] 特别鸣谢;;[18] 特别鸣谢;;[19] 特别鸣谢;;[20] 特别鸣谢;;[21] 特别鸣谢;;",
+					"de": "[6] Originalidee, Regie, Buch, Schnitt, Produktion;;[7] Regie, Buch, Schnitt;;[8] Regieassistenz, Produktion;;[9] Kamera;;[10] Ton, Standbilder;;[11] Ton;;[12] Schnittassistenz;;[13] Storyboard;;[14] Produktionsassistenz;;[15] Unterstützung;;[16] Unterstützung;;[17] Besonderer Dank;;[18] Besonderer Dank;;[19] Besonderer Dank;;[20] Besonderer Dank;;[21] Besonderer Dank;;",
+					"ar": "[6] فكرة أصلية, إخراج, كتابة, مونتاج, إنتاج;;[7] إخراج, كتابة, مونتاج;;[8] مساعد مخرج, إنتاج;;[9] تصوير سينمائي;;[10] صوت, صور فوتوغرافية;;[11] صوت;;[12] مساعد مونتاج;;[13] لوحة قصصية;;[14] مساعد إنتاج;;[15] دعم;;[16] دعم;;[17] شكر خاص;;[18] شكر خاص;;[19] شكر خاص;;[20] شكر خاص;;[21] شكر خاص;;"
 				}
 			}
 		},
@@ -90,7 +106,9 @@
 					"zh": "[1] 助手;;",
 					"de": "[1] Assistent;;",
 					"ar": "[1] مساعد;;"
-				}
+				},
+				"stars_people": null,
+				"stars_roles": null
 			}
 		},
 		{
@@ -121,7 +139,9 @@
 					"zh": "[1] 助手;;",
 					"de": "[1] Assistent;;",
 					"ar": "[1] مساعد;;"
-				}
+				},
+				"stars_people": null,
+				"stars_roles": null
 			}
 		},
 		{
@@ -152,7 +172,9 @@
 					"zh": "[1] 助手;;",
 					"de": "[1] Assistent;;",
 					"ar": "[1] مساعد;;"
-				}
+				},
+				"stars_people": null,
+				"stars_roles": null
 			}
 		},
 		{
@@ -183,7 +205,9 @@
 					"zh": "[1] 助手;;",
 					"de": "[1] Assistent;;",
 					"ar": "[1] مساعد;;"
-				}
+				},
+				"stars_people": null,
+				"stars_roles": null
 			}
 		},
 		{
@@ -214,7 +238,9 @@
 					"zh": "[1] 助手;;",
 					"de": "[1] Assistent;;",
 					"ar": "[1] مساعد;;"
-				}
+				},
+				"stars_people": null,
+				"stars_roles": null
 			}
 		},
 		{
@@ -245,7 +271,9 @@
 					"zh": "[1] 助手;;",
 					"de": "[1] Assistent;;",
 					"ar": "[1] مساعد;;"
-				}
+				},
+				"stars_people": null,
+				"stars_roles": null
 			}
 		},
 		{
@@ -276,7 +304,9 @@
 					"zh": "[1] 助手;;",
 					"de": "[1] Assistent;;",
 					"ar": "[1] مساعد;;"
-				}
+				},
+				"stars_people": null,
+				"stars_roles": null
 			}
 		},
 		{
@@ -300,14 +330,22 @@
 				"zh": "为一部黑色喜剧短片录制制作音频并操作麦克风杆，该片讲述了一位陷入困境的艺术家对完美的追求，拍摄于单一场景。",
 				"de": "Aufnahme des Produktionstons und Bedienung der Tonangel für einen Kurzfilm in schwarzer Komödie, der die Suche eines verstörten Künstlers nach Perfektion verfolgt, gedreht an einem einzigen Set-Ort.",
 				"ar": "تسجيل صوت الإنتاج وتشغيل بوم لفيلم قصير كوميدي داكن يتبع سعي فنان مضطرب للكمال، تم تصويره في موقع تصوير واحد.",
-"crew_people": "[1] **Charlie Chaves** [Instagram](https://www.instagram.com/charliechavess);;[2] **Bruno de Franclieu** [LinkedIn](https://www.linkedin.com/in/bruno-de-franclieu-b6899aa4/);;[3] **Charlie Chaves** [Instagram](https://www.instagram.com/charliechavess);;[4] **Nityam** [Instagram](https://www.instagram.com/nityamnow);;[5] **Patricia Pontes** [Instagram](https://www.instagram.com/pontes_filmworks);;[6] **Gonçalo Pereira** [Instagram](https://www.instagram.com/goncalopereiraaa_);;[7] **João Formiga** [Instagram](https://www.instagram.com/joaoformiga);;[8] **Valdir Neves** [Instagram](https://www.instagram.com/val.nevs);;[9] **Carlos Calderon** [Instagram](https://www.instagram.com/charliechavess);;[10] **Inês Pinheiro** [Instagram](https://www.instagram.com/neespera);;",
-"crew_roles": {
-    "en": "[1] The Artist (Actor);;[2] The Opportunistic Art Critic (Actor);;[3] Director, Producer, Actor;;[4] Assistant Director, Producer, Camera Operator;;[5] Assistant Director, Special Thanks;;[6] Camera Operator;;[7] Camera Assistant;;[8] Sound Operator;;[9] Post-production;;[10] Special Thanks;;",
-    "pt-pt": "[1] O Artista (Ator);;[2] O oportuno Critico de Arte (Ator);;[3] Realização, Produção, Ator;;[4] Assistente Realização, Produção, Operador de Câmara;;[5] Assistente Realização, Agradecimentos Especiais;;[6] Operador de Câmara;;[7] Assistente de Câmara;;[8] Operador de Som;;[9] Pós-produção;;[10] Agradecimentos Especiais;;",
-    "zh": "[1] 艺术家 (演员);;[2] 投机取巧的艺术评论家 (演员);;[3] 导演, 制片, 演员;;[4] 助理导演, 制片, 摄影师;;[5] 助理导演, 特别鸣谢;;[6] 摄影师;;[7] 摄影助理;;[8] 录音师;;[9] 后期制作;;[10] 特别鸣谢;;",
-    "de": "[1] Der Künstler (Schauspieler);;[2] Der opportunistische Kunstkritiker (Schauspieler);;[3] Regie, Produktion, Schauspieler;;[4] Regieassistenz, Produktion, Kameraoperator;;[5] Regieassistenz, Besonderer Dank;;[6] Kameraoperator;;[7] Kameraassistenz;;[8] Tonoperator;;[9] Postproduktion;;[10] Besonderer Dank;;",
-    "ar": "[1] الفنان (ممثل);;[2] ناقد فني انتهازي (ممثل);;[3] إخراج، إنتاج، ممثل;;[4] مساعد مخرج، إنتاج، مشغل كاميرا;;[5] مساعد مخرج، شكر خاص;;[6] مشغل كاميرا;;[7] مساعد كاميرا;;[8] مشغل صوت;;[9] ما بعد الإنتاج;;[10] شكر خاص;;"
-}
+				"stars_people": "[1] **Charlie Chaves** [Instagram](https://www.instagram.com/charliechavess);;[2] **Bruno de Franclieu** [LinkedIn](https://www.linkedin.com/in/bruno-de-franclieu-b6899aa4/);;",
+				"stars_roles": {
+					"en": "[1] The Artist;;[2] The Opportunistic Art Critic;;",
+					"pt-pt": "[1] O Artista;;[2] O oportuno Critico de Arte;;",
+					"zh": "[1] 艺术家;;[2] 投机取巧的艺术评论家;;",
+					"de": "[1] Der Künstler;;[2] Der opportunistische Kunstkritiker;;",
+					"ar": "[1] الفنان;;[2] ناقد فني انتهازي;;"
+				},
+				"crew_people": "[3] **Charlie Chaves** [Instagram](https://www.instagram.com/charliechavess);;[4] **Nityam** [Instagram](https://www.instagram.com/nityamnow);;[5] **Patricia Pontes** [Instagram](https://www.instagram.com/pontes_filmworks);;[6] **Gonçalo Pereira** [Instagram](https://www.instagram.com/goncalopereiraaa_);;[7] **João Formiga** [Instagram](https://www.instagram.com/joaoformiga);;[8] **Valdir Neves** [Instagram](https://www.instagram.com/val.nevs);;[9] **Carlos Calderon** [Instagram](https://www.instagram.com/charliechavess);;[10] **Inês Pinheiro** [Instagram](https://www.instagram.com/neespera);;",
+				"crew_roles": {
+					"en": "[3] Director, Producer, Actor;;[4] Assistant Director, Producer, Camera Operator;;[5] Assistant Director, Special Thanks;;[6] Camera Operator;;[7] Camera Assistant;;[8] Sound Operator;;[9] Post-production;;[10] Special Thanks;;",
+					"pt-pt": "[3] Realização, Produção, Ator;;[4] Assistente Realização, Produção, Operador de Câmara;;[5] Assistente Realização, Agradecimentos Especiais;;[6] Operador de Câmara;;[7] Assistente de Câmara;;[8] Operador de Som;;[9] Pós-produção;;[10] Agradecimentos Especiais;;",
+					"zh": "[3] 导演, 制片, 演员;;[4] 助理导演, 制片, 摄影师;;[5] 助理导演, 特别鸣谢;;[6] 摄影师;;[7] 摄影助理;;[8] 录音师;;[9] 后期制作;;[10] 特别鸣谢;;",
+					"de": "[3] Regie, Produktion, Schauspieler;;[4] Regieassistenz, Produktion, Kameraoperator;;[5] Regieassistenz, Besonderer Dank;;[6] Kameraoperator;;[7] Kameraassistenz;;[8] Tonoperator;;[9] Postproduktion;;[10] Besonderer Dank;;",
+					"ar": "[3] إخراج، إنتاج، ممثل;;[4] مساعد مخرج، إنتاج، مشغل كاميرا;;[5] مساعد مخرج، شكر خاص;;[6] مشغل كاميرا;;[7] مساعد كاميرا;;[8] مشغل صوت;;[9] ما بعد الإنتاج;;[10] شكر خاص;;"
+				}
 			}
 		},
 		{
@@ -338,7 +376,9 @@
 					"zh": "[1] 助手;;",
 					"de": "[1] Assistent;;",
 					"ar": "[1] مساعد;;"
-				}
+				},
+				"stars_people": null,
+				"stars_roles": null
 			}
 		},
 		{
@@ -369,7 +409,9 @@
 					"zh": "[1] 助手;;",
 					"de": "[1] Assistent;;",
 					"ar": "[1] مساعد;;"
-				}
+				},
+				"stars_people": null,
+				"stars_roles": null
 			}
 		},
 		{
@@ -400,7 +442,9 @@
 					"zh": "[1] 助手;;",
 					"de": "[1] Assistent;;",
 					"ar": "[1] مساعد;;"
-				}
+				},
+				"stars_people": null,
+				"stars_roles": null
 			}
 		},
 		{
@@ -431,7 +475,9 @@
 					"zh": "[1] 助手;;",
 					"de": "[1] Assistent;;",
 					"ar": "[1] مساعد;;"
-				}
+				},
+				"stars_people": null,
+				"stars_roles": null
 			}
 		}
 	]

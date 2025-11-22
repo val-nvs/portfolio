@@ -101,6 +101,10 @@
 			pointer-events: none;
 		}
 
+		.vertical-text-left span > span,
+		.vertical-text-right span > span {
+			display: inline;
+		}
 		.vertical-text-left span,
 		.vertical-text-right span {
 			text-orientation: mixed;
@@ -109,11 +113,6 @@
 			white-space: nowrap;
 			letter-spacing: 0.1rem;
 			display: block;
-		}
-
-		.vertical-text-left span > span,
-		.vertical-text-right span > span {
-			display: inline;
 		}
 
 		.frame button {
@@ -513,6 +512,15 @@
 			margin-bottom: 2rem;
 			text-shadow: 0 0 2rem rgba(255, 255, 255, 0.3);
 		}
+		
+		/* Heading Style (h2s are now removed, but keeping the style block for structure consistency) */
+		.hero-text h2 {
+			font-family: "neue", sans-serif;
+			font-size: 3rem;
+			margin-top: 3rem;
+			margin-bottom: 1rem;
+			color: white;
+		}
 
 		.hero-text p {
 			font-size: 3rem;
@@ -528,6 +536,15 @@
 			gap: 1rem;
 			width: 100%;
 			margin-top: 2rem;
+		}
+		
+		/* Divider between Actors and Crew */
+		.crew-list.actors-section {
+			/* Reduced margin-top since h2 is gone, added bottom padding and border to separate */
+			margin-top: 0;
+			margin-bottom: 3rem;
+			padding-bottom: 2rem;
+			border-bottom: 0.1rem dashed rgba(255, 255, 255, 0.2);
 		}
 
 		.crew-card {
@@ -545,6 +562,16 @@
 
 		.crew-card:hover {
 			background: rgba(255, 255, 255, 0.12);
+		}
+		
+		/* Actors/Stars Card Style (Yellow) */
+		.crew-card.actor-card {
+			background: rgba(255, 255, 0, 0.15); /* Light yellow/gold tint */
+			border: 0.1rem solid rgba(255, 255, 0, 0.3);
+		}
+
+		.crew-card.actor-card:hover {
+			background: rgba(255, 255, 0, 0.25);
 		}
 
 		.crew-name {
@@ -749,11 +776,26 @@
 			}
 		},
 		crew: { 
-			en: { title: "Crew & Credits", text: "" },
-			"pt-pt": { title: "Equipa e Créditos", text: "" },
-			zh: { title: "团队和制作人员", text: "" },
-			de: { title: "Crew & Credits", text: "" },
-			ar: { title: "طاقم العمل والاعتمادات", text: "" }
+			en: { 
+				title: "Crew & Credits",
+				actors_heading: "Actors & Stars"
+			},
+			"pt-pt": { 
+				title: "Equipa e Créditos",
+				actors_heading: "Atores e Elenco"
+			},
+			zh: { 
+				title: "团队和制作人员", 
+				actors_heading: "演员和明星"
+			},
+			de: { 
+				title: "Crew & Credits", 
+				actors_heading: "Schauspieler & Stars"
+			},
+			ar: { 
+				title: "طاقم العمل والاعتمادات",
+				actors_heading: "الممثلون والنجوم"
+			}
 		}
 	};
 	
@@ -813,9 +855,7 @@
 			</button>
 			<div class="hero-text">
 				<h1 id="crewTitle">${popupContent.crew.en.title}</h1>
-				<div id="crewList" class="crew-list">
-					</div>
-			</div>
+				</div>
 		</div>
 	`;
 	document.body.appendChild(crewPopup);
@@ -827,30 +867,28 @@
 		}
 	});
 
-	// Function to generate HTML from the special text format
-	function generateCrewHTML(project, lang) {
-		if (!project.description.crew_people || !project.description.crew_roles || !project.description.crew_roles[lang]) {
-			return '<p style="color:white; font-size:2rem;">No crew information available.</p>';
+	// Function to generate HTML for a list of people (Actors or Crew)
+	function generatePeopleHTML(peopleRaw, rolesRaw, cardClass = '') {
+		if (!peopleRaw || !rolesRaw) {
+			return '';
 		}
 
-		const peopleRaw = project.description.crew_people.split(';;');
-		const rolesRaw = project.description.crew_roles[lang].split(';;');
-
+		const people = peopleRaw.split(';;').map(s => s.trim()).filter(s => s.length > 0);
+		
 		// Map roles by ID for easy lookup
 		const rolesMap = {};
-		rolesRaw.forEach(roleString => {
-			// Extract ID [x] and Role text
-			const match = roleString.match(/\[(\d+)\]\s*(.*)/);
-			if (match) {
-				rolesMap[match[1]] = match[2].trim();
-			}
-		});
+		rolesRaw.split(';;').map(s => s.trim()).filter(s => s.length > 0)
+			.forEach(roleString => {
+				// Extract ID [x] and Role text
+				const match = roleString.match(/\[(\d+)\]\s*(.*)/);
+				if (match) {
+					rolesMap[match[1]] = match[2].trim();
+				}
+			});
 
 		let html = '';
 
-		peopleRaw.forEach(personString => {
-			if (!personString.trim()) return;
-
+		people.forEach(personString => {
 			// Parsing Format: [1] **Name** [LinkText](LinkURL)
 			const regex = /\[(\d+)\]\s*\*\*(.*?)\*\*\s*\[(.*?)\]\((.*?)\)/;
 			const match = personString.match(regex);
@@ -863,7 +901,7 @@
 				const role = rolesMap[id] || "";
 
 				html += `
-					<div class="crew-card">
+					<div class="crew-card ${cardClass}">
 						<div class="crew-name">${name}</div>
 						<div class="crew-role">${role}</div>
 						<a href="${linkUrl}" target="_blank" class="crew-link">
@@ -876,6 +914,45 @@
 
 		return html;
 	}
+	
+	// Main function to generate the full popup content
+	function generateCrewPopupContent(project, lang) {
+		const actorsPeople = project.description.stars_people;
+		const actorsRoles = project.description.stars_roles ? project.description.stars_roles[lang] : null;
+		const crewPeople = project.description.crew_people;
+		const crewRoles = project.description.crew_roles ? project.description.crew_roles[lang] : null;
+		
+		let html = '';
+		
+		const actorsHTML = generatePeopleHTML(actorsPeople, actorsRoles, 'actor-card');
+		const crewHTML = generatePeopleHTML(crewPeople, crewRoles, '');
+
+		// 1. Actors Section (Yellow Cards)
+		if (actorsHTML) {
+			html += `
+				<div id="actorsList" class="crew-list actors-section">
+					${actorsHTML}
+				</div>
+			`;
+		}
+
+		// 2. Crew Section (Standard Cards)
+		if (crewHTML) {
+			// If actors were present, the crew list will start immediately after the divider
+			// If no actors, this list will be the first content below the H1
+			html += `
+				<div id="crewList" class="crew-list">
+					${crewHTML}
+				</div>
+			`;
+		} else if (!actorsHTML) {
+			// Only show fallback message if BOTH sections are empty
+			html += '<p style="color:white; font-size:2rem; margin-top:2rem;">No crew or cast information available for this project.</p>';
+		}
+
+		return html;
+	}
+	// END OF REFACTOR: generateCrewPopupContent
 
 	// Popup functions
 	function openPopup(type, projectIndex = null) {
@@ -886,13 +963,14 @@
 			const project = projectsData.projects[projectIndex];
 			const lang = languages[currentLanguage];
 			
-			// Update Title
-			const crewTitle = document.getElementById('crewTitle');
-			crewTitle.textContent = popupContent.crew[lang].title;
-
-			// Generate and Inject Grid
-			const crewList = document.getElementById('crewList');
-			crewList.innerHTML = generateCrewHTML(project, lang);
+			// Inject all HTML content generated by the new function
+			document.querySelector('#crewPopup .hero-text').innerHTML = `
+				<button class="hero-close" onclick="closePopup('crew')">
+					<span class="material-symbols-outlined">close</span>
+				</button>
+				<h1 id="crewTitle">${popupContent.crew[lang].title}</h1>
+				${generateCrewPopupContent(project, lang)}
+			`;
 		}
 
 		popup.classList.add('show');
@@ -965,6 +1043,27 @@
 							"de": "Dies ist ein Beispielprojekt mit Videodemonstration (YouTube).",
 							"ar": "هذا مشروع عينة مع عرض فيديو (يوتيوب).",
 							
+							"stars_people": `
+								[1] **Ryan Gosling** [IMDb](https://www.imdb.com/name/nm0331516);;
+								[2] **Emma Stone** [IMDb](https://www.imdb.com/name/nm1297015)`,
+							"stars_roles": {
+								"en": `
+									[1] Sebastian;;
+									[2] Mia`,
+								"pt-pt": `
+									[1] Sebastião;;
+									[2] Mia`,
+								"zh": `
+									[1] 塞巴斯蒂安;;
+									[2] 米娅`,
+								"de": `
+									[1] Sebastian;;
+									[2] Mia`,
+								"ar": `
+									[1] سيباستيان;;
+									[2] ميا`
+							},
+							
 							"crew_people": `
 									[1] **Alice** [Portfolio](https://www.alice.com);;
 									[2] **Bob** [Instagram](https://www.instagram.com/bob_ig);;
@@ -1014,6 +1113,28 @@
 							"zh": "另一个展示设计工作的示例项目（Vimeo）。",
 							"de": "Ein weiteres Beispielprojekt mit Designarbeit (Vimeo).",
 							"ar": "مشروع عينة آخر يعرض أعمال التصميم (فيميو).",
+							
+							"stars_people": `
+								[1] **Maria** [Website](https://www.maria.com);;
+								[2] **Alex** [IMDb](https://www.alex.com)`,
+							"stars_roles": {
+								"en": `
+									[1] Lead Actress;;
+									[2] Supporting Role`,
+								"pt-pt": `
+									[1] Atriz Principal;;
+									[2] Papel Secundário`,
+								"zh": `
+									[1] 女主角;;
+									[2] 配角`,
+								"de": `
+									[1] Hauptdarstellerin;;
+									[2] Nebenrolle`,
+								"ar": `
+									[1] الممثلة الرئيسية;;
+									[2] دور مساعد`
+							},
+							
 							"crew_people": `
 								[1] **David** [Instagram](https://www.instagram.com/david_ig);;
 								[2] **Eve** [LinkedIn](https://www.linkedin.com/in/eve)`,
@@ -1292,11 +1413,16 @@
 			document.getElementById('crewTitle').textContent = popupContent.crew[lang].title;
 		}
 
-		// Refresh the Crew Popup list if it is currently open and active
+		// Refresh the Crew Popup content if it is currently open and active
 		if (activeCrewProjectIndex !== null) {
-			const crewList = document.getElementById('crewList');
 			const project = projectsData.projects[activeCrewProjectIndex];
-			crewList.innerHTML = generateCrewHTML(project, lang);
+			document.querySelector('#crewPopup .hero-text').innerHTML = `
+				<button class="hero-close" onclick="closePopup('crew')">
+					<span class="material-symbols-outlined">close</span>
+				</button>
+				<h1 id="crewTitle">${popupContent.crew[lang].title}</h1>
+				${generateCrewPopupContent(project, lang)}
+			`;
 		}
 
 		const frames = document.querySelectorAll('.ladder .toddao.project-container:not(.dummy-frame)');
