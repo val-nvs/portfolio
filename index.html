@@ -1194,12 +1194,6 @@
 			button.appendChild(leftSpan);
 			button.appendChild(rightSpan);
 			frame.appendChild(button);
-
-			// Add hover listener to button to trigger text shuffle on the barcode text
-			button.addEventListener('mouseenter', () => {
-				const textElements = frame.querySelectorAll('.libre-barcode-128-text-regular');
-				textElements.forEach(el => triggerTextShuffle(el));
-			});
 			
 			const verticalTextLeft = document.createElement('div');
 			verticalTextLeft.className = 'vertical-text-left';
@@ -1481,53 +1475,6 @@
 			mainNav.classList.remove('hide');
 			mainNav.classList.add('show');
 		}
-	}
-
-	/**
-	 * HELPER: Trigger text shuffle effect
-	 * Shuffles characters for 0.5 seconds then restores original text
-	 * FIXED: Uses data attribute to store original text to prevent overwriting with garbage if hovered quickly
-	 */
-	function triggerTextShuffle(element) {
-		const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		const duration = 300;
-		const frameRate = 30; 
-		
-		// If original text is not stored yet, store it now.
-		// We use dataset so it persists even if we hover again while it's shuffling.
-		if (!element.dataset.originalText) {
-			element.dataset.originalText = element.textContent;
-		}
-		
-		const originalText = element.dataset.originalText;
-
-		// If there's an existing interval running on this element, clear it
-		if (element.dataset.shuffleInterval) {
-			clearInterval(Number(element.dataset.shuffleInterval));
-		}
-
-		const startTime = Date.now();
-
-		const interval = setInterval(() => {
-			const elapsed = Date.now() - startTime;
-			
-			if (elapsed >= duration) {
-				// Stop and restore
-				element.textContent = originalText;
-				clearInterval(interval);
-				delete element.dataset.shuffleInterval;
-				// Note: We keep dataset.originalText so future hovers know the true value
-			} else {
-				// Shuffle
-				element.textContent = originalText.split('').map(char => {
-					// Preserve slashes or spaces if you want, or shuffle everything
-					if (char === '/' || char === ' ') return char;
-					return chars[Math.floor(Math.random() * chars.length)];
-				}).join('');
-			}
-		}, frameRate);
-
-		element.dataset.shuffleInterval = interval;
 	}
 
 	document.addEventListener('DOMContentLoaded', () => {
