@@ -9,7 +9,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=Noto+Sans+Symbols+2&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128+Text&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=close,menu,translate" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_outward,close,menu,translate" />
 	<link rel="icon" href="./favicon.png" type="image/png">
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
 
@@ -513,7 +513,7 @@
 			text-shadow: 0 0 2rem rgba(255, 255, 255, 0.3);
 		}
 		
-		/* Heading Style (h2s are now removed, but keeping the style block for structure consistency) */
+		/* Heading Style */
 		.hero-text h2 {
 			font-family: "neue", sans-serif;
 			font-size: 3rem;
@@ -529,20 +529,18 @@
 			white-space: pre-line;
 		}
 
-		/* MODIFIED: Crew Grid Styles - One Liner */
+		/* Crew Grid Styles */
 		.crew-list {
 			display: grid;
-			grid-template-columns: 1fr; /* Full width rows */
+			grid-template-columns: 1fr;
 			gap: 1rem;
 			width: 100%;
 			margin-top: 2rem;
 		}
 		
-		/* Divider between Actors and Crew */
 		.crew-list.actors-section {
-			/* Reduced margin-top since h2 is gone, added bottom padding and border to separate */
 			margin-top: 0;
-			margin-bottom: 3rem;
+			margin-bottom: 0rem;
 			padding-bottom: 2rem;
 			border-bottom: 0.1rem dashed rgba(255, 255, 255, 0.2);
 		}
@@ -552,11 +550,11 @@
 			border: 0.1rem solid rgba(255, 255, 255, 0.1);
 			padding: 1.5rem;
 			border-radius: 1rem;
-			display: flex; /* CHANGED to Row */
+			display: flex;
 			flex-direction: row;
-			align-items: center; /* Vertically center items */
+			align-items: center;
 			gap: 1rem;
-			flex-wrap: wrap; /* Allow wrapping on mobile */
+			flex-wrap: wrap; 
 			transition: background 0.2s ease;
 		}
 
@@ -564,9 +562,8 @@
 			background: rgba(255, 255, 255, 0.12);
 		}
 		
-		/* Actors/Stars Card Style (Yellow) */
 		.crew-card.actor-card {
-			background: rgba(255, 255, 0, 0.15); /* Light yellow/gold tint */
+			background: rgba(255, 255, 0, 0.15);
 			border: 0.1rem solid rgba(255, 255, 0, 0.3);
 		}
 
@@ -579,27 +576,35 @@
 			font-size: 1.8rem;
 			color: white;
 			text-transform: uppercase;
-			white-space: nowrap; /* Keep name on one line */
+			white-space: nowrap; 
 		}
 
 		.crew-role {
 			font-family: "Atkinson Hyperlegible Next", sans-serif;
 			font-size: 1.6rem;
 			color: rgba(255, 255, 255, 0.7);
-			flex-grow: 1; /* Takes available space */
+			flex-grow: 1; 
 		}
 
+		/* UPDATED: Container for links (pushes to the right) */
+		.crew-links-container {
+			margin-left: auto;
+			display: flex;
+			gap: 1.5rem;
+			align-items: center;
+		}
+
+		/* UPDATED: Individual Link Styling */
 		.crew-link {
 			font-family: "Atkinson Hyperlegible Next", sans-serif;
 			font-size: 1.4rem;
-			color: #8cc9ff; /* MODIFIED: Colored link */
+			color: #8cc9ff;
 			text-decoration: none;
 			opacity: 1;
 			display: flex;
 			align-items: center;
 			gap: 0.5rem;
 			font-weight: bold;
-			margin-left: auto; /* Pushes link to the right if desired, or remove to keep tight */
 		}
 
 		.crew-link:hover {
@@ -607,7 +612,7 @@
 			filter: brightness(1.2);
 		}
 
-		/* Scrollbar styling for popup */
+		/* Scrollbar styling */
 		.hero-content::-webkit-scrollbar {
 			width: 0.8rem;
 		}
@@ -691,6 +696,7 @@
 		<div class="toddao frame"><img src="toddao.svg"></div>
 		<div class="toddao frame"><img src="toddao.svg"></div>
 		<div class="toddao frame"><img src="toddao.svg"></div>
+		<div class="toddao frame"><img src="toddao.svg"></div>
 	</div>
 
 	<div class="ladder strip">
@@ -720,7 +726,7 @@
 	const aboutImageSrc = "./media/group.jpg";
 	const contactImageSrc = "./media/nodes.png";
 
-	// NEW: Translations for the loading text
+	// Translations for the loading text
 	const loadingTranslations = {
 		"en": "LOADING VIDEO...",
 		"pt-pt": "A CARREGAR VÍDEO...",
@@ -799,7 +805,6 @@
 		}
 	};
 	
-	// Crew Popup Translation for the button
 	const crewButtonTranslations = {
 		"en": "Crew",
 		"pt-pt": "Equipa",
@@ -808,7 +813,6 @@
 		"ar": "طاقم العمل"
 	};
 
-	// Navigation translations
 	const navTranslations = {
 		"about": {
 			"en": "About",
@@ -844,7 +848,7 @@
 	document.getElementById('aboutImage').src = aboutImageSrc;
 	document.getElementById('contactImage').src = contactImageSrc;
 	
-	// Create Crew Popup (Structure Modified for Grid)
+	// Create Crew Popup
 	const crewPopup = document.createElement('div');
 	crewPopup.className = 'hero-popup';
 	crewPopup.id = 'crewPopup';
@@ -860,14 +864,13 @@
 	`;
 	document.body.appendChild(crewPopup);
 	
-	// Close crew popup on background click
 	document.getElementById('crewPopup').addEventListener('click', (e) => {
 		if (e.target === e.currentTarget) {
 			closePopup('crew');
 		}
 	});
 
-	// Function to generate HTML for a list of people (Actors or Crew)
+// UPDATED: Function to generate HTML for a list of people with MULTIPLE LINKS
 	function generatePeopleHTML(peopleRaw, rolesRaw, cardClass = '') {
 		if (!peopleRaw || !rolesRaw) {
 			return '';
@@ -875,11 +878,9 @@
 
 		const people = peopleRaw.split(';;').map(s => s.trim()).filter(s => s.length > 0);
 		
-		// Map roles by ID for easy lookup
 		const rolesMap = {};
 		rolesRaw.split(';;').map(s => s.trim()).filter(s => s.length > 0)
 			.forEach(roleString => {
-				// Extract ID [x] and Role text
 				const match = roleString.match(/\[(\d+)\]\s*(.*)/);
 				if (match) {
 					rolesMap[match[1]] = match[2].trim();
@@ -889,24 +890,40 @@
 		let html = '';
 
 		people.forEach(personString => {
-			// Parsing Format: [1] **Name** [LinkText](LinkURL)
-			const regex = /\[(\d+)\]\s*\*\*(.*?)\*\*\s*\[(.*?)\]\((.*?)\)/;
-			const match = personString.match(regex);
+			// 1. Find ID and Name first
+			const idMatch = personString.match(/\[(\d+)\]/);
+			const nameMatch = personString.match(/\*\*(.*?)\*\*/);
 
-			if (match) {
-				const id = match[1];
-				const name = match[2];
-				const linkText = match[3];
-				const linkUrl = match[4];
+			if (idMatch && nameMatch) {
+				const id = idMatch[1];
+				const name = nameMatch[1];
 				const role = rolesMap[id] || "";
 
+				// 2. Find ALL links in the string (0, 1, or multiple)
+				let linksHtml = '';
+				
+				// CHANGED: Regex now strictly stops at the first closing bracket (Using [^\]]+)
+				// This fixes the bug where it captured "1] **Name** [Link" as the link text.
+				const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+				let linkMatch;
+
+				while ((linkMatch = linkRegex.exec(personString)) !== null) {
+					// CHANGED: Removed the arrow_outward span
+					linksHtml += `
+						<a href="${linkMatch[2]}" target="_blank" class="crew-link">
+							${linkMatch[1]} <span class="material-symbols-outlined" style="font-size:1.4rem">arrow_outward</span>
+						</a>
+					`;
+				}
+
+				// 3. Create the card with container
 				html += `
 					<div class="crew-card ${cardClass}">
 						<div class="crew-name">${name}</div>
 						<div class="crew-role">${role}</div>
-						<a href="${linkUrl}" target="_blank" class="crew-link">
-							${linkText} <span class="material-symbols-outlined" style="font-size:1.4rem"></span>
-						</a>
+						<div class="crew-links-container">
+							${linksHtml}
+						</div>
 					</div>
 				`;
 			}
@@ -915,7 +932,6 @@
 		return html;
 	}
 	
-	// Main function to generate the full popup content
 	function generateCrewPopupContent(project, lang) {
 		const actorsPeople = project.description.stars_people;
 		const actorsRoles = project.description.stars_roles ? project.description.stars_roles[lang] : null;
@@ -927,7 +943,6 @@
 		const actorsHTML = generatePeopleHTML(actorsPeople, actorsRoles, 'actor-card');
 		const crewHTML = generatePeopleHTML(crewPeople, crewRoles, '');
 
-		// 1. Actors Section (Yellow Cards)
 		if (actorsHTML) {
 			html += `
 				<div id="actorsList" class="crew-list actors-section">
@@ -936,23 +951,18 @@
 			`;
 		}
 
-		// 2. Crew Section (Standard Cards)
 		if (crewHTML) {
-			// If actors were present, the crew list will start immediately after the divider
-			// If no actors, this list will be the first content below the H1
 			html += `
 				<div id="crewList" class="crew-list">
 					${crewHTML}
 				</div>
 			`;
 		} else if (!actorsHTML) {
-			// Only show fallback message if BOTH sections are empty
 			html += '<p style="color:white; font-size:2rem; margin-top:2rem;">No crew or cast information available for this project.</p>';
 		}
 
 		return html;
 	}
-	// END OF REFACTOR: generateCrewPopupContent
 
 	// Popup functions
 	function openPopup(type, projectIndex = null) {
@@ -963,7 +973,6 @@
 			const project = projectsData.projects[projectIndex];
 			const lang = languages[currentLanguage];
 			
-			// Inject all HTML content generated by the new function
 			document.querySelector('#crewPopup .hero-text').innerHTML = `
 				<button class="hero-close" onclick="closePopup('crew')">
 					<span class="material-symbols-outlined">close</span>
@@ -986,7 +995,6 @@
 		}
 	}
 
-	// Close popup on background click
 	document.getElementById('aboutPopup').addEventListener('click', (e) => {
 		if (e.target === e.currentTarget) {
 			closePopup('about');
@@ -999,7 +1007,6 @@
 		}
 	});
 
-	// Close popup on Escape key
 	document.addEventListener('keydown', (e) => {
 		if (e.key === 'Escape') {
 			document.querySelectorAll('.hero-popup.show').forEach(popup => {
@@ -1018,7 +1025,6 @@
 			return Promise.resolve();
 		} catch (error) {
 			console.error('Error loading project data:', error);
-			// FIXED: Cleaned up Tabbing for projectsData
 			projectsData = {
 				"projects": [
 					{
@@ -1260,7 +1266,6 @@
 				}
 				
 				if (videoUrl) {
-					// MODIFIED: Use translated text for loading
 					const lang = languages[currentLanguage];
 					const loadingText = loadingTranslations[lang] || "LOADING VIDEO...";
 					
@@ -1413,7 +1418,6 @@
 			document.getElementById('crewTitle').textContent = popupContent.crew[lang].title;
 		}
 
-		// Refresh the Crew Popup content if it is currently open and active
 		if (activeCrewProjectIndex !== null) {
 			const project = projectsData.projects[activeCrewProjectIndex];
 			document.querySelector('#crewPopup .hero-text').innerHTML = `
