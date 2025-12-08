@@ -2,6 +2,45 @@
 	"projects": [
 		{
 			"media": [
+				"./media/nini.jpg",
+				"./media/nini.jpg"
+			],
+			"videoId": "MCx7GS_gBK4",
+			"date": "2024/12",
+			"duration": "04 MIN",	
+			"translations": {
+				"en": ["Interview", "Camera"],
+				"pt-pt": ["Entrevista", "Câmara"],
+				"zh": ["访谈", "摄影"],
+				"de": ["Interview", "Kamera"],
+				"ar": ["مقابلة", "كاميرا"]
+			},
+			"description": {
+				"en": "Interview",
+				"pt-pt": "Entrevista",
+				"zh": "访谈",
+				"de": "Interview",
+				"ar": "مقابلة",
+				"crew_people": "[1] **Valdir Neves** [Instagram](https://www.instagram.com/val.nevs/) [Website](https://val-nvs.com/);;",
+				"crew_roles": {
+					"en": "[1] Camera;;",
+					"pt-pt": "[1] Câmara;;",
+					"zh": "[1] 摄影;;",
+					"de": "[1] Kamera;;",
+					"ar": "[1] كاميرا;;"
+				},
+				"stars_people":  "[1] **Nusaibah Ahmed** [Instagram](https://www.instagram.com/a_nusaibah_/);;",
+				"stars_roles": {
+					"en": "[1] Nusaibah;;",
+					"pt-pt": "[1] Nusaibah;;",
+					"zh": "[1] Nusaibah;;",
+					"de": "[1] Nusaibah;;",
+					"ar": "[1] Nusaibah;;"
+				}
+			}
+		},
+		{
+			"media": [
 				"./media/bang.jpg",
 				"./media/bang-alt.jpg"
 			],
