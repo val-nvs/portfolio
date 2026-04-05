@@ -1,12 +1,43 @@
 {
 	"projects": [
+{
+			"media": [
+				"./media/cctv.jpg",
+				"./media/cctv.jpg"
+			],
+			"videoId": "MCx7GS_gBK4",
+			"date": "2026/04",
+			"duration": "10 MIN",	
+			"translations": {
+				"en": ["Short Film", "Camera"],
+				"pt-pt": ["", "Câmara"],
+				"zh": ["", "摄影"],
+				"de": ["", "Kamera"],
+				"ar": ["", "كاميرا"]
+			},
+			"description": {
+				"en": "Short Film",
+				"pt-pt": "",
+				"zh": "",
+				"de": "",
+				"ar": "",
+				"crew_people": "[1] **Valdir Neves** [Instagram](https://www.instagram.com/val.nevs/) [Website](https://val-nvs.com/);;",
+				"crew_roles": {
+					"en": "[1] Camera;;",
+					"pt-pt": "[1] Câmara;;",
+					"zh": "[1] 摄影;;",
+					"de": "[1] Kamera;;",
+					"ar": "[1] كاميرا;;"
+				}
+			}
+		},
 		{
 			"media": [
 				"./media/nini.jpg",
 				"./media/nini.jpg"
 			],
 			"videoId": "MCx7GS_gBK4",
-			"date": "2024/12",
+			"date": "2025/12",
 			"duration": "04 MIN",	
 			"translations": {
 				"en": ["Interview", "Camera"],
