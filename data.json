@@ -2,6 +2,39 @@
 	"projects": [
 {
 			"media": [
+				"./media/firefly.jpg",
+				"./media/firefly.jpg"
+			],
+			"videoId": "",
+			"date": "2026/06",
+			"duration": "07 MIN",
+			"translations": {
+				"en": ["Short Film", "Director"],
+				"pt-pt": ["Curta-metragem", "Realizador"],
+				"zh": ["短片", "导演"],
+				"de": ["Kurzfilm", "Regisseur"],
+				"ar": ["فيلم قصير", "مخرج"]
+			},
+			"description": {
+				"en": "Firefly, a short film written and shot in 48 hours for the 48 Hour Film Project competition, Lisbon 2026. Recorded in June, screening on July 18 at Cinema São Jorge.",
+				"pt-pt": "Firefly, uma curta-metragem escrita e filmada em 48 horas para a competição 48 Hour Film Project, Lisboa 2026. Gravado em junho, com exibição a 18 de julho no Cinema São Jorge.",
+				"zh": "《Firefly》，为2026年里斯本48小时电影计划竞赛在48小时内编写和拍摄的短片。于6月拍摄，7月18日在圣若热电影院放映。",
+				"de": "Firefly, ein Kurzfilm, geschrieben und gedreht in 48 Stunden für den Wettbewerb 48 Hour Film Project, Lissabon 2026. Aufgenommen im Juni, Vorführung am 18. Juli im Kino São Jorge.",
+				"ar": "Firefly، فيلم قصير كُتب وصُوّر خلال 48 ساعة لمسابقة 48 Hour Film Project، لشبونة 2026. تم التسجيل في يونيو، وسيُعرض في 18 يوليو في سينما ساو جورج.",
+				"crew_people": "[1] **Valdir Neves** [Instagram](https://www.instagram.com/val.nevs/) [Website](https://val-nvs.com/);;[2] **Charlie Chaves** [Instagram](https://www.instagram.com/charliechavess);;[3] **Giovanna Domiciano Neto** []();;[4] **Rita Primavera Lopes Família** []();;[5] **Sinou Gomez** []();;[6] **Nikolas Serra** []();;[7] **Rafael Sousa** []();;[8] **Sara Silva Veiga** []();;[9] **Jiani Shi** []();;[10] **Xihe Yu** []();;[11] **Inês Garcias Lopes** []();;[12] **Sofia Aragão** []();;[13] **André de Brito** []();;[14] **Dylan Cabanis** []();;",
+				"crew_roles": {
+					"en": "[1] Director, Camera Operator;;[2] Producer;;[3] Producer;;[4] Writer;;[5] Writer;;[6] Editor;;[7] Cinematographer, Camera Operator;;[8] Assistant Director;;[9] Lighting;;[10] Additional Photography;;[11] Art Direction;;[12] Art Direction;;[13] Composer;;[14] Sound;;",
+					"pt-pt": "[1] Realizador, Operador de Câmara;;[2] Produtor;;[3] Produtor;;[4] Escritor;;[5] Escritor;;[6] Editor;;[7] Fotografia, Operador de Câmara;;[8] Assistente Realização;;[9] Iluminação;;[10] Fotografia Adicional;;[11] Direção de Arte;;[12] Direção de Arte;;[13] Compositor;;[14] Som;;",
+					"zh": "[1] 导演, 摄影师;;[2] 制片;;[3] 制片;;[4] 编剧;;[5] 编剧;;[6] 剪辑师;;[7] 摄影, 摄影师;;[8] 助理导演;;[9] 灯光师;;[10] 补充摄影;;[11] 美术指导;;[12] 美术指导;;[13] 作曲;;[14] 音响;;",
+					"de": "[1] Regisseur, Kameramann;;[2] Produzent;;[3] Produzent;;[4] Autor;;[5] Autor;;[6] Cutter;;[7] Kamera, Kameramann;;[8] Regieassistenz;;[9] Beleuchter;;[10] Zusätzliche Fotografie;;[11] Szenenbild;;[12] Szenenbild;;[13] Komponist;;[14] Ton;;",
+					"ar": "[1] مخرج، مشغل كاميرا;;[2] منتج;;[3] منتج;;[4] كاتب;;[5] كاتب;;[6] مونتير;;[7] تصوير سينمائي، مشغل كاميرا;;[8] مساعد مخرج;;[9] إضاءة;;[10] تصوير إضافي;;[11] إخراج فني;;[12] إخراج فني;;[13] ملحن;;[14] صوت;;"
+				},
+				"stars_people": null,
+				"stars_roles": null
+			}
+		},
+		{
+			"media": [
 				"./media/Screenshot_20260409-210354.png",
 				"./media/Screenshot_20260409-210354.png"
 			],
@@ -10,17 +43,17 @@
 			"duration": "10 MIN",	
 			"translations": {
 				"en": ["Short Film", "Camera"],
-				"pt-pt": ["", "Câmara"],
-				"zh": ["", "摄影"],
-				"de": ["", "Kamera"],
-				"ar": ["", "كاميرا"]
+				"pt-pt": ["Curta-metragem", "Câmara"],
+				"zh": ["短片", "摄影"],
+				"de": ["Kurzfilm", "Kamera"],
+				"ar": ["فيلم قصير", "كاميرا"]
 			},
 			"description": {
-				"en": "Short Film",
-				"pt-pt": "",
-				"zh": "",
-				"de": "",
-				"ar": "",
+				"en": "OTTO, a short film about a man crossing a metropolitan station.",
+				"pt-pt": "OTTO, uma curta-metragem sobre um homem a atravessar uma estação de metropolitano.",
+				"zh": "《OTTO》，讲述一名男子穿过地铁站的短片。",
+				"de": "OTTO, ein Kurzfilm über einen Mann, der einen U-Bahnhof durchquert.",
+				"ar": "OTTO، فيلم قصير عن رجل يعبر محطة مترو.",
 				"crew_people": "[1] **Valdir Neves** [Instagram](https://www.instagram.com/val.nevs/) [Website](https://val-nvs.com/);;",
 				"crew_roles": {
 					"en": "[1] Camera;;",
@@ -86,11 +119,11 @@
 				"ar": ["فيديو موسيقي", "كاميرا"]
 			},
 			"description": {
-				"en": "K-pop dance cover shot with two cameras - I operated one on a gimbal to capture dynamic angles inspired by 1theK's On The Spot series.",
-				"pt-pt": "Cover de dança K-pop filmado com duas câmaras - operei uma num gimbal para capturar ângulos dinâmicos inspirados na série On The Spot da 1theK.",
-				"zh": "K-pop舞蹈翻跳用两台摄像机拍摄 - 我操作稳定器摄像机捕捉动态角度，灵感来自1theK的On The Spot系列。",
-				"de": "K-Pop-Tanzcover mit zwei Kameras gedreht - ich bediente eine auf einem Gimbal, um dynamische Winkel zu erfassen, inspiriert von 1theKs On The Spot-Serie.",
-				"ar": "غطاء رقص كيبوب تم تصويره بكاميرتين - قمت بتشغيل واحدة على محور متوازن لالتقاط زوايا ديناميكية مستوحاة من سلسلة On The Spot من 1theK.",
+				"en": "K-pop dance cover shot with two cameras, one operated on a gimbal to capture dynamic angles inspired by 1theK's On The Spot series.",
+				"pt-pt": "Cover de dança K-pop filmado com duas câmaras, uma delas operada num gimbal para capturar ângulos dinâmicos inspirados na série On The Spot da 1theK.",
+				"zh": "K-pop舞蹈翻跳用两台摄像机拍摄，其中一台稳定器摄像机用于捕捉动态角度，灵感来自1theK的On The Spot系列。",
+				"de": "K-Pop-Tanzcover mit zwei Kameras gedreht, eine davon auf einem Gimbal, um dynamische Winkel einzufangen, inspiriert von 1theKs On The Spot-Serie.",
+				"ar": "غطاء رقص كيبوب تم تصويره بكاميرتين، إحداهما على محور متوازن لالتقاط زوايا ديناميكية مستوحاة من سلسلة On The Spot من 1theK.",
 				"crew_people": "[1] **NUNCHI** [Instagram](https://www.instagram.com/nunchiverse/);;[2] **Valdir Neves** [Instagram](https://www.instagram.com/val.nevs/) [Website](https://val-nvs.com/);;[3] **Inês Serra** [Instagram](https://www.instagram.com/_nene.05_/);;[4] **Sofia Serra** [Instagram](https://www.instagram.com/photosby.sofs_/);;",
 				"crew_roles": {
 					"en": "[1] Dance Crew;;[2] Camera;;[3] Camera;;[4] Stills;;",
@@ -141,7 +174,7 @@
 				"crew_people": "[6] **Charlie Chaves** [Instagram](https://www.instagram.com/charliechavess);;[7] **Nityam** [Instagram](https://www.instagram.com/nityamnow);;[8] **Inês Serra** [Instagram](https://www.instagram.com/_nene.05_/);;[9] **Rasmus** [Instagram](https://www.instagram.com/wrasmus/);;[10] **Valdir Neves** [Instagram](https://www.instagram.com/val.nevs/) [Website](https://val-nvs.com/);;[11] **Fabio Duarte** []();;[12] **Lia Paladino** [Instagram](https://www.instagram.com/liapaladinoo/);;[13] **Madalena Oliveira** [Instagram](https://www.instagram.com/blueyy.biker/);;[14] **José Machado** [Instagram](https://www.instagram.com/zemariamachado__/);;[15] **Junta de Freguesia de Alvalade** [Instagram](https://www.instagram.com/jfalvalade/);;[16] **STAL Direcção Regional Lisboa** [Instagram](https://www.instagram.com/stallisboa/);;[17] **ETIC** [Instagram](https://www.instagram.com/eticoficial/);;[18] **João Ramos** []();;[19] **Isabel Castelo-Branco** [Instagram](https://www.instagram.com/castelobranco.isabel/);;[20] **Gustavo Chaves** []();;[21] **Lorena Calderon** []();;",
 				"crew_roles": {
 					"en": "[6] Original Idea, Director, Writer, Editor, Producer;;[7] Director, Writer, Editor;;[8] Assistant Director, Producer;;[9] Cinematographer;;[10] Sound, Stills;;[11] Sound;;[12] Assistant Editor;;[13] Storyboard;;[14] Production Assistant;;[15] Support;;[16] Support;;[17] Special Thanks;;[18] Special Thanks;;[19] Special Thanks;;[20] Special Thanks;;[21] Special Thanks;;",
-					"pt-pt": "[6] Ideia Original, Realização, Escrita, Montagem, Produção;;[7] Realização, Escrita, Montagem;;[8] Assistente Realização, Produção;;[9] Fotografia;;[10] Som, Stills;;[11] Som;;[12] Assistente de Montagem;;[13] Storyboard;;[14] Assistente de Produção;;[15] Apoios;;[16] Apoios;;[17] Agradecimientos Especiais;;[18] Agradecimientos Especiais;;[19] Agradecimientos Especiais;;[20] Agradecimientos Especiais;;[21] Agradecimientos Especiais;;",
+					"pt-pt": "[6] Ideia Original, Realização, Escrita, Montagem, Produção;;[7] Realização, Escrita, Montagem;;[8] Assistente Realização, Produção;;[9] Fotografia;;[10] Som, Stills;;[11] Som;;[12] Assistente de Montagem;;[13] Storyboard;;[14] Assistente de Produção;;[15] Apoios;;[16] Apoios;;[17] Agradecimentos Especiais;;[18] Agradecimentos Especiais;;[19] Agradecimentos Especiais;;[20] Agradecimentos Especiais;;[21] Agradecimentos Especiais;;",
 					"zh": "[6] 原始概念, 导演, 编剧, 剪辑, 制片;;[7] 导演, 编剧, 剪辑;;[8] 助理导演, 制片;;[9] 摄影;;[10] 音响, 静物摄影;;[11] 音响;;[12] 助理剪辑;;[13] 分镜脚本;;[14] 制作助理;;[15] 支持;;[16] 支持;;[17] 特别鸣谢;;[18] 特别鸣谢;;[19] 特别鸣谢;;[20] 特别鸣谢;;[21] 特别鸣谢;;",
 					"de": "[6] Originalidee, Regie, Buch, Schnitt, Produktion;;[7] Regie, Buch, Schnitt;;[8] Regieassistenz, Produktion;;[9] Kamera;;[10] Ton, Standbilder;;[11] Ton;;[12] Schnittassistenz;;[13] Storyboard;;[14] Produktionsassistenz;;[15] Unterstützung;;[16] Unterstützung;;[17] Besonderer Dank;;[18] Besonderer Dank;;[19] Besonderer Dank;;[20] Besonderer Dank;;[21] Besonderer Dank;;",
 					"ar": "[6] فكرة أصلية, إخراج, كتابة, مونتاج, إنتاج;;[7] إخراج, كتابة, مونتاج;;[8] مساعد مخرج, إنتاج;;[9] تصوير سينمائي;;[10] صوت, صور فوتوغرافية;;[11] صوت;;[12] مساعد مونتاج;;[13] لوحة قصصية;;[14] مساعد إنتاج;;[15] دعم;;[16] دعم;;[17] شكر خاص;;[18] شكر خاص;;[19] شكر خاص;;[20] شكر خاص;;[21] شكر خاص;;"
@@ -403,7 +436,7 @@
 				"stars_people": "[1] **Charlie Chaves** [Instagram](https://www.instagram.com/charliechavess);;[2] **Bruno de Franclieu** [LinkedIn](https://www.linkedin.com/in/bruno-de-franclieu-b6899aa4/);;",
 				"stars_roles": {
 					"en": "[1] The Artist;;[2] The Opportunistic Art Critic;;",
-					"pt-pt": "[1] O Artista;;[2] O oportuno Critico de Arte;;",
+					"pt-pt": "[1] O Artista;;[2] O oportuno Crítico de Arte;;",
 					"zh": "[1] 艺术家;;[2] 投机取巧的艺术评论家;;",
 					"de": "[1] Der Künstler;;[2] Der opportunistische Kunstkritiker;;",
 					"ar": "[1] الفنان;;[2] ناقد فني انتهازي;;"

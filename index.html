@@ -9,7 +9,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=Noto+Sans+Symbols+2&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128+Text&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_outward,close,menu,translate" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_outward,close,menu,public,translate" />
 	<link rel="icon" href="./favicon.png" type="image/png">
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
 
@@ -55,11 +55,86 @@
 
 		.visual {position: absolute;}
 
+		/* Film stock presets: recolor the emulsion border with a plain hue
+		   shift (fine for a flat graphic), but grade photos with a
+		   low-opacity blend-mode tint rather than hue-rotate — rotating hue
+		   on a photo drags skin tones around the whole color wheel and
+		   breaks them. A soft-light/color tint sits on top of the photo's
+		   own luminance instead, so the picture keeps reading correctly.
+		   Switch by setting data-stock="..." on <html>. */
+		:root {
+			--frame-filter: none;
+			--photo-filter: none;
+			--photo-tint: transparent;
+			--photo-tint-blend: normal;
+			--photo-tint-opacity: 0;
+		}
+		:root[data-stock="kodak2383"] {
+			--frame-filter: hue-rotate(-6deg) saturate(0.85) brightness(0.95);
+			--photo-filter: contrast(1.08) saturate(1.05) brightness(0.98);
+			--photo-tint: rgb(255, 150, 60);
+			--photo-tint-blend: soft-light;
+			--photo-tint-opacity: 0.22;
+		}
+		:root[data-stock="cinestill800t"] {
+			--frame-filter: hue-rotate(150deg) saturate(0.55) brightness(0.9);
+			--photo-filter: contrast(1.1) saturate(1.15);
+			--photo-tint: rgb(255, 90, 40);
+			--photo-tint-blend: soft-light;
+			--photo-tint-opacity: 0.2;
+		}
+		:root[data-stock="fujieterna"] {
+			--frame-filter: hue-rotate(70deg) saturate(0.5) brightness(1.05);
+			--photo-filter: contrast(0.92) saturate(0.85) brightness(1.03);
+			--photo-tint: rgb(70, 190, 150);
+			--photo-tint-blend: soft-light;
+			--photo-tint-opacity: 0.16;
+		}
+		:root[data-stock="trix"] {
+			--frame-filter: grayscale(1) contrast(1.1);
+			--photo-filter: grayscale(1) contrast(1.25) brightness(1.05);
+			--photo-tint: transparent;
+			--photo-tint-blend: normal;
+			--photo-tint-opacity: 0;
+		}
+
 		.frame {
 			position: relative;
 		}
 		.frame > img {
 			width: 100%;
+			filter: var(--frame-filter);
+			animation: filmFlicker 6s ease-in-out infinite;
+		}
+		.frame:nth-child(3n) > img { animation-delay: -2s; }
+		.frame:nth-child(3n+1) > img { animation-delay: -4s; }
+
+		@keyframes filmFlicker {
+			0%, 100% { opacity: 1; }
+			50% { opacity: 0.93; }
+		}
+
+		.stock-switcher {
+			position: fixed;
+			bottom: 2rem;
+			right: 2rem;
+			z-index: 10002;
+			background: rgba(18, 18, 18, 0.85);
+			border: 0.05rem solid rgba(255, 255, 255, 0.15);
+			border-radius: 1rem;
+			padding: 1rem 1.5rem;
+			color: #fff;
+			font-family: "neue", sans-serif;
+			font-weight: bold;
+			font-size: 1.8rem;
+			box-shadow:
+				inset 0 0.1rem 0 rgba(255, 255, 255, 0.1),
+				0 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+			transition: all 0.2s ease;
+		}
+
+		.stock-switcher:hover {
+			background: rgba(255, 255, 255, 0.16);
 		}
 		.toddao {
 			width: 65rem;
@@ -123,10 +198,10 @@
 		}
 		
 		.toddao button {
-			will-change: height, transform; 
+			will-change: height, transform;
 			width: 52.6rem;
 			height: 23rem;
-			transition: height 1s ease, transform 1s ease, filter 0.3s ease;
+			transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
 			z-index: 1;
 			border-radius: 1rem;
 		}
@@ -146,8 +221,20 @@
 			width: 100%;
 			height: 100%;
 			object-fit: cover;
-			transition: opacity 0.5s ease;
+			transition: opacity 0.35s ease, filter 0.3s ease;
 			border-radius: 1rem;
+			filter: var(--photo-filter);
+		}
+
+		.frame button .grade-overlay {
+			position: absolute;
+			inset: 0;
+			border-radius: 1rem;
+			pointer-events: none;
+			background: var(--photo-tint);
+			mix-blend-mode: var(--photo-tint-blend);
+			opacity: var(--photo-tint-opacity);
+			transition: opacity 0.3s ease, background 0.3s ease;
 		}
 		.frame button {
 			color: white;
@@ -290,27 +377,25 @@
 			top: 0;
 			left: 50%;
 			transform: translateX(-50%);
-			width: 57.5rem;
-			height: 10rem;
+			width: min(94vw, 60rem);
 			z-index: 10001;
 			display: flex;
 			align-items: center;
-			gap: 1rem;
 			padding: 1rem;
+			gap: 0.6rem;
 			pointer-events: none;
 		}
 
 		nav {
 			flex: 1;
-			background: rgba(240, 248, 255, 0.12);
-			backdrop-filter: blur(1.5rem) saturate(1.3);
-			-webkit-backdrop-filter: blur(1.5rem) saturate(1.3);
+			min-width: 0;
+			background: rgba(18, 18, 18, 0.85);
 			border-radius: 1rem;
-			box-shadow: 
-				inset 0 0.1rem 0 rgba(255, 255, 255, 0.2),
-				0 0.3rem 1rem rgba(0, 0, 0, 0.1);
+			box-shadow:
+				inset 0 0.1rem 0 rgba(255, 255, 255, 0.08),
+				0 0.3rem 1rem rgba(0, 0, 0, 0.3);
 			border: 0.05rem solid rgba(255, 255, 255, 0.15);
-			padding: 1rem;
+			padding: 0.6rem;
 			opacity: 1;
 			pointer-events: none;
 			transition: opacity 0.2s linear, pointer-events 0.2s linear;
@@ -320,85 +405,82 @@
 			opacity: 0;
 			pointer-events: none;
 		}
-		
+
 		nav.show {
 			opacity: 1;
 			pointer-events: auto;
 		}
-		
+
 		nav ul {
 			display: grid;
-			grid-template-columns: 1fr 1fr 9rem;
+			grid-template-columns: 1fr 1fr 8rem;
 			align-items: center;
 			list-style: none;
-			gap: 1rem;
+			gap: 0.6rem;
 			margin: 0;
 			padding: 0;
 			height: 100%;
 		}
-		
-		nav button {
-			background: rgba(255, 255, 255, 0.25);
-			backdrop-filter: blur(0.5rem);
-			-webkit-backdrop-filter: blur(0.5rem);
-			padding: 1rem 0;
+
+		nav button,
+		.home-link,
+		.burger-button {
+			background: rgba(255, 255, 255, 0.08);
+			padding: 0.9rem 0;
 			font-family: "neue", sans-serif;
 			font-weight: bold;
-			border-radius: 1rem;
+			border-radius: 0.75rem;
 			line-height: 1;
-			box-shadow: 
-				inset 0 0.1rem 0 rgba(255, 255, 255, 0.3),
-				0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
-			text-shadow: 0 0 0.8rem rgba(255, 255, 255, 0.6);
-			color: #000;
-			font-size: 2.6rem;
+			box-shadow:
+				inset 0 0.1rem 0 rgba(255, 255, 255, 0.1),
+				0 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+			color: #fff;
+			font-size: 1.7rem;
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			gap: 1rem;
+			gap: 0.6rem;
 			width: 100%;
 			transition: all 0.2s ease;
-			border: 0.05rem solid rgba(255, 255, 255, 0.2);
+			border: 0.05rem solid rgba(255, 255, 255, 0.15);
+			text-decoration: none;
+			white-space: nowrap;
 		}
-		
-		nav button:hover {
-			background: rgba(255, 255, 255, 0.35);
-			box-shadow: 
-				inset 0 0.1rem 0 rgba(255, 255, 255, 0.4),
-				0 0.3rem 0.8rem rgba(0, 0, 0, 0.15);
-			text-shadow: 0 0 1.2rem rgba(255, 255, 255, 0.8);
+
+		nav button:hover,
+		.home-link:hover,
+		.burger-button:hover {
+			background: rgba(255, 255, 255, 0.16);
+			box-shadow:
+				inset 0 0.1rem 0 rgba(255, 255, 255, 0.15),
+				0 0.3rem 0.8rem rgba(0, 0, 0, 0.25);
+		}
+
+		header .material-symbols-outlined {
+			font-size: 1.7rem;
+		}
+
+		.home-link,
+		.burger-button {
+			flex-shrink: 0;
+			pointer-events: visible;
+			/* These sit directly on the page background (no dark nav
+			   parent behind them), so they need their own opaque
+			   background instead of the light chip tint nav buttons use. */
+			background: rgba(18, 18, 18, 0.85);
+		}
+
+		.home-link:hover,
+		.burger-button:hover {
+			background: rgba(35, 35, 35, 0.9);
+		}
+
+		.home-link {
+			width: 7rem;
 		}
 
 		.burger-button {
-			flex-shrink: 0;
-			width: 6rem;
-			height: 6rem;
-			background: rgba(200, 210, 220, 0.3);
-			backdrop-filter: blur(1.5rem) saturate(1.2);
-			-webkit-backdrop-filter: blur(1.5rem) saturate(1.2);
-			border-radius: 1rem;
-			font-family: "neue", sans-serif;
-			font-weight: bold;
-			box-shadow: 
-				inset 0 0.1rem 0 rgba(255, 255, 255, 0.2),
-				0 0.3rem 1rem rgba(0, 0, 0, 0.12);
-			text-shadow: 0 0 0.8rem rgba(255, 255, 255, 0.7);
-			color: #000;
-			font-size: 2.6rem;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			transition: all 0.2s ease;
-			border: 0.1rem solid rgba(255, 255, 255, 0.8);
-			pointer-events: visible;
-		}
-		
-		.burger-button:hover {
-			background: rgba(220, 230, 240, 0.4);
-			box-shadow: 
-				inset 0 0.1rem 0 rgba(255, 255, 255, 0.3),
-				0 0.4rem 1.2rem rgba(0, 0, 0, 0.15);
-			text-shadow: 0 0 1.2rem rgba(255, 255, 255, 0.9);
+			width: 5rem;
 		}
 
 		.frame button span {
@@ -642,16 +724,25 @@
 				<li>
 					<button>
 						<span class="material-symbols-outlined">translate</span>
-						<span style="font-size: 1.5rem;">(EN)</span>
+						<span>(EN)</span>
 					</button>
 				</li>
 			</ul>
 		</nav>
 
-		<button class="burger-button" id="burger" aria-expanded="false" aria-controls="mainNav" onclick="burgerClicked()">
-			<span class="material-symbols-outlined">menu</span>
+		<a class="home-link" href="https://val-nvs.com" target="_blank" rel="noopener" aria-label="Visit val-nvs.com, main site" title="val-nvs.com — main site">
+			<span class="material-symbols-outlined">public</span>
+			<span style="font-size: 1.2rem;">Site</span>
+		</a>
+
+		<button class="burger-button" id="burger" aria-expanded="true" aria-controls="mainNav" onclick="burgerClicked()">
+			<span class="material-symbols-outlined">close</span>
 		</button>
 	</header>
+
+	<button class="stock-switcher" id="stockSwitcher" onclick="cycleFilmStock()">
+		Film: <span id="stockLabel">Original</span>
+	</button>
 
 	<div class="hero-popup" id="aboutPopup">
 		<div class="hero-content">
@@ -679,26 +770,7 @@
 		</div>
 	</div>
 
-	<div class="visual strip">
-		<div class="toddao frame"><img src="toddao.svg"></div>
-		<div class="toddao frame"><img src="toddao.svg"></div>
-		<div class="toddao frame"><img src="toddao.svg"></div>
-		<div class="toddao frame"><img src="toddao.svg"></div>
-		<div class="toddao frame"><img src="toddao.svg"></div>
-		<div class="toddao frame"><img src="toddao.svg"></div>
-		<div class="toddao frame"><img src="toddao.svg"></div>
-		<div class="toddao frame"><img src="toddao.svg"></div>
-		<div class="toddao frame"><img src="toddao.svg"></div>
-		<div class="toddao frame"><img src="toddao.svg"></div>
-		<div class="toddao frame"><img src="toddao.svg"></div>
-		<div class="toddao frame"><img src="toddao.svg"></div>
-		<div class="toddao frame"><img src="toddao.svg"></div>
-		<div class="toddao frame"><img src="toddao.svg"></div>
-		<div class="toddao frame"><img src="toddao.svg"></div>
-		<div class="toddao frame"><img src="toddao.svg"></div>
-		<div class="toddao frame"><img src="toddao.svg"></div>
-		<div class="toddao frame"><img src="toddao.svg"></div>
-	</div>
+	<div class="visual strip"></div>
 
 	<div class="ladder strip">
 		<div class="toddao frame"></div>
@@ -734,6 +806,15 @@
 		"zh": "加载视频...",
 		"de": "VIDEO WIRD GELADEN...",
 		"ar": "جار التحميل..."
+	};
+
+	// Translations for the "no video" placeholder
+	const videoNotFoundTranslations = {
+		"en": "VIDEO NOT FOUND",
+		"pt-pt": "VÍDEO NÃO ENCONTRADO",
+		"zh": "未找到视频",
+		"de": "VIDEO NICHT GEFUNDEN",
+		"ar": "الفيديو غير موجود"
 	};
 
 	// Popup content translations
@@ -1021,6 +1102,7 @@
 		try {
 			const response = await fetch('./data.json');
 			projectsData = await response.json();
+			generateVisualStrip();
 			generateProjects();
 			updateLanguage();
 			return Promise.resolve();
@@ -1167,15 +1249,37 @@
 					}
 				]
 			};
+			generateVisualStrip();
 			generateProjects();
 			updateLanguage();
 			return Promise.resolve();
 		}
 	}
 
+	function generateVisualStrip() {
+		if (!projectsData) return;
+
+		// Visual strip is a decorative background layer behind the ladder strip,
+		// which overlaps it by one frame (margin-top: -23.75rem) and adds a
+		// leading spacer + dummy frame plus a trailing spacer around the real
+		// project cards. It needs projects.length + 2 frames to fully cover the ladder.
+		const visualStrip = document.querySelector('.visual.strip');
+		const count = projectsData.projects.length + 2;
+
+		visualStrip.innerHTML = '';
+		for (let i = 0; i < count; i++) {
+			const frame = document.createElement('div');
+			frame.className = 'toddao frame';
+			const img = document.createElement('img');
+			img.src = 'toddao.svg';
+			frame.appendChild(img);
+			visualStrip.appendChild(frame);
+		}
+	}
+
 	function generateProjects() {
 		if (!projectsData) return;
-		
+
 		const ladderStrip = document.querySelector('.ladder.strip');
 		const lastFrame = ladderStrip.children[ladderStrip.children.length - 1];
 		
@@ -1189,15 +1293,18 @@
 			
 			const button = document.createElement('button');
 			const img = document.createElement('img');
+			const gradeOverlay = document.createElement('div');
 			const leftSpan = document.createElement('span');
 			const rightSpan = document.createElement('span');
-			
+
 			img.src = project.media[0];
 			img.dataset.projectIndex = index;
+			gradeOverlay.className = 'grade-overlay';
 			leftSpan.className = 'left';
 			rightSpan.className = 'right';
-			
+
 			button.appendChild(img);
+			button.appendChild(gradeOverlay);
 			button.appendChild(leftSpan);
 			button.appendChild(rightSpan);
 			frame.appendChild(button);
@@ -1250,43 +1357,42 @@
 		const img = frame.querySelector('button img');
 
 		if (expanded) {
-			img.src = project.media[1] || project.media[0];
+			const lang = languages[currentLanguage];
+			let videoUrl = null;
 
 			if (project.videoId) {
 				const videoId = project.videoId;
-				let videoUrl = '';
-				
+
 				if (videoId.length === 9) {
 					videoUrl = `https://player.vimeo.com/video/${videoId}?autoplay=0&dnt=1`;
-				} 
-				else if (videoId.length === 11) {
+				} else if (videoId.length === 11) {
 					videoUrl = `https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0&modestbranding=1`;
 				} else {
 					console.warn(`Unsupported video ID length for: ${videoId}`);
-					videoUrl = null;
-				}
-				
-				if (videoUrl) {
-					const lang = languages[currentLanguage];
-					const loadingText = loadingTranslations[lang] || "LOADING VIDEO...";
-					
-					youtubeContainer.innerHTML = `<div class="youtube-placeholder">${loadingText}</div>`;
-					youtubeContainer.classList.add('show');
-					
-					setTimeout(() => {
-						const iframe = document.createElement('iframe');
-						iframe.src = videoUrl;
-						iframe.frameBorder = "0";
-						iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-						iframe.allowFullscreen = true;
-						iframe.onload = () => {
-							iframe.style.opacity = '1'; 
-						};
-						youtubeContainer.appendChild(iframe);
-					}, 1000);
 				}
 			}
-			
+
+			if (videoUrl) {
+				const loadingText = loadingTranslations[lang] || "LOADING VIDEO...";
+
+				youtubeContainer.innerHTML = `<div class="youtube-placeholder">${loadingText}</div>`;
+				youtubeContainer.classList.add('show');
+
+				const iframe = document.createElement('iframe');
+				iframe.src = videoUrl;
+				iframe.frameBorder = "0";
+				iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+				iframe.allowFullscreen = true;
+				iframe.onload = () => {
+					iframe.style.opacity = '1';
+				};
+				youtubeContainer.appendChild(iframe);
+			} else {
+				const notFoundText = videoNotFoundTranslations[lang] || "VIDEO NOT FOUND";
+				youtubeContainer.innerHTML = `<div class="youtube-placeholder">${notFoundText}</div>`;
+				youtubeContainer.classList.add('show');
+			}
+
 			setTimeout(() => {
 				textAndButtonContainer.classList.add('show');
 			}, 100);
@@ -1322,7 +1428,6 @@
 					button.classList.remove('expanded');
 					toggleMediaAndDescription(frame, projectIndex, false);
 					frame.classList.remove('move-up', 'move-down');
-					button.style.filter = '';
 
 					ladderFrames.forEach((frm) => {
 						frm.classList.remove('move-up', 'move-down');
@@ -1337,44 +1442,49 @@
 							const btn = frm.querySelector('button:not(.crew-button)');
 							if (btn) {
 								btn.classList.remove('expanded');
-								toggleMediaAndDescription(frm, frmIndex - 2, false); 
+								toggleMediaAndDescription(frm, frmIndex - 2, false);
 							}
 						}
 					});
 
-					const expandCard = () => {
-						button.style.filter = ''; 
-						button.style.pointerEvents = 'auto'; 
-						button.classList.add('expanded');
-						toggleMediaAndDescription(frame, projectIndex, true);
-						
-						ladderFrames.forEach((frm, frameIndex) => {
-							if (frameIndex < index) {
-								frm.classList.add('move-up');
-							} else if (frameIndex > index) {
-								frm.classList.add('move-down');
-							}
-						});
-					};
-					
-					if (project.media[1]) {
-						button.style.filter = 'brightness(0.5)';
+					// Expand right away — don't wait on the network for this.
+					button.classList.add('expanded');
+					toggleMediaAndDescription(frame, projectIndex, true);
+
+					ladderFrames.forEach((frm, frameIndex) => {
+						if (frameIndex < index) {
+							frm.classList.add('move-up');
+						} else if (frameIndex > index) {
+							frm.classList.add('move-down');
+						}
+					});
+
+					const targetSrc = project.media[1] || project.media[0];
+
+					if (targetSrc !== project.media[0]) {
+						// Keep showing the thumbnail through the expand
+						// animation — no waiting on the network to start it.
+						// Swap in the full-size image only once the card is
+						// fully open and the image has loaded.
+						let imageReady = false;
+						let boxReady = false;
+
+						const reveal = () => {
+							if (!imageReady || !boxReady) return;
+							img.src = targetSrc;
+						};
+
 						const loadingImage = new Image();
-						loadingImage.src = project.media[1];
-						button.style.pointerEvents = 'none';
+						loadingImage.onload = () => { imageReady = true; reveal(); };
+						loadingImage.onerror = () => { imageReady = true; reveal(); };
+						loadingImage.src = targetSrc;
 
-						loadingImage.onload = () => {
-							img.src = project.media[1];
-							expandCard();
-						};
-
-						loadingImage.onerror = () => {
-							console.error(`Failed to load image: ${project.media[1]}. Expanding anyway.`);
-							expandCard();
-						};
-
-					} else {
-						expandCard();
+						button.addEventListener('transitionend', function onExpandEnd(e) {
+							if (e.target !== button || e.propertyName !== 'height') return;
+							button.removeEventListener('transitionend', onExpandEnd);
+							boxReady = true;
+							reveal();
+						});
 					}
 				}
 			});
@@ -1467,12 +1577,19 @@
 		updateLanguage();
 	}
 
+	function setBurgerState(isOpen) {
+		const burger = document.getElementById('burger');
+		burger.setAttribute('aria-expanded', isOpen);
+		burger.querySelector('.material-symbols-outlined').textContent = isOpen ? 'close' : 'menu';
+	}
+
 	function burgerClicked() {
 		const burger = document.getElementById('burger');
 		const mainNav = document.getElementById('mainNav');
 		const expanded = burger.getAttribute('aria-expanded') === 'true';
-		burger.setAttribute('aria-expanded', !expanded);
-		
+
+		setBurgerState(!expanded);
+
 		if (expanded) {
 			mainNav.classList.add('hide');
 			mainNav.classList.remove('show');
@@ -1480,6 +1597,26 @@
 			mainNav.classList.remove('hide');
 			mainNav.classList.add('show');
 		}
+	}
+
+	// Temporary film stock preview switcher
+	const filmStocks = [
+		{ id: '', label: 'Original' },
+		{ id: 'kodak2383', label: 'Kodak 2383' },
+		{ id: 'cinestill800t', label: 'CineStill 800T' },
+		{ id: 'fujieterna', label: 'Fuji Eterna' },
+		{ id: 'trix', label: 'Tri-X B&W' }
+	];
+	let stockIndex = 0;
+	function cycleFilmStock() {
+		stockIndex = (stockIndex + 1) % filmStocks.length;
+		const stock = filmStocks[stockIndex];
+		if (stock.id) {
+			document.documentElement.dataset.stock = stock.id;
+		} else {
+			delete document.documentElement.dataset.stock;
+		}
+		document.getElementById('stockLabel').textContent = stock.label;
 	}
 
 	document.addEventListener('DOMContentLoaded', () => {
@@ -1497,6 +1634,7 @@
 				const mainNav = document.getElementById('mainNav');
 				mainNav.classList.remove('show');
 				mainNav.classList.add('hide');
+				setBurgerState(false);
 			}
 		});
 	});
